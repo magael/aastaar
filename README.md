@@ -1,4 +1,4 @@
-# Polunetsintä
+# Polunetsintäohjelma
 
 ## Aineopintojen harjoitustyö: Tietorakenteet ja algoritmit (loppukesä 2019)
 
