@@ -4,7 +4,7 @@
 
 Harjoitustyön aihe on polunetsintä verkossa kahden pisteen välillä. Tarkoituksena on löytää nopein reitti kaksiuloitteisella pelikartalla, joka on mallinnettu koodissa ruudukoksi. Ruudukko sisältää läpäisemättömiä seiniä ja tekoälyagentin kuljettavaa tilaa. Työ mallintaa yleistä ongelmaa peleissä: miten agentti suunnistaa pelin ympäristössä tiettyyn kohteeseen, esimerkiksi kun vihollinen jahtaa pelaajaa.
 
-Aikavaatimustavoite: $O(n\sqrt{2})$
+Aikavaatimustavoite: O(n^2)
 
 
 ## Käytettävät algoritmit ja tietorakenteet
