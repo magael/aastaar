@@ -35,7 +35,7 @@ Jatkokehitysideana polulle voitaisiin myös lisätä suoritusaikana uusia esteit
 * Eri algoritmien vertailu
 
 #### Edistyneitä / jatkokehityksen toiminnallisuuksia:
-* Kartan valinta
+* Kartan valinta useista vaihtoehdoista
 * Polun "pehmennys" / tasapainotus (smoothing)
 * Muita reitinhakualgoritmeja
 * Navigaatioruudukon luonti eri kuvien (samassa formaatissa) perusteella
