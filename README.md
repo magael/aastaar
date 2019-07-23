@@ -1,4 +1,4 @@
-# Aineopintojen harjoitustyö: Tietorakenteet ja algoritmi
+# Aineopintojen harjoitustyö: Tietorakenteet ja algoritmit (loppukesä 2019)
 
 ## Polunetsintä
 
