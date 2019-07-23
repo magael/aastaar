@@ -42,7 +42,6 @@ Jatkokehitysideana polulle voitaisiin myös lisätä suoritusaikana uusia esteit
 * Reitillä liikkuva tekoälyagentti
 * Polunetsintä dynaamisesti muuttuvaan kohteeseen (käyttäjän syötteestä)
 * Esteiden luonti dynaamisesti (käyttäjän syötteestä) ja törmäyksentarkistus
-* Valikkonäkymä ym. graafisen käyttöliittymän hiomista
   
 ##  Lähteet
 https://en.wikipedia.org/wiki/A*_search_algorithm
