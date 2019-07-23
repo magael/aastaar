@@ -9,7 +9,7 @@ Aikavaatimustavoite: O(n^2)
 
 ## Käytettävät algoritmit ja tietorakenteet
 
-Työssä toteutetaan ensisijaisesti A*-algoritmia. A*-algoritmista voidaan myös ajan salliessa toteuttaa erilaisia versioita, ja vertailla niiden tilankäyttöä ja suoritusnopeutta.
+Työssä sovelletaan ensisijaisesti A*-algoritmia. A*-algoritmista voidaan myös ajan salliessa toteuttaa erilaisia versioita, ja vertailla niiden tilankäyttöä ja suoritusnopeutta.
 
 A* on yleisesti hyväksi toteutettu algoritmi harjoitustyön aiheen kaltaiseen tarkoitukseen, mutta tarkoitus on myös verrata sen suoritusta leveyssuuntaiseen läpikäyntiin (BFS) ja mahdollisesti muihin, kuten Dijkstran algoritmiin.
 
