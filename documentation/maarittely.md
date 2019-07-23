@@ -27,10 +27,10 @@ Jatkokehitysideana polulle voitaisiin myös lisätä suoritusaikana uusia esteit
 
 #### Perustoiminnallisuuksia:
 * Käyttöliittymäikkunan muodostaminen ja sulkeminen
-* Kartan piirtäminen ja päivittäminen
+* Kartan ja tavoitepisteiden piirtäminen ja päivittäminen
 * Navigaatioruudukon luonti
-* Tavoitepisteiden ja polunetsinnän visualisointi
 * BFS
+* Polunetsinnän visualisointi
 * A* (mahdollisesti eri versioita)
 * Eri algoritmien vertailu
 
