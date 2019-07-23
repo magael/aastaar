@@ -29,13 +29,13 @@ Jatkokehitysideana polulle voitaisiin myös lisätä suoritusaikana uusia esteit
 * Käyttöliittymäikkunan muodostaminen ja sulkeminen
 * Kartan piirtäminen ja päivittäminen
 * Navigaatioruudukon luonti
-* Kartan valinta
 * Tavoitepisteiden ja polunetsinnän visualisointi
 * BFS
 * A* (mahdollisesti eri versioita)
 * Eri algoritmien vertailu
 
 #### Edistyneitä / jatkokehityksen toiminnallisuuksia:
+* Kartan valinta
 * Polun "pehmennys" / tasapainotus (smoothing)
 * Muita reitinhakualgoritmeja
 * Navigaatioruudukon luonti eri kuvien (samassa formaatissa) perusteella
