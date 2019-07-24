@@ -2,7 +2,7 @@
 
 ## Harjoitustyön tarkoitus
 
-Harjoitustyön aihe on polunetsintä verkossa kahden pisteen välillä. Tarkoituksena on löytää nopein reitti kaksiuloitteisella pelikartalla, joka on mallinnettu koodissa ruudukoksi. Ruudukko sisältää läpäisemättömiä seiniä ja tekoälyagentin kuljettavaa tilaa. Työ mallintaa yleistä ongelmaa peleissä: miten agentti suunnistaa pelin ympäristössä tiettyyn kohteeseen, esimerkiksi kun vihollinen jahtaa pelaajaa.
+Harjoitustyön aihe on polunetsintä verkossa kahden pisteen välillä ja toteutuskielenä on Java. Tarkoituksena on löytää nopein reitti kaksiuloitteisella, ylhäältä päin kuvatulla pelikartalla, joka on mallinnettu koodissa ruudukoksi. Ruudukko sisältää läpäisemättömiä seiniä ja tekoälyagentin kuljettavaa tilaa. Työ mallintaa yleistä ongelmaa peleissä: miten agentti suunnistaa pelin ympäristössä tiettyyn kohteeseen, esimerkiksi kun vihollinen jahtaa pelaajaa.
 
 Aikavaatimustavoite: O(n^2)
 
@@ -18,7 +18,7 @@ Löytämissäni esimerkeissä  A*-algoritmi käyttää __prioriteettijonoa__ ver
 
 ## Toiminnallisuus
 
-Ohjelma saa syötteenä kartan, jonka pohjalta luodaan algoritmin navigointiin käyttämä ruudukko. Polunetsintä kahden pisteen välillä visualisoidaan graafisen käyttöliittymän avulla.
+Ohjelma saa syötteenä kartan, jonka pohjalta luodaan algoritmin navigointiin käyttämä ruudukko. Polunetsintä kahden pisteen välillä visualisoidaan Java FX graafisen käyttöliittymän avulla.
 
 Lisäksi, jos toteutukseen jää aikaa, tavoitepistettä voi muuttaa kesken suorituksen, jolloin algoritmi löytää lyhyellä viiveellä polun uuteen tavoitteeseen, ja agentti liikkuu kohteeseen.
 
