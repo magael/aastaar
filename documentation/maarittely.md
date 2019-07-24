@@ -9,11 +9,11 @@ Aikavaatimustavoite: O(n^2)
 
 ## Käytettävät algoritmit ja tietorakenteet
 
-Työssä sovelletaan ensisijaisesti _A*_-algoritmia. A*-algoritmista voidaan myös ajan salliessa toteuttaa erilaisia versioita, ja vertailla niiden tilankäyttöä ja suoritusnopeutta.
+Työssä sovelletaan ensisijaisesti __A*__-algoritmia. A*-algoritmista voidaan myös ajan salliessa toteuttaa erilaisia versioita, ja vertailla niiden tilankäyttöä ja suoritusnopeutta.
 
-A* on yleisesti hyväksi toteutettu algoritmi harjoitustyön aiheen kaltaiseen tarkoitukseen, mutta tarkoitus on myös verrata sen suoritusta leveyssuuntaiseen läpikäyntiin (_BFS_) ja mahdollisesti muihin, kuten Dijkstran algoritmiin.
+A* on yleisesti hyväksi toteutettu algoritmi harjoitustyön aiheen kaltaiseen tarkoitukseen, mutta tarkoitus on myös verrata sen suoritusta leveyssuuntaiseen läpikäyntiin (__BFS__) ja mahdollisesti muihin, kuten Dijkstran algoritmiin.
 
-Löytämissäni esimerkeissä  A*-algoritmi käyttää _prioriteettijonoa_ verkon solmuille, ja _hajautustaulua_ läpikäytyihin solmuihin. Vaikuttaa kuitenkin mahdolliselta toteuttaa koko algoritmi (vähemmän tehokkaasti) käyttäen pelkästään tavallisia dynaamisia taulukoita (tai esimerkiksi käyttämällä prioriteettijonoa, mutta taulukkoa hajautustaulun sijaan).
+Löytämissäni esimerkeissä  A*-algoritmi käyttää __prioriteettijonoa__ verkon solmuille, ja __hajautustaulua__ läpikäytyihin solmuihin. Vaikuttaa kuitenkin mahdolliselta toteuttaa koko algoritmi (vähemmän tehokkaasti) käyttäen pelkästään tavallisia dynaamisia taulukoita (tai esimerkiksi käyttämällä prioriteettijonoa, mutta taulukkoa hajautustaulun sijaan).
 
 
 ## Toiminnallisuus
