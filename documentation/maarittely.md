@@ -32,6 +32,7 @@ Jatkokehitysideana polulle voitaisiin myös lisätä suoritusaikana uusia esteit
 * BFS
 * Polunetsinnän visualisointi
 * A* (mahdollisesti eri versioita)
+* Itse toteutetut tietorakenteet
 * Eri algoritmien vertailu
 
 #### Edistyneitä / jatkokehityksen toiminnallisuuksia:
