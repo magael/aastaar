@@ -22,7 +22,7 @@ Ohjelma saa syötteenä kartan, jonka pohjalta luodaan algoritmin navigointiin k
 
 Lisäksi, jos toteutukseen jää aikaa, tavoitepistettä voi muuttaa kesken suorituksen, jolloin algoritmi löytää lyhyellä viiveellä polun uuteen kohteeseen, jonne agentti liikkuu.
 
-Jatkokehitysideana polulle voitaisiin myös lisätä suoritusaikana uusia esteitä, jotka agentti onnistuisi kiertämään.
+Jatkokehitysideana polulle voitaisiin myös lisätä suoritusaikana uusia esteitä, jotka agentti onnistuisi kiertämään. Muita ideoita on polun tasapainotus, verkon painot ja oma tasogeneraattori.
 
 
 #### Perustoiminnallisuuksia:
