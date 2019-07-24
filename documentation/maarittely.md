@@ -36,6 +36,8 @@ Jatkokehitysideana polulle voitaisiin myös lisätä suoritusaikana uusia esteit
 * Eri algoritmien vertailu
 
 #### Edistyneitä / jatkokehityksen toiminnallisuuksia:
+Olisi kiva saada palautetta, arviolta kuinka laaja työ olisi pelkillä perustoiminnallisuuksilla, ja esim. mitä näistä "edistyneistä" olisi hyvä ehtiä toteuttamaan, jos tavoittelee vitosta.
+
 * Kartan valinta useista eri vaihtoehdoista
 * Polun "pehmennys" / tasapainotus (smoothing)
 * Muita reitinhakualgoritmeja
@@ -43,6 +45,8 @@ Jatkokehitysideana polulle voitaisiin myös lisätä suoritusaikana uusia esteit
 * Reitillä liikkuva tekoälyagentti
 * Polunetsintä dynaamisesti muuttuvaan kohteeseen (käyttäjän syötteestä)
 * Esteiden luonti dynaamisesti (käyttäjän syötteestä) ja törmäyksentarkistus
+* Verkon painot: esim. hiekkapolku, nurmikko, lumi
+* Oma kartta-/tasogeneraattori (esim. palikat ruudukolla tai korkeuskartta)
   
 ##  Lähteet
 https://en.wikipedia.org/wiki/A*_search_algorithm
