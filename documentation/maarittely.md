@@ -24,8 +24,8 @@ Lisäksi, jos toteutukseen jää aikaa, tavoitepistettä voi muuttaa kesken suor
 
 Jatkokehitysideana polulle voitaisiin myös lisätä suoritusaikana uusia esteitä, jotka agentti onnistuisi kiertämään. Muita ideoita on polun tasapainotus, verkon painot ja oma tasogeneraattori.
 
-
 #### Perustoiminnallisuuksia:
+
 * Käyttöliittymäikkunan muodostaminen ja sulkeminen
 * Kartan ja tavoitepisteiden piirtäminen ja päivittäminen
 * Navigaatioruudukon luonti
@@ -36,7 +36,6 @@ Jatkokehitysideana polulle voitaisiin myös lisätä suoritusaikana uusia esteit
 * Eri algoritmien vertailu
 
 #### Edistyneitä / jatkokehityksen toiminnallisuuksia:
-Olisi kiva saada palautetta, arviolta kuinka laaja työ olisi pelkillä perustoiminnallisuuksilla, ja esim. mitä näistä "edistyneistä" olisi hyvä ehtiä toteuttamaan, jos tavoittelee vitosta.
 
 * Kartan valinta useista eri vaihtoehdoista
 * Polun "pehmennys" / tasapainotus (smoothing)
@@ -47,6 +46,7 @@ Olisi kiva saada palautetta, arviolta kuinka laaja työ olisi pelkillä perustoi
 * Esteiden luonti dynaamisesti (käyttäjän syötteestä) ja törmäyksentarkistus
 * Verkon painot: esim. hiekkapolku, nurmikko, lumi
 * Oma kartta-/tasogeneraattori (esim. palikat ruudukolla tai korkeuskartta)
-  
+
+
 ##  Lähteet
 https://en.wikipedia.org/wiki/A*_search_algorithm
