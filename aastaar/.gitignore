@@ -1,4 +1,10 @@
 build/
+build.gradle
 .gradle/
 .nb-gradle/
+.nb-gradle-properties
+.project
+.settings/
 .nbproject/
+
+src/main/resources/
