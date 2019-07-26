@@ -2,5 +2,5 @@ build/
 .gradle/
 .nb-gradle/
 .nbproject/
-
+bin/
 src/main/resources/
