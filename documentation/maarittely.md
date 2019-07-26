@@ -20,7 +20,7 @@ Löytämissäni esimerkeissä  A*-algoritmi käyttää __prioriteettijonoa__ ver
 
 Ohjelma saa syötteenä kartan, jonka pohjalta luodaan algoritmin navigointiin käyttämä ruudukko. Polunetsintä kahden pisteen välillä visualisoidaan Java FX graafisen käyttöliittymän avulla.
 
-Lisäksi, jos toteutukseen jää aikaa, tavoitepistettä voi muuttaa kesken suorituksen, jolloin algoritmi löytää lyhyellä viiveellä polun uuteen kohteeseen, jonne agentti liikkuu.
+Lisäksi, jos toteutukseen jää aikaa, tavoitepistettä voi muuttaa kesken suorituksen, jolloin algoritmi löytää lyhyellä viiveellä polun uuteen kohteeseen, jonne agentti liikkuu (esim. suoritetaan reitinhakualgoritmi kahdesti sekunnissa).
 
 Jatkokehitysideana polulle voitaisiin myös lisätä suoritusaikana uusia esteitä, jotka agentti onnistuisi kiertämään. Muita ideoita on polun tasapainotus, verkon painot ja oma tasogeneraattori.
 
@@ -37,14 +37,14 @@ Jatkokehitysideana polulle voitaisiin myös lisätä suoritusaikana uusia esteit
 
 #### Edistyneitä / jatkokehityksen toiminnallisuuksia:
 
-* Kartan valinta useista eri vaihtoehdoista
+* Kartan valinta useista eri vaihtoehdoista (esim. käyttäjän syötteestä numeroilla 1-n)
 * Polun "pehmennys" / tasapainotus (smoothing)
 * Muita reitinhakualgoritmeja
-* Navigaatioruudukon luonti eri kuvien (samassa formaatissa) perusteella
+* Navigaatioruudukon luonti eri kuvien (samassa formaatissa) perusteella (esim. käyttäjän syöttämän tiedostopolun mukaan)
 * Reitillä liikkuva tekoälyagentti
 * Polunetsintä dynaamisesti muuttuvaan kohteeseen (käyttäjän syötteestä)
 * Esteiden luonti dynaamisesti (käyttäjän syötteestä) ja törmäyksentarkistus
-* Verkon painot: esim. hiekkapolku, nurmikko, lumi
+* Verkon painot: esim. hiekkapolku, nurmikko, lumi (movingai-benchmarkeissa ilmeisesti "matala vesi")
 * Oma kartta-/tasogeneraattori (esim. huoneverkosto, labyrintti tai korkeuskartan perusteella)
 
 
