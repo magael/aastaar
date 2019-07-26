@@ -28,7 +28,7 @@ Jatkokehitysideana polulle voitaisiin myös lisätä suoritusaikana uusia esteit
 
 * Käyttöliittymäikkunan muodostaminen ja sulkeminen
 * Kartan ja tavoitepisteiden piirtäminen ja päivittäminen
-* Navigaatioruudukon luonti
+* Algoritmin navigoitavan ruudukon luonti
 * BFS
 * Polunetsinnän visualisointi
 * A* (mahdollisesti eri versioita)
@@ -45,8 +45,9 @@ Jatkokehitysideana polulle voitaisiin myös lisätä suoritusaikana uusia esteit
 * Polunetsintä dynaamisesti muuttuvaan kohteeseen (käyttäjän syötteestä)
 * Esteiden luonti dynaamisesti (käyttäjän syötteestä) ja törmäyksentarkistus
 * Verkon painot: esim. hiekkapolku, nurmikko, lumi
-* Oma kartta-/tasogeneraattori (esim. palikat ruudukolla tai korkeuskartta)
+* Oma kartta-/tasogeneraattori (esim. huoneverkosto, labyrintti tai korkeuskartan perusteella)
 
 
 ##  Lähteet
 https://en.wikipedia.org/wiki/A*_search_algorithm
+https://movingai.com
