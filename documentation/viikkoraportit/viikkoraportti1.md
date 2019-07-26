@@ -14,7 +14,6 @@ Tutustuin jMonkeyEngine-pelimoottoriin (game engine), joka käyttää Javaa ohje
 
 Tutustuin myös kahteen toiseen 3D-Java-kirjastoon: Lightweight Java Gaming Library:n (LWJGL) ja Java OpenGL:n (JOGL). Molemmat vaikuttivat hyvin aloittelijaystävällisiltä ja mielenkiintoisilta. Arvioin kuitenkin, että näistä jompaa kumpaa kirjastoa hyödyntämällä suuri osa kurssista menisi käyttöliittymän ja ympäristön toteutukseen, jolloin ei välttämättä jäisi tarpeeksi aikaa algoritmeille ja tietorakenteille.
 
-
 #### Tiistai 23.7.
 
 En ollut tarkistanut, saako työssä käyttää C#:ää, mutta otin jo etukäteen selvää, miten Unity 3D -pelimoottorilla, jota olen hieman aiemmin käyttänyt, tehdyille ohjelmistoille voidaan kirjoittaa testejä. Päältä päin testaaminen vaikutti ihan sujuvalta, mutta aiempien kokemusten mukaan (muilla kielillä toteutetuissa ei-peli-projekteissa) uuden testikirjaston käyttöönottoon saattaa kulua paljon aikaa.
@@ -28,4 +27,12 @@ listaamillani "perustoiminnallisuuksilla", ja esim. mitä "edistyneistä" olisi 
 
 #### Torstai 25.7.
 
-Kirjoitin tämän viikkoraportin ja otin projektissa Gradlen käyttöön. Repossa oli valmiiksi issuet sallittu. Seuraavaksi rekisteröidyn ja teen palautuksen Labtooliin ja katson mitä toisen viikon palautukseen vaaditaan. Varmaan luen vielä aiheeseen liittyviä juttuja netistä ja alan tekemään käyttöliittymää ym. lähipäivinä.
+Kirjoitin tämän viikkoraportin ja otin projektissa Gradlen käyttöön. Repossa oli valmiiksi issuet sallittu. Seuraavaksi rekisteröidyn ja teen palautuksen Labtooliin ja katson mitä toisen viikon palautukseen vaaditaan.
+
+#### Perjantai 26.7.
+
+Tutustuin tarkemmin Moving AI Labin 2D-benchmark-materiaaleihin. Olisi kyllä hienoa käyttää aineistoa omassa työssä ainakin jollain tasolla.
+
+Voisin esim. aloittaa toteuttamalla tiedostonlukijaluokan, joka lukee .map-tiedostojen ASCII-muotoista dataa, ja toisen luokan säilyttämään ja hallinnoimaan sitä. Mielellään tarvitsisin myös GUI-luokan piirtämään ensialkuun eri väriset ruudut datan mukaan. En tiedä pitäisikö sitä ennen jo aloittaa itse algoritmin toteutus.
+
+Vilkaisin myös muun muassa Jump Point Searchia, ja tuli mieleen kysyä, mitä algoritmeja tai variaatioita "perus" A*:n lisäksi olisi hyvä toteuttaa? Ajattelin BFS:ää lähtökohtana siihen, että pääsee alkuun visualisoinnin kanssa, mutta muuten ei ole mitään kummempia suunnitelmia. 
