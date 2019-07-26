@@ -22,8 +22,8 @@ Päädyin lopulta ratkaisuun, että on parempi aloittaa perinteisemmästä 2D-ym
 
 Tutustuin myös muun muassa Moving AI Lab-sivuston resursseihin sekä yleisesti reitinhakualgoritmeihin ym. Pelkästään A*-algoritmista näyttää olevan aika erilaisia toteutuksia, ja vähän askarruttaa, millaisen saan itse aikaiseksi. Erilaisia optimointejakin tuntui olevan paljon, ja toisaalta minua kiinnostaa myös tapaukset (peleissä), joissa A* ei ole paras ratkaisu.
 
-Aiheen selkeytyttyä laadin projektille suunnitelman ja kirjoitin [vaatimusmäärittelyn](https://github.com/magael/aastaar/blob/master/documentation/maarittely.md). Olisi kiva saada palautetta, arviolta kuinka laaja työ olisi vaatimusmäärittelyyssä
-listaamillani "perustoiminnallisuuksilla", ja esim. mitä "edistyneistä" olisi hyvä ehtiä toteuttamaan, jos tavoittelee vitosta. Pyrin laatimaan bulletpointit toiminnallisuuksien toteutusjärjestyksessä, mutta suunnitelmat saattavat toki vielä hieman muuttua.
+Aiheen selkeytyttyä laadin projektille suunnitelman ja kirjoitin [vaatimusmäärittelyn](https://github.com/magael/aastaar/blob/master/documentation/maarittely.md). __Olisi kiva saada palautetta, arviolta kuinka laaja työ olisi vaatimusmäärittelyyssä
+listaamillani "perustoiminnallisuuksilla", ja esim. mitä "edistyneistä" olisi hyvä ehtiä toteuttamaan, jos tavoittelee vitosta?__ Pyrin laatimaan bulletpointit toiminnallisuuksien toteutusjärjestyksessä, mutta suunnitelmat saattavat toki vielä hieman muuttua.
 
 #### Torstai 25.7.
 
@@ -35,4 +35,4 @@ Tutustuin tarkemmin Moving AI Labin 2D-benchmark-materiaaleihin. Olisi kyllä hi
 
 Voisin esim. aloittaa toteuttamalla tiedostonlukijaluokan, joka lukee .map-tiedostojen ASCII-muotoista dataa, ja toisen luokan säilyttämään ja hallinnoimaan sitä. Mielellään tarvitsisin myös GUI-luokan piirtämään ensialkuun eri väriset ruudut datan mukaan. En tiedä pitäisikö sitä ennen jo aloittaa itse algoritmin toteutus.
 
-Vilkaisin myös muun muassa Jump Point Searchia, ja tuli mieleen kysyä, mitä algoritmeja tai variaatioita "perus" A*:n lisäksi olisi hyvä toteuttaa? Ajattelin BFS:ää lähtökohtana siihen, että pääsee alkuun visualisoinnin kanssa, mutta muuten ei ole mitään kummempia suunnitelmia. 
+Vilkaisin myös muun muassa Jump Point Searchia, ja tuli mieleen kysyä, __olisiko ehdotuksia tietyistä algoritmeista tai variaatioista "perus" A*:n lisäksi, joita olisi hyvä toteuttaa?__ Ajattelin BFS:ää lähtökohtana siihen, että pääsee alkuun visualisoinnin kanssa, mutta muuten ei ole mitään kummempia suunnitelmia. 
