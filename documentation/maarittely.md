@@ -50,4 +50,5 @@ Jatkokehitysideana polulle voitaisiin myös lisätä suoritusaikana uusia esteit
 
 ##  Lähteet
 https://en.wikipedia.org/wiki/A*_search_algorithm
+
 https://movingai.com
