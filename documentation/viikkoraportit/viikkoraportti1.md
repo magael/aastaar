@@ -1,6 +1,6 @@
 ## Viikko 1
 
-Työtunteja kertyi yhteensä noin 12.
+Työtunteja kertyi yhteensä noin 14.
 
 #### Maanantai 22.7.
 
