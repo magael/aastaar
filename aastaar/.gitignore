@@ -4,4 +4,3 @@ build/
 .nb-gradle-properties
 .nbproject/
 bin/
-src/main/resources/
