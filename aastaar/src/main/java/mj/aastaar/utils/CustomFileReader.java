@@ -20,22 +20,37 @@ public class CustomFileReader {
      * @return the file data in a String ArrayList
      * @throws java.lang.Exception
      */
-    public ArrayList<String> readFile(String filePath) throws Exception {
-        ArrayList<String> stringDataList = new ArrayList<>();
+    private ArrayList<String> dataArray;
+
+    public CustomFileReader() {
+        dataArray = new ArrayList<>();
+    }
+
+    public ArrayList<String> getDataArrayList() {
+        return dataArray;
+    }
+
+    public String[] getDataArray() {
+        String[] stringArray = new String[dataArray.size()];
+        for (int i = 0; i < dataArray.size(); i++) {
+            stringArray[i] = dataArray.get(i);
+        }
+        return stringArray;
+    }
+
+    public void readFile(String filePath) throws Exception {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         InputStream is = cl.getResourceAsStream(filePath);
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
-        
-        addLines(br, stringDataList);
-        is.close();
 
-        return stringDataList;
+        addLines(br);
+        is.close();
     }
 
-    private void addLines(BufferedReader br, ArrayList<String> stringDataList) throws IOException {
+    private void addLines(BufferedReader br) throws IOException {
         String dataLine;
         while ((dataLine = br.readLine()) != null) {
-                stringDataList.add(dataLine);
+            dataArray.add(dataLine);
         }
     }
 }
