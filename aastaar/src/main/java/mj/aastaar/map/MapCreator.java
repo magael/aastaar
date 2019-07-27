@@ -42,19 +42,7 @@ public class MapCreator {
 
     public void objectsFromMapRow(String mapDataLine) {
         for (int j = 0; j < mapDataLine.length(); j++) {
-//            switch (lvlDataLine.charAt(j)) {
-//                case '0':
-//                    addGround();
-//                    break;
-//                case '1':
-//                    addObstacle();
-//                    break;
-//                case '2':
-//                    addPlatform();
-//                    break;
-//                default:
-//                    break;
-//            }
+            // add characters to Grid
         }
     }
 }
