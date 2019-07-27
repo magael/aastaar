@@ -14,8 +14,7 @@ import java.util.ArrayList;
 public class CustomFileReader {
 
     /**
-     * Reads a file from the given path and puts it's contents in a String
-     * array. Lines starting with the character '#' are skipped.
+     * Reads a file from the given path and puts it's contents in a String array.
      *
      * @param filePath
      * @return the file data in a String ArrayList
@@ -24,9 +23,9 @@ public class CustomFileReader {
     public ArrayList<String> readFile(String filePath) throws Exception {
         ArrayList<String> stringDataList = new ArrayList<>();
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
-
         InputStream is = cl.getResourceAsStream(filePath);
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        
         addLines(br, stringDataList);
         is.close();
 

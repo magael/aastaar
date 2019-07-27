@@ -2,9 +2,12 @@ package mj.aastaar;
 
 import mj.aastaar.map.MapCreator;
 
-public class App {
+/**
+ *
+ * @author MJ
+ */
 
-    private String mapFilePath;
+public class App {
 
     public static void main(String[] args) {
         run();
@@ -14,7 +17,7 @@ public class App {
         initConfig("default");
     }
 
-    // read config file, or if no path given, initialize hard coded variables
+    // read config file, or if no path given, attempt hard coded variables
     private static void initConfig(String configFilePath) {
         MapCreator mapCreator = new MapCreator();
         if (configFilePath.equals("default")) {
