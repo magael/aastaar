@@ -4,3 +4,5 @@ build/
 .nb-gradle-properties
 .nbproject/
 bin/
+gradle.properties
+.settings/

@@ -20,22 +20,18 @@ public class CustomFileReader {
      * @return the file data in a String ArrayList
      * @throws java.lang.Exception
      */
-    private ArrayList<String> dataArray;
+    private ArrayList<String> data;
 
     public CustomFileReader() {
-        dataArray = new ArrayList<>();
-    }
-
-    public ArrayList<String> getDataArrayList() {
-        return dataArray;
+        data = new ArrayList<>();
     }
 
     public String[] getDataArray() {
-        String[] stringArray = new String[dataArray.size()];
-        for (int i = 0; i < dataArray.size(); i++) {
-            stringArray[i] = dataArray.get(i);
+        String[] dataArray = new String[data.size()];
+        for (int i = 0; i < data.size(); i++) {
+            dataArray[i] = data.get(i);
         }
-        return stringArray;
+        return dataArray;
     }
 
     public void readFile(String filePath) throws Exception {
@@ -50,7 +46,7 @@ public class CustomFileReader {
     private void addLines(BufferedReader br) throws IOException {
         String dataLine;
         while ((dataLine = br.readLine()) != null) {
-            dataArray.add(dataLine);
+            data.add(dataLine);
         }
     }
 }
