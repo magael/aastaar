@@ -21,18 +21,23 @@ public class App {
     private static void initConfig(String configFilePath) {
         MapCreator mapCreator = new MapCreator();
         if (configFilePath.equals("default")) {
-            // TODO:
-            // use the returned boolean to determine if map creation was succesful
             mapCreator.createMapFromFile("mapdata/dao-map/arena.map");
+        }
+        char[][] grid = mapCreator.getGrid();
+        if (grid != null) {
+            // DEBUG: print
+            // for (int i = 0; i < grid.length; i++) {
+            // for (int j = 0; j < grid[i].length; j++) {
+            // System.out.print(grid[i][j]);
+            // }
+            // System.out.println("");
+            // }
         }
         // TODO:
         // probably a separate map collection class, where:
         // - read map paths from .cfg file to String[] mapFilePaths
         // - initialize an array of map objects Map[] maps
         // - for each line in mapFilePaths:
-        // add to maps the returned value of
-        // mapCreator.createMapFromFile(x)
-        // or maybe that is still boolean or void and add something like
-        // mapCreator.getMap
+        // add to maps
     }
 }

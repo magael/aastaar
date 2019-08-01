@@ -1,6 +1,5 @@
 package mj.aastaar.map;
 
-import java.util.ArrayList;
 import mj.aastaar.utils.CustomFileReader;
 
 /**
@@ -8,61 +7,91 @@ import mj.aastaar.utils.CustomFileReader;
  * @author MJ
  */
 
+// Using Nathan Sturtevant's Moving AI Lab 2D pathfinding benchmark maps.
+// The maps have the following format:
+//
+// All maps begin with the lines:
+// type octile
+// height x
+// width y
+// map
+//
+// where x and y are the repsective height and width of the map.
+// Normal ground is represented by a period (‘.’),
+// and shallow water is represented by the ‘S’ character.
+// These are the only passable types of terrain.
+// All other terrain is considered to be impassable,
+// including trees (‘T’), water (‘W’) and out of bounds (‘@’).
+
 public class MapCreator {
 
     CustomFileReader mapReader;
+    private int mapHeight;
+    private int mapWidth;
+    private char[][] grid;
 
     public MapCreator() {
         mapReader = new CustomFileReader();
+        mapHeight = 0;
+        mapWidth = 0;
+        grid = new char[0][0];
     }
 
-    // returns true, if map created succesfully
-    // check file format from the first line, start "handling" from the second line
-    public boolean createMapFromFile(String mapFilePath) {
+    public char[][] getGrid() {
+        return grid;
+    }
+
+    public void createMapFromFile(String mapFilePath) {
         try {
             mapReader.readFile(mapFilePath);
             String[] mapData = mapReader.getDataArray();
-            return readMapData(mapData);
+            readMapData(mapData);
         } catch (Exception e) {
             System.out.println("Error when attempting to read the level data file:\n" + e);
-            return false;
         }
     }
 
-    public boolean readMapData(String[] mapData) {
+    // check file format from the first line, start "handling" from the second line
+    public void readMapData(String[] mapData) {
         String mapDataLine = "";
-        int i = 1;
+        int row = 1;
         if (!mapData[0].equals("type octile")) {
-            System.out.println("The map file is not in the correct format");
-            return false;
+            System.out.println("The map data format is incorrect");
         }
-        while (i < mapData.length && (mapDataLine = mapData[i]) != null) {
-            handleMapRow(i, mapDataLine);
-            i++;
-        }
-        return true;
-    }
-
-    // NOTE: this ok or better to just use mapdata length and maprow length?
-    private void handleMapRow(int i, String mapDataLine) {
-        if (i == 1) {
-            // init height
-            // DEBUG: print
-            System.out.println("height: " + mapDataLine.split(" ")[1]);
-        } else if (i == 2) {
-            // init width
-            // DEBUG: print
-            System.out.println(mapDataLine);
-        } else if (i > 3) {
-            objectsFromMapRow(mapDataLine);
+        while (row < mapData.length && (mapDataLine = mapData[row]) != null) {
+            handleMapRow(row, mapDataLine);
+            row++;
         }
     }
 
-    public void objectsFromMapRow(String mapDataLine) {
+    // initializing the grid according to the file
+    private void handleMapRow(int row, String mapDataLine) {
+        if (row == 1) {
+            mapHeight = Integer.parseInt(mapDataLine.split(" ")[1]);
+            // DEBUG: print
+            // System.out.println("height: " + mapHeight);
+        } else if (row == 2) {
+            mapWidth = Integer.parseInt(mapDataLine.split(" ")[1]);
+            // DEBUG: print
+            // System.out.println("width: " + mapWidth);
+        } else if (row > 3) {
+            if (mapHeight < 1 || mapWidth < 1) {
+                System.out.println("Error reading map dimensions");
+            } else {
+                if (grid.length < 1) {
+                    grid = new char[mapHeight][mapWidth];
+                }
+                objectsFromMapRow(row - 4, mapDataLine);
+            }
+        }
+    }
+
+    // adding characters to the grid
+    public void objectsFromMapRow(int row, String mapDataLine) {
         // DEBUG: print
-        System.out.println(mapDataLine);
-        for (int j = 0; j < mapDataLine.length(); j++) {
-            // add characters to Grid
+        // System.out.println(mapDataLine);
+        for (int col = 0; col < mapDataLine.length(); col++) {
+            grid[row][col] = mapDataLine.charAt(col);
         }
     }
 }
