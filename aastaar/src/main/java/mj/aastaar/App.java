@@ -33,8 +33,8 @@ public class App {
             // }
 
             // BFS
-            BreadthFirstSearch bfs = new BreadthFirstSearch(startX, startY, goalX, goalY);
-            System.out.println(bfs.shortestPath(grid));
+            BreadthFirstSearch bfs = new BreadthFirstSearch();
+            System.out.println(bfs.shortestPath(grid, startX, startY, goalX, goalY));
         }
     }
 

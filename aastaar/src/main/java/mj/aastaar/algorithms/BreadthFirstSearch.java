@@ -15,19 +15,17 @@ import mj.aastaar.map.Node;
  * @author MJ
  */
 
-// NOTE: small optimization might be converting grid from chars to 0's & 1's
-// at initialization, to simplify checking for neighbours when expanding
+// NOTE: A tiny optimization might be converting the grid at initialization
+// to contain 0's & 1's in stead of the different terrain representations,
+// to simplify checking for neighbours when expanding.
 public class BreadthFirstSearch {
 
     Node start;
     Node goal;
 
-    public BreadthFirstSearch(int startX, int startY, int goalX, int goalY) {
+    public int shortestPath(char[][] grid, int startX, int startY, int goalX, int goalY) {
         start = new Node(startX, startY);
         goal = new Node(goalX, goalY);
-    }
-
-    public int shortestPath(char[][] grid) {
         ArrayDeque<Node> frontier = new ArrayDeque<>();
         HashMap<Node, Node> cameFrom = new HashMap<>();
 
