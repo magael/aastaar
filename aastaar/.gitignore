@@ -3,6 +3,7 @@ build/
 .nb-gradle/
 .nb-gradle-properties
 .nbproject/
+nbproject/
 bin/
 gradle.properties
 .settings/

@@ -1,1 +1,8 @@
 .vscode/
+gradle/
+gradlew
+gradlew.bat
+settings.gradle
+.gradle
+build.gradle
+build
