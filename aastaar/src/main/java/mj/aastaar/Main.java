@@ -8,7 +8,7 @@ import mj.aastaar.map.MapCreator;
  *
  * @author MJ
  */
-public class App {
+public class Main {
 
     private static Grid grid;
     // TODO: no magic numbers

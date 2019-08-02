@@ -13,7 +13,7 @@ apply plugin: 'jacoco'
 // prefer. In this case NetBeans will not add these tasks but you may rely on
 // your own implementation.
 if (!hasProperty('mainClass')) {
-    ext.mainClass = 'mj.aastaar.App'
+    ext.mainClass = 'mj.aastaar.Main'
 }
 
 repositories {
@@ -38,6 +38,6 @@ check.dependsOn jacocoTestReport
 
 jar {
     manifest {
-        attributes 'Main-Class': 'mj.aastaar.App'
+        attributes 'Main-Class': 'mj.aastaar.Main'
     }
 }
