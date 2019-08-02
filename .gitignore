@@ -6,3 +6,5 @@ settings.gradle
 .gradle
 build.gradle
 build
+.settings/
+.project
