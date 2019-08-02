@@ -42,4 +42,26 @@ public class MapCreatorTest {
         assertEquals(3, creator.getGrid()[3].length);
         assertEquals(3, creator.getGrid()[4].length);
     }
+    
+    @Test
+    public void mapCreationFailsSafelyWithBadFilePath() {
+        MapCreator newCreator = new MapCreator();
+        String noSuchPath = "wrong/no_file.bad";
+        newCreator.createMapFromFile(noSuchPath);
+        char[][] emptyGrid = new char[0][0];
+        assertArrayEquals(emptyGrid, newCreator.getGrid());
+    }
+    
+    @Test
+    public void mapCreationSucceedsWithCorrectFilePath() {
+        MapCreator newCreator = new MapCreator();
+        String testMap = "testmaps/test.map";
+        newCreator.createMapFromFile(testMap);
+        char[][] grid = newCreator.getGrid();
+        char c = grid[0][0];
+        assertEquals('T', c);
+//        c = grid[2][1];
+//        assertEquals('W', c);
+        assertEquals(4, grid.length);
+    }
 }
