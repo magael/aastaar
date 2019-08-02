@@ -4,16 +4,16 @@
 
 Harjoitustyön aihe on polunetsintä verkossa kahden pisteen välillä ja ohjelmointikielenä on Java. Tarkoituksena on löytää nopein reitti kaksiuloitteisella, ylhäältä päin kuvatulla pelikartalla, joka on mallinnettu koodissa ruudukoksi. Ruudukko sisältää läpäisemättömiä seiniä ja tekoälyagentin kuljettavaa tilaa. Työ mallintaa yleistä ongelmaa peleissä: miten agentti suunnistaa pelin ympäristössä tiettyyn kohteeseen, esimerkiksi kun vihollinen jahtaa pelaajaa.
 
-Aikavaatimustavoite: O(n^2)
-
 
 ## Käytettävät algoritmit ja tietorakenteet
 
 Työssä sovelletaan ensisijaisesti __A*__-algoritmia. A*-algoritmista voidaan myös ajan salliessa toteuttaa erilaisia versioita, ja vertailla niiden tilankäyttöä ja suoritusnopeutta.
 
-A* on yleisesti hyväksi toteutettu algoritmi harjoitustyön aiheen kaltaiseen tarkoitukseen, mutta tarkoitus on myös verrata sen suoritusta leveyssuuntaiseen läpikäyntiin (__BFS__) ja mahdollisesti muihin, kuten esimerkiksi Dijkstran algoritmiin.
+A* on oletettavsti hyvin toimiva algoritmi harjoitustyön aiheen kaltaiseen tarkoitukseen, mutta tarkoitus on myös verrata sen suoritusta leveyssuuntaiseen läpikäyntiin (__BFS__) ja mahdollisesti muihin, kuten esimerkiksi Dijkstran algoritmiin.
 
-Löytämissäni esimerkeissä  A*-algoritmi käyttää __prioriteettijonoa__ verkon solmuille, ja __hajautustaulua__ läpikäytyihin solmuihin. Vaikuttaa kuitenkin mahdolliselta toteuttaa koko algoritmi (vähemmän tehokkaasti) käyttäen pelkästään tavallisia dynaamisia taulukoita (tai esimerkiksi käyttämällä prioriteettijonoa, mutta taulukkoa hajautustaulun sijaan).
+BFS:n aikavaativuus on O(|V| + |E|) ja tilavaativuus O(|V|), missä |V| on verkon solmujen ja |E| kaarten lukumäärä. A*:n aikavaativuus riippuu käytetystä heurestiikasta. Ilmeisesti aikavaativuus on pahimmassa tapauksessa eksponentiaalinen ja parhaimmassa tapauksessa polynominen ratkaisun, eli lyhyimmän polun pituuteen nähden.
+
+Tarkoitukseni on toteuttaa algoritmit käyttäen __prioriteettijonoa__ verkon solmuille, ja __hajautustaulua__ läpikäytyihin solmuihin.
 
 
 ## Toiminnallisuus
@@ -39,6 +39,7 @@ Jatkokehitysideana polulle voitaisiin myös lisätä suoritusaikana uusia esteit
 
 * Kartan valinta käyttäjän syötteestä
 * Kartat konfiguraatiotiedossa määritellyistä poluista
+* Liikkumissuuntien määrittely (esim. 4 sallittua suuntaa tai myös diagonaalit)
 * Polun "pehmennys" / tasapainotus (smoothing)
 * Muita reitinhakualgoritmeja
 * Reitillä liikkuva tekoälyagentti
@@ -46,6 +47,7 @@ Jatkokehitysideana polulle voitaisiin myös lisätä suoritusaikana uusia esteit
 * Esteiden luonti dynaamisesti, käyttäjän syötteestä
 * Verkon painot: esim. hiekkapolku, nurmikko, lumi (movingai-benchmarkeissa ilmeisesti "matala vesi")
 * Oma kartta-/tasogeneraattori (esim. huoneverkosto, labyrintti tai korkeuskartan perusteella)
+* "Tile bitmasking": Karttaruutujen visualisointi eri tavoin riippuen naapureista
 
 
 ##  Lähteet
