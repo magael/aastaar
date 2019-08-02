@@ -1,6 +1,6 @@
 ## Viikkoraportti 2
 
-Työtunteja kertyi yhteensä noin 23.
+Työtunteja kertyi yhteensä noin 25.
 
 ---
 
@@ -37,7 +37,7 @@ Karttadata ArrayListista taulukkorakenteeseen, projektin suunnittelua ym. Muutam
 
 #### Ma-ke 29.-31.7.
 
-Aiheesta lukemista.
+Vähän aiheesta lukemista.
 
 #### Torstai 1.8.
 
@@ -45,4 +45,4 @@ Karttojen tallennus 2D-ruudukkoon. BFS teorian kertausta. Oleellisten luokkien (
 
 #### Perjantai 2.8.
 
-Grid-luokka kartoille ym. refaktorointia. Naapurilista ArrayListista taulukoksi. Filereaderille testejä.
+Grid-luokka kartoille ym. refaktorointia. Naapurilista ArrayListista taulukoksi. Yksikkötestejä suurimmalle osalle koodia.
