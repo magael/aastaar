@@ -1,7 +1,5 @@
 package mj.aastaar.map;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author MJ
@@ -42,23 +40,22 @@ public class Grid {
     }
 
     // TODO: get neighbours in specified directions (8 with diagonals, else 4)
-    public ArrayList<Node> getNeighbours(int x, int y, int directions) {
-//        Node[] neighbours = new Node[directions];
-        ArrayList<Node> neighbours = new ArrayList<>();
-
+    // currently only allows movement in 4 directions
+    // NOTE: for large maps it might be optimal to use a custom arraylist implementation?
+    public Node[] getNeighbours(int x, int y, int directions) {
+        Node[] neighbours = new Node[directions];
         if (x < (grid.length - 1) && isPassable(grid[x + 1][y])) {
-            neighbours.add(new Node(x + 1, y));
+            neighbours[0] = new Node(x + 1, y);
         }
         if (x > 0 && isPassable(grid[x - 1][y])) {
-            neighbours.add(new Node(x - 1, y));
+            neighbours[1] = new Node(x - 1, y);
         }
         if (y < (grid[0].length - 1) && isPassable(grid[x][y + 1])) {
-            neighbours.add(new Node(x, y + 1));
+            neighbours[2] = new Node(x, y + 1);
         }
         if (y > 0 && isPassable(grid[x][y - 1])) {
-            neighbours.add(new Node(x, y - 1));
+            neighbours[3] = new Node(x, y - 1);
         }
-
         return neighbours;
     }
 

@@ -24,9 +24,10 @@ public class App {
     private static void run() {
         initConfig("default");
         if (grid.getGrid() != null && grid.getLength() > 0) {
+            grid.print();
             // BFS
             BreadthFirstSearch bfs = new BreadthFirstSearch();
-            System.out.println(bfs.shortestPath(grid, startX, startY, goalX, goalY));
+            System.out.println(bfs.shortestPath(grid, startX, startY, goalX, goalY, 4));
         }
     }
 
@@ -34,15 +35,15 @@ public class App {
     // TODO:
     // map list / collection (probably a separate class), where:
     // - read map paths from .cfg file to String[] mapFilePaths
-    // - initialize an array of maps (maybe Map objects)
-    // - for each line in mapFilePaths: add to maps
+    // - initialize an array of Grids
+    // - for each line in mapFilePaths: add to grids
     private static void initConfig(String configFilePath) {
         MapCreator mapCreator = new MapCreator();
         if (configFilePath.equals("default")) {
             mapCreator.createMapFromFile("mapdata/dao-map/arena.map");
+            char[][] gridArray = mapCreator.getGrid();
+            char[] impassable = {'T', 'W', '@'};
+            grid = new Grid(gridArray, impassable);
         }
-        char[][] gridArray = mapCreator.getGrid();
-        char[] impassable = {'T', 'W', '@'};
-        grid = new Grid(gridArray, impassable);
     }
 }

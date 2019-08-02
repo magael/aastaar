@@ -6,7 +6,6 @@
 package mj.aastaar.algorithms;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.HashMap;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
@@ -18,10 +17,10 @@ import mj.aastaar.map.Node;
 
 public class BreadthFirstSearch {
 
-    Node start;
-    Node goal;
+    private Node start;
+    private Node goal;
 
-    public int shortestPath(Grid grid, int startX, int startY, int goalX, int goalY) {
+    public int shortestPath(Grid grid, int startX, int startY, int goalX, int goalY, int directions) {
         start = new Node(startX, startY);
         goal = new Node(goalX, goalY);
         ArrayDeque<Node> frontier = new ArrayDeque<>();
@@ -37,15 +36,15 @@ public class BreadthFirstSearch {
                 return earlyExit(current, cameFrom);
             }
             
-            expandFrontier(grid, cameFrom, frontier, current);
+            expandFrontier(grid, cameFrom, frontier, current, directions);
         }
         return -1;
     }
 
-    private void expandFrontier(Grid grid, HashMap<Node, Node> cameFrom, ArrayDeque<Node> frontier, Node current) {
-        ArrayList<Node> currentNeighbours = grid.getNeighbours(current.getX(), current.getY(), 4);
+    private void expandFrontier(Grid grid, HashMap<Node, Node> cameFrom, ArrayDeque<Node> frontier, Node current, int directions) {
+        Node[] currentNeighbours = grid.getNeighbours(current.getX(), current.getY(), directions);
         for (Node next : currentNeighbours) {
-            if (!cameFrom.containsKey(next)) {
+            if (next != null && !cameFrom.containsKey(next)) {
                 frontier.add(next);
                 cameFrom.put(next, current);
             }
