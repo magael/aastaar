@@ -8,6 +8,7 @@ package mj.aastaar.algorithms;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
+import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 
 /**
@@ -15,15 +16,12 @@ import mj.aastaar.map.Node;
  * @author MJ
  */
 
-// NOTE: A tiny optimization might be converting the grid at initialization
-// to contain 0's & 1's in stead of the different terrain representations,
-// to simplify checking for neighbours when expanding.
 public class BreadthFirstSearch {
 
     Node start;
     Node goal;
 
-    public int shortestPath(char[][] grid, int startX, int startY, int goalX, int goalY) {
+    public int shortestPath(Grid grid, int startX, int startY, int goalX, int goalY) {
         start = new Node(startX, startY);
         goal = new Node(goalX, goalY);
         ArrayDeque<Node> frontier = new ArrayDeque<>();
@@ -44,8 +42,8 @@ public class BreadthFirstSearch {
         return -1;
     }
 
-    private void expandFrontier(char[][] grid, HashMap<Node, Node> cameFrom, ArrayDeque<Node> frontier, Node current) {
-        ArrayList<Node> currentNeighbours = getNeighbours(grid, current.getX(), current.getY());
+    private void expandFrontier(Grid grid, HashMap<Node, Node> cameFrom, ArrayDeque<Node> frontier, Node current) {
+        ArrayList<Node> currentNeighbours = grid.getNeighbours(current.getX(), current.getY(), 4);
         for (Node next : currentNeighbours) {
             if (!cameFrom.containsKey(next)) {
                 frontier.add(next);
@@ -61,32 +59,5 @@ public class BreadthFirstSearch {
             steps++;
         }
         return steps;
-    }
-
-    private ArrayList<Node> getNeighbours(char[][] grid, int x, int y) {
-        ArrayList<Node> neighbours = new ArrayList<>();
-
-        if (x < (grid.length - 1) && isPassable(grid[x + 1][y])) {
-            neighbours.add(new Node(x + 1, y));
-        }
-        if (x > 0 && isPassable(grid[x - 1][y])) {
-            neighbours.add(new Node(x - 1, y));
-        }
-        if (y < (grid[0].length - 1) && isPassable(grid[x][y + 1])) {
-            neighbours.add(new Node(x, y + 1));
-        }
-        if (y > 0 && isPassable(grid[x][y - 1])) {
-            neighbours.add(new Node(x, y - 1));
-        }
-
-        return neighbours;
-    }
-
-    // TODO: get passable characters as parameter
-    private boolean isPassable(char c) {
-        if (c == 'T') return false;
-        if (c == 'W') return false;
-        if (c == '@') return false;
-        return true;
     }
 }
