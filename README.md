@@ -13,4 +13,8 @@
 
 #### Testaus
 
-Testikattavuus löytyy suorittamalla gradle-projektin juuressa, eli repositorion alihakemistossa _aastaar_ komennon <code>gradle test jacocoTestReport</code> ja navigoimalla build/reports/tests/test/index.html
+Testikattavuus löytyy suorittamalla gradle-projektin juuressa, eli repositorion alihakemistossa _aastaar_ komennon
+
+<code>gradle test jacocoTestReport</code>
+
+ja navigoimalla build/reports/tests/test/index.html.
