@@ -21,8 +21,6 @@ En ole soveltanut A*:a aiemmin, joten koen tärkeäksi saada siitä ensin kelvol
 
 #### Huomioita ja askarruttavia asioita:
 
-* Sain Gradlen asennettua, testaus toimii NetBeansissa ja Jacoco-raportti generoituu oikein, mutta kun yritän käyttää gradlea konsolin kautta, se kertoo, että taskeja ei löydy.
-
 * Onkohan ok varata jokaisella reitinhakualgoritmin suorituksen aikana tapahtuvalla naapurien tarkistuksella esim. 4-alkioinen taulukko (tarkasteltavan alkion ala- ja yläpuolella sekä sivuilla oleville alkioille), jos ei tule muita oleellisempia tarpeita omalle yksinkertaiselle dynaamisen taulukkorakenteen toteutukselle? Tarkoitan siis Grid-luokan metodia getNeighbours().
 
 * Saakohan Stringin metodia split() käyttää?

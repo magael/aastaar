@@ -10,3 +10,7 @@
 [Viikko 1](https://github.com/magael/aastaar/blob/master/documentation/viikkoraportit/viikkoraportti1.md)
 
 [Viikko 2](https://github.com/magael/aastaar/blob/master/documentation/viikkoraportit/viikkoraportti2.md)
+
+#### Testaus
+
+Testikattavuus löytyy suorittamalla gradle-projektin juuressa, eli repositorion alihakemistossa "astaar" komennon <code>gradle test jacocoTestReport</code> ja navigoimalla build/reports/tests/test/index.html
