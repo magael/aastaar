@@ -62,7 +62,6 @@ public class Grid {
         return neighbours;
     }
 
-    // TODO: get passable characters as parameter
     private boolean isPassable(char c) {
         for (char ic : impassable) {
             if (c == ic) {
