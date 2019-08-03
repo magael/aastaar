@@ -20,7 +20,7 @@ public class MapCreatorTest {
             "type octile",
             "height 5",
             "width 3",
-            "@@@",
+            "map",
             "T.T",
             "W.W",
             "T..",

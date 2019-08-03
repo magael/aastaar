@@ -64,7 +64,8 @@ public class MapCreator {
         }
     }
 
-    // initializing the grid according to the file
+    // initializing grid height and width,
+    // skipping "map" and handling map characters
     private void handleMapRow(int row, String mapDataLine) {
         if (row == 1) {
             mapHeight = Integer.parseInt(mapDataLine.split(" ")[1]);

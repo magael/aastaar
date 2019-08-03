@@ -32,11 +32,12 @@ public class CustomFileReaderTest {
         assertEquals("type octile", dataArray[0]);
         assertEquals("width 4", dataArray[1]);
         assertEquals("height 4", dataArray[2]);
-        assertEquals("T@@T", dataArray[3]);
-        assertEquals("T..T", dataArray[4]);
-        assertEquals("TW.T", dataArray[5]);
-        assertEquals("TTTT", dataArray[6]);
-        assertEquals(7, dataArray.length);
+        assertEquals("map", dataArray[3]);
+        assertEquals("T@@T", dataArray[4]);
+        assertEquals("T..T", dataArray[5]);
+        assertEquals("TW.T", dataArray[6]);
+        assertEquals("TTTT", dataArray[7]);
+        assertEquals(8, dataArray.length);
     }
 
     @Test(expected = Exception.class)
