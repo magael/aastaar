@@ -46,3 +46,5 @@ Karttojen tallennus 2D-ruudukkoon. BFS teorian kertausta. Oleellisten luokkien (
 #### Perjantai 2.8.
 
 Grid-luokka kartoille ym. refaktorointia. Naapurilista ArrayListista taulukoksi. Yksikkötestejä suurimmalle osalle koodia.
+
+Seuraavaksi tarkoitus tehdä pieniä muutoksia, toteuttaa A* valmiilla tietorakenteilla ja aloittaa GUI-/visualisaatiohommat.
