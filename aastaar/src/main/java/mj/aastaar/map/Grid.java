@@ -18,25 +18,20 @@ public class Grid {
         return grid;
     }
 
-    public char[] getRow(int row) {
-        return grid[row];
-    }
-
     public int getLength() {
         return grid.length;
     }
 
-    public void print() {
+    @Override
+    public String toString() {
+        String s = "";
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
-                System.out.print(grid[i][j]);
+                s += grid[i][j];
             }
-            System.out.println("");
+            s += '\n';
         }
-    }
-
-    public void setGrid(char[][] grid) {
-        this.grid = grid;
+        return s;
     }
 
     // TODO: get neighbours in specified directions (8 with diagonals, else 4)

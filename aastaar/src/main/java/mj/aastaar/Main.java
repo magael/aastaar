@@ -24,7 +24,7 @@ public class Main {
     private static void run() {
         initConfig("default");
         if (grid.getGrid() != null && grid.getLength() > 0) {
-            grid.print();
+            System.out.println(grid);
             // BFS
             BreadthFirstSearch bfs = new BreadthFirstSearch();
             System.out.println(bfs.shortestPath(grid, startX, startY, goalX, goalY, 4));
