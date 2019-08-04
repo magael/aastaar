@@ -66,6 +66,7 @@ public class MapCreator {
 
     // initializing grid height and width,
     // skipping "map" and handling map characters
+    // TODO: If the map height/width do not match the file, it should be scaled to that size
     private void handleMapRow(int row, String mapDataLine) {
         if (row == 1) {
             mapHeight = Integer.parseInt(mapDataLine.split(" ")[1]);

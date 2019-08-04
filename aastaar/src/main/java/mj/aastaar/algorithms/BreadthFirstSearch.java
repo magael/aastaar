@@ -14,18 +14,17 @@ import mj.aastaar.map.Node;
  *
  * @author MJ
  */
-
 public class BreadthFirstSearch {
 
-    private Node start;
-    private Node goal;
+    private ArrayDeque<Node> frontier;
+    private HashMap<Node, Node> cameFrom;
 
-    public int shortestPath(Grid grid, int startX, int startY, int goalX, int goalY, int directions) {
-        start = new Node(startX, startY);
-        goal = new Node(goalX, goalY);
-        ArrayDeque<Node> frontier = new ArrayDeque<>();
-        HashMap<Node, Node> cameFrom = new HashMap<>();
+    public BreadthFirstSearch() {
+        frontier = new ArrayDeque<>();
+        cameFrom = new HashMap<>();
+    }
 
+    public int shortestPath(Grid grid, Node start, Node goal, int directions) {
         frontier.add(start);
         cameFrom.put(start, start);
 
@@ -33,15 +32,15 @@ public class BreadthFirstSearch {
             Node current = frontier.poll();
 
             if (current.equals(goal)) {
-                return earlyExit(current, cameFrom);
+                return earlyExit(current, start);
             }
-            
-            expandFrontier(grid, cameFrom, frontier, current, directions);
+
+            expandFrontier(grid, current, directions);
         }
         return -1;
     }
 
-    private void expandFrontier(Grid grid, HashMap<Node, Node> cameFrom, ArrayDeque<Node> frontier, Node current, int directions) {
+    private void expandFrontier(Grid grid, Node current, int directions) {
         Node[] currentNeighbours = grid.getNeighbours(current.getX(), current.getY(), directions);
         for (Node next : currentNeighbours) {
             if (next != null && !cameFrom.containsKey(next)) {
@@ -51,7 +50,7 @@ public class BreadthFirstSearch {
         }
     }
 
-    private int earlyExit(Node current, HashMap<Node, Node> cameFrom) {
+    private int earlyExit(Node current, Node start) {
         int steps = 0;
         while (!current.equals(start)) {
             current = cameFrom.get(current);

@@ -4,13 +4,28 @@ package mj.aastaar.map;
  *
  * @author MJ
  */
-public class Node {
+public class Node implements Comparable<Node>{
 
     private int x, y;
+    private double priority;
 
-    public Node(int x, int y) {
+//    public Node(int x, int y) {
+//        this.x = x;
+//        this.y = y;
+//    }
+
+    public Node(int x, int y, double priority) {
         this.x = x;
         this.y = y;
+        this.priority = priority;
+    }
+
+    public double getPriority() {
+        return priority;
+    }
+
+    public void setPriority(double priority) {
+        this.priority = priority;
     }
 
     public void setX(int x) {
@@ -55,5 +70,12 @@ public class Node {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public int compareTo(Node o) {
+        if (this.priority > o.priority) return -1;
+        if (this.priority > o.priority) return 1;
+        return 0;
     }
 }

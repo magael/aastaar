@@ -15,10 +15,10 @@ public class NodeTest {
     
     @Before
     public void setUp() {
-        nodeA = new Node(0, 6);
-        nodeB = new Node(34, 170);
-        nodeC = new Node(0, 99);
-        nodeD = new Node(0, 6);
+        nodeA = new Node(0, 6, 0);
+        nodeB = new Node(34, 170, 0);
+        nodeC = new Node(0, 99, 0);
+        nodeD = new Node(0, 6, 0);
     }
     
     @Test
