@@ -1,6 +1,15 @@
 package mj.aastaar;
 
 //import mj.aastaar.algorithms.AStar;
+import java.util.Random;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
+import javafx.stage.Stage;
 import mj.aastaar.algorithms.BreadthFirstSearch;
 import mj.aastaar.algorithms.Dijkstra;
 import mj.aastaar.map.Grid;
@@ -11,7 +20,7 @@ import mj.aastaar.map.Node;
  *
  * @author MJ
  */
-public class Main {
+public class Main extends Application {
 
     private static Grid grid;
     
@@ -34,6 +43,34 @@ public class Main {
 //    private static int goalX = 101;
 //    private static int goalY = 162;
 
+    @Override
+    public void start(Stage window) throws Exception {
+        GridPane layout = new GridPane();
+        
+        char[][] grid2D = new char[0][0];
+        if (grid != null && grid.getLength() > 0) {
+            grid2D = grid.getGrid();
+        } else {
+            System.out.println("no grid");
+        }
+        if (grid2D != null && grid.getLength() > 0) {
+            Random random = new Random();
+            for (int i = 0; i < grid2D.length - 1; i++) {
+                for (int j = 0; j < grid2D[i].length - 1; j++) {
+                    Color color = Color.rgb(125, 125, 125, random.nextDouble());
+                    layout.add(new Rectangle(10, 10, color), i, j);
+                }
+            }
+        } else {
+            System.out.println("no grid2d");
+        }
+        
+        Scene view = new Scene(layout);
+        window.setScene(view);
+        window.setTitle("Pathfinding visualization on game maps");
+        window.show();
+    }
+
     public static void main(String[] args) {
         run();
     }
@@ -41,7 +78,7 @@ public class Main {
     private static void run() {
         initConfig(null);
         
-        if (grid.getGrid() != null && grid.getLength() > 0) {
+        if (grid != null && grid.getGrid() != null && grid.getLength() > 0) {
             System.out.println(grid);
             
             // BFS
@@ -66,6 +103,8 @@ public class Main {
 //            // A*
 //            AStar astar = new AStar();
 //            System.out.println(astar.shortestPathLength(grid, start, goal, 4));
+
+            launch(Main.class);
         }
     }
 
