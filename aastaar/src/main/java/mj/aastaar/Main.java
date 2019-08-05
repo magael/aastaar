@@ -23,26 +23,12 @@ public class Main extends Application {
     private static Grid grid;
 
     // TODO: no magic numbers
-    // arena
-//    private static int startX = 4;
-//    private static int startY = 32;
-//    private static int goalX = 47;
-//    private static int goalY = 19;
-    private static int startX = 19;
-    private static int startY = 26;
-    private static int goalX = 19;
-    private static int goalY = 29;
-
-    // arena2
-//    private static int startX = 99;
-//    private static int startY = 159;
-//    private static int goalX = 101;
-//    private static int goalY = 162;'
     // Aftershock
-//    private static int startX = 82;
-//    private static int startY = 203;
-//    private static int goalX = 78;
-//    private static int goalY = 199;
+    private static int startX = 82;
+    private static int startY = 203;
+    private static int goalX = 78;
+    private static int goalY = 199;
+    
     @Override
     public void start(Stage window) throws Exception {
         GridPane layout = new GridPane();
@@ -58,18 +44,7 @@ public class Main extends Application {
             for (int i = 0; i < grid2D.length - 1; i++) {
                 for (int j = 0; j < grid2D[i].length - 1; j++) {
                     Color color = Color.rgb(125, 125, 125, random.nextDouble());
-                    int tileSize = 10;
-                    if (grid2D.length < 100 ) {
-                        tileSize = 8;
-                    } else if (grid2D.length < 200) {
-                        tileSize = 4;
-                    } else if (grid2D.length < 300) {
-                        tileSize = 3;
-                    } else if (grid2D.length < 400) {
-                        tileSize = 2;
-                    } else {
-                        tileSize = 1;
-                    }
+                    double tileSize = 1.17; // 512 * 1.17 = roughly 600 for minimum resolution
                     layout.add(new Rectangle(tileSize, tileSize, color), i, j);
                 }
             }
