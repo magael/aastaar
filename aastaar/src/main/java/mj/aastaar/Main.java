@@ -40,11 +40,12 @@ public class Main extends Application {
             System.out.println("no grid");
         }
         if (grid2D != null) {
-            Random random = new Random();
+//            Random random = new Random();
             for (int i = 0; i < grid2D.length - 1; i++) {
                 for (int j = 0; j < grid2D[i].length - 1; j++) {
-                    Color color = Color.rgb(125, 125, 125, random.nextDouble());
-                    double tileSize = 1.17; // 512 * 1.17 = roughly 600 for minimum resolution
+//                    Color color = Color.rgb(125, 125, 125, random.nextDouble());
+                    Color color = tileColor(grid2D[i][j]);
+                    double tileSize = 2.0;
                     layout.add(new Rectangle(tileSize, tileSize, color), i, j);
                 }
             }
@@ -66,15 +67,16 @@ public class Main extends Application {
         initConfig(null);
 
         if (grid != null && grid.getGrid() != null && grid.getLength() > 0) {
-            System.out.println(grid);
+//            System.out.println(grid);
 
             // BFS
-            BreadthFirstSearch bfs = new BreadthFirstSearch();
-            Node start = new Node(startX, startY, 0.0);
-            Node goal = new Node(goalX, goalY, 0.0);
-
-            int pathLength = bfs.shortestPathLength(grid, start, goal, 4);
-            System.out.println("BFS shortest path length: " + pathLength);
+//            System.out.println("Starting BFS");
+//            BreadthFirstSearch bfs = new BreadthFirstSearch();
+//            Node start = new Node(startX, startY, 0.0);
+//            Node goal = new Node(goalX, goalY, 0.0);
+//
+//            int pathLength = bfs.shortestPathLength(grid, start, goal, 4);
+//            System.out.println("BFS shortest path length: " + pathLength);
 
 //            Node[] path = bfs.shortestPath(goal, start, pathLength);
 //            System.out.println("BFS shortest path: ");
@@ -82,15 +84,37 @@ public class Main extends Application {
 //                System.out.println(path[i]);
 //            }
             // Dijkstra
-            Dijkstra dijkstra = new Dijkstra();
-            dijkstra.shortestPath(grid, start, goal, 4);
-            System.out.println("Dijkstra shortest path length: " + dijkstra.shortestPath(grid, start, goal, 4));
+//            System.out.println("Starting Dijkstra");
+//            Dijkstra dijkstra = new Dijkstra();
+//            dijkstra.shortestPath(grid, start, goal, 4);
+//            System.out.println("Dijkstra shortest path length: " + dijkstra.shortestPath(grid, start, goal, 4));
 
-//            // A*
-//            AStar astar = new AStar();
-//            System.out.println(astar.shortestPathLength(grid, start, goal, 4));
             launch(Main.class);
         }
+    }
+    
+    // determine color for map tiles
+    private Color tileColor(char c) {
+        Color color = Color.RED;
+        switch (c) {
+            case '.':
+                color = Color.LIGHTGRAY;
+                break;
+            case 'T':
+                color = Color.DARKGREEN;
+                break;
+            case '@':
+                color = Color.BLACK;
+                break;
+            case 'W':
+                color = Color.PURPLE;
+                break;
+            case 'S':
+                color = Color.AQUAMARINE;
+                break;
+            default: break;
+        }
+        return color;
     }
 
     // create the pathfinding grid based on a specific map
