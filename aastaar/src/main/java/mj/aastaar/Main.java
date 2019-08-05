@@ -98,7 +98,7 @@ public class Main extends Application {
         Color color = Color.RED;
         switch (c) {
             case '.':
-                color = Color.LIGHTGRAY;
+                color = Color.BISQUE;
                 break;
             case 'T':
                 color = Color.DARKGREEN;
@@ -107,10 +107,10 @@ public class Main extends Application {
                 color = Color.BLACK;
                 break;
             case 'W':
-                color = Color.PURPLE;
+                color = Color.MIDNIGHTBLUE;
                 break;
             case 'S':
-                color = Color.AQUAMARINE;
+                color = Color.CADETBLUE;
                 break;
             default: break;
         }
@@ -130,7 +130,9 @@ public class Main extends Application {
         MapCreator mapCreator = new MapCreator();
         if (configFilePath == null) {
             //mapCreator.createMapFromFile("mapdata/dao-map/den308d.map");
-            mapCreator.createMapFromFile("mapdata/sc1-map/Aftershock.map");
+            //mapCreator.createMapFromFile("mapdata/sc1-map/Aftershock.map");
+            //mapCreator.createMapFromFile("mapdata/bg512-map/AR0011SR.map");
+            mapCreator.createMapFromFile("mapdata/wc3maps512-map/timbermawhold.map");
             if (mapCreator.getGrid() != null) {
                 char[][] gridArray = mapCreator.getGrid();
                 char[] impassable = {'T', 'W', '@'};

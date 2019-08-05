@@ -62,8 +62,8 @@ public class MapCreator {
                     System.out.println("Error reading map dimensions");
                     break;
                 } else if (mapHeight != 512 || mapWidth != 512) {
-                    System.out.println("Map needs to be of size 512 * 512");
-                    break;
+                    //System.out.println("Map needs to be of size 512 * 512");
+                    //break;
                 }
             }
             handleMapRow(row, mapDataLine);
