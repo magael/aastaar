@@ -78,4 +78,9 @@ public class Node implements Comparable<Node>{
         if (this.priority > o.priority) return 1;
         return 0;
     }
+
+    @Override
+    public String toString() {
+        return "[" + this.x + ", " + this.y + "]";
+    }
 }

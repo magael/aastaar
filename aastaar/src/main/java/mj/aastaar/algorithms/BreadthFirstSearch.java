@@ -23,8 +23,28 @@ public class BreadthFirstSearch {
         frontier = new ArrayDeque<>();
         cameFrom = new HashMap<>();
     }
+    
+    // returns the Nodes of the shortest path after the path and it's length are found
+    // TODO: no separate shortestPlathLength and shortestPath methods,
+    // always return the shortest path.
+    // will still require 2 iterations of the path or a dynamic array
+    public Node[] shortestPath(Node goal, Node start, int length) {
+        if (cameFrom.isEmpty()) {
+            System.out.println("Path not found.");
+            return null;
+        }
+        Node[] path = new Node[length];
+        int i = 1;
+        Node current = goal;
+        while (!current.equals(start)) {
+            current = cameFrom.get(current);
+            path[length - i] = current;
+            i++;
+        }
+        return path;
+    }
 
-    public int shortestPath(Grid grid, Node start, Node goal, int directions) {
+    public int shortestPathLength(Grid grid, Node start, Node goal, int directions) {
         frontier.add(start);
         cameFrom.put(start, start);
 
@@ -50,11 +70,18 @@ public class BreadthFirstSearch {
         }
     }
 
+    // traces the steps back from goal to start,
+    // returns the length of the shortest path
     private int earlyExit(Node current, Node start) {
         int steps = 0;
+        ArrayDeque<Node> path = new ArrayDeque<>();
         while (!current.equals(start)) {
             current = cameFrom.get(current);
+            path.add(current);
             steps++;
+        }
+        for (int i = 0; i < steps; i++) {
+            System.out.println(path.removeLast());
         }
         return steps;
     }
