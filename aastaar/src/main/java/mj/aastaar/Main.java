@@ -1,7 +1,5 @@
 package mj.aastaar;
 
-//import mj.aastaar.algorithms.AStar;
-import java.util.Random;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
@@ -10,9 +8,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import mj.aastaar.algorithms.BreadthFirstSearch;
 import mj.aastaar.algorithms.Dijkstra;
+import mj.aastaar.algorithms.DijkstraOpenClosed;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.MapCreator;
 import mj.aastaar.map.Node;
+import mj.aastaar.utils.InputHandler;
 
 /**
  *
@@ -23,6 +23,7 @@ public class Main extends Application {
     private static Grid grid;
     private static Node start, goal;
     private static Node[] shortestPath;
+    private static InputHandler inputHandler;
 
     public static void main(String[] args) {
         run();
@@ -58,6 +59,9 @@ public class Main extends Application {
 //            dijkstra.shortestPath(grid, start, goal, 4);
 //            int pathLength2 = dijkstra.shortestPath(grid, start, goal, 4);
 //            System.out.println("Dijkstra shortest path length: " + pathLength2);
+            // Dijkstra2
+            DijkstraOpenClosed d2 = new DijkstraOpenClosed();
+            System.out.println(d2.shortestPath(grid, start, goal, 4));
             // GUI
             launch(Main.class);
         }
@@ -66,8 +70,9 @@ public class Main extends Application {
     @Override
     public void start(Stage window) throws Exception {
         GridPane layout = gridGUI();
-        Scene view = new Scene(layout);
-        window.setScene(view);
+        Scene scene = new Scene(layout);
+
+        window.setScene(scene);
         window.setTitle("Pathfinding visualization on game maps");
         window.show();
     }
@@ -146,7 +151,7 @@ public class Main extends Application {
 
     private static void initDefaultGrid() {
         MapCreator mapCreator = new MapCreator();
-        //mapCreator.createMapFromFile("mapdata/dao-map/arena2.map");
+        //mapCreator.createMapFromFile("mapdata/dao-map/arena.map");
         mapCreator.createMapFromFile("mapdata/sc1-map/Aftershock.map");
         //mapCreator.createMapFromFile("mapdata/bg512-map/AR0011SR.map");
         //mapCreator.createMapFromFile("mapdata/wc3maps512-map/timbermawhold.map");

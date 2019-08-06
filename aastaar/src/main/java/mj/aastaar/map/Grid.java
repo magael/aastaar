@@ -54,16 +54,16 @@ public class Grid {
         Node[] neighbours = new Node[directions];
         if (isPassable(grid[x][y])) {
             if (x < (grid.length - 1) && isPassable(grid[x + 1][y])) {
-                neighbours[0] = new Node(x + 1, y, 0);
+                neighbours[0] = new Node(x + 1, y, 1);
             }
             if (x > 0 && isPassable(grid[x - 1][y])) {
-                neighbours[1] = new Node(x - 1, y, 0);
+                neighbours[1] = new Node(x - 1, y, 1);
             }
             if (y < (grid[0].length - 1) && isPassable(grid[x][y + 1])) {
-                neighbours[2] = new Node(x, y + 1, 0);
+                neighbours[2] = new Node(x, y + 1, 1);
             }
             if (y > 0 && isPassable(grid[x][y - 1])) {
-                neighbours[3] = new Node(x, y - 1, 0);
+                neighbours[3] = new Node(x, y - 1, 1);
             }
         }
         return neighbours;
