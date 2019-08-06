@@ -22,6 +22,7 @@ public class Main extends Application {
 
     private static Grid grid;
     private static Node start, goal;
+    private static Node[] shortestPath;
 
     public static void main(String[] args) {
         run();
@@ -39,13 +40,14 @@ public class Main extends Application {
             //            System.out.println(grid);
 
             // BFS
-//            System.out.println("Starting BFS");
-//            BreadthFirstSearch bfs = new BreadthFirstSearch();
-//
-//            int pathLength = bfs.shortestPathLength(grid, start, goal, 4);
-//            System.out.println("BFS shortest path length: " + pathLength);
+            System.out.println("Starting BFS");
+            BreadthFirstSearch bfs = new BreadthFirstSearch();
+
+            int pathLength = bfs.shortestPathLength(grid, start, goal, 4);
+            System.out.println("BFS shortest path length: " + pathLength);
             // testing separate shortest path method
-//            Node[] path = bfs.shortestPath(goal, start, pathLength);
+            shortestPath = bfs.shortestPath(goal, start, pathLength);
+            System.out.println("Retrieved shortest path as array");
 //            System.out.println("BFS shortest path: ");
 //            for (int i = 0; i < pathLength - 1; i++) {
 //                System.out.println(path[i]);
@@ -85,10 +87,18 @@ public class Main extends Application {
                 } else {
                     color = tileColor(grid2D[i][j]);
                 }
-
                 layout.add(new Rectangle(tileSize, tileSize, color), i, j);
             }
         }
+
+        if (shortestPath != null) {
+            for (int i = 0; i < shortestPath.length - 1; i++) {
+                int x = shortestPath[i].getX();
+                int y = shortestPath[i].getY();
+                layout.add(new Rectangle(tileSize, tileSize, Color.WHITE), x, y);
+            }
+        }
+        
         return layout;
     }
 
@@ -124,6 +134,7 @@ public class Main extends Application {
     // - read map paths from .cfg file to String[] mapFilePaths
     // - initialize an array of Grids
     // - for each line in mapFilePaths: add to grids
+    // - or mayne init one grid at a time when user chooses a map
     // TODO 2: refactor into separate non-GUI class,
     // probably take mapCreator as param, return grid
     private static void initConfig(String configFilePath) {
@@ -153,6 +164,17 @@ public class Main extends Application {
         int startY = 203;
         int goalX = 78;
         int goalY = 199;
+        // arena
+//        int startX = 4;
+//        int startY = 32;
+//        int goalX = 47;
+//        int goalY = 19;
+        // arena2
+//        int startX = 84;
+//        int startY = 106;
+//        int goalX = 77;
+//        int goalY = 85;
+
         start = new Node(startX, startY, 0.0);
         goal = new Node(goalX, goalY, 0.0);
     }

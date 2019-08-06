@@ -28,21 +28,21 @@ public class BreadthFirstSearch {
     // TODO: no separate shortestPlathLength and shortestPath methods,
     // always return the shortest path.
     // will still require 2 iterations of the path or a dynamic or a very large array
-//    public Node[] shortestPath(Node goal, Node start, int length) {
-//        if (cameFrom.isEmpty()) {
-//            System.out.println("Path not found.");
-//            return null;
-//        }
-//        Node[] path = new Node[length];
-//        int i = 1;
-//        Node current = goal;
-//        while (!current.equals(start)) {
-//            current = cameFrom.get(current);
-//            path[length - i] = current;
-//            i++;
-//        }
-//        return path;
-//    }
+    public Node[] shortestPath(Node goal, Node start, int length) {
+        if (cameFrom.isEmpty() || length < 1) {
+            System.out.println("Path not found.");
+            return null;
+        }
+        Node[] path = new Node[length];
+        Node current = goal;
+        int i = length - 1;
+        while (i >= 0) {
+            path[i] = current;
+            current = cameFrom.get(current);
+            i--;
+        }
+        return path;
+    }
 
     public int shortestPathLength(Grid grid, Node start, Node goal, int directions) {
         frontier.add(start);

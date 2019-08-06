@@ -27,7 +27,9 @@ public class Grid {
         String s = "";
         for (int i = 0; i < grid.length; i++) {
             s += Integer.toString(i) + ". ";
-            if (i < 10) s += " ";
+            if (i < 10) {
+                s += " ";
+            }
             for (int j = 0; j < grid[i].length; j++) {
                 s += grid[i][j];
             }
@@ -50,17 +52,19 @@ public class Grid {
     // NOTE: i'd like to test precomputed neighbour lists / hashtables vs this kind of dynamic check
     public Node[] getNeighbours(int x, int y, int directions) {
         Node[] neighbours = new Node[directions];
-        if (x < (grid.length - 1) && isPassable(grid[x + 1][y])) {
-            neighbours[0] = new Node(x + 1, y, 0);
-        }
-        if (x > 0 && isPassable(grid[x - 1][y])) {
-            neighbours[1] = new Node(x - 1, y, 0);
-        }
-        if (y < (grid[0].length - 1) && isPassable(grid[x][y + 1])) {
-            neighbours[2] = new Node(x, y + 1, 0);
-        }
-        if (y > 0 && isPassable(grid[x][y - 1])) {
-            neighbours[3] = new Node(x, y - 1, 0);
+        if (isPassable(grid[x][y])) {
+            if (x < (grid.length - 1) && isPassable(grid[x + 1][y])) {
+                neighbours[0] = new Node(x + 1, y, 0);
+            }
+            if (x > 0 && isPassable(grid[x - 1][y])) {
+                neighbours[1] = new Node(x - 1, y, 0);
+            }
+            if (y < (grid[0].length - 1) && isPassable(grid[x][y + 1])) {
+                neighbours[2] = new Node(x, y + 1, 0);
+            }
+            if (y > 0 && isPassable(grid[x][y - 1])) {
+                neighbours[3] = new Node(x, y - 1, 0);
+            }
         }
         return neighbours;
     }
