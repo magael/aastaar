@@ -69,8 +69,8 @@ public class Node implements Comparable<Node>{
 
     @Override
     public int compareTo(Node o) {
-        if (this.priority > o.priority) return -1;
         if (this.priority > o.priority) return 1;
+        if (this.priority < o.priority) return -1;
         return 0;
     }
 

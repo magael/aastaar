@@ -50,9 +50,10 @@ public class Grid {
     // currently only allows movement in 4 directions
     // NOTE: for large maps it might be optimal to use a custom arraylist implementation?
     // NOTE: i'd like to test precomputed neighbour lists / hashtables vs this kind of dynamic check
+    // TODO: refactor inBounds checks
     public Node[] getNeighbours(int x, int y, int directions) {
         Node[] neighbours = new Node[directions];
-        if (isPassable(grid[x][y])) {
+        if (x >= 0 && y >= 0 && x < grid.length && y < grid.length && isPassable(grid[x][y])) {
             if (x < (grid.length - 1) && isPassable(grid[x + 1][y])) {
                 neighbours[0] = new Node(x + 1, y, 1);
             }

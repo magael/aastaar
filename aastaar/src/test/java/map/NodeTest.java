@@ -17,8 +17,8 @@ public class NodeTest {
     public void setUp() {
         nodeA = new Node(0, 6, 0);
         nodeB = new Node(34, 170, 0);
-        nodeC = new Node(0, 99, 0);
-        nodeD = new Node(0, 6, 0);
+        nodeC = new Node(0, 99, 10);
+        nodeD = new Node(0, 6, -1);
     }
     
     @Test
@@ -50,5 +50,20 @@ public class NodeTest {
     public void equalsReturnsFalseForDifferentClass() {
         String example = "not a node";
         assertFalse((nodeA.equals(example)));
+    }
+    
+    @Test
+    public void priorityIsMoreCorrectly() {
+        assertEquals(1, nodeC.compareTo(nodeA));
+    }
+    
+    @Test
+    public void priorityIsLessCorrectly() {
+        assertEquals(-1, nodeA.compareTo(nodeC));
+    }
+    
+     @Test
+    public void priorityIsSameCorrectly() {
+        assertEquals(0, nodeA.compareTo(nodeB));
     }
 }

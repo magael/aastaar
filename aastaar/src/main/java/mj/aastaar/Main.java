@@ -49,15 +49,16 @@ public class Main extends Application {
             System.out.println("Retrieved shortest path as array");
 
             // Dijkstra
-            System.out.println("Starting Dijkstra");
+//            System.out.println("Starting Dijkstra");
 //            Dijkstra dijkstra = new Dijkstra();
 //            dijkstra.shortestPath(grid, start, goal, 4);
 //            int pathLength2 = dijkstra.shortestPath(grid, start, goal, 4);
 //            System.out.println("Dijkstra shortest path length: " + pathLength2);
 
             // Dijkstra2
+            System.out.println("Starting Dijkstra2");
             DijkstraOpenClosed d2 = new DijkstraOpenClosed();
-            System.out.println("Dijkstra shortest path length: " + d2.shortestPath(grid, start, goal, 4));
+            System.out.println("Dijkstra2 shortest path length: " + d2.shortestPath(grid, start, goal, 4));
             // GUI
             launch(Main.class);
         }
@@ -99,7 +100,7 @@ public class Main extends Application {
                 layout.add(new Rectangle(tileSize, tileSize, Color.WHITE), x, y);
             }
         }
-        
+
         return layout;
     }
 
@@ -147,8 +148,8 @@ public class Main extends Application {
 
     private static void initDefaultGrid() {
         MapCreator mapCreator = new MapCreator();
-        //mapCreator.createMapFromFile("mapdata/dao-map/arena2.map");
-        mapCreator.createMapFromFile("mapdata/sc1-map/Aftershock.map");
+        mapCreator.createMapFromFile("mapdata/dao-map/arena2.map");
+        //mapCreator.createMapFromFile("mapdata/sc1-map/Aftershock.map");
         //mapCreator.createMapFromFile("mapdata/bg512-map/AR0011SR.map");
         //mapCreator.createMapFromFile("mapdata/wc3maps512-map/timbermawhold.map");
         if (mapCreator.getGrid() != null) {
@@ -161,10 +162,10 @@ public class Main extends Application {
     private static void initDefaultPositions() {
         // TODO: no magic numbers
         // Aftershock
-        int startX = 82;
-        int startY = 203;
-        int goalX = 78;
-        int goalY = 199;
+//        int startX = 82;
+//        int startY = 203;
+//        int goalX = 78;
+//        int goalY = 199;
         // arena
 //        int startX = 4;
 //        int startY = 32;
@@ -175,6 +176,11 @@ public class Main extends Application {
 //        int startY = 106;
 //        int goalX = 77;
 //        int goalY = 85;
+        // arena2 other
+        int startX = 104;
+        int startY = 44;
+        int goalX = 70;
+        int goalY = 190;
 
         start = new Node(startX, startY, 0.0);
         goal = new Node(goalX, goalY, 0.0);
