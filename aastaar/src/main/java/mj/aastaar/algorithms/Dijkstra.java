@@ -1,5 +1,6 @@
 package mj.aastaar.algorithms;
 
+//import java.util.ArrayList;
 import java.util.HashMap;
 //import java.util.HashSet;
 import java.util.PriorityQueue;
@@ -16,13 +17,15 @@ public class Dijkstra {
     private PriorityQueue<Node> frontier;
     private HashMap<Node, Node> cameFrom;
     private HashMap<Node, Double> costSoFar;
-    //private Set<Node> closedSet;
+    //private ArrayList<Node> closedSet;
+//    private Set<Node> closedSet;
 
     public Dijkstra() {
         frontier = new PriorityQueue<>();
         cameFrom = new HashMap<>();
         costSoFar = new HashMap<>();
-        //closedSet = new HashSet<Node>();
+        //closedSet = new ArrayList<>();
+//        closedSet = new HashSet<>();
     }
     
     public int shortestPath(Grid grid, Node start, Node goal, int directions) {
@@ -36,7 +39,8 @@ public class Dijkstra {
             if (current.equals(goal)) {
                 return earlyExit(current, start, cameFrom);
             }
-            
+//            if (closedSet.contains(current)) continue;
+//            closedSet.add(current);
             expandFrontier(grid, current, directions);
         }
         return -1;
@@ -49,19 +53,15 @@ public class Dijkstra {
     // citing “Priority Queues and Dijkstra’s Algorithm” by Chen et al.
     private void expandFrontier(Grid grid, Node current, int directions) {
         Node[] currentNeighbours = grid.getNeighbours(current.getX(), current.getY(), directions);
-//        System.out.println("Visiting " + current.getX() + ", " + current.getY());
         for (Node next : currentNeighbours) {
             double newCost = costSoFar.get(current) + grid.cost(current, next);
             if (next != null && (!costSoFar.containsKey(next) || newCost < costSoFar.get(next))) {
                 costSoFar.put(next, newCost);
-                //frontier.remove(next);
                 next.setPriority(newCost);
-//                System.out.println("adding a new node to the frontier with cost of" + newCost);
                 frontier.add(next);
                 cameFrom.put(next, current);
             }
         }
-        //closedSet.add(current);
     }
 
     private int earlyExit(Node current, Node start, HashMap<Node, Node> cameFrom) {

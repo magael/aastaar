@@ -9,11 +9,6 @@ public class Node implements Comparable<Node>{
     private int x, y;
     private double priority;
 
-//    public Node(int x, int y) {
-//        this.x = x;
-//        this.y = y;
-//    }
-
     public Node(int x, int y, double priority) {
         this.x = x;
         this.y = y;
