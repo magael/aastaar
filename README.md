@@ -19,4 +19,4 @@ Testikattavuus löytyy suorittamalla gradle-projektin juuressa, eli repositorion
 
 <code>gradle test jacocoTestReport</code>
 
-ja navigoimalla build/reports/tests/test/index.html.
+ja navigoimalla _build/reports/jacoco/test/html/index.html_.
