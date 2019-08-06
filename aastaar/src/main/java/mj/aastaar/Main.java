@@ -38,30 +38,26 @@ public class Main extends Application {
         } else if (grid == null || grid.getGrid() == null || grid.getLength() < 1) {
             System.out.println("Error creating a pathfinding grid");
         } else {
-            //            System.out.println(grid);
-
             // BFS
             System.out.println("Starting BFS");
             BreadthFirstSearch bfs = new BreadthFirstSearch();
 
             int pathLength = bfs.shortestPathLength(grid, start, goal, 4);
             System.out.println("BFS shortest path length: " + pathLength);
-            // testing separate shortest path method
+
             shortestPath = bfs.shortestPath(goal, start, pathLength);
             System.out.println("Retrieved shortest path as array");
-//            System.out.println("BFS shortest path: ");
-//            for (int i = 0; i < pathLength - 1; i++) {
-//                System.out.println(path[i]);
-//            }
+
             // Dijkstra
-//            System.out.println("Starting Dijkstra");
+            System.out.println("Starting Dijkstra");
 //            Dijkstra dijkstra = new Dijkstra();
 //            dijkstra.shortestPath(grid, start, goal, 4);
 //            int pathLength2 = dijkstra.shortestPath(grid, start, goal, 4);
 //            System.out.println("Dijkstra shortest path length: " + pathLength2);
+
             // Dijkstra2
             DijkstraOpenClosed d2 = new DijkstraOpenClosed();
-            System.out.println(d2.shortestPath(grid, start, goal, 4));
+            System.out.println("Dijkstra shortest path length: " + d2.shortestPath(grid, start, goal, 4));
             // GUI
             launch(Main.class);
         }
@@ -151,7 +147,7 @@ public class Main extends Application {
 
     private static void initDefaultGrid() {
         MapCreator mapCreator = new MapCreator();
-        //mapCreator.createMapFromFile("mapdata/dao-map/arena.map");
+        //mapCreator.createMapFromFile("mapdata/dao-map/arena2.map");
         mapCreator.createMapFromFile("mapdata/sc1-map/Aftershock.map");
         //mapCreator.createMapFromFile("mapdata/bg512-map/AR0011SR.map");
         //mapCreator.createMapFromFile("mapdata/wc3maps512-map/timbermawhold.map");

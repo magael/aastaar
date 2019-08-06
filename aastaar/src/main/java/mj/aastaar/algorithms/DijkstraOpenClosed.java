@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mj.aastaar.algorithms;
 
-import java.util.HashMap;
 import java.util.PriorityQueue;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
@@ -41,6 +35,7 @@ public class DijkstraOpenClosed {
             
             if (current.equals(goal)) {
                 return dist[goal.getX()][goal.getY()];
+//                return dist.get(goal);
             }
 
             if (visited[current.getX()][current.getY()]) {
@@ -55,19 +50,17 @@ public class DijkstraOpenClosed {
                 if (dist[next.getX()][next.getY()] > newCost) {
                     dist[next.getX()][next.getY()] = newCost;
 //                    dist.put(next, newCost);
-                    pq.add(new Node(next.getX(), next.getY(), dist[next.getX()][next.getY()]));
+                    pq.add(new Node(next.getX(), next.getY(), newCost));
 
                 }
 //                if (next != null && dist.get(next) > newCost) {
 //                    dist.put(next, newCost);
 //                    pq.add(new Node(next.getX(), next.getY(), dist.get(next)));
-//
 //                }
 
             }
 
         }
         return -1;
-//        return dist.get(goal);
     }
 }

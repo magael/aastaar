@@ -11,6 +11,8 @@
 
 [Viikko 2](https://github.com/magael/aastaar/blob/master/documentation/viikkoraportit/viikkoraportti2.md)
 
+[Viikko 3](https://github.com/magael/aastaar/blob/master/documentation/viikkoraportit/viikkoraportti3.md)
+
 #### Testaus
 
 Testikattavuus löytyy suorittamalla gradle-projektin juuressa, eli repositorion alihakemistossa _aastaar_ komennon
