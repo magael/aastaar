@@ -1,6 +1,7 @@
 package mj.aastaar;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -42,6 +43,7 @@ public class Main extends Application {
         } else if (grid == null || grid.getGrid() == null || grid.getLength() < 1) {
             System.out.println("Error creating a pathfinding grid");
         } else {
+            //System.out.println(grid);
             // BFS
             System.out.println("Starting BFS");
             BreadthFirstSearch bfs = new BreadthFirstSearch();
@@ -69,11 +71,10 @@ public class Main extends Application {
             int astarPathLength = astar.search(grid, start, goal, 4);
             System.out.println("A* shortest path length: " + astarPathLength);
             shortestPath3 = astar.shortestPath(goal, start, astarPathLength);
-            
+
             // Compare paths
 //            System.out.println("BFS and Dijkstra found the exact same path: " + shortestPath.equals(dijkstraShortestPath));
 //            shortestPath = dijkstraShortestPath;
-            
             // GUI
             launch(Main.class);
         }
@@ -89,6 +90,7 @@ public class Main extends Application {
         window.show();
     }
 
+    // NOTE: GridPane.add receives coordinates in (..., column, row)
     private GridPane gridGUI() {
         GridPane layout = new GridPane();
         char[][] grid2D = grid.getGrid();
@@ -104,23 +106,20 @@ public class Main extends Application {
                 } else {
                     color = tileColor(grid2D[i][j]);
                 }
-                layout.add(new Rectangle(tileSize, tileSize, color), i, j);
+                layout.add(new Rectangle(tileSize, tileSize, color), j, i);
             }
         }
 
+        // testing printing different paths found by different algroithms
         if (shortestPath != null) {
             for (int i = 0; i < shortestPath.length - 1; i++) {
-                int x = shortestPath[i].getX();
-                int y = shortestPath[i].getY();
-                layout.add(new Rectangle(tileSize, tileSize, Color.WHITE), x, y);
-            }
-        }
-        
-        // testing printing different paths found by different algroithms
-        if (shortestPath2 != null && shortestPath3 != null) {
-            for (int i = 0; i < shortestPath2.length - 1; i++) {
-                layout.add(new Rectangle(tileSize, tileSize, Color.CYAN), shortestPath2[i].getX(), shortestPath2[i].getY());
-                layout.add(new Rectangle(tileSize, tileSize, Color.MAGENTA), shortestPath3[i].getX(), shortestPath3[i].getY());
+                layout.add(new Rectangle(tileSize, tileSize, Color.YELLOW), shortestPath[i].getY(), shortestPath[i].getX());
+                if (shortestPath2 != null) {
+                    layout.add(new Rectangle(tileSize, tileSize, Color.CYAN), shortestPath2[i].getY(), shortestPath2[i].getX());
+                }
+                if (shortestPath3 != null) {
+                    layout.add(new Rectangle(tileSize, tileSize, Color.MAGENTA), shortestPath3[i].getY(), shortestPath3[i].getX());
+                }
             }
         }
 
@@ -171,8 +170,8 @@ public class Main extends Application {
 
     private static void initDefaultGrid() {
         MapCreator mapCreator = new MapCreator();
-        mapCreator.createMapFromFile("mapdata/dao-map/arena2.map");
-        //mapCreator.createMapFromFile("mapdata/sc1-map/Aftershock.map");
+        // mapCreator.createMapFromFile("mapdata/dao-map/arena2.map");
+        mapCreator.createMapFromFile("mapdata/sc1-map/Aftershock.map");
         //mapCreator.createMapFromFile("mapdata/bg512-map/AR0011SR.map");
         //mapCreator.createMapFromFile("mapdata/wc3maps512-map/timbermawhold.map");
         if (mapCreator.getGrid() != null) {
@@ -189,6 +188,11 @@ public class Main extends Application {
 //        int startY = 203;
 //        int goalX = 78;
 //        int goalY = 199;
+        // Aftershock other:
+        int startX = 82;
+        int startY = 203;
+        int goalX = 400;
+        int goalY = 390;
         // arena
 //        int startX = 4;
 //        int startY = 32;
@@ -200,10 +204,10 @@ public class Main extends Application {
 //        int goalX = 77;
 //        int goalY = 85;
         // arena2 other
-        int startX = 104;
-        int startY = 44;
-        int goalX = 70;
-        int goalY = 190;
+//        int startX = 104;
+//        int startY = 44;
+//        int goalX = 70;
+//        int goalY = 190;
 
         start = new Node(startX, startY, 0.0);
         goal = new Node(goalX, goalY, 0.0);

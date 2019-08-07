@@ -61,9 +61,6 @@ public class MapCreator {
                 if (mapHeight < 1 || mapWidth < 1) {
                     System.out.println("Error reading map dimensions");
                     break;
-//                } else if (mapHeight != 512 || mapWidth != 512) {
-                    //System.out.println("Map needs to be of size 512 * 512");
-                    //break;
                 }
             }
             handleMapRow(row, mapDataLine);
@@ -78,12 +75,8 @@ public class MapCreator {
     private void handleMapRow(int row, String mapDataLine) {
         if (row == 1) {
             mapHeight = Integer.parseInt(mapDataLine.split(" ")[1]);
-            // DEBUG: print
-            // System.out.println("height: " + mapHeight);
         } else if (row == 2) {
             mapWidth = Integer.parseInt(mapDataLine.split(" ")[1]);
-            // DEBUG: print
-            // System.out.println("width: " + mapWidth);
         } else if (row > 3) {
             if (grid.length < 1) {
                 grid = new char[mapHeight][mapWidth];

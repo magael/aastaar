@@ -49,19 +49,25 @@ public class Grid {
         return x + y;
     }
 
-    // TODO: different cost for shallow water than normal ground
-    // and no cutting corners and cost of sqrt(2) for diagonal
+    // different cost for shallow water than normal ground
+    // TODO: experiment with weights
+    // TODO: no cutting corners and cost of sqrt(2) for diagonal
     public double cost(Node from, Node to) {
-//        char current = grid[from.getX()][to.getX()];
-//        char next = grid[to.getX()][to.getY()];
-        return 1.0;
+        double cost = 1.0;
+        char current = grid[from.getX()][to.getX()];
+        char next = grid[to.getX()][to.getY()];
+        if (current == 'S') cost += 2.0;
+        if (next == 'S') cost += 2.0;
+        return cost;
     }
 
     // returns the adjacent nodes which are in bounds and passable
     // if also the current node is in bounds and passable
-    // TODO: get neighbours in specified directions (8 with diagonals, else 4),
-    // currently only allows movement in 4 directions
-    // TODO: dynamic array
+    // (checked in case starting node is out of bounds)
+    // TODO: only check the starting node once (elsewhere)
+    // TODO: directions which are specified in coordinate arrays,
+    // currently only allows movement in 4 directions (horizontal, vertical)
+    // TODO: dynamic array for neighbours
     // TODO: refactor inBounds checks
     // NOTE: it would be interesting to test precomputed neighbour lists / matrices
     // or hashtables vs this kind of dynamic check
