@@ -8,4 +8,3 @@ bin/
 gradle.properties
 .settings/
 src/main/resources/mapdata/bg512-map
-src/main/resources/mapdata/wc3maps512-map

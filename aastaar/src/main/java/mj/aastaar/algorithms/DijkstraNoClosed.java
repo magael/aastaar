@@ -26,7 +26,7 @@ public class DijkstraNoClosed {
     }
     
     // returns the Nodes of the shortest path after the path and it's length are found
-    // TODO: no separate shortestPlathLength and shortestPathLength methods,
+    // TODO: no separate shortestPlathLength and search methods,
     // always return the shortest path.
     // will still require 2 iterations of the path or a dynamic or a very large array
     public Node[] shortestPath(Node goal, Node start, int length) {
@@ -45,7 +45,7 @@ public class DijkstraNoClosed {
         return path;
     }
     
-    public int shortestPathLength(Grid grid, Node start, Node goal, int directions) {
+    public int search(Grid grid, Node start, Node goal, int directions) {
         frontier.add(start);
         cameFrom.put(start, start);
         cost.put(start, 0.0);

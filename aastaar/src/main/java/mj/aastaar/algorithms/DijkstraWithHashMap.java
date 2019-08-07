@@ -17,8 +17,14 @@ import mj.aastaar.map.Node;
  */
 // TODO: extends abstract class PathFindinAlgorithm
 public class DijkstraWithHashMap {
+    
+    HashMap<Node, Node> cameFrom;
 
-    public double shortestPath(Grid grid, Node start, Node goal, int directions) {
+    public DijkstraWithHashMap() {
+        cameFrom = new HashMap<>();
+    }
+    
+    public double search(Grid grid, Node start, Node goal, int directions) {
         HashMap<Node, Double> cost = new HashMap<>();
         HashSet<Node> visited = new HashSet<>();
         PriorityQueue<Node> frontier = new PriorityQueue();
@@ -51,5 +57,25 @@ public class DijkstraWithHashMap {
 
         }
         return -1;
+    }
+    
+    // returns the Nodes of the shortest path after the path and it's length are found
+    // TODO: no separate shortestPlathLength and shortestPathLength methods,
+    // always return the shortest path.
+    // will still require 2 iterations of the path or a dynamic or a very large array
+    public Node[] shortestPath(Node goal, Node start, int length) {
+        if (cameFrom.isEmpty() || length < 1) {
+            System.out.println("Path not found.");
+            return null;
+        }
+        Node[] path = new Node[length];
+        Node current = goal;
+        int i = length - 1;
+        while (i >= 0) {
+            path[i] = current;
+            current = cameFrom.get(current);
+            i--;
+        }
+        return path;
     }
 }

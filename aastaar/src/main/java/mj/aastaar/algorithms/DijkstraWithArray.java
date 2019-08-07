@@ -11,7 +11,7 @@ import mj.aastaar.map.Node;
 // TODO: extends abstract class PathFindinAlgorithm
 public class DijkstraWithArray {
     
-    public double shortestPath(Grid grid, Node start, Node goal, int directions) {
+    public double search(Grid grid, Node start, Node goal, int directions) {
         int nx = grid.getLength();
         int ny = grid.getGrid()[0].length; // getRowLength-method to grid?
         double cost[][] = new double[nx][ny];

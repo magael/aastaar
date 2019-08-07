@@ -43,25 +43,24 @@ public class Main extends Application {
         } else if (grid == null || grid.getGrid() == null || grid.getLength() < 1) {
             System.out.println("Error creating a pathfinding grid");
         } else {
-            //System.out.println(grid);
             // BFS
             System.out.println("Starting BFS");
             BreadthFirstSearch bfs = new BreadthFirstSearch();
-            int bfsPathLength = bfs.shortestPathLength(grid, start, goal, 4);
-            System.out.println("BFS shortest path length: " + bfsPathLength);
+            int bfsPathLength = bfs.search(grid, start, goal, 4);
+            System.out.println("BFS shortest (unweighted) path length: " + bfsPathLength);
             shortestPath = bfs.shortestPath(goal, start, bfsPathLength);
             System.out.println("Retrieved BFS shortest path as array");
 
             // Dijkstra
             System.out.println("Starting Dijkstra with initializations of two arrays containing each node");
             DijkstraWithArray d2 = new DijkstraWithArray();
-            System.out.println("DijkstraWithArray shortest path length: " + d2.shortestPath(grid, start, goal, 4));
+            System.out.println("DijkstraWithArray shortest path length: " + d2.search(grid, start, goal, 4));
             System.out.println("Starting Dijkstra with HashSet for visited and HashMap for costs");
             DijkstraWithHashMap d3 = new DijkstraWithHashMap();
-            System.out.println("DijkstraWithHashMap shortest path length: " + d3.shortestPath(grid, start, goal, 4));
+            System.out.println("DijkstraWithHashMap shortest path length: " + d3.search(grid, start, goal, 4));
             System.out.println("Starting Dijkstra with no closed set");
             DijkstraNoClosed dijkstraNoClosed = new DijkstraNoClosed();
-            int dijkstraPathLength = dijkstraNoClosed.shortestPathLength(grid, start, goal, 4);
+            int dijkstraPathLength = dijkstraNoClosed.search(grid, start, goal, 4);
             System.out.println("DijkstraNoClosed shortest path length: " + dijkstraPathLength);
             shortestPath2 = dijkstraNoClosed.shortestPath(goal, start, dijkstraPathLength);
             System.out.println("Retrieved Dijkstra shortest path as array");
@@ -73,8 +72,8 @@ public class Main extends Application {
             shortestPath3 = astar.shortestPath(goal, start, astarPathLength);
 
             // Compare paths
-//            System.out.println("BFS and Dijkstra found the exact same path: " + shortestPath.equals(dijkstraShortestPath));
-//            shortestPath = dijkstraShortestPath;
+//            System.out.println("BFS and Dijkstra found the exact same path: " + search.equals(dijkstraShortestPath));
+//            search = dijkstraShortestPath;
             // GUI
             launch(Main.class);
         }
@@ -114,12 +113,18 @@ public class Main extends Application {
         if (shortestPath != null) {
             for (int i = 0; i < shortestPath.length - 1; i++) {
                 layout.add(new Rectangle(tileSize, tileSize, Color.YELLOW), shortestPath[i].getY(), shortestPath[i].getX());
-                if (shortestPath2 != null) {
-                    layout.add(new Rectangle(tileSize, tileSize, Color.CYAN), shortestPath2[i].getY(), shortestPath2[i].getX());
-                }
-                if (shortestPath3 != null) {
-                    layout.add(new Rectangle(tileSize, tileSize, Color.MAGENTA), shortestPath3[i].getY(), shortestPath3[i].getX());
-                }
+            }
+        }
+
+        if (shortestPath2 != null) {
+            for (int i = 0; i < shortestPath2.length - 1; i++) {
+                layout.add(new Rectangle(tileSize, tileSize, Color.CYAN), shortestPath2[i].getY(), shortestPath2[i].getX());
+            }
+        }
+
+        if (shortestPath3 != null) {
+            for (int i = 0; i < shortestPath3.length - 1; i++) {
+                layout.add(new Rectangle(tileSize, tileSize, Color.MAGENTA), shortestPath3[i].getY(), shortestPath3[i].getX());
             }
         }
 
@@ -170,10 +175,11 @@ public class Main extends Application {
 
     private static void initDefaultGrid() {
         MapCreator mapCreator = new MapCreator();
-        // mapCreator.createMapFromFile("mapdata/dao-map/arena2.map");
-        mapCreator.createMapFromFile("mapdata/sc1-map/Aftershock.map");
-        //mapCreator.createMapFromFile("mapdata/bg512-map/AR0011SR.map");
-        //mapCreator.createMapFromFile("mapdata/wc3maps512-map/timbermawhold.map");
+        //mapCreator.createMapFromFile("mapdata/dao-map/arena2.map");
+        //mapCreator.createMapFromFile("mapdata/sc1-map/Aftershock.map");
+        //mapCreator.createMapFromFile("mapdata/wc3maps512-map/tranquilpaths.map");
+        // timbermawhold contains shallow water
+        mapCreator.createMapFromFile("mapdata/wc3maps512-map/timbermawhold.map");
         if (mapCreator.getGrid() != null) {
             char[][] gridArray = mapCreator.getGrid();
             char[] impassable = {'T', 'W', '@'};
@@ -183,16 +189,17 @@ public class Main extends Application {
 
     private static void initDefaultPositions() {
         // TODO: no magic numbers
+        // example coordinates for different maps
         // Aftershock
 //        int startX = 82;
 //        int startY = 203;
 //        int goalX = 78;
 //        int goalY = 199;
         // Aftershock other:
-        int startX = 82;
-        int startY = 203;
-        int goalX = 400;
-        int goalY = 390;
+//        int startX = 82;
+//        int startY = 203;
+//        int goalX = 400;
+//        int goalY = 390;
         // arena
 //        int startX = 4;
 //        int startY = 32;
@@ -208,6 +215,16 @@ public class Main extends Application {
 //        int startY = 44;
 //        int goalX = 70;
 //        int goalY = 190;
+        // timbermawhold
+        int startX = 70;
+        int startY = 380;
+        int goalX = 394;
+        int goalY = 101;
+        // tranquilpaths
+//        int startX = 250;
+//        int startY = 50;
+//        int goalX = 250;
+//        int goalY = 375;
 
         start = new Node(startX, startY, 0.0);
         goal = new Node(goalX, goalY, 0.0);
