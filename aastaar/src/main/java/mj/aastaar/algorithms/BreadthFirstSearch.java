@@ -21,6 +21,8 @@ public class BreadthFirstSearch extends PathFindingAlgorithm {
         super();
         frontier = new ArrayDeque<>();
     }
+    
+    //NOTE: not sure if best practice to use "super" keyword or not
 
     @Override
     public int search(Grid grid, Node start, Node goal, int directions) {

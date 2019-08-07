@@ -25,9 +25,11 @@ public class Main extends Application {
 
     private static Grid grid;
     private static Node start, goal;
-    private static Node[] shortestPath;
-    private static Node[] shortestPath2;
-    private static Node[] shortestPath3;
+    private static Node[][] shortestPaths;
+    private static Color[] pathColors;
+//    private static Node[] shortestPath;
+//    private static Node[] shortestPath2;
+//    private static Node[] shortestPath3;
     private static InputHandler inputHandler;
 
     public static void main(String[] args) {
@@ -43,14 +45,20 @@ public class Main extends Application {
         } else if (grid == null || grid.getGrid() == null || grid.getLength() < 1) {
             System.out.println("Error creating a pathfinding grid");
         } else {
+            // initialize array for the shortest paths of the different algorithms
+            // to be improved
+            shortestPaths = new Node[3][0];
+            pathColors = new Color[3];
+            
             // BFS
             System.out.println("Starting BFS");
             BreadthFirstSearch bfs = new BreadthFirstSearch();
             int bfsPathLength = bfs.search(grid, start, goal, 4);
             System.out.println("BFS shortest (unweighted) path length: " + bfsPathLength);
-            shortestPath = bfs.shortestPath(goal, start, bfsPathLength);
+            shortestPaths[0] = bfs.shortestPath(goal, start, bfsPathLength);
             System.out.println("Retrieved BFS shortest path as array");
-
+            pathColors[0] = Color.YELLOW;
+            
             // Dijkstra
             System.out.println("Starting Dijkstra with initializations of two arrays containing each node");
             DijkstraWithArray d2 = new DijkstraWithArray();
@@ -62,15 +70,17 @@ public class Main extends Application {
             DijkstraNoClosed dijkstraNoClosed = new DijkstraNoClosed();
             int dijkstraPathLength = dijkstraNoClosed.search(grid, start, goal, 4);
             System.out.println("DijkstraNoClosed shortest path length: " + dijkstraPathLength);
-            shortestPath2 = dijkstraNoClosed.shortestPath(goal, start, dijkstraPathLength);
+            shortestPaths[1] = dijkstraNoClosed.shortestPath(goal, start, dijkstraPathLength);
             System.out.println("Retrieved Dijkstra shortest path as array");
+            pathColors[1] = Color.CYAN;
             // A*
             System.out.println("Starting A*");
             AStar astar = new AStar();
             int astarPathLength = astar.search(grid, start, goal, 4);
             System.out.println("A* shortest path length: " + astarPathLength);
-            shortestPath3 = astar.shortestPath(goal, start, astarPathLength);
-
+            shortestPaths[2] = astar.shortestPath(goal, start, astarPathLength);
+            System.out.println("Retrieved A* shortest path as array");
+            pathColors[2] = Color.MAGENTA;
             // Compare paths
 //            System.out.println("BFS and Dijkstra found the exact same path: " + search.equals(dijkstraShortestPath));
 //            search = dijkstraShortestPath;
@@ -109,22 +119,13 @@ public class Main extends Application {
             }
         }
 
-        // testing printing different paths found by different algroithms
-        if (shortestPath != null) {
-            for (int i = 0; i < shortestPath.length - 1; i++) {
-                layout.add(new Rectangle(tileSize, tileSize, Color.YELLOW), shortestPath[i].getY(), shortestPath[i].getX());
-            }
-        }
-
-        if (shortestPath2 != null) {
-            for (int i = 0; i < shortestPath2.length - 1; i++) {
-                layout.add(new Rectangle(tileSize, tileSize, Color.CYAN), shortestPath2[i].getY(), shortestPath2[i].getX());
-            }
-        }
-
-        if (shortestPath3 != null) {
-            for (int i = 0; i < shortestPath3.length - 1; i++) {
-                layout.add(new Rectangle(tileSize, tileSize, Color.MAGENTA), shortestPath3[i].getY(), shortestPath3[i].getX());
+        // printing different paths found by different algroithms
+        // to be improved
+        for (int i = 0; i < shortestPaths.length; i++) {
+            Node[] path = shortestPaths[i];
+            if (path == null) continue;
+            for (int j = 0; j < path.length - 1; j++) {
+                layout.add(new Rectangle(tileSize, tileSize, pathColors[i]), path[j].getY(), path[j].getX());
             }
         }
 
@@ -175,6 +176,7 @@ public class Main extends Application {
 
     private static void initDefaultGrid() {
         MapCreator mapCreator = new MapCreator();
+        // example maps
         //mapCreator.createMapFromFile("mapdata/dao-map/arena2.map");
         //mapCreator.createMapFromFile("mapdata/sc1-map/Aftershock.map");
         //mapCreator.createMapFromFile("mapdata/wc3maps512-map/tranquilpaths.map");
