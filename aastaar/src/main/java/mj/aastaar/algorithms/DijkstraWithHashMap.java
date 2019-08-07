@@ -15,6 +15,7 @@ import mj.aastaar.map.Node;
  *
  * @author MJ
  */
+// TODO: extends abstract class PathFindinAlgorithm
 public class DijkstraWithHashMap {
 
     public double shortestPath(Grid grid, Node start, Node goal, int directions) {
@@ -41,7 +42,7 @@ public class DijkstraWithHashMap {
             for (Node next : grid.getNeighbours(current.getX(), current.getY(), directions)) {
                 if (next == null) continue;
                 double newCost = cost.get(current) + grid.cost(next, goal);
-                if (!cost.containsKey(next) || cost.get(next) > newCost) {
+                if (!cost.containsKey(next) || newCost < cost.get(next)) {
                     cost.put(next, newCost);
                     frontier.add(new Node(next.getX(), next.getY(), newCost));
                 }

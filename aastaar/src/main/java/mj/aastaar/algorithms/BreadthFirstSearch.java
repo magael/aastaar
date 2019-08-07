@@ -14,6 +14,7 @@ import mj.aastaar.map.Node;
  *
  * @author MJ
  */
+// TODO: extends abstract class PathFindinAlgorithm
 public class BreadthFirstSearch {
 
     private ArrayDeque<Node> frontier;

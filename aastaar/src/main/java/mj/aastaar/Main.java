@@ -24,6 +24,7 @@ public class Main extends Application {
     private static Grid grid;
     private static Node start, goal;
     private static Node[] shortestPath;
+    private static Node[] shortestPath2;
     private static InputHandler inputHandler;
 
     public static void main(String[] args) {
@@ -42,12 +43,10 @@ public class Main extends Application {
             // BFS
             System.out.println("Starting BFS");
             BreadthFirstSearch bfs = new BreadthFirstSearch();
-
-            int pathLength = bfs.shortestPathLength(grid, start, goal, 4);
-            System.out.println("BFS shortest path length: " + pathLength);
-
-            shortestPath = bfs.shortestPath(goal, start, pathLength);
-            System.out.println("Retrieved shortest path as array");
+            int bfsPathLength = bfs.shortestPathLength(grid, start, goal, 4);
+            System.out.println("BFS shortest path length: " + bfsPathLength);
+            shortestPath = bfs.shortestPath(goal, start, bfsPathLength);
+            System.out.println("Retrieved BFS shortest path as array");
 
             // Dijkstra
             System.out.println("Starting Dijkstra with initializations of two arrays containing each node");
@@ -57,9 +56,16 @@ public class Main extends Application {
             DijkstraWithHashMap d3 = new DijkstraWithHashMap();
             System.out.println("DijkstraWithHashMap shortest path length: " + d3.shortestPath(grid, start, goal, 4));
             System.out.println("Starting Dijkstra with no closed set");
-            DijkstraNoClosed dijkstra = new DijkstraNoClosed();
-            dijkstra.shortestPath(grid, start, goal, 4);
-            System.out.println("DijkstraNoClosed shortest path length: " + dijkstra.shortestPath(grid, start, goal, 4));
+            DijkstraNoClosed dijkstraNoClosed = new DijkstraNoClosed();
+            int dijkstraPathLength = dijkstraNoClosed.shortestPathLength(grid, start, goal, 4);
+            System.out.println("DijkstraNoClosed shortest path length: " + dijkstraPathLength);
+            shortestPath2 = dijkstraNoClosed.shortestPath(goal, start, bfsPathLength);
+            System.out.println("Retrieved Dijkstra shortest path as array");
+            
+            // Compare paths
+//            System.out.println("BFS and Dijkstra found the exact same path: " + shortestPath.equals(dijkstraShortestPath));
+//            shortestPath = dijkstraShortestPath;
+            
             // GUI
             launch(Main.class);
         }
@@ -99,6 +105,15 @@ public class Main extends Application {
                 int x = shortestPath[i].getX();
                 int y = shortestPath[i].getY();
                 layout.add(new Rectangle(tileSize, tileSize, Color.WHITE), x, y);
+            }
+        }
+        
+        // testing printing different paths found by different algroithms
+        if (shortestPath2 != null) {
+            for (int i = 0; i < shortestPath2.length - 1; i++) {
+                int x = shortestPath2[i].getX();
+                int y = shortestPath2[i].getY();
+                layout.add(new Rectangle(tileSize, tileSize, Color.CYAN), x, y);
             }
         }
 

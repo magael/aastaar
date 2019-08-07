@@ -8,6 +8,7 @@ import mj.aastaar.map.Node;
  *
  * @author MJ
  */
+// TODO: extends abstract class PathFindinAlgorithm
 public class DijkstraWithArray {
     
     public double shortestPath(Grid grid, Node start, Node goal, int directions) {
@@ -41,9 +42,8 @@ public class DijkstraWithArray {
 
             for (Node next : grid.getNeighbours(current.getX(), current.getY(), directions)) {
                 if (next == null) continue;
-                // double newCost = current.getPriority() + next.getPriority();
                 double newCost = cost[current.getX()][current.getY()] + grid.cost(current, next);
-                if (cost[next.getX()][next.getY()] > newCost) {
+                if (newCost < cost[next.getX()][next.getY()]) {
                     cost[next.getX()][next.getY()] = newCost;
                     frontier.add(new Node(next.getX(), next.getY(), newCost));
 

@@ -61,7 +61,7 @@ public class MapCreator {
                 if (mapHeight < 1 || mapWidth < 1) {
                     System.out.println("Error reading map dimensions");
                     break;
-                } else if (mapHeight != 512 || mapWidth != 512) {
+//                } else if (mapHeight != 512 || mapWidth != 512) {
                     //System.out.println("Map needs to be of size 512 * 512");
                     //break;
                 }
@@ -74,6 +74,7 @@ public class MapCreator {
     // initializing grid height and width,
     // skipping "map" and handling map characters
     // TODO: If the map height/width do not match the file, it should be scaled to that size
+    // TODO: make sure each row is of same length (as the first row)
     private void handleMapRow(int row, String mapDataLine) {
         if (row == 1) {
             mapHeight = Integer.parseInt(mapDataLine.split(" ")[1]);
