@@ -7,8 +7,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import mj.aastaar.algorithms.BreadthFirstSearch;
-import mj.aastaar.algorithms.Dijkstra;
-import mj.aastaar.algorithms.DijkstraOpenClosed;
+import mj.aastaar.algorithms.DijkstraNoClosed;
+import mj.aastaar.algorithms.DijkstraWithHashMap;
+import mj.aastaar.algorithms.DijkstraWithArray;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.MapCreator;
 import mj.aastaar.map.Node;
@@ -49,16 +50,17 @@ public class Main extends Application {
             System.out.println("Retrieved shortest path as array");
 
             // Dijkstra
-//            System.out.println("Starting Dijkstra");
-//            Dijkstra dijkstra = new Dijkstra();
+//            System.out.println("Starting DijkstraNoClosed");
+//            DijkstraNoClosed dijkstra = new DijkstraNoClosed();
 //            dijkstra.shortestPath(grid, start, goal, 4);
 //            int pathLength2 = dijkstra.shortestPath(grid, start, goal, 4);
-//            System.out.println("Dijkstra shortest path length: " + pathLength2);
-
-            // Dijkstra2
-            System.out.println("Starting Dijkstra2");
-            DijkstraOpenClosed d2 = new DijkstraOpenClosed();
+//            System.out.println("DijkstraNoClosed shortest path length: " + pathLength2);
+            System.out.println("Starting Dijkstra with initializations of two arrays containing each node");
+            DijkstraWithArray d2 = new DijkstraWithArray();
             System.out.println("Dijkstra2 shortest path length: " + d2.shortestPath(grid, start, goal, 4));
+            System.out.println("Starting Dijkstra with HashSet for visited and HashMap for costs");
+            DijkstraWithHashMap d3 = new DijkstraWithHashMap();
+            System.out.println("Dijkstra2 shortest path length: " + d3.shortestPath(grid, start, goal, 4));
             // GUI
             launch(Main.class);
         }

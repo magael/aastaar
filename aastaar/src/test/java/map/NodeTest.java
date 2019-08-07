@@ -27,7 +27,7 @@ public class NodeTest {
     }
     
     @Test
-    public void equalsReturnsTrueForDifferentButEqual() {
+    public void equalsReturnsTrueForDifferentButWithEqualCoordinates() {
         assertTrue((nodeA.equals(nodeD)));
     }
     
@@ -62,7 +62,7 @@ public class NodeTest {
         assertEquals(-1, nodeA.compareTo(nodeC));
     }
     
-     @Test
+    @Test
     public void priorityIsSameCorrectly() {
         assertEquals(0, nodeA.compareTo(nodeB));
     }

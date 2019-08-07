@@ -39,18 +39,21 @@ public class Grid {
     }
 
     // TODO: different cost for shallow water than normal ground
-    // and no cutting corners and sqrt(2) for diagonal
+    // and no cutting corners and cost of sqrt(2) for diagonal
     public double cost(Node from, Node to) {
 //        char current = grid[from.getX()][to.getX()];
 //        char next = grid[to.getX()][to.getY()];
         return 1.0;
     }
 
-    // TODO: get neighbours in specified directions (8 with diagonals, else 4)
+    // returns the adjacent nodes which are in bounds and passable
+    // if also the current node is in bounds and passable
+    // TODO: get neighbours in specified directions (8 with diagonals, else 4),
     // currently only allows movement in 4 directions
-    // NOTE: for large maps it might be optimal to use a custom arraylist implementation?
-    // NOTE: i'd like to test precomputed neighbour lists / hashtables vs this kind of dynamic check
+    // TODO: dynamic array
     // TODO: refactor inBounds checks
+    // NOTE: it would be interesting to test precomputed neighbour lists / matrices
+    // or hashtables vs this kind of dynamic check
     public Node[] getNeighbours(int x, int y, int directions) {
         Node[] neighbours = new Node[directions];
         if (x >= 0 && y >= 0 && x < grid.length && y < grid.length && isPassable(grid[x][y])) {
