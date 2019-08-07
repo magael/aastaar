@@ -46,10 +46,10 @@ public class DijkstraNoClosed {
     // (redblobgames.com/pathfinding/a-star/implementation.html#algorithm),
     // citing “Priority Queues and DijkstraNoClosed’s Algorithm” by Chen et al.
     private void expandFrontier(Grid grid, Node current, int directions) {
-        Node[] currentNeighbours = grid.getNeighbours(current.getX(), current.getY(), directions);
-        for (Node next : currentNeighbours) {
+        for (Node next : grid.getNeighbours(current.getX(), current.getY(), directions)) {
+            if (next == null) continue;
             double newCost = costSoFar.get(current) + grid.cost(current, next);
-            if (next != null && (!costSoFar.containsKey(next) || newCost < costSoFar.get(next))) {
+            if (!costSoFar.containsKey(next) || newCost < costSoFar.get(next)) {
                 costSoFar.put(next, newCost);
                 next.setPriority(newCost);
                 frontier.add(next);

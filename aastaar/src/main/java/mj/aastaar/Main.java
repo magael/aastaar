@@ -50,17 +50,16 @@ public class Main extends Application {
             System.out.println("Retrieved shortest path as array");
 
             // Dijkstra
-//            System.out.println("Starting DijkstraNoClosed");
-//            DijkstraNoClosed dijkstra = new DijkstraNoClosed();
-//            dijkstra.shortestPath(grid, start, goal, 4);
-//            int pathLength2 = dijkstra.shortestPath(grid, start, goal, 4);
-//            System.out.println("DijkstraNoClosed shortest path length: " + pathLength2);
             System.out.println("Starting Dijkstra with initializations of two arrays containing each node");
             DijkstraWithArray d2 = new DijkstraWithArray();
-            System.out.println("Dijkstra2 shortest path length: " + d2.shortestPath(grid, start, goal, 4));
+            System.out.println("DijkstraWithArray shortest path length: " + d2.shortestPath(grid, start, goal, 4));
             System.out.println("Starting Dijkstra with HashSet for visited and HashMap for costs");
             DijkstraWithHashMap d3 = new DijkstraWithHashMap();
-            System.out.println("Dijkstra2 shortest path length: " + d3.shortestPath(grid, start, goal, 4));
+            System.out.println("DijkstraWithHashMap shortest path length: " + d3.shortestPath(grid, start, goal, 4));
+            System.out.println("Starting Dijkstra with no closed set");
+            DijkstraNoClosed dijkstra = new DijkstraNoClosed();
+            dijkstra.shortestPath(grid, start, goal, 4);
+            System.out.println("DijkstraNoClosed shortest path length: " + dijkstra.shortestPath(grid, start, goal, 4));
             // GUI
             launch(Main.class);
         }

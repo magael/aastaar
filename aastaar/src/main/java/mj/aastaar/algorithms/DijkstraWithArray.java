@@ -41,7 +41,8 @@ public class DijkstraWithArray {
 
             for (Node next : grid.getNeighbours(current.getX(), current.getY(), directions)) {
                 if (next == null) continue;
-                double newCost = current.getPriority() + next.getPriority();
+                // double newCost = current.getPriority() + next.getPriority();
+                double newCost = cost[current.getX()][current.getY()] + grid.cost(current, next);
                 if (cost[next.getX()][next.getY()] > newCost) {
                     cost[next.getX()][next.getY()] = newCost;
                     frontier.add(new Node(next.getX(), next.getY(), newCost));

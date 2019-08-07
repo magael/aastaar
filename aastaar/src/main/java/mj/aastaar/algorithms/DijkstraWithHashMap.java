@@ -5,7 +5,6 @@
  */
 package mj.aastaar.algorithms;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.PriorityQueue;
@@ -41,7 +40,7 @@ public class DijkstraWithHashMap {
 
             for (Node next : grid.getNeighbours(current.getX(), current.getY(), directions)) {
                 if (next == null) continue;
-                double newCost = current.getPriority() + next.getPriority();
+                double newCost = cost.get(current) + grid.cost(next, goal);
                 if (!cost.containsKey(next) || cost.get(next) > newCost) {
                     cost.put(next, newCost);
                     frontier.add(new Node(next.getX(), next.getY(), newCost));
