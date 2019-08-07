@@ -6,6 +6,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import mj.aastaar.algorithms.AStar;
 import mj.aastaar.algorithms.BreadthFirstSearch;
 import mj.aastaar.algorithms.DijkstraNoClosed;
 import mj.aastaar.algorithms.DijkstraWithHashMap;
@@ -25,6 +26,7 @@ public class Main extends Application {
     private static Node start, goal;
     private static Node[] shortestPath;
     private static Node[] shortestPath2;
+    private static Node[] shortestPath3;
     private static InputHandler inputHandler;
 
     public static void main(String[] args) {
@@ -59,8 +61,14 @@ public class Main extends Application {
             DijkstraNoClosed dijkstraNoClosed = new DijkstraNoClosed();
             int dijkstraPathLength = dijkstraNoClosed.shortestPathLength(grid, start, goal, 4);
             System.out.println("DijkstraNoClosed shortest path length: " + dijkstraPathLength);
-            shortestPath2 = dijkstraNoClosed.shortestPath(goal, start, bfsPathLength);
+            shortestPath2 = dijkstraNoClosed.shortestPath(goal, start, dijkstraPathLength);
             System.out.println("Retrieved Dijkstra shortest path as array");
+            // A*
+            System.out.println("Starting A*");
+            AStar astar = new AStar();
+            int astarPathLength = astar.search(grid, start, goal, 4);
+            System.out.println("A* shortest path length: " + astarPathLength);
+            shortestPath3 = astar.shortestPath(goal, start, astarPathLength);
             
             // Compare paths
 //            System.out.println("BFS and Dijkstra found the exact same path: " + shortestPath.equals(dijkstraShortestPath));
@@ -109,11 +117,10 @@ public class Main extends Application {
         }
         
         // testing printing different paths found by different algroithms
-        if (shortestPath2 != null) {
+        if (shortestPath2 != null && shortestPath3 != null) {
             for (int i = 0; i < shortestPath2.length - 1; i++) {
-                int x = shortestPath2[i].getX();
-                int y = shortestPath2[i].getY();
-                layout.add(new Rectangle(tileSize, tileSize, Color.CYAN), x, y);
+                layout.add(new Rectangle(tileSize, tileSize, Color.CYAN), shortestPath2[i].getX(), shortestPath2[i].getY());
+                layout.add(new Rectangle(tileSize, tileSize, Color.MAGENTA), shortestPath3[i].getX(), shortestPath3[i].getY());
             }
         }
 

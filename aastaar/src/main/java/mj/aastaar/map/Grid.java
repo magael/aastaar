@@ -37,6 +37,17 @@ public class Grid {
         }
         return s;
     }
+    
+    // manhattan distance on a square grid
+    // avoiding using the Java Math class
+    public double heuristic(Node a, Node b) {
+        //   return abs(a.x - b.x) + abs(a.y - b.y)
+        double x = a.getX() - b.getX();
+        x = (x > 0) ? x : 0 - x;
+        double y = a.getY() - b.getY();
+        y = (y > 0) ? y : 0 - y;
+        return x + y;
+    }
 
     // TODO: different cost for shallow water than normal ground
     // and no cutting corners and cost of sqrt(2) for diagonal
