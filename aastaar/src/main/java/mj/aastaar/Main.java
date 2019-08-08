@@ -42,81 +42,21 @@ public class Main extends Application {
         } else if (grid == null || grid.getGrid() == null || grid.getLength() < 1) {
             System.out.println("Error creating a pathfinding grid");
         } else {
-            // initialize array for the shortest paths of the different algorithms
+            // initialize arrays for the shortest paths of the different algorithms
             // to be improved
             shortestPaths = new Node[5][0];
             pathColors = new Color[5];
 
             // BFS
-//            System.out.println("Starting BFS");
-//            int pathLength = bfs.search(grid, start, goal, 4);
-//            System.out.println("BFS shortest (unweighted) path length: " + pathLength);
-//            shortestPaths[0] = bfs.getPath().shortestPath(goal, start, pathLength);
-//            System.out.println("Retrieved BFS shortest path as array");
-//            System.out.println("");
-//            pathColors[0] = Color.YELLOW;
             runPathfindingAlgorithm(new BreadthFirstSearch(), "BFS", 0, Color.YELLOW);
 
             // Dijkstra
-            // #1
-            System.out.println("Starting Dijkstra with initializations of two arrays containing each node");
-            DijkstraWithArray d1 = new DijkstraWithArray();
-            int pathLength = d1.search(grid, start, goal, 4);
-            System.out.println("DijkstraWithArray shortest path "
-                    + "length: " + pathLength
-                    + ", cost: " + d1.getCost(goal));
-            shortestPaths[1] = d1.getPath().shortestPath(goal, start, pathLength);
-            System.out.println("Retrieved DijkstraWithArray shortest path as array");
-            System.out.println("");
-//            pathColors[1] = Color.web("#00FFFF", 0.33);
-            pathColors[1] = Color.GREENYELLOW;
-
-            // #2
-            System.out.println("Starting Dijkstra with HashSet for visited and HashMap for costs");
-            DijkstraWithHashMap d2 = new DijkstraWithHashMap();
-            pathLength = d2.search(grid, start, goal, 4);
-            System.out.println("DijkstraWithHashMap shortest path "
-                    + "length: " + pathLength
-                    + ", cost: " + d2.getCost(goal));
-            shortestPaths[2] = d2.getPath().shortestPath(goal, start, pathLength);
-            System.out.println("Retrieved DijkstraWithArray shortest path as array");
-            System.out.println("");
-            pathColors[2] = Color.BLUEVIOLET;
-
-            // #3
-            System.out.println("Starting Dijkstra with no closed set");
-            DijkstraNoClosed d3 = new DijkstraNoClosed();
-            pathLength = d3.search(grid, start, goal, 4);
-            System.out.println("DijkstraNoClosed shortest path "
-                    + "length: " + pathLength
-                    + ", cost: " + d3.getCost(goal));
-            shortestPaths[3] = d3.getPath().shortestPath(goal, start, pathLength);
-            System.out.println("Retrieved DijkstraNoClosed shortest path as array");
-            System.out.println("");
-//            pathColors[3] = pathColors[1] = Color.web("#00FFFF", 1.0);
-            pathColors[3] = Color.CYAN;
-
-            // DEBUG: Comparing Dijkstras
-//            Node[] d1path = d1.getPath().shortestPath(goal, start, pathLength);
-//            Node[] d2path = d2.getPath().shortestPath(goal, start, pathLength);
-//            Node[] d3path = d3.getPath().shortestPath(goal, start, pathLength);
-//            for (int i = 0; i < pathLength; i++) {
-//                if (!d1path[i].equals(d2path[i]) || !d1path[i].equals(d3path[i]) || !d2path[i].equals(d3path[i])) {
-//                    System.out.println("Paths differ at index " + i);
-//                } else {
-//                    System.out.println("Same");
-//                }
-//            }
+            runPathfindingAlgorithm(new DijkstraWithArray(), "Dijkstra with arrays", 1, Color.CYAN);
+            runPathfindingAlgorithm(new DijkstraWithHashMap(), "Dijkstra with hash tables", 2, Color.CYAN);
+            runPathfindingAlgorithm(new DijkstraNoClosed(), "Dijkstra with no closed set", 2, Color.CYAN);
 
             // A*
-            System.out.println("Starting A*");
-            AStar astar = new AStar();
-            pathLength = astar.search(grid, start, goal, 4);
-            System.out.println("A* shortest path length: " + pathLength
-                    + ", cost: " + astar.getCost(goal));
-            shortestPaths[4] = astar.getPath().shortestPath(goal, start, pathLength);
-            System.out.println("Retrieved A* shortest path as array");
-            pathColors[4] = Color.MAGENTA;
+            runPathfindingAlgorithm(new AStar(), "A*", 4, Color.MAGENTA);
 
             // GUI
             launch(Main.class);
@@ -134,14 +74,13 @@ public class Main extends Application {
     }
 
     private static void runPathfindingAlgorithm(PathFindingAlgorithm algorithm, String name, int i, Color color) {
-        System.out.println("Starting " + name + "with initializations of two arrays containing each node");
+        System.out.println("Starting " + name);
         int pathLength = algorithm.search(grid, start, goal, 4);
         System.out.println(name + " shortest path "
                 + "length: " + pathLength
                 + ", cost: " + algorithm.getCost(goal));
         shortestPaths[i] = algorithm.getPath().shortestPath(goal, start, pathLength);
-        System.out.println("Retrieved " + name + " shortest path as array");
-        System.out.println("");
+        System.out.println("Retrieved " + name + " shortest path as array \n");
         pathColors[i] = color;
     }
 
@@ -166,7 +105,6 @@ public class Main extends Application {
         }
 
         // printing different paths found by different algroithms
-        // to be improved
         for (int i = 0; i < shortestPaths.length; i++) {
             Node[] path = shortestPaths[i];
             if (path == null) {
