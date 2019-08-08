@@ -49,7 +49,7 @@ public class Main extends Application {
             // to be improved
             shortestPaths = new Node[3][0];
             pathColors = new Color[3];
-            
+
             // BFS
             System.out.println("Starting BFS");
             BreadthFirstSearch bfs = new BreadthFirstSearch();
@@ -57,23 +57,44 @@ public class Main extends Application {
             System.out.println("BFS shortest (unweighted) path length: " + bfsPathLength);
             shortestPaths[0] = bfs.getPath().shortestPath(goal, start, bfsPathLength);
             System.out.println("Retrieved BFS shortest path as array");
+            System.out.println("");
             pathColors[0] = Color.YELLOW;
-            
+
             // Dijkstra
             System.out.println("Starting Dijkstra with initializations of two arrays containing each node");
-            DijkstraWithArray d2 = new DijkstraWithArray();
-            System.out.println("DijkstraWithArray shortest path length: " + d2.search(grid, start, goal, 4));
-            System.out.println("Starting Dijkstra with HashSet for visited and HashMap for costs");
-            DijkstraWithHashMap d3 = new DijkstraWithHashMap();
-            System.out.println("DijkstraWithHashMap shortest path length: " + d3.search(grid, start, goal, 4));
-            System.out.println("Starting Dijkstra with no closed set");
-            DijkstraNoClosed dijkstraNoClosed = new DijkstraNoClosed();
-            int dijkstraPathLength = dijkstraNoClosed.search(grid, start, goal, 4);
-            System.out.println("DijkstraNoClosed shortest path length: " + dijkstraPathLength);
-            shortestPaths[1] = dijkstraNoClosed.getPath().shortestPath(goal, start, dijkstraPathLength);
-            System.out.println("Retrieved Dijkstra shortest path as array");
-            pathColors[1] = Color.CYAN;
+            DijkstraWithArray d1 = new DijkstraWithArray();
+            System.out.println("DijkstraWithArray shortest path "
+                    + "length: " + d1.search(grid, start, goal, 4)
+                    + ", cost: " + d1.getCost(goal));
+            System.out.println("");
             
+            System.out.println("Starting Dijkstra with HashSet for visited and HashMap for costs");
+            DijkstraWithHashMap d2 = new DijkstraWithHashMap();
+            System.out.println("DijkstraWithHashMap shortest path "
+                    + "length: " + d2.search(grid, start, goal, 4)
+                    + ", cost: " + d2.getCost(goal));
+            System.out.println("");
+            
+            System.out.println("Starting Dijkstra with no closed set");
+            DijkstraNoClosed d3 = new DijkstraNoClosed();
+            int dijkstraPathLength = d3.search(grid, start, goal, 4);
+            System.out.println("DijkstraNoClosed shortest path "
+                    + "length: " + dijkstraPathLength
+                    + ", cost: " + d2.getCost(goal));
+            shortestPaths[1] = d3.getPath().shortestPath(goal, start, dijkstraPathLength);
+            System.out.println("Retrieved Dijkstra shortest path as array");
+            System.out.println("");
+            pathColors[1] = Color.CYAN;
+            //compare
+//            Node[] d1path = d1.getPath().shortestPath(goal, start, dijkstraPathLength);
+//            Node[] d2path = d2.getPath().shortestPath(goal, start, dijkstraPathLength);
+//            Node[] d3path = d3.getPath().shortestPath(goal, start, dijkstraPathLength);
+//            for (int i = 0; i < dijkstraPathLength; i++) {
+//                System.out.println(d1path[i] == d2path[i]);
+//                System.out.println(d1path[i] == d3path[i]);
+//                System.out.println(d2path[i] == d3path[i]);
+//            }
+
             // A*
             System.out.println("Starting A*");
             AStar astar = new AStar();
@@ -122,7 +143,9 @@ public class Main extends Application {
         // to be improved
         for (int i = 0; i < shortestPaths.length; i++) {
             Node[] path = shortestPaths[i];
-            if (path == null) continue;
+            if (path == null) {
+                continue;
+            }
             for (int j = 0; j < path.length - 1; j++) {
                 layout.add(new Rectangle(tileSize, tileSize, pathColors[i]), path[j].getY(), path[j].getX());
             }

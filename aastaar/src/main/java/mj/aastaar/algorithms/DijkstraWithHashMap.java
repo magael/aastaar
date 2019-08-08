@@ -18,14 +18,12 @@ import mj.aastaar.map.Node;
 public class DijkstraWithHashMap implements PathFindingAlgorithm {
 
     private Path path;
-    private HashMap<Node, Node> cameFrom;
     private HashMap<Node, Double> cost;
     private HashSet<Node> visited;
     private PriorityQueue<Node> frontier;
 
     public DijkstraWithHashMap() {
         path = new Path();
-        cameFrom = new HashMap<>();
         cost = new HashMap<>();
         visited = new HashSet<>();
         frontier = new PriorityQueue();
@@ -57,7 +55,12 @@ public class DijkstraWithHashMap implements PathFindingAlgorithm {
     public Path getPath() {
         return path;
     }
+    
+    public double getCost(Node goal) {
+        return cost.get(goal);
+    }
 
+    // used by the search to put new nodes to the frontier (a.k.a. open set) and path
     private void expandFrontier(Node current, Grid grid, int directions, Node goal) {
         visited.add(current);
         
@@ -69,7 +72,7 @@ public class DijkstraWithHashMap implements PathFindingAlgorithm {
             if (!cost.containsKey(next) || newCost < cost.get(next)) {
                 cost.put(next, newCost);
                 frontier.add(new Node(next.getX(), next.getY(), newCost));
-                path.put(next, current);
+                path.putCameFrom(next, current);
             }
         }
     }

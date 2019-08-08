@@ -27,7 +27,7 @@ public class DijkstraNoClosed implements PathFindingAlgorithm {
     @Override
     public int search(Grid grid, Node start, Node goal, int directions) {
         frontier.add(start);
-        path.put(start, start);
+        path.putCameFrom(start, start);
         cost.put(start, 0.0);
 
         while (!frontier.isEmpty()) {
@@ -41,11 +41,16 @@ public class DijkstraNoClosed implements PathFindingAlgorithm {
         return -1;
     }
     
+    public double getCost(Node goal) {
+        return cost.get(goal);
+    }
+    
     @Override
     public Path getPath() {
         return path;
     }
     
+    // used by the search to put new nodes to the frontier (a.k.a. open set) and path
     private void expandFrontier(Grid grid, Node current, int directions) {
         for (Node next : grid.getNeighbours(current.getX(), current.getY(), directions)) {
             if (next == null) continue;
@@ -54,7 +59,7 @@ public class DijkstraNoClosed implements PathFindingAlgorithm {
                 cost.put(next, newCost);
                 next.setPriority(newCost);
                 frontier.add(next);
-                path.put(next, current);
+                path.putCameFrom(next, current);
             }
         }
     }

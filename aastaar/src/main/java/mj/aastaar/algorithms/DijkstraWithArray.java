@@ -20,6 +20,7 @@ public class DijkstraWithArray implements PathFindingAlgorithm {
         frontier = new PriorityQueue();
     }
     
+    // returns the amount of steps in the shortest path or -1 if not founs
     @Override
     public int search(Grid grid, Node start, Node goal, int directions) {
         int nx = grid.getLength();
@@ -41,7 +42,6 @@ public class DijkstraWithArray implements PathFindingAlgorithm {
             Node current = frontier.poll();
             
             if (current.equals(goal)) {
-                // return cost[goal.getX()][goal.getY()];
                 return path.earlyExit(current, start);
             }
 
@@ -59,7 +59,12 @@ public class DijkstraWithArray implements PathFindingAlgorithm {
     public Path getPath() {
         return path;
     }
+    
+    public double getCost(Node goal) {
+        return cost[goal.getX()][goal.getY()];
+    }
 
+    // used by the search to put new nodes to the frontier (a.k.a. open set) and path
     private void expandFrontier(Node current, Grid grid, int directions) {
         visited[current.getX()][current.getY()] = true;
         
@@ -69,7 +74,7 @@ public class DijkstraWithArray implements PathFindingAlgorithm {
             if (newCost < cost[next.getX()][next.getY()]) {
                 cost[next.getX()][next.getY()] = newCost;
                 frontier.add(new Node(next.getX(), next.getY(), newCost));
-                path.put(next, current);
+                path.putCameFrom(next, current);
             }
         }
     }

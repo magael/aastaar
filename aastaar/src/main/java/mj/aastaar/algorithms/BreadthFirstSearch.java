@@ -31,7 +31,7 @@ public class BreadthFirstSearch implements PathFindingAlgorithm {
     @Override
     public int search(Grid grid, Node start, Node goal, int directions) {
         frontier.add(start);
-        path.put(start, start);
+        path.putCameFrom(start, start);
 
         while (!frontier.isEmpty()) {
             Node current = frontier.poll();
@@ -45,13 +45,13 @@ public class BreadthFirstSearch implements PathFindingAlgorithm {
         return -1;
     }
 
-    // used by the search to put new nodes to the frontier (a.k.a. open set)
+    // used by the search to put new nodes to the frontier (a.k.a. open set) and path
     private void expandFrontier(Grid grid, Node current, int directions) {
         Node[] currentNeighbours = grid.getNeighbours(current.getX(), current.getY(), directions);
         for (Node next : currentNeighbours) {
             if (next != null && !path.containsNode(next)) {
                 frontier.add(next);
-                path.put(next, current);
+                path.putCameFrom(next, current);
             }
         }
     }

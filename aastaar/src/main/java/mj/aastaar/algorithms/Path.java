@@ -26,7 +26,7 @@ public class Path {
         return false;
     }
     
-    public void put(Node to, Node from) {
+    public void putCameFrom(Node to, Node from) {
         cameFrom.put(to, from);
     }
 
@@ -38,7 +38,7 @@ public class Path {
         //ArrayDeque<Node> path = new ArrayDeque<>();
         while (!current.equals(start)) {
             current = cameFrom.get(current);
-            //path.put(current);
+            //path.putCameFrom(current);
             steps++;
         }
 //        for (int i = 0; i < steps; i++) {
