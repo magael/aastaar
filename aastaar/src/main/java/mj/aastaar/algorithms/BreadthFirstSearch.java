@@ -29,7 +29,7 @@ public class BreadthFirstSearch implements PathFindingAlgorithm {
     public Path getPath() {
         return path;
     }
-    
+
     // returns the amount of steps in a shortest path or -1 if not found
     // NOTE: cannot do multiple searches with the same object
     @Override

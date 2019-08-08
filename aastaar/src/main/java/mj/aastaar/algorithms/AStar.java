@@ -34,6 +34,7 @@ public class AStar implements PathFindingAlgorithm {
             if (current.equals(goal)) {
                 return path.earlyExit(current, start);
             }
+            
             expandFrontier(grid, current, goal, directions);
         }
         return -1;

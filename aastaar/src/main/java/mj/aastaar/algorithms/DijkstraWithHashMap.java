@@ -32,7 +32,7 @@ public class DijkstraWithHashMap implements PathFindingAlgorithm {
     // returns the amount of steps in a shortest path or -1 if not found
     // NOTE: cannot do multiple searches with the same object
     @Override
-    public int search(Grid grid, Node start, Node goal, int directions) {        
+    public int search(Grid grid, Node start, Node goal, int directions) {
         cost.put(start, 0.0);
         frontier.add(new Node(start.getX(), start.getY(), 0.0));
 
@@ -52,12 +52,12 @@ public class DijkstraWithHashMap implements PathFindingAlgorithm {
         }
         return -1;
     }
-    
+
     @Override
     public Path getPath() {
         return path;
     }
-    
+
     public double getCost(Node goal) {
         return cost.get(goal);
     }
@@ -65,15 +65,14 @@ public class DijkstraWithHashMap implements PathFindingAlgorithm {
     // used by the search to put new nodes to the frontier (a.k.a. open set) and path
     private void expandFrontier(Node current, Grid grid, int directions, Node goal) {
         visited.add(current);
-        
+
         for (Node next : grid.getNeighbours(current.getX(), current.getY(), directions)) {
-            if (next == null) {
-                continue;
-            }
+            if (next == null) continue;
             double newCost = cost.get(current) + grid.cost(current, next);
             if (!cost.containsKey(next) || newCost < cost.get(next)) {
                 cost.put(next, newCost);
-                frontier.add(new Node(next.getX(), next.getY(), newCost));
+                next.setPriority(newCost);
+                frontier.add(next);
                 path.putCameFrom(next, current);
             }
         }

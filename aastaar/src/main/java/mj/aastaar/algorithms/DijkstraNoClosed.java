@@ -38,6 +38,7 @@ public class DijkstraNoClosed implements PathFindingAlgorithm {
             if (current.equals(goal)) {
                 return path.earlyExit(current, start);
             }
+            
             expandFrontier(grid, current, directions);
         }
         return -1;
