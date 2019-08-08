@@ -48,7 +48,6 @@ public class DijkstraWithHashMap implements PathFindingAlgorithm {
             }
 
             expandFrontier(current, grid, directions, goal);
-
         }
         return -1;
     }

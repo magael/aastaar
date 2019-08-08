@@ -79,7 +79,7 @@ public class Scenario {
     // - read map paths from .cfg file to String[] mapFilePaths
     // - initialize an array of Grids
     // - for each line in mapFilePaths: add to grids
-    // - or mayne init one grid at a time when user chooses a map
+    // - or maybe init one grid at a time when the user chooses a map
     public void initConfig(String configFilePath) {
         if (configFilePath == null) {
             initDefaultGrid();

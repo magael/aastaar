@@ -11,9 +11,6 @@ import mj.aastaar.algorithms.BreadthFirstSearch;
 import mj.aastaar.algorithms.DijkstraNoClosed;
 import mj.aastaar.algorithms.DijkstraWithHashMap;
 import mj.aastaar.algorithms.DijkstraWithArray;
-import mj.aastaar.algorithms.PathFindingAlgorithm;
-import mj.aastaar.map.Grid;
-import mj.aastaar.map.MapCreator;
 import mj.aastaar.map.Node;
 
 /**
@@ -22,17 +19,14 @@ import mj.aastaar.map.Node;
  */
 public class Main extends Application {
 
-    private static Grid grid;
     private static Scenario scenario;
-//    private static Node start, goal;
-//    private static Node[][] shortestPaths;
-//    private static Color[] pathColors;
 
     public static void main(String[] args) {
         run();
     }
 
     private static void run() {
+        // initializing the map, start and goal
         scenario = new Scenario();
         scenario.initConfig(null);
 
@@ -49,7 +43,7 @@ public class Main extends Application {
             scenario.runPathfindingAlgorithm(new BreadthFirstSearch(), "BFS", 0, "#FFFF00");
             scenario.runPathfindingAlgorithm(new DijkstraWithArray(), "Dijkstra with arrays", 1, "#000FFF");
             scenario.runPathfindingAlgorithm(new DijkstraWithHashMap(), "Dijkstra with hash tables", 2, "#0FF000");
-            scenario.runPathfindingAlgorithm(new DijkstraNoClosed(), "Dijkstra with no closed set", 2, "#00FFFF");
+            scenario.runPathfindingAlgorithm(new DijkstraNoClosed(), "Dijkstra with no closed set", 3, "#00FFFF");
             scenario.runPathfindingAlgorithm(new AStar(), "A*", 4, "#FF00FF");
 
             // GUI
@@ -57,6 +51,7 @@ public class Main extends Application {
         }
     }
 
+    // called automatically after launching the JavaFX Application
     @Override
     public void start(Stage window) throws Exception {
         GridPane layout = gridGUI();

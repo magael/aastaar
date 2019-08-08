@@ -50,7 +50,6 @@ public class DijkstraWithArray implements PathFindingAlgorithm {
             }
 
             expandFrontier(current, grid, directions);
-
         }
         return -1;
     }
