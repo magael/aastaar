@@ -49,11 +49,13 @@ public class Grid {
     }
 
     // different cost for shallow water than normal ground
+    // NOTE: should only be called for nodes that have already been checked
+    // as passable and in bounds
     // NOTE: experimenting with different "S"-penalties yields different paths
     // TODO: no cutting corners and cost of sqrt(2) for diagonal
     public double cost(Node from, Node to) {
         double cost = 1.0;
-        char current = grid[from.getX()][to.getX()];
+        char current = grid[from.getX()][from.getY()];
         char next = grid[to.getX()][to.getY()];
         if (current == 'S') cost += 2.0;
         if (next == 'S') cost += 2.0;
