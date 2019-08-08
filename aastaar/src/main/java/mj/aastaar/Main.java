@@ -1,7 +1,6 @@
 package mj.aastaar;
 
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -12,6 +11,7 @@ import mj.aastaar.algorithms.BreadthFirstSearch;
 import mj.aastaar.algorithms.DijkstraNoClosed;
 import mj.aastaar.algorithms.DijkstraWithHashMap;
 import mj.aastaar.algorithms.DijkstraWithArray;
+import mj.aastaar.algorithms.PathFindingAlgorithm;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.MapCreator;
 import mj.aastaar.map.Node;
@@ -27,9 +27,6 @@ public class Main extends Application {
     private static Node start, goal;
     private static Node[][] shortestPaths;
     private static Color[] pathColors;
-//    private static Node[] shortestPath;
-//    private static Node[] shortestPath2;
-//    private static Node[] shortestPath3;
     private static InputHandler inputHandler;
 
     public static void main(String[] args) {
@@ -47,62 +44,79 @@ public class Main extends Application {
         } else {
             // initialize array for the shortest paths of the different algorithms
             // to be improved
-            shortestPaths = new Node[3][0];
-            pathColors = new Color[3];
+            shortestPaths = new Node[5][0];
+            pathColors = new Color[5];
 
             // BFS
-            System.out.println("Starting BFS");
-            BreadthFirstSearch bfs = new BreadthFirstSearch();
-            int bfsPathLength = bfs.search(grid, start, goal, 4);
-            System.out.println("BFS shortest (unweighted) path length: " + bfsPathLength);
-            shortestPaths[0] = bfs.getPath().shortestPath(goal, start, bfsPathLength);
-            System.out.println("Retrieved BFS shortest path as array");
-            System.out.println("");
-            pathColors[0] = Color.YELLOW;
+//            System.out.println("Starting BFS");
+//            int pathLength = bfs.search(grid, start, goal, 4);
+//            System.out.println("BFS shortest (unweighted) path length: " + pathLength);
+//            shortestPaths[0] = bfs.getPath().shortestPath(goal, start, pathLength);
+//            System.out.println("Retrieved BFS shortest path as array");
+//            System.out.println("");
+//            pathColors[0] = Color.YELLOW;
+            runPathfindingAlgorithm(new BreadthFirstSearch(), "BFS", 0, Color.YELLOW);
 
             // Dijkstra
+            // #1
             System.out.println("Starting Dijkstra with initializations of two arrays containing each node");
             DijkstraWithArray d1 = new DijkstraWithArray();
+            int pathLength = d1.search(grid, start, goal, 4);
             System.out.println("DijkstraWithArray shortest path "
-                    + "length: " + d1.search(grid, start, goal, 4)
+                    + "length: " + pathLength
                     + ", cost: " + d1.getCost(goal));
+            shortestPaths[1] = d1.getPath().shortestPath(goal, start, pathLength);
+            System.out.println("Retrieved DijkstraWithArray shortest path as array");
             System.out.println("");
-            
+//            pathColors[1] = Color.web("#00FFFF", 0.33);
+            pathColors[1] = Color.GREENYELLOW;
+
+            // #2
             System.out.println("Starting Dijkstra with HashSet for visited and HashMap for costs");
             DijkstraWithHashMap d2 = new DijkstraWithHashMap();
+            pathLength = d2.search(grid, start, goal, 4);
             System.out.println("DijkstraWithHashMap shortest path "
-                    + "length: " + d2.search(grid, start, goal, 4)
+                    + "length: " + pathLength
                     + ", cost: " + d2.getCost(goal));
+            shortestPaths[2] = d2.getPath().shortestPath(goal, start, pathLength);
+            System.out.println("Retrieved DijkstraWithArray shortest path as array");
             System.out.println("");
-            
+            pathColors[2] = Color.BLUEVIOLET;
+
+            // #3
             System.out.println("Starting Dijkstra with no closed set");
             DijkstraNoClosed d3 = new DijkstraNoClosed();
-            int dijkstraPathLength = d3.search(grid, start, goal, 4);
+            pathLength = d3.search(grid, start, goal, 4);
             System.out.println("DijkstraNoClosed shortest path "
-                    + "length: " + dijkstraPathLength
-                    + ", cost: " + d2.getCost(goal));
-            shortestPaths[1] = d3.getPath().shortestPath(goal, start, dijkstraPathLength);
-            System.out.println("Retrieved Dijkstra shortest path as array");
+                    + "length: " + pathLength
+                    + ", cost: " + d3.getCost(goal));
+            shortestPaths[3] = d3.getPath().shortestPath(goal, start, pathLength);
+            System.out.println("Retrieved DijkstraNoClosed shortest path as array");
             System.out.println("");
-            pathColors[1] = Color.CYAN;
-            //compare
-//            Node[] d1path = d1.getPath().shortestPath(goal, start, dijkstraPathLength);
-//            Node[] d2path = d2.getPath().shortestPath(goal, start, dijkstraPathLength);
-//            Node[] d3path = d3.getPath().shortestPath(goal, start, dijkstraPathLength);
-//            for (int i = 0; i < dijkstraPathLength; i++) {
-//                System.out.println(d1path[i] == d2path[i]);
-//                System.out.println(d1path[i] == d3path[i]);
-//                System.out.println(d2path[i] == d3path[i]);
+//            pathColors[3] = pathColors[1] = Color.web("#00FFFF", 1.0);
+            pathColors[3] = Color.CYAN;
+
+            // DEBUG: Comparing Dijkstras
+//            Node[] d1path = d1.getPath().shortestPath(goal, start, pathLength);
+//            Node[] d2path = d2.getPath().shortestPath(goal, start, pathLength);
+//            Node[] d3path = d3.getPath().shortestPath(goal, start, pathLength);
+//            for (int i = 0; i < pathLength; i++) {
+//                if (!d1path[i].equals(d2path[i]) || !d1path[i].equals(d3path[i]) || !d2path[i].equals(d3path[i])) {
+//                    System.out.println("Paths differ at index " + i);
+//                } else {
+//                    System.out.println("Same");
+//                }
 //            }
 
             // A*
             System.out.println("Starting A*");
             AStar astar = new AStar();
-            int astarPathLength = astar.search(grid, start, goal, 4);
-            System.out.println("A* shortest path length: " + astarPathLength);
-            shortestPaths[2] = astar.getPath().shortestPath(goal, start, astarPathLength);
+            pathLength = astar.search(grid, start, goal, 4);
+            System.out.println("A* shortest path length: " + pathLength
+                    + ", cost: " + astar.getCost(goal));
+            shortestPaths[4] = astar.getPath().shortestPath(goal, start, pathLength);
             System.out.println("Retrieved A* shortest path as array");
-            pathColors[2] = Color.MAGENTA;
+            pathColors[4] = Color.MAGENTA;
 
             // GUI
             launch(Main.class);
@@ -117,6 +131,18 @@ public class Main extends Application {
         window.setScene(scene);
         window.setTitle("Pathfinding visualization on game maps");
         window.show();
+    }
+
+    private static void runPathfindingAlgorithm(PathFindingAlgorithm algorithm, String name, int i, Color color) {
+        System.out.println("Starting " + name + "with initializations of two arrays containing each node");
+        int pathLength = algorithm.search(grid, start, goal, 4);
+        System.out.println(name + " shortest path "
+                + "length: " + pathLength
+                + ", cost: " + algorithm.getCost(goal));
+        shortestPaths[i] = algorithm.getPath().shortestPath(goal, start, pathLength);
+        System.out.println("Retrieved " + name + " shortest path as array");
+        System.out.println("");
+        pathColors[i] = color;
     }
 
     // NOTE: GridPane.add receives coordinates in (..., column, row)

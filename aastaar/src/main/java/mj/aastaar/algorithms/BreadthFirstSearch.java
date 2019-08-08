@@ -17,10 +17,12 @@ public class BreadthFirstSearch implements PathFindingAlgorithm {
 
     private ArrayDeque<Node> frontier;
     private Path path;
+    private int cost;
 
     public BreadthFirstSearch() {
         frontier = new ArrayDeque<>();
         path = new Path();
+        cost = 0;
     }
 
     @Override
@@ -28,6 +30,8 @@ public class BreadthFirstSearch implements PathFindingAlgorithm {
         return path;
     }
     
+    // returns the amount of steps in a shortest path or -1 if not found
+    // NOTE: cannot do multiple searches with the same object
     @Override
     public int search(Grid grid, Node start, Node goal, int directions) {
         frontier.add(start);
@@ -37,7 +41,8 @@ public class BreadthFirstSearch implements PathFindingAlgorithm {
             Node current = frontier.poll();
 
             if (current.equals(goal)) {
-                return path.earlyExit(current, start);
+                cost = path.earlyExit(current, start);
+                return cost;
             }
 
             expandFrontier(grid, current, directions);
@@ -54,5 +59,10 @@ public class BreadthFirstSearch implements PathFindingAlgorithm {
                 path.putCameFrom(next, current);
             }
         }
+    }
+
+    @Override
+    public double getCost(Node goal) {
+        return cost;
     }
 }

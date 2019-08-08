@@ -13,4 +13,6 @@ public interface PathFindingAlgorithm {
     public int search(Grid grid, Node start, Node goal, int directions);
     
     public Path getPath();
+    
+    public double getCost(Node goal);
 }

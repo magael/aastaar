@@ -21,7 +21,8 @@ public class AStar implements PathFindingAlgorithm {
         cost = new HashMap<>();
     }
     
-    // runs the pathfinding algorithm, returns the length of the shortest path
+    // returns the amount of steps in a shortest path or -1 if not found
+    // NOTE: cannot do multiple searches with the same object
     public int search(Grid grid, Node start, Node goal, int directions) {
         frontier.add(start);
         path.putCameFrom(start, start);
@@ -41,6 +42,11 @@ public class AStar implements PathFindingAlgorithm {
     @Override
     public Path getPath() {
         return path;
+    }
+    
+    @Override
+    public double getCost(Node goal) {
+        return cost.get(goal);
     }
 
     // used by the search to put new nodes to the frontier (a.k.a. open set) and path

@@ -20,7 +20,8 @@ public class DijkstraWithArray implements PathFindingAlgorithm {
         frontier = new PriorityQueue();
     }
     
-    // returns the amount of steps in the shortest path or -1 if not founs
+    // returns the amount of steps in a shortest path or -1 if not found
+    // NOTE: cannot do multiple searches with the same object
     @Override
     public int search(Grid grid, Node start, Node goal, int directions) {
         int nx = grid.getLength();

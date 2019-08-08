@@ -24,6 +24,8 @@ public class DijkstraNoClosed implements PathFindingAlgorithm {
         cost = new HashMap<>();
     }
     
+    // returns the amount of steps in a shortest path or -1 if not found
+    // NOTE: cannot do multiple searches with the same object
     @Override
     public int search(Grid grid, Node start, Node goal, int directions) {
         frontier.add(start);
