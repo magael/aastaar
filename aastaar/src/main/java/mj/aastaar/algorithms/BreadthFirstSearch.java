@@ -13,27 +13,31 @@ import mj.aastaar.map.Node;
  *
  * @author MJ
  */
-public class BreadthFirstSearch extends PathFindingAlgorithm {
+public class BreadthFirstSearch implements PathFindingAlgorithm {
 
     private ArrayDeque<Node> frontier;
+    private Path path;
 
     public BreadthFirstSearch() {
-        super();
         frontier = new ArrayDeque<>();
+        path = new Path();
+    }
+
+    @Override
+    public Path getPath() {
+        return path;
     }
     
-    //NOTE: not sure if best practice to use "super" keyword or not
-
     @Override
     public int search(Grid grid, Node start, Node goal, int directions) {
         frontier.add(start);
-        super.cameFrom.put(start, start);
+        path.put(start, start);
 
         while (!frontier.isEmpty()) {
             Node current = frontier.poll();
 
             if (current.equals(goal)) {
-                return super.earlyExit(current, start);
+                return path.earlyExit(current, start);
             }
 
             expandFrontier(grid, current, directions);
@@ -41,13 +45,13 @@ public class BreadthFirstSearch extends PathFindingAlgorithm {
         return -1;
     }
 
-    @Override
-    public void expandFrontier(Grid grid, Node current, int directions) {
+    // used by the search to put new nodes to the frontier (a.k.a. open set)
+    private void expandFrontier(Grid grid, Node current, int directions) {
         Node[] currentNeighbours = grid.getNeighbours(current.getX(), current.getY(), directions);
         for (Node next : currentNeighbours) {
-            if (next != null && !super.cameFrom.containsKey(next)) {
+            if (next != null && !path.containsNode(next)) {
                 frontier.add(next);
-                super.cameFrom.put(next, current);
+                path.put(next, current);
             }
         }
     }

@@ -55,7 +55,7 @@ public class Main extends Application {
             BreadthFirstSearch bfs = new BreadthFirstSearch();
             int bfsPathLength = bfs.search(grid, start, goal, 4);
             System.out.println("BFS shortest (unweighted) path length: " + bfsPathLength);
-            shortestPaths[0] = bfs.shortestPath(goal, start, bfsPathLength);
+            shortestPaths[0] = bfs.getPath().shortestPath(goal, start, bfsPathLength);
             System.out.println("Retrieved BFS shortest path as array");
             pathColors[0] = Color.YELLOW;
             
@@ -73,6 +73,7 @@ public class Main extends Application {
             shortestPaths[1] = dijkstraNoClosed.shortestPath(goal, start, dijkstraPathLength);
             System.out.println("Retrieved Dijkstra shortest path as array");
             pathColors[1] = Color.CYAN;
+            
             // A*
             System.out.println("Starting A*");
             AStar astar = new AStar();
@@ -81,9 +82,7 @@ public class Main extends Application {
             shortestPaths[2] = astar.shortestPath(goal, start, astarPathLength);
             System.out.println("Retrieved A* shortest path as array");
             pathColors[2] = Color.MAGENTA;
-            // Compare paths
-//            System.out.println("BFS and Dijkstra found the exact same path: " + search.equals(dijkstraShortestPath));
-//            search = dijkstraShortestPath;
+
             // GUI
             launch(Main.class);
         }
