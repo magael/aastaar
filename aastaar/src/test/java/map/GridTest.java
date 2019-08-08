@@ -89,6 +89,21 @@ public class GridTest {
     }
     
     @Test
+    public void heuristicReturnsCorrectManhattanDistance2() {
+        int ax = 20;
+        int ay = 4;
+        int bx = 8;
+        int by = 100;
+        
+        Node a = new Node(ax, ay, 0.0);
+        Node b = new Node(bx, by, 0.0);
+        
+        double h = (double) Math.abs(ax - bx) + Math.abs(ay - by);
+        
+        assertEquals(h, grid.heuristic(a, b), 0.0);
+    }
+    
+    @Test
     public void costReturnsOneForGround() {
         Node from = new Node(1, 1, 0);
         Node to = new Node(2, 1, 0);

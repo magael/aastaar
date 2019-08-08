@@ -37,7 +37,7 @@ public class Grid {
         }
         return s;
     }
-    
+
     // manhattan distance on a square grid
     // with a custom of implementation calculating absolute value
     public double heuristic(Node a, Node b) {
@@ -57,15 +57,18 @@ public class Grid {
         double cost = 1.0;
         char current = grid[from.getX()][from.getY()];
         char next = grid[to.getX()][to.getY()];
-        if (current == 'S') cost += 2.0;
-        if (next == 'S') cost += 2.0;
+        if (current == 'S') {
+            cost += 2.0;
+        }
+        if (next == 'S') {
+            cost += 2.0;
+        }
         return cost;
     }
 
     // returns the adjacent nodes which are in bounds and passable
     // if also the current node is in bounds and passable
     // (checked in case starting node is out of bounds)
-    // TODO: only check the starting node once (elsewhere)
     // TODO: directions which are specified in coordinate arrays,
     // currently only allows movement in 4 directions (horizontal, vertical)
     // TODO: dynamic array for neighbours
@@ -74,24 +77,22 @@ public class Grid {
     // or hashtables vs this kind of dynamic check
     public Node[] getNeighbours(int x, int y, int directions) {
         Node[] neighbours = new Node[directions];
-        if (x >= 0 && y >= 0 && x < grid.length && y < grid.length && isPassable(grid[x][y])) {
-            if (x < (grid.length - 1) && isPassable(grid[x + 1][y])) {
-                neighbours[0] = new Node(x + 1, y, 1);
-            }
-            if (x > 0 && isPassable(grid[x - 1][y])) {
-                neighbours[1] = new Node(x - 1, y, 1);
-            }
-            if (y < (grid[0].length - 1) && isPassable(grid[x][y + 1])) {
-                neighbours[2] = new Node(x, y + 1, 1);
-            }
-            if (y > 0 && isPassable(grid[x][y - 1])) {
-                neighbours[3] = new Node(x, y - 1, 1);
-            }
+        if (x < (grid.length - 1) && isPassable(grid[x + 1][y])) {
+            neighbours[0] = new Node(x + 1, y, 1);
+        }
+        if (x > 0 && isPassable(grid[x - 1][y])) {
+            neighbours[1] = new Node(x - 1, y, 1);
+        }
+        if (y < (grid[0].length - 1) && isPassable(grid[x][y + 1])) {
+            neighbours[2] = new Node(x, y + 1, 1);
+        }
+        if (y > 0 && isPassable(grid[x][y - 1])) {
+            neighbours[3] = new Node(x, y - 1, 1);
         }
         return neighbours;
     }
 
-    private boolean isPassable(char c) {
+    public boolean isPassable(char c) {
         for (char ic : impassable) {
             if (c == ic) {
                 return false;

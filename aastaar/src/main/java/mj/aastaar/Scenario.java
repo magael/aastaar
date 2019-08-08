@@ -61,15 +61,32 @@ public class Scenario {
         this.pathColors = pathColors;
     }
 
+    public boolean startNodeIsValid() {
+        int x = start.getX();
+        int y = start.getY();
+        int gridLength = grid.getLength();
+        if (x >= 0 && y >= 0 && x < gridLength && y < gridLength) {
+            char startChar = grid.getGrid2D()[x][y];
+            if (grid.isPassable(startChar)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void runPathfindingAlgorithm(PathFindingAlgorithm algorithm, String name, int i, String color) {
-        System.out.println("Starting " + name);
-        int pathLength = algorithm.search(grid, start, goal, 4);
-        System.out.println(name + " shortest path "
-                + "length: " + pathLength
-                + ", cost: " + algorithm.getCost(goal));
-        shortestPaths[i] = algorithm.getPath().shortestPath(goal, start, pathLength);
-        System.out.println("Retrieved " + name + " shortest path as array \n");
-        pathColors[i] = color;
+        if (startNodeIsValid()) {
+            System.out.println("Starting " + name);
+            int pathLength = algorithm.search(grid, start, goal, 4);
+            System.out.println(name + " shortest path "
+                    + "length: " + pathLength
+                    + ", cost: " + algorithm.getCost(goal));
+            shortestPaths[i] = algorithm.getPath().shortestPath(goal, start, pathLength);
+            System.out.println("Retrieved " + name + " shortest path as array \n");
+            pathColors[i] = color;
+        } else {
+            System.out.println("The starting position is not valid");
+        }
     }
 
     // create the pathfinding grid based on a specific map
