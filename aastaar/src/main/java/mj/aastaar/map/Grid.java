@@ -14,7 +14,7 @@ public class Grid {
         this.impassable = impassable;
     }
 
-    public char[][] getGrid() {
+    public char[][] getGrid2D() {
         return grid;
     }
 
@@ -39,9 +39,8 @@ public class Grid {
     }
     
     // manhattan distance on a square grid
-    // avoiding using the Java Math class
+    // with a custom of implementation calculating absolute value
     public double heuristic(Node a, Node b) {
-        //   return abs(a.x - b.x) + abs(a.y - b.y)
         double x = a.getX() - b.getX();
         x = (x > 0) ? x : 0 - x;
         double y = a.getY() - b.getY();
@@ -50,7 +49,7 @@ public class Grid {
     }
 
     // different cost for shallow water than normal ground
-    // TODO: experiment with weights
+    // NOTE: experimenting with different "S"-penalties yields different paths
     // TODO: no cutting corners and cost of sqrt(2) for diagonal
     public double cost(Node from, Node to) {
         double cost = 1.0;

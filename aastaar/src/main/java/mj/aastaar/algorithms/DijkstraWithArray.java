@@ -25,7 +25,7 @@ public class DijkstraWithArray implements PathFindingAlgorithm {
     @Override
     public int search(Grid grid, Node start, Node goal, int directions) {
         int nx = grid.getLength();
-        int ny = grid.getGrid()[0].length;
+        int ny = grid.getGrid2D()[0].length;
         cost = new double[nx][ny];
         visited = new boolean[nx][ny];
         
