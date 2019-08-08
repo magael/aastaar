@@ -70,7 +70,7 @@ public class Main extends Application {
             DijkstraNoClosed dijkstraNoClosed = new DijkstraNoClosed();
             int dijkstraPathLength = dijkstraNoClosed.search(grid, start, goal, 4);
             System.out.println("DijkstraNoClosed shortest path length: " + dijkstraPathLength);
-            shortestPaths[1] = dijkstraNoClosed.shortestPath(goal, start, dijkstraPathLength);
+            shortestPaths[1] = dijkstraNoClosed.getPath().shortestPath(goal, start, dijkstraPathLength);
             System.out.println("Retrieved Dijkstra shortest path as array");
             pathColors[1] = Color.CYAN;
             
@@ -79,7 +79,7 @@ public class Main extends Application {
             AStar astar = new AStar();
             int astarPathLength = astar.search(grid, start, goal, 4);
             System.out.println("A* shortest path length: " + astarPathLength);
-            shortestPaths[2] = astar.shortestPath(goal, start, astarPathLength);
+            shortestPaths[2] = astar.getPath().shortestPath(goal, start, astarPathLength);
             System.out.println("Retrieved A* shortest path as array");
             pathColors[2] = Color.MAGENTA;
 
