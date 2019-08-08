@@ -2,6 +2,7 @@ package mj.aastaar;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -55,7 +56,8 @@ public class Main extends Application {
     @Override
     public void start(Stage window) throws Exception {
         GridPane layout = gridGUI();
-        Scene scene = new Scene(layout);
+        ScrollPane sp = new ScrollPane(layout);
+        Scene scene = new Scene(sp);
 
         window.setScene(scene);
         window.setTitle("Pathfinding visualization on game maps");
