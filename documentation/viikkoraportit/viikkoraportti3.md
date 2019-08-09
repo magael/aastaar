@@ -27,19 +27,19 @@ Pieniä parannuksia mm. BreadthFirstSearchiin, Nodeille prioriteetti ja ensimmä
 
 BFS palauttaa itse polun (solmut taulukkona), GUI-ikkuna, ruudut asiaankuuluvilla väreillä, suunnittelua. Noin 6h.
 
-## Tiistai 6.8.
+#### Tiistai 6.8.
 
 Dijkstran korjausausyritys ja toinen versio Dijkstrasta. Node-luokan testaustaa. Alku- ja loppupisteiden ja polun piirtäminen kartalle ym. Noin 7h.
 
-## Keskiviikko 7.8.
+#### Keskiviikko 7.8.
 
 Toinen ja kolmas versio Dijkstrasta toimimaan ja A*. Polkujen painot, refaktoroitia, dokumentointia ym. Noin 7h.
 
-## Torstai 8.8.
+#### Torstai 8.8.
 
 Algoritmirajapinta, ei-GUI-jutut pois Mainista ym. refaktorointia ja koodin siistimistä, visualisoinnin kehittämistä, dokumentointia, testausta ym. Noin 8h.
 
-## Perjantai 9.8.
+#### Perjantai 9.8.
 
 Viikkoraportti. Noin 1h.
 
