@@ -51,7 +51,7 @@ public class Grid {
     // different cost for shallow water than normal ground
     // NOTE: should only be called for nodes that have already been checked
     // as passable and in bounds
-    // NOTE: experimenting with different "S"-penalties yields different paths
+    // NOTE: different "shallow water"-penalties yield different paths
     // TODO: no cutting corners and cost of sqrt(2) for diagonal
     public double cost(Node from, Node to) {
         double cost = 1.0;
