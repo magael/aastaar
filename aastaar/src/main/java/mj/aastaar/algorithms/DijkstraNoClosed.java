@@ -14,12 +14,12 @@ import mj.aastaar.map.Node;
  */
 public class DijkstraNoClosed implements PathFindingAlgorithm {
     
-    private Path path;
+    private PathWithHashMap path;
     private PriorityQueue<Node> frontier;
     private HashMap<Node, Double> cost;
 
     public DijkstraNoClosed() {
-        path = new Path();
+        path = new PathWithHashMap();
         frontier = new PriorityQueue<>();
         cost = new HashMap<>();
     }

@@ -8,7 +8,7 @@ Työtunteja kertyi yhteensä noin 32.
 
 * Projektin edistäminen on niin mielekästä, että tuli tehtyä tällä viikolla aika paljon hommia sen eteen. Ajattelin keskittyä ensi viikolla lähinnä toteuttamaan oman prioriteettijonon. Onkohan mahdollista, että jos muita toiminnallisuuksia ei juuri tulisi lisää, projektin voitaisiin kuitenkin katsoa edistyneen, kun tällä viikolla se eteni sen verran paljon?
 
-* Testikattavuudessa on vähän parantamisen varaa, mutta oikeestaan kaikki paitsi Mainin GUI-jutut ja algoritmiluokat ovat nähdäkseni melko kattavasti testattu. Olen lykännyt algoritmien yksikkötestausta, koska niiden toteutukset ovat muuttuneet jatkuvasti paljon. Osaa nykyisistä luokista ei varmaan tule jäämään ollenkaan lopulliseen palautukseen. Jos siitä ei ole arvostelun kannalta hyötyä, niin en ehkä haluaisi merkitä testeille esim. Main-luokkaa skipattavaksi, vaikka se nostaisi vähän kattavuusprosenttia.
+* Testikattavuudessa on vähän parantamisen varaa, mutta oikeestaan kaikki paitsi Mainin GUI-jutut ja algoritmiluokat ovat melko kattavasti testattu. Olen lykännyt algoritmien yksikkötestausta, koska niiden toteutukset ovat muuttuneet jatkuvasti paljon. Osaa nykyisistä luokista ei varmaan tule jäämään ollenkaan lopulliseen palautukseen. Jos siitä ei ole arvostelun kannalta hyötyä, niin en ehkä haluaisi merkitä testeille esim. Main-luokkaa skipattavaksi, vaikka se nostaisi vähän kattavuusprosenttia.
 
 * Onkohan BFS arvostelun kannalta minkään arvoinen? Se myös taitaisi vaatia erikseen oman tietorakenteen toteutuksen.
 

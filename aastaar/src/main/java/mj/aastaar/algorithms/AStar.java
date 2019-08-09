@@ -11,12 +11,12 @@ import mj.aastaar.map.Node;
  */
 public class AStar implements PathFindingAlgorithm {
     
-    private Path path;
+    private PathWithHashMap path;
     private PriorityQueue<Node> frontier;
     private HashMap<Node, Double> cost;
 
     public AStar() {
-        path = new Path();
+        path = new PathWithHashMap();
         frontier = new PriorityQueue<>();
         cost = new HashMap<>();
     }

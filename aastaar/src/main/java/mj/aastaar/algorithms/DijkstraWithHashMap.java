@@ -17,13 +17,13 @@ import mj.aastaar.map.Node;
  */
 public class DijkstraWithHashMap implements PathFindingAlgorithm {
 
-    private Path path;
+    private PathWithHashMap path;
     private HashMap<Node, Double> cost;
     private HashSet<Node> visited;
     private PriorityQueue<Node> frontier;
 
     public DijkstraWithHashMap() {
-        path = new Path();
+        path = new PathWithHashMap();
         cost = new HashMap<>();
         visited = new HashSet<>();
         frontier = new PriorityQueue();

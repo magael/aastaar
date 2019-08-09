@@ -16,12 +16,12 @@ import mj.aastaar.map.Node;
 public class BreadthFirstSearch implements PathFindingAlgorithm {
 
     private ArrayDeque<Node> frontier;
-    private Path path;
+    private PathWithHashMap path;
     private int cost;
 
     public BreadthFirstSearch() {
         frontier = new ArrayDeque<>();
-        path = new Path();
+        path = new PathWithHashMap();
         cost = 0;
     }
 

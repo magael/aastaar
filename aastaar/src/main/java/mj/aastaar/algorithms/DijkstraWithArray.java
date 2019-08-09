@@ -10,13 +10,12 @@ import mj.aastaar.map.Node;
  */
 public class DijkstraWithArray implements PathFindingAlgorithm {
 
-    private Path path;
+    private PathWithArray path;
     private PriorityQueue<Node> frontier;
     private double cost[][];
     private boolean[][] visited;
 
     public DijkstraWithArray() {
-        path = new Path();
         frontier = new PriorityQueue();
     }
 
@@ -26,6 +25,7 @@ public class DijkstraWithArray implements PathFindingAlgorithm {
     public int search(Grid grid, Node start, Node goal, int directions) {
         int nx = grid.getLength();
         int ny = grid.getGrid2D()[0].length;
+        path = new PathWithArray(nx, ny);
         cost = new double[nx][ny];
         visited = new boolean[nx][ny];
 
