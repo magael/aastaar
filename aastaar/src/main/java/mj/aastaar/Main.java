@@ -40,12 +40,12 @@ public class Main extends Application {
             // to be improved
             scenario.setShortestPaths(new Node[5][]);
             scenario.setPathColors(new String[5]);
-
-            scenario.runPathfindingAlgorithm(new BreadthFirstSearch(), "BFS", 0, "#FFFF00");
-            scenario.runPathfindingAlgorithm(new DijkstraWithArray(), "Dijkstra with arrays", 1, "#000FFF");
-            scenario.runPathfindingAlgorithm(new DijkstraWithHashMap(), "Dijkstra with hash tables", 2, "#0FF000");
-            scenario.runPathfindingAlgorithm(new DijkstraNoClosed(), "Dijkstra with no closed set", 3, "#00FFFF");
-            scenario.runPathfindingAlgorithm(new AStar(), "A*", 4, "#FF00FF");
+                    
+            scenario.runPathfindingAlgorithm(new BreadthFirstSearch(), "BFS", 0, "#FFFF00"); // color: yellow
+            scenario.runPathfindingAlgorithm(new DijkstraWithArray(), "Dijkstra with arrays", 1, "#000FFF"); // color: blue
+            scenario.runPathfindingAlgorithm(new DijkstraWithHashMap(), "Dijkstra with hash tables", 2, "#0FF000"); // color: green
+            scenario.runPathfindingAlgorithm(new DijkstraNoClosed(), "Dijkstra with no closed set", 3, "#00FFFF"); // color: cyan
+            scenario.runPathfindingAlgorithm(new AStar(), "A*", 4, "#FF00FF"); // color: magenta
 
             // GUI
             launch(Main.class);

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mj.aastaar.algorithms;
 
 import java.util.HashMap;
@@ -18,23 +13,24 @@ import mj.aastaar.map.Node;
 public class DijkstraWithHashMap implements PathFindingAlgorithm {
 
     private PathWithHashMap path;
+    private PriorityQueue<Node> frontier;
     private HashMap<Node, Double> cost;
     private HashSet<Node> visited;
-    private PriorityQueue<Node> frontier;
 
     public DijkstraWithHashMap() {
         path = new PathWithHashMap();
+        frontier = new PriorityQueue();
         cost = new HashMap<>();
         visited = new HashSet<>();
-        frontier = new PriorityQueue();
     }
 
     // returns the amount of steps in a shortest path or -1 if not found
     // NOTE: cannot do multiple searches with the same object
     @Override
     public int search(Grid grid, Node start, Node goal, int directions) {
+        path.putCameFrom(start, start);
+        frontier.add(start);
         cost.put(start, 0.0);
-        frontier.add(new Node(start.getX(), start.getY(), 0.0));
 
         while (!frontier.isEmpty()) {
             Node current = frontier.poll();
@@ -57,6 +53,7 @@ public class DijkstraWithHashMap implements PathFindingAlgorithm {
         return path;
     }
 
+    @Override
     public double getCost(Node goal) {
         return cost.get(goal);
     }

@@ -40,6 +40,7 @@ public class Grid {
 
     // manhattan distance on a square grid
     // with a custom of implementation calculating absolute value
+    // TODO: octile distance for diagonal movement
     public double heuristic(Node a, Node b) {
         double x = a.getX() - b.getX();
         x = (x > 0) ? x : 0 - x;
@@ -52,7 +53,6 @@ public class Grid {
     // NOTE: should only be called for nodes that have already been checked
     // as passable and in bounds
     // NOTE: different "shallow water"-penalties yield different paths
-    // TODO: no cutting corners and cost of sqrt(2) for diagonal
     public double cost(Node from, Node to) {
         double cost = 1.0;
         char current = grid[from.getX()][from.getY()];
@@ -70,8 +70,8 @@ public class Grid {
     // if also the current node is in bounds and passable
     // (checked in case starting node is out of bounds)
     // TODO: directions which are specified in coordinate arrays,
-    // currently only allows movement in 4 directions (horizontal, vertical)
-    // TODO: dynamic array for neighbours
+    // currently only allows movement in 4 directions (horizontal, vertical),
+    // no cutting corners for diagonal movement
     // TODO: refactor inBounds checks
     // NOTE: it would be interesting to test precomputed neighbour lists / matrices
     // or hashtables vs this kind of dynamic check

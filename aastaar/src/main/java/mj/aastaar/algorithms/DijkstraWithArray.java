@@ -35,8 +35,9 @@ public class DijkstraWithArray implements PathFindingAlgorithm {
             }
         }
 
-        cost[start.getX()][start.getY()] = 0.0;
+        path.putCameFrom(start, start);
         frontier.add(new Node(start.getX(), start.getY(), 0.0));
+        cost[start.getX()][start.getY()] = 0.0;
 
         while (!frontier.isEmpty()) {
             Node current = frontier.poll();
@@ -59,6 +60,7 @@ public class DijkstraWithArray implements PathFindingAlgorithm {
         return path;
     }
 
+    @Override
     public double getCost(Node goal) {
         return cost[goal.getX()][goal.getY()];
     }

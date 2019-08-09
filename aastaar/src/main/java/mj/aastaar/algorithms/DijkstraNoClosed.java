@@ -1,10 +1,7 @@
 package mj.aastaar.algorithms;
 
-//import java.util.ArrayList;
 import java.util.HashMap;
-//import java.util.HashSet;
 import java.util.PriorityQueue;
-//import java.util.Set;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 
@@ -28,8 +25,8 @@ public class DijkstraNoClosed implements PathFindingAlgorithm {
     // NOTE: cannot do multiple searches with the same object
     @Override
     public int search(Grid grid, Node start, Node goal, int directions) {
-        frontier.add(start);
         path.putCameFrom(start, start);
+        frontier.add(start);
         cost.put(start, 0.0);
 
         while (!frontier.isEmpty()) {
@@ -44,13 +41,14 @@ public class DijkstraNoClosed implements PathFindingAlgorithm {
         return -1;
     }
     
-    public double getCost(Node goal) {
-        return cost.get(goal);
-    }
-    
     @Override
     public Path getPath() {
         return path;
+    }
+    
+    @Override
+    public double getCost(Node goal) {
+        return cost.get(goal);
     }
     
     // used by the search to put new nodes to the frontier (a.k.a. open set) and path
