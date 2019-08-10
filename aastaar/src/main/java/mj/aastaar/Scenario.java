@@ -110,7 +110,7 @@ public class Scenario {
         //mapCreator.createMapFromFile("mapdata/sc1-map/Aftershock.map");
         //mapCreator.createMapFromFile("mapdata/wc3maps512-map/tranquilpaths.map");
         // the wc3 maps contain shallow water
-        //mapCreator.createMapFromFile("mapdata/wc3maps512-map/divideandconquer.map");
+        mapCreator.createMapFromFile("mapdata/wc3maps512-map/divideandconquer.map");
         //mapCreator.createMapFromFile("mapdata/wc3maps512-map/timbermawhold.map");
         if (mapCreator.getGrid() != null) {
             char[][] gridArray = mapCreator.getGrid();
