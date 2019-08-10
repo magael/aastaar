@@ -6,7 +6,7 @@ Työtunteja kertyi yhteensä noin 32.
 
 #### Viikon aikana syntynyttä pohdintaa:
 
-* Projektin edistäminen on niin mielekästä, että tuli tehtyä tällä viikolla aika paljon hommia sen eteen. Ajattelin keskittyä ensi viikolla lähinnä toteuttamaan omaa prioriteettijonoa, sekä aikataulussa mainittuihin dokumentaation ja testauksen osuuksiin. Onkohan projekti jo mahdollisesti siinä pisteessä, että se on toiminnallisuuksien suhteen (eli tietorakenteita, testausta ja dokumentaatiota lukuunottamatta) viikolle 4 riittävällä tasolla?
+* Projektin edistäminen on niin mielekästä, että tuli tehtyä tällä viikolla aika paljon hommia sen eteen. Ajattelin keskittyä ensi viikolla lähinnä toteuttamaan omaa prioriteettijonoa, sekä aikataulussa mainittuihin dokumentaation ja testauksen osuuksiin. Onkohan projekti jo mahdollisesti siinä pisteessä, että se olisi toiminnallisuuksien suhteen (eli tietorakenteita, testausta ja dokumentaatiota lukuunottamatta) viikon 4 palautuksen vaatimusten tasolla?
 
 * Testikattavuudessa on vähän parantamisen varaa, mutta oikeestaan kaikki paitsi Mainin GUI-jutut ja algoritmiluokat ovat melko kattavasti testattu. Olen lykännyt algoritmien yksikkötestausta, koska niiden toteutukset ovat muuttuneet jatkuvasti paljon. Monet nykyisistä luokista ovat vain kokeiluja, jotka eivät varmastikaan tule jäämään lopulliseen palautukseen.
 
