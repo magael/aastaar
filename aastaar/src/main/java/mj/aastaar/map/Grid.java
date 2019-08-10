@@ -39,7 +39,7 @@ public class Grid {
     }
 
     // manhattan distance on a square grid
-    // with a custom of implementation calculating absolute value
+    // with a custom of implementation of calculating absolute value
     // TODO: octile distance for diagonal movement
     public double heuristic(Node a, Node b) {
         double x = a.getX() - b.getX();
@@ -67,8 +67,6 @@ public class Grid {
     }
 
     // returns the adjacent nodes which are in bounds and passable
-    // if also the current node is in bounds and passable
-    // (checked in case starting node is out of bounds)
     // TODO: directions which are specified in coordinate arrays,
     // currently only allows movement in 4 directions (horizontal, vertical),
     // no cutting corners for diagonal movement
