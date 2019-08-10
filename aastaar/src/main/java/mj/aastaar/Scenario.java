@@ -107,11 +107,10 @@ public class Scenario {
     private void initDefaultGrid() {
         MapCreator mapCreator = new MapCreator();
         // example maps
-        //mapCreator.createMapFromFile("mapdata/dao-map/arena2.map");
         //mapCreator.createMapFromFile("mapdata/sc1-map/Aftershock.map");
         //mapCreator.createMapFromFile("mapdata/wc3maps512-map/tranquilpaths.map");
         // the wc3 maps contain shallow water
-        mapCreator.createMapFromFile("mapdata/wc3maps512-map/divideandconquer.map");
+        //mapCreator.createMapFromFile("mapdata/wc3maps512-map/divideandconquer.map");
         //mapCreator.createMapFromFile("mapdata/wc3maps512-map/timbermawhold.map");
         if (mapCreator.getGrid() != null) {
             char[][] gridArray = mapCreator.getGrid();
@@ -128,11 +127,6 @@ public class Scenario {
 //        int startY = 203;
 //        int goalX = 400;
 //        int goalY = 390;
-        // arena
-//        int startX = 4;
-//        int startY = 32;
-//        int goalX = 47;
-//        int goalY = 19;
         // arena2
 //        int startX = 84;
 //        int startY = 106;
@@ -153,11 +147,6 @@ public class Scenario {
 //        int startY = 380;
 //        int goalX = 394;
 //        int goalY = 101;
-        // tranquilpaths
-//        int startX = 250;
-//        int startY = 50;
-//        int goalX = 250;
-//        int goalY = 375;
 
         start = new Node(startX, startY, 0.0);
         goal = new Node(goalX, goalY, 0.0);
