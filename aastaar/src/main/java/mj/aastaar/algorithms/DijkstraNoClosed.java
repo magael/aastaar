@@ -48,6 +48,7 @@ public class DijkstraNoClosed implements PathFindingAlgorithm {
     
     @Override
     public double getCost(Node goal) {
+        if (!cost.containsKey(goal)) return -1;
         return cost.get(goal);
     }
     

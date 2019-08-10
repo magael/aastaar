@@ -62,7 +62,9 @@ public class DijkstraWithArray implements PathFindingAlgorithm {
 
     @Override
     public double getCost(Node goal) {
-        return cost[goal.getX()][goal.getY()];
+        double c = cost[goal.getX()][goal.getY()];
+        if (c == 1000000000.0) return -1;
+        return c;
     }
 
     // used by the search to put new nodes to the frontier (a.k.a. open set) and path
