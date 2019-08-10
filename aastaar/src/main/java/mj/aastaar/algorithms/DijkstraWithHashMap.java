@@ -1,5 +1,7 @@
 package mj.aastaar.algorithms;
 
+import mj.aastaar.algorithms.path.Path;
+import mj.aastaar.algorithms.path.PathWithHashMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.PriorityQueue;

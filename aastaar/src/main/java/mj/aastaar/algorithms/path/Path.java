@@ -1,4 +1,4 @@
-package mj.aastaar.algorithms;
+package mj.aastaar.algorithms.path;
 
 import mj.aastaar.map.Node;
 

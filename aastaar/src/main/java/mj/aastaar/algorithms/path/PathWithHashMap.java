@@ -1,4 +1,4 @@
-package mj.aastaar.algorithms;
+package mj.aastaar.algorithms.path;
 
 import java.util.HashMap;
 import mj.aastaar.map.Node;
