@@ -31,7 +31,8 @@ public class ScenarioTest {
             {'S', '.', 'T', 'T', 'T'}
         };
         char[] impassable = {'T', 'W', '@'};
-        scenario.setGrid(new Grid(gridArray, impassable));
+        double edgeWeight = 2.0;
+        scenario.setGrid(new Grid(gridArray, impassable, edgeWeight));
         start = new Node(0, 0, 0);
         scenario.setStart(start);
     }

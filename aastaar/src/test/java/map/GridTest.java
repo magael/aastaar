@@ -23,8 +23,8 @@ public class GridTest {
             {'S', '.', '.', '.', 'T'},
             {'S', '.', 'T', 'T', 'T'}
         };
-        char[] impassable = {'T', 'W', '@'};
-        grid = new Grid(gridArray, impassable);
+        char[] impassable = {'T', 'W', '@'};double edgeWeight = 2.0;
+        grid = new Grid(gridArray, impassable, edgeWeight);
     }
     
     @Test

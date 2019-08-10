@@ -115,7 +115,8 @@ public class Scenario {
         if (mapCreator.getGrid() != null) {
             char[][] gridArray = mapCreator.getGrid();
             char[] impassable = {'T', 'W', '@'};
-            grid = new Grid(gridArray, impassable);
+            double edgeWeight = 2.0; // penalty for moving to or from shallow water
+            grid = new Grid(gridArray, impassable, edgeWeight);
         }
     }
 
@@ -138,8 +139,8 @@ public class Scenario {
 //        int goalX = 70;
 //        int goalY = 190;
         // divideandconquer
-        int startX = 90;
-        int startY = 370;
+        int startX = 95;
+        int startY = 270;
         int goalX = 420;
         int goalY = 440;
         // timbermawhold

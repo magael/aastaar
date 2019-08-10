@@ -8,10 +8,12 @@ public class Grid {
 
     private char[][] grid;
     private char[] impassable;
+    private double edgeWeight;
 
-    public Grid(char[][] grid, char[] impassable) {
+    public Grid(char[][] grid, char[] impassable, double edgeWeight) {
         this.grid = grid;
         this.impassable = impassable;
+        this.edgeWeight = edgeWeight;
     }
 
     public char[][] getGrid2D() {
@@ -58,10 +60,10 @@ public class Grid {
         char current = grid[from.getX()][from.getY()];
         char next = grid[to.getX()][to.getY()];
         if (current == 'S') {
-            cost += 2.0;
+            cost += edgeWeight;
         }
         if (next == 'S') {
-            cost += 2.0;
+            cost += edgeWeight;
         }
         return cost;
     }
