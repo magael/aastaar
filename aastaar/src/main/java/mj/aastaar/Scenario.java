@@ -110,8 +110,9 @@ public class Scenario {
         //mapCreator.createMapFromFile("mapdata/dao-map/arena2.map");
         //mapCreator.createMapFromFile("mapdata/sc1-map/Aftershock.map");
         //mapCreator.createMapFromFile("mapdata/wc3maps512-map/tranquilpaths.map");
-        // timbermawhold contains shallow water
-        mapCreator.createMapFromFile("mapdata/wc3maps512-map/timbermawhold.map");
+        // the wc3 maps contain shallow water
+        mapCreator.createMapFromFile("mapdata/wc3maps512-map/divideandconquer.map");
+        //mapCreator.createMapFromFile("mapdata/wc3maps512-map/timbermawhold.map");
         if (mapCreator.getGrid() != null) {
             char[][] gridArray = mapCreator.getGrid();
             char[] impassable = {'T', 'W', '@'};
@@ -142,11 +143,16 @@ public class Scenario {
 //        int startY = 44;
 //        int goalX = 70;
 //        int goalY = 190;
+        // divideandconquer
+        int startX = 90;
+        int startY = 370;
+        int goalX = 420;
+        int goalY = 440;
         // timbermawhold
-        int startX = 70;
-        int startY = 380;
-        int goalX = 394;
-        int goalY = 101;
+//        int startX = 70;
+//        int startY = 380;
+//        int goalX = 394;
+//        int goalY = 101;
         // tranquilpaths
 //        int startX = 250;
 //        int startY = 50;

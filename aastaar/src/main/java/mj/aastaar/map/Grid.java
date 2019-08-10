@@ -58,10 +58,10 @@ public class Grid {
         char current = grid[from.getX()][from.getY()];
         char next = grid[to.getX()][to.getY()];
         if (current == 'S') {
-            cost += 2.0;
+            cost += 20.0;
         }
         if (next == 'S') {
-            cost += 2.0;
+            cost += 20.0;
         }
         return cost;
     }
