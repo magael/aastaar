@@ -10,14 +10,14 @@ import mj.aastaar.map.Node;
  *
  * @author MJ
  */
-public class DijkstraWithArray implements PathFindingAlgorithm {
+public class Dijkstra implements PathFindingAlgorithm {
 
     private PathWithArray path;
     private PriorityQueue<Node> frontier;
     private double cost[][];
     private boolean[][] visited;
 
-    public DijkstraWithArray() {
+    public Dijkstra() {
         frontier = new PriorityQueue();
     }
 
@@ -26,7 +26,7 @@ public class DijkstraWithArray implements PathFindingAlgorithm {
     @Override
     public int search(Grid grid, Node start, Node goal, int directions) {
         int nx = grid.getLength();
-        int ny = grid.getGrid2D()[0].length;
+        int ny = grid.getRowLength();
         path = new PathWithArray(nx, ny);
         cost = new double[nx][ny];
         visited = new boolean[nx][ny];

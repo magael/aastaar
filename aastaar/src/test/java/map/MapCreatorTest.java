@@ -18,7 +18,7 @@ public class MapCreatorTest {
         creator = new MapCreator();
         String[] mapData = {
             "type octile",
-            "height 5",
+            "height 4",
             "width 3",
             "map",
             "T.T",
@@ -31,7 +31,9 @@ public class MapCreatorTest {
 
     @Test
     public void mapHeightIsSetCorrectly() {
-        assertEquals(5, creator.getGrid().length);
+        assertEquals('T', creator.getGrid()[0][0]);
+        assertEquals('T', creator.getGrid()[3][2]);
+        assertEquals(4, creator.getGrid().length);
     }
     
     @Test
@@ -40,7 +42,6 @@ public class MapCreatorTest {
         assertEquals(3, creator.getGrid()[1].length);
         assertEquals(3, creator.getGrid()[2].length);
         assertEquals(3, creator.getGrid()[3].length);
-        assertEquals(3, creator.getGrid()[4].length);
     }
     
     @Test
