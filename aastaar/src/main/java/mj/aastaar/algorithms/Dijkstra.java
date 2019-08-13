@@ -15,7 +15,7 @@ public class Dijkstra implements PathFindingAlgorithm {
     private PathWithArray path;
     private PriorityQueue<Node> frontier;
     private double cost[][];
-    private boolean[][] visited;
+//    private boolean[][] visited; // optional, but might influence speed
 
     public Dijkstra() {
         frontier = new PriorityQueue();
@@ -29,7 +29,7 @@ public class Dijkstra implements PathFindingAlgorithm {
         int ny = grid.getRowLength();
         path = new PathWithArray(nx, ny);
         cost = new double[nx][ny];
-        visited = new boolean[nx][ny];
+//        visited = new boolean[nx][ny];
 
         for (int i = 0; i < nx; i++) {
             for (int j = 1; j < ny; j++) {
@@ -37,8 +37,8 @@ public class Dijkstra implements PathFindingAlgorithm {
             }
         }
 
-        path.putCameFrom(start, start);
-        frontier.add(new Node(start.getX(), start.getY(), 0.0));
+//        path.putCameFrom(start, start); // NOTE: unnecessary or optional?
+        frontier.add(start);
         cost[start.getX()][start.getY()] = 0.0;
 
         while (!frontier.isEmpty()) {
@@ -48,9 +48,9 @@ public class Dijkstra implements PathFindingAlgorithm {
                 return path.earlyExit(current, start);
             }
 
-            if (visited[current.getX()][current.getY()]) {
-                continue;
-            }
+//            if (visited[current.getX()][current.getY()]) {
+//                continue;
+//            }
 
             expandFrontier(current, grid, directions);
         }
@@ -71,7 +71,7 @@ public class Dijkstra implements PathFindingAlgorithm {
 
     // used by the search to put new nodes to the frontier (a.k.a. open set) and path
     private void expandFrontier(Node current, Grid grid, int directions) {
-        visited[current.getX()][current.getY()] = true;
+//        visited[current.getX()][current.getY()] = true;
 
         for (Node next : grid.getNeighbours(current.getX(), current.getY(), directions)) {
             if (next == null) continue;
