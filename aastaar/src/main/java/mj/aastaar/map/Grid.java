@@ -23,6 +23,11 @@ public class Grid {
     public int getLength() {
         return grid.length;
     }
+    
+    // assumes all the rows have equal length
+    public int getRowLength() {
+        return grid[0].length;
+    }
 
     @Override
     public String toString() {

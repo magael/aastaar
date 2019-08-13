@@ -1,8 +1,7 @@
 package mj.aastaar.algorithms;
 
 import mj.aastaar.algorithms.path.Path;
-import mj.aastaar.algorithms.path.PathWithHashMap;
-import java.util.HashMap;
+import mj.aastaar.algorithms.path.PathWithArray;
 import java.util.PriorityQueue;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
@@ -13,29 +12,44 @@ import mj.aastaar.map.Node;
  */
 public class AStar implements PathFindingAlgorithm {
     
-    private PathWithHashMap path;
+    private PathWithArray path;
     private PriorityQueue<Node> frontier;
-    private HashMap<Node, Double> cost;
+    private double cost[][];
+    private boolean[][] visited;
 
     public AStar() {
-        path = new PathWithHashMap();
         frontier = new PriorityQueue<>();
-        cost = new HashMap<>();
     }
     
     // returns the amount of steps in a shortest path or -1 if not found
     // NOTE: cannot do multiple searches with the same object
     @Override
     public int search(Grid grid, Node start, Node goal, int directions) {
-        path.putCameFrom(start, start);
+        int nx = grid.getLength();
+        int ny = grid.getRowLength();
+        path = new PathWithArray(nx, ny);
+        cost = new double[nx][ny];
+        visited = new boolean[nx][ny];
+
+        for (int i = 0; i < nx; i++) {
+            for (int j = 1; j < ny; j++) {
+                cost[i][j] = 1000000000.0;
+            }
+        }
+        
         frontier.add(start);
-        cost.put(start, 0.0);
+        cost[start.getX()][start.getY()] = 0.0;
+        path.putCameFrom(start, start);
 
         while (!frontier.isEmpty()) {
             Node current = frontier.poll();
 
             if (current.equals(goal)) {
                 return path.earlyExit(current, start);
+            }
+            
+            if (visited[current.getX()][current.getY()]) {
+                continue;
             }
             
             expandFrontier(grid, current, goal, directions);
@@ -50,17 +64,19 @@ public class AStar implements PathFindingAlgorithm {
     
     @Override
     public double getCost(Node goal) {
-        if (!cost.containsKey(goal)) return -1;
-        return cost.get(goal);
+        double c = cost[goal.getX()][goal.getY()];
+        if (c == 1000000000.0) return -1;
+        return c;
     }
 
     // used by the search to put new nodes to the frontier (a.k.a. open set) and path
     private void expandFrontier(Grid grid, Node current, Node goal, int directions) {
+        visited[current.getX()][current.getY()] = true;
         for (Node next : grid.getNeighbours(current.getX(), current.getY(), directions)) {
             if (next == null) continue;
-            double newCost = cost.get(current) + grid.cost(current, next);
-            if (!cost.containsKey(next) || newCost < cost.get(next)) {
-                cost.put(next, newCost);
+            double newCost = cost[current.getX()][current.getY()] + grid.cost(current, next);
+            if (newCost < cost[next.getX()][next.getY()]) {
+                cost[next.getX()][next.getY()] = newCost;
                 next.setPriority(newCost + grid.heuristic(next, goal));
                 frontier.add(next);
                 path.putCameFrom(next, current);

@@ -8,9 +8,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import mj.aastaar.algorithms.AStar;
-import mj.aastaar.algorithms.BreadthFirstSearch;
-import mj.aastaar.algorithms.DijkstraNoClosed;
-import mj.aastaar.algorithms.DijkstraWithHashMap;
 import mj.aastaar.algorithms.DijkstraWithArray;
 import mj.aastaar.map.Node;
 
@@ -37,14 +34,10 @@ public class Main extends Application {
             System.out.println("Error creating a pathfinding grid");
         } else {
             // initialize arrays for the shortest paths of the different algorithms
-            // to be improved
             scenario.setShortestPaths(new Node[5][]);
             scenario.setPathColors(new String[5]);
                     
-            scenario.runPathfindingAlgorithm(new BreadthFirstSearch(), "BFS", 0, "#FFFF00"); // color: yellow
-            scenario.runPathfindingAlgorithm(new DijkstraWithArray(), "Dijkstra with arrays", 1, "#000FFF"); // color: blue
-            scenario.runPathfindingAlgorithm(new DijkstraWithHashMap(), "Dijkstra with hash tables", 2, "#0FF000"); // color: green
-            scenario.runPathfindingAlgorithm(new DijkstraNoClosed(), "Dijkstra with no closed set", 3, "#00FFFF"); // color: cyan
+            scenario.runPathfindingAlgorithm(new DijkstraWithArray(), "Dijkstra with arrays", 1, "#00FFFF"); // color: cyan
             scenario.runPathfindingAlgorithm(new AStar(), "A*", 4, "#FF00FF"); // color: magenta
 
             // GUI
