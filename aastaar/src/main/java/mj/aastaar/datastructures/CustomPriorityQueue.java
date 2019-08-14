@@ -86,15 +86,14 @@ public class CustomPriorityQueue {
     }
 
     private int minPriority(int leftChild, int rightChild) {
-        int min = leftChild;
         Node left = heap[leftChild];
         Node right = heap[rightChild];
 
         if (rightChild <= heapSize && right.getPriority() < left.getPriority()) {
-            min = rightChild;
+            return rightChild;
         }
 
-        return min;
+        return leftChild;
     }
 
     private void swap(int i, int j) {

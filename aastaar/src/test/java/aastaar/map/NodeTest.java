@@ -1,9 +1,11 @@
-package map;
+package aastaar.map;
+
+import static org.junit.Assert.*;
 
 import mj.aastaar.map.Node;
+
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -11,7 +13,10 @@ import static org.junit.Assert.*;
  */
 public class NodeTest {
     
-    Node nodeA, nodeB, nodeC, nodeD;
+    Node nodeA;
+    Node nodeB;
+    Node nodeC;
+    Node nodeD;
     
     @Before
     public void setUp() {

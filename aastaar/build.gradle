@@ -5,6 +5,8 @@ sourceCompatibility = '1.8'
 
 apply plugin: 'jacoco'
 
+apply plugin: 'checkstyle'
+
 // NetBeans will automatically add "run" and "debug" tasks relying on the
 // "mainClass" property. You may however define the property prior executing
 // tasks by passing a "-PmainClass=<QUALIFIED_CLASS_NAME>" argument.

@@ -1,9 +1,11 @@
-package map;
+package aastaar.map;
+
+import static org.junit.Assert.*;
 
 import mj.aastaar.map.MapCreator;
+
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -61,8 +63,6 @@ public class MapCreatorTest {
         char[][] grid = newCreator.getGrid();
         char c = grid[0][0];
         assertEquals('T', c);
-//        c = grid[2][1];
-//        assertEquals('W', c);
         assertEquals(4, grid.length);
     }
 }

@@ -1,10 +1,12 @@
-package map;
+package aastaar.map;
+
+import static org.junit.Assert.*;
 
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
+
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -23,7 +25,8 @@ public class GridTest {
             {'S', '.', '.', '.', 'T'},
             {'S', '.', 'T', 'T', 'T'}
         };
-        char[] impassable = {'T', 'W', '@'};double edgeWeight = 2.0;
+        char[] impassable = {'T', 'W', '@'};
+        double edgeWeight = 2.0;
         grid = new Grid(gridArray, impassable, edgeWeight);
     }
     
