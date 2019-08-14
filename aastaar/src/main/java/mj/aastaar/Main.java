@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import mj.aastaar.algorithms.AStar;
+import mj.aastaar.algorithms.AStarWithCustomPQ;
 import mj.aastaar.algorithms.Dijkstra;
 import mj.aastaar.map.Node;
 
@@ -37,8 +38,9 @@ public class Main extends Application {
             scenario.setShortestPaths(new Node[5][]);
             scenario.setPathColors(new String[5]);
                     
-            scenario.runPathfindingAlgorithm(new Dijkstra(), "Dijkstra with arrays", 1, "#00FFFF"); // color: cyan
-            scenario.runPathfindingAlgorithm(new AStar(), "A*", 4, "#FF00FF"); // color: magenta
+            scenario.runPathfindingAlgorithm(new Dijkstra(), "Dijkstra with arrays", 0, "#00FFFF"); // color: cyan
+            scenario.runPathfindingAlgorithm(new AStar(), "A*", 1, "#FF00FF"); // color: magenta
+            scenario.runPathfindingAlgorithm(new AStarWithCustomPQ(), "A* with custom PriorityQueue", 2, "#FF00FF"); // color: magenta
 
             // GUI
             launch(Main.class);
