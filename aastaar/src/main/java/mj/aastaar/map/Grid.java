@@ -47,7 +47,6 @@ public class Grid {
 
     // manhattan distance on a square grid
     // with a custom of implementation of calculating absolute value
-    // TODO: octile distance for diagonal movement
     public double heuristic(Node a, Node b) {
         double x = a.getX() - b.getX();
         x = (x > 0) ? x : 0 - x;
@@ -74,10 +73,6 @@ public class Grid {
     }
 
     // returns the adjacent nodes which are in bounds and passable
-    // TODO: directions which are specified in coordinate arrays,
-    // currently only allows movement in 4 directions (horizontal, vertical),
-    // no cutting corners for diagonal movement
-    // TODO: refactor inBounds checks
     // NOTE: it would be interesting to test precomputed neighbour lists / matrices
     // or hashtables vs this kind of dynamic check
     public Node[] getNeighbours(int x, int y, int directions) {

@@ -37,21 +37,11 @@ public class Main extends Application {
             scenario.setShortestPaths(new Node[5][]);
             scenario.setPathColors(new String[5]);
                     
-            scenario.runPathfindingAlgorithm(new Dijkstra(), "Dijkstra with arrays", 0, "#00FFFF"); // color: cyan
-            scenario.runPathfindingAlgorithm(new AStar(), "A* with custom PriorityQueue", 1, "#FF00FF"); // color: magenta
+            scenario.runPathfindingAlgorithm(new Dijkstra(), "Dijkstra", 0, "#00FFFF"); // color: cyan
+            scenario.runPathfindingAlgorithm(new AStar(), "A*", 1, "#FF00FF"); // color: magenta
 
             // GUI
             launch(Main.class);
-            
-//            // testing customPQ
-//            CustomPriorityQueue pq = new CustomPriorityQueue(5);
-//            pq.heapInsert(new Node(0, 0, 5));
-//            pq.heapInsert(new Node(1, 1, 3));
-//            pq.heapInsert(new Node(2, 2, 8));
-//            pq.heapInsert(new Node(3, 3, 7));
-//            System.out.println(pq.heapMin());
-//            System.out.println(pq.heapDelMin());
-//            System.out.println(pq.heapDelMin());
         }
      }
 

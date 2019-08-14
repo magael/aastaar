@@ -44,7 +44,7 @@ public class CustomPriorityQueue {
     }
 
     public void heapInsert(Node node) {
-        if (heapSize + 2 < heap.length) {
+        if (heapSize + 1 < heap.length) {
             heapSize++;
             heap[heapSize] = node;
             percolateUp();

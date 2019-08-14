@@ -43,8 +43,6 @@ public class PathWithArray implements Path {
     }
 
     // returns the Nodes of the shortest path after the path and it's length are found
-    // TODO: no separate shortestPlathLength and shortestPathLength methods,
-    // always return the shortest path.
     @Override
     public Node[] shortestPath(Node goal, Node start, int length) {
         if (cameFrom == null || length < 1) {
