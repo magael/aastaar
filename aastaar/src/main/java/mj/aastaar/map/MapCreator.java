@@ -70,8 +70,6 @@ public class MapCreator {
 
     // initializing grid height and width,
     // skipping "map" and handling map characters
-    // TODO: If the map height/width do not match the file, it should be scaled to that size
-    // TODO: make sure each row is of same length (as the first row)
     private void handleMapRow(int row, String mapDataLine) {
         if (row == 1) {
             mapHeight = Integer.parseInt(mapDataLine.split(" ")[1]);

@@ -90,13 +90,6 @@ public class Scenario {
     }
 
     // create the pathfinding grid based on a specific map
-    // TODO:
-    // read config file
-    // map list / collection (probably a separate class), where:
-    // - read map paths from .cfg file to String[] mapFilePaths
-    // - initialize an array of Grids
-    // - for each line in mapFilePaths: add to grids
-    // - or maybe init one grid at a time when the user chooses a map
     public void initConfig(String configFilePath) {
         if (configFilePath == null) {
             initDefaultGrid();
@@ -120,7 +113,6 @@ public class Scenario {
         }
     }
 
-    // TODO: no magic numbers
     private void initDefaultPositions() {
         // example coordinates for different maps
         // Aftershock
