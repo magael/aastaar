@@ -2,7 +2,7 @@ package mj.aastaar.algorithms;
 
 import mj.aastaar.algorithms.path.Path;
 import mj.aastaar.algorithms.path.PathWithArray;
-import java.util.PriorityQueue;
+import mj.aastaar.datastructures.CustomPriorityQueue;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 
@@ -13,13 +13,9 @@ import mj.aastaar.map.Node;
 public class Dijkstra implements PathFindingAlgorithm {
 
     private PathWithArray path;
-    private PriorityQueue<Node> frontier;
+    private CustomPriorityQueue frontier;
     private double cost[][];
 //    private boolean[][] visited; // optional, but might influence speed
-
-    public Dijkstra() {
-        frontier = new PriorityQueue();
-    }
 
     // returns the amount of steps in a shortest path or -1 if not found
     // NOTE: cannot do multiple searches with the same object
@@ -28,6 +24,7 @@ public class Dijkstra implements PathFindingAlgorithm {
         int nx = grid.getLength();
         int ny = grid.getRowLength();
         path = new PathWithArray(nx, ny);
+        frontier = new CustomPriorityQueue(nx * ny);
         cost = new double[nx][ny];
 //        visited = new boolean[nx][ny];
 
@@ -37,12 +34,11 @@ public class Dijkstra implements PathFindingAlgorithm {
             }
         }
 
-//        path.putCameFrom(start, start); // NOTE: unnecessary or optional?
-        frontier.add(start);
+        frontier.heapInsert(start);
         cost[start.getX()][start.getY()] = 0.0;
 
         while (!frontier.isEmpty()) {
-            Node current = frontier.poll();
+            Node current = frontier.heapDelMin();
 
             if (current.equals(goal)) {
                 return path.earlyExit(current, start);
@@ -79,7 +75,7 @@ public class Dijkstra implements PathFindingAlgorithm {
             if (newCost < cost[next.getX()][next.getY()]) {
                 cost[next.getX()][next.getY()] = newCost;
                 next.setPriority(newCost);
-                frontier.add(next);
+                frontier.heapInsert(next);
                 path.putCameFrom(next, current);
             }
         }

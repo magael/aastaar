@@ -8,9 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import mj.aastaar.algorithms.AStar;
-import mj.aastaar.algorithms.AStarWithCustomPQ;
 import mj.aastaar.algorithms.Dijkstra;
-import mj.aastaar.datastructures.CustomPriorityQueue;
 import mj.aastaar.map.Node;
 
 /**
@@ -36,24 +34,24 @@ public class Main extends Application {
             System.out.println("Error creating a pathfinding grid");
         } else {
             // initialize arrays for the shortest paths of the different algorithms
-//            scenario.setShortestPaths(new Node[5][]);
-//            scenario.setPathColors(new String[5]);
-//                    
-//            scenario.runPathfindingAlgorithm(new Dijkstra(), "Dijkstra with arrays", 0, "#00FFFF"); // color: cyan
-//            scenario.runPathfindingAlgorithm(new AStar(), "A*", 1, "#FF00FF"); // color: magenta
-//            scenario.runPathfindingAlgorithm(new AStarWithCustomPQ(), "A* with custom PriorityQueue", 2, "#FF00FF"); // color: magenta
-//
-//            // GUI
-//            launch(Main.class);
-            // testing customPQ
-            CustomPriorityQueue pq = new CustomPriorityQueue(5);
-            pq.heapInsert(new Node(0, 0, 5));
-            pq.heapInsert(new Node(1, 1, 3));
-            pq.heapInsert(new Node(2, 2, 8));
-            pq.heapInsert(new Node(3, 3, 7));
-            System.out.println(pq.heapMin());
-            System.out.println(pq.heapDelMin());
-            System.out.println(pq.heapDelMin());
+            scenario.setShortestPaths(new Node[5][]);
+            scenario.setPathColors(new String[5]);
+                    
+            scenario.runPathfindingAlgorithm(new Dijkstra(), "Dijkstra with arrays", 0, "#00FFFF"); // color: cyan
+            scenario.runPathfindingAlgorithm(new AStar(), "A* with custom PriorityQueue", 1, "#FF00FF"); // color: magenta
+
+            // GUI
+            launch(Main.class);
+            
+//            // testing customPQ
+//            CustomPriorityQueue pq = new CustomPriorityQueue(5);
+//            pq.heapInsert(new Node(0, 0, 5));
+//            pq.heapInsert(new Node(1, 1, 3));
+//            pq.heapInsert(new Node(2, 2, 8));
+//            pq.heapInsert(new Node(3, 3, 7));
+//            System.out.println(pq.heapMin());
+//            System.out.println(pq.heapDelMin());
+//            System.out.println(pq.heapDelMin());
         }
      }
 

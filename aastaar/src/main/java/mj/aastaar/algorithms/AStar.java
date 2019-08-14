@@ -2,7 +2,7 @@ package mj.aastaar.algorithms;
 
 import mj.aastaar.algorithms.path.Path;
 import mj.aastaar.algorithms.path.PathWithArray;
-import java.util.PriorityQueue;
+import mj.aastaar.datastructures.CustomPriorityQueue;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 
@@ -13,14 +13,10 @@ import mj.aastaar.map.Node;
 public class AStar implements PathFindingAlgorithm {
     
     private PathWithArray path;
-    private PriorityQueue<Node> frontier;
+    private CustomPriorityQueue frontier;
     private double cost[][];
 //    private boolean[][] visited; // optional, but might influence speed
 
-    public AStar() {
-        frontier = new PriorityQueue<>();
-    }
-    
     // returns the amount of steps in a shortest path or -1 if not found
     // NOTE: cannot do multiple searches with the same object
     @Override
@@ -28,6 +24,7 @@ public class AStar implements PathFindingAlgorithm {
         int nx = grid.getLength();
         int ny = grid.getRowLength();
         path = new PathWithArray(nx, ny);
+        frontier = new CustomPriorityQueue(nx * ny);
         cost = new double[nx][ny];
 //        visited = new boolean[nx][ny];
 
@@ -36,27 +33,25 @@ public class AStar implements PathFindingAlgorithm {
                 cost[i][j] = 1000000000.0;
             }
         }
-        
-//        path.putCameFrom(start, start);  // NOTE: unnecessary or optional?
-        frontier.add(start);
+
+        frontier.heapInsert(start);
         cost[start.getX()][start.getY()] = 0.0;
 
         while (!frontier.isEmpty()) {
-            Node current = frontier.poll();
-
+            Node current = frontier.heapDelMin();
+            
             if (current.equals(goal)) {
                 return path.earlyExit(current, start);
             }
-            
+
 //            if (visited[current.getX()][current.getY()]) {
 //                continue;
 //            }
-            
             expandFrontier(grid, current, goal, directions);
         }
         return -1;
     }
-
+    
     @Override
     public Path getPath() {
         return path;
@@ -65,7 +60,9 @@ public class AStar implements PathFindingAlgorithm {
     @Override
     public double getCost(Node goal) {
         double c = cost[goal.getX()][goal.getY()];
-        if (c == 1000000000.0) return -1;
+        if (c == 1000000000.0) {
+            return -1;
+        }
         return c;
     }
 
@@ -73,12 +70,14 @@ public class AStar implements PathFindingAlgorithm {
     private void expandFrontier(Grid grid, Node current, Node goal, int directions) {
 //        visited[current.getX()][current.getY()] = true;
         for (Node next : grid.getNeighbours(current.getX(), current.getY(), directions)) {
-            if (next == null) continue;
+            if (next == null) {
+                continue;
+            }
             double newCost = cost[current.getX()][current.getY()] + grid.cost(current, next);
             if (newCost < cost[next.getX()][next.getY()]) {
                 cost[next.getX()][next.getY()] = newCost;
                 next.setPriority(newCost + grid.heuristic(next, goal));
-                frontier.add(next);
+                frontier.heapInsert(next);
                 path.putCameFrom(next, current);
             }
         }

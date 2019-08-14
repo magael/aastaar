@@ -10,6 +10,7 @@ public class CustomPriorityQueue {
 
     private int heapSize;
     private Node[] heap;
+    private final int ROOT = 1;
 
     public CustomPriorityQueue(int maxSize) {
         heapSize = 0;
@@ -22,14 +23,18 @@ public class CustomPriorityQueue {
         return heapSize;
     }
 
+    public boolean isEmpty() {
+        return heapSize <= 0;
+    }
+
     public Node heapMin() {
-        return heap[1];
+        return heap[ROOT];
     }
 
     public Node heapDelMin() {
-        Node head = heap[1];
+        Node head = heap[ROOT];
         if (heapSize > 0) {
-            heap[1] = heap[heapSize];
+            heap[ROOT] = heap[heapSize];
             heapSize--;
             percolateDown();
         } else {
@@ -50,7 +55,7 @@ public class CustomPriorityQueue {
 
     private void percolateUp() {
         int current = heapSize;
-        while (current > 1) {
+        while (current > ROOT) {
             int parent = parent(current);
             while (heap[current].getPriority() < heap[parent].getPriority()) {
                 swap(current, parent);
@@ -60,36 +65,42 @@ public class CustomPriorityQueue {
     }
 
     private void percolateDown() {
-        int current = 1;
+        int current = ROOT;
         while (true) {
             int leftChild = leftChild(current);
             int rightChild = rightChild(current);
-            Node leftChildNode = heap[leftChild];
-            Node rightChildNode = heap[rightChild];
 
             if (leftChild > heapSize) {
                 break;
             }
-            // TODO: refactor getmin
-            int min = leftChild;
-            if (rightChild(current) <= heapSize) {
-                if (rightChildNode.getPriority() < leftChildNode.getPriority()) {
-                    min = rightChild;
-                }
-            }
+
+            int min = minPriority(leftChild, rightChild);
+
             if (heap[current].getPriority() <= heap[min].getPriority()) {
                 break;
             }
+
             swap(current, min);
             current = min;
         }
+    }
+
+    private int minPriority(int leftChild, int rightChild) {
+        int min = leftChild;
+        Node left = heap[leftChild];
+        Node right = heap[rightChild];
+
+        if (rightChild <= heapSize && right.getPriority() < left.getPriority()) {
+            min = rightChild;
+        }
+
+        return min;
     }
 
     private void swap(int i, int j) {
         Node temp = heap[i];
         heap[i] = heap[j];
         heap[j] = temp;
-
     }
 
     private int parent(int i) {
