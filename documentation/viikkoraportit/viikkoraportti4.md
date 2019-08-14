@@ -1,6 +1,6 @@
 ## Viikkoraportti 4
 
-Työtunteja kertyi yhteensä noin 11.
+Työtunteja kertyi yhteensä noin 12.
 
 ---
 
@@ -24,4 +24,4 @@ HashMap-versiot pois masterista, MapCreatorTestin fixaus, A*:sta taulukkoversio,
 
 #### Ke 14.8.
 
-Custom prioriteetijonon toteutus ja käyttöönotto, checkstyle, dokumentointia. N. 5 h.
+Custom prioriteetijonon toteutus ja käyttöönotto, checkstyle, dokumentointia, priorityqueuelle testit. N. 6 h.
