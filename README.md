@@ -6,6 +6,8 @@
 
 [Vaatimusmäärittely](https://github.com/magael/aastaar/blob/master/documentation/maarittely.md)
 
+[TODO-muistiinpanoja](https://github.com/magael/aastaar/blob/master/documentation/todo.md)
+
 #### Viikkoraportit
 [Viikko 1](https://github.com/magael/aastaar/blob/master/documentation/viikkoraportit/viikkoraportti1.md)
 
@@ -17,11 +19,12 @@
 
 #### Testaus
 
-Testikattavuus löytyy suorittamalla gradle-projektin juuressa, eli repositorion alihakemistossa <code>aastaar</code> komennon
+Testikattavuus löytyy suorittamalla gradle-projektin juuressa, eli repositorion alihakemistossa <code>aastaar</code> komennon <code>gradle test jacocoTestReport</code> ja navigoimalla <code>build/reports/jacoco/test/html/index.html</code>.
 
-<code>gradle test jacocoTestReport</code>
+#### Checkstyle
 
-ja navigoimalla <code>build/reports/jacoco/test/html/index.html</code>.
+Projekti hyödyntää checkstyleä. Tyylivirheet voidaan tarkastaa komennolla <code>gradle check</code> ja ne löytyvät polulta <code>build/reports/checkstyle/test.html</code>.
 
-#### Muut
-[TODO-muistiinpanoja](https://github.com/magael/aastaar/blob/master/documentation/todo.md)
+#### Javadoc
+
+Javadocin saa generoitua komennolla <code>gradle javadoc</code> ja ne löytyy polulta <code>build/docs/javadoc/index.html</code>.
