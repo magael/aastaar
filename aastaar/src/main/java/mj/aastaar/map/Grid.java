@@ -1,14 +1,14 @@
 package mj.aastaar.map;
 
 /**
- *
+ * 
  * @author MJ
  */
 public class Grid {
 
     private char[][] grid;
     private char[] impassable;
-    private double edgeWeight;
+    private double heavyEdgeWeight;
 
     /**
      *
@@ -19,7 +19,7 @@ public class Grid {
     public Grid(char[][] grid, char[] impassable, double edgeWeight) {
         this.grid = grid;
         this.impassable = impassable;
-        this.edgeWeight = edgeWeight;
+        this.heavyEdgeWeight = edgeWeight;
     }
 
     /**
@@ -38,11 +38,11 @@ public class Grid {
         return grid.length;
     }
     
-    // assumes all the rows have equal length
 
     /**
-     *
-     * @return
+     * Assumes all the rows have equal length.
+     * 
+     * @return The length of the first row in the grid array
      */
     public int getRowLength() {
         return grid[0].length;
@@ -64,57 +64,56 @@ public class Grid {
         return s;
     }
 
-    // manhattan distance on a square grid
-    // with a custom of implementation of calculating absolute value
-
     /**
+     * Manhattan distance on a square grid,
+     * with a custom of implementation of calculating absolute value.
      *
-     * @param a
-     * @param b
-     * @return
+     * @param a One of the nodes involved in the calculation
+     * @param b The other node involved in the calculation
+     * @return The Manhattan distance.
      */
     public double heuristic(Node a, Node b) {
         double x = a.getX() - b.getX();
-        x = (x > 0) ? x : 0 - x;
         double y = a.getY() - b.getY();
+        x = (x > 0) ? x : 0 - x;
         y = (y > 0) ? y : 0 - y;
         return x + y;
     }
 
-    // different cost for shallow water than normal ground
-    // NOTE: should only be called for nodes that have already been checked
-    // as passable and in bounds
-    // NOTE: different "shallow water"-penalties yield different paths
 
     /**
+     * Different cost for shallow water than normal ground.
+     * Should only be called for nodes that have already been checked
+     * as passable and in bounds.
+     * Different edge weights yield different paths.
      *
-     * @param from
-     * @param to
-     * @return
+     * @param from The position from which the movement is occurring.
+     * @param to The position to which the movement is heading.
+     * @return The cost of the movement.
      */
     public double cost(Node from, Node to) {
         double cost = 1.0;
         char current = grid[from.getX()][from.getY()];
         char next = grid[to.getX()][to.getY()];
         if (current == 'S') {
-            cost += edgeWeight;
+            cost += heavyEdgeWeight;
         }
         if (next == 'S') {
-            cost += edgeWeight;
+            cost += heavyEdgeWeight;
         }
         return cost;
     }
 
-    // returns the adjacent nodes which are in bounds and passable
-    // NOTE: it would be interesting to test precomputed neighbour lists / matrices
-    // or hashtables vs this kind of dynamic check
-
     /**
+     * Checking and retrieving the adjacent nodes in the grid,
+     * which are in bounds and passable.
+     * Currently only allows movement in four directions.
      *
-     * @param x
-     * @param y
-     * @param directions
-     * @return
+     * @param x X-coordinate of the position of which neighbours are requested
+     * @param y Y-coordinate of the position of which neighbours are requested
+     * @param directions In how many directions are neighbours requested
+     * @return Array of Nodes which are in bounds, passable and adjacent
+     * to the provided position
      */
     public Node[] getNeighbours(int x, int y, int directions) {
         Node[] neighbours = new Node[directions];

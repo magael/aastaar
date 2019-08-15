@@ -3,24 +3,22 @@ package mj.aastaar.map;
 import mj.aastaar.utils.CustomFileReader;
 
 /**
- *
+ * Using Nathan Sturtevant's Moving AI Lab 2D pathfinding benchmark maps.
+ * The maps have the following format:
+ * All maps begin with the lines:
+ * type octile
+ * height x
+ * width y
+ * map
+ * where x and y are the respective height and width of the map.
+ * Normal ground is represented by a period (‘.’),
+ * and shallow water is represented by the ‘S’ character.
+ * These are the only passable types of terrain.
+ * All other terrain is considered to be impassable,
+ * including trees (‘T’), water (‘W’) and out of bounds (‘@’).
+ * 
  * @author MJ
  */
-// Using Nathan Sturtevant's Moving AI Lab 2D pathfinding benchmark maps.
-// The maps have the following format:
-//
-// All maps begin with the lines:
-// type octile
-// height x
-// width y
-// map
-//
-// where x and y are the repsective height and width of the map.
-// Normal ground is represented by a period (‘.’),
-// and shallow water is represented by the ‘S’ character.
-// These are the only passable types of terrain.
-// All other terrain is considered to be impassable,
-// including trees (‘T’), water (‘W’) and out of bounds (‘@’).
 public class MapCreator {
 
     CustomFileReader mapReader;
@@ -60,10 +58,10 @@ public class MapCreator {
         }
     }
 
-    // check file format from the first line, start "handling" from the second line
-
     /**
-     *
+     * Checking the file format from the first line,
+     * starting "handling" from the second line.
+     * 
      * @param mapData
      */
     public void readMapData(String[] mapData) {
@@ -83,9 +81,26 @@ public class MapCreator {
             row++;
         }
     }
+        
+    /**
+     * Adding characters to the grid.
+     *
+     * @param row
+     * @param mapDataLine
+     */
+    public void objectsFromMapRow(int row, String mapDataLine) {
+        for (int col = 0; col < mapDataLine.length(); col++) {
+            grid[row][col] = mapDataLine.charAt(col);
+        }
+    }
 
-    // initializing grid height and width,
-    // skipping "map" and handling map characters
+    /**
+     * Initializing grid height and width,
+     * skipping "map" and handling map characters.
+     * 
+     * @param row
+     * @param mapDataLine 
+     */
     private void handleMapRow(int row, String mapDataLine) {
         if (row == 1) {
             mapHeight = Integer.parseInt(mapDataLine.split(" ")[1]);
@@ -98,20 +113,5 @@ public class MapCreator {
             objectsFromMapRow(row - 4, mapDataLine);
         }
 
-    }
-
-// adding characters to the grid
-
-    /**
-     *
-     * @param row
-     * @param mapDataLine
-     */
-    public void objectsFromMapRow(int row, String mapDataLine) {
-        // DEBUG: print
-        // System.out.println(mapDataLine);
-        for (int col = 0; col < mapDataLine.length(); col++) {
-            grid[row][col] = mapDataLine.charAt(col);
-        }
     }
 }

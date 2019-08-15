@@ -3,7 +3,9 @@ package mj.aastaar.algorithms.path;
 import mj.aastaar.map.Node;
 
 /**
- *
+ * Storing paths and retrieving the shortest path between two positions
+ * on a grid.
+ * 
  * @author mijamija
  */
 public class PathWithArray implements Path {
@@ -30,11 +32,6 @@ public class PathWithArray implements Path {
         return cameFrom;
     }
 
-    /**
-     *
-     * @param node
-     * @return
-     */
     @Override
     public boolean containsNode(Node node) {
         if (cameFrom[node.getX()][node.getY()] != null) {
@@ -43,43 +40,12 @@ public class PathWithArray implements Path {
         return false;
     }
 
-    /**
-     *
-     * @param to
-     * @param from
-     */
     @Override
     public void putCameFrom(Node to, Node from) {
         cameFrom[to.getX()][to.getY()] = from;
     }
-
-    // traces the steps back from goal to start,
-    // returns the length of the shortest path
-
-    /**
-     *
-     * @param current
-     * @param start
-     * @return
-     */
-    public int earlyExit(Node current, Node start) {
-        int steps = 0;
-        while (!current.equals(start)) {
-            current = cameFrom[current.getX()][current.getY()];
-            steps++;
-        }
-        return steps;
-    }
-
-    // returns the Nodes of the shortest path after the path and it's length are found
-
-    /**
-     *
-     * @param goal
-     * @param start
-     * @param length
-     * @return
-     */
+    
+    
     @Override
     public Node[] shortestPath(Node goal, Node start, int length) {
         if (cameFrom == null || length < 1) {
@@ -95,5 +61,22 @@ public class PathWithArray implements Path {
             i--;
         }
         return path;
+    }
+
+    /**
+     * Traces the steps back from goal to start,
+     * returns the length of the shortest path.
+     * 
+     * @param current
+     * @param start
+     * @return
+     */
+    public int earlyExit(Node current, Node start) {
+        int steps = 0;
+        while (!current.equals(start)) {
+            current = cameFrom[current.getX()][current.getY()];
+            steps++;
+        }
+        return steps;
     }
 }

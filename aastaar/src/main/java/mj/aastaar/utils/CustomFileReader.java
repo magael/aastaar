@@ -17,7 +17,7 @@ public class CustomFileReader {
      * Reads a file from the given path and puts it's contents in a String array.
      *
      * @param filePath
-     * @return the file data in a String ArrayList
+     * @return The file data in a String ArrayList
      * @throws java.lang.Exception
      */
     private ArrayList<String> data;
@@ -31,7 +31,7 @@ public class CustomFileReader {
 
     /**
      *
-     * @return
+     * @return The data file rows as an array of Strings
      */
     public String[] getDataArray() {
         String[] dataArray = new String[data.size()];
@@ -42,7 +42,8 @@ public class CustomFileReader {
     }
 
     /**
-     *
+     * Reading the file at the provided path.
+     * 
      * @param filePath
      * @throws Exception
      */
@@ -55,6 +56,12 @@ public class CustomFileReader {
         is.close();
     }
 
+    /**
+     * Adding the data rows in the file into an ArrayList.
+     * 
+     * @param br
+     * @throws IOException 
+     */
     private void addLines(BufferedReader br) throws IOException {
         String dataLine;
         while ((dataLine = br.readLine()) != null) {

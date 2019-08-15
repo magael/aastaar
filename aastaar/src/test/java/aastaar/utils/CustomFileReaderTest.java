@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
+ * Unit tests for the CustomFileReader class.
  *
  * @author MJ
  */

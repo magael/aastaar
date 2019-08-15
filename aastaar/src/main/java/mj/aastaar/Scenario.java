@@ -169,8 +169,8 @@ public class Scenario {
         if (mapCreator.getGrid() != null) {
             char[][] gridArray = mapCreator.getGrid();
             char[] impassable = {'T', 'W', '@'};
-            double edgeWeight = 2.0;
-            grid = new Grid(gridArray, impassable, edgeWeight);
+            double heavyEdgeWeight = 2.0;
+            grid = new Grid(gridArray, impassable, heavyEdgeWeight);
         }
     }
 

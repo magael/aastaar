@@ -150,7 +150,7 @@ public class CustomPriorityQueue {
     /**
      * Determining the parent element of an element in the heap.
      * 
-     * @param i The index of the element who's parent is requested.
+     * @param i The index of the requested element's child.
      * @return The parent's index.
      */
     private int parent(int i) {
@@ -160,7 +160,7 @@ public class CustomPriorityQueue {
     /**
      * Determining the leftmost child of an element in the heap.
      * 
-     * @param i The index of the element who's child is requested.
+     * @param i The index of the requested element's parent.
      * @return The child's index.
      */
     private int leftChild(int i) {
@@ -170,7 +170,7 @@ public class CustomPriorityQueue {
     /**
      * Determining the rightmost child of an element in the heap.
      * 
-     * @param i The index of the element who's child is requested.
+     * @param i The index of the requested element's parent.
      * @return The child's index.
      */
     private int rightChild(int i) {

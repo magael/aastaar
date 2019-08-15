@@ -8,7 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
+ * Unit tests for the MapCreator class.
+ * 
  * @author MJ
  */
 public class MapCreatorTest {

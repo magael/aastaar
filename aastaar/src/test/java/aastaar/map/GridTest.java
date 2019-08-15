@@ -9,7 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
+ * Unit tests for the Grid class.
+ * 
  * @author MJ
  */
 public class GridTest {

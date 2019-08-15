@@ -1,7 +1,8 @@
 package mj.aastaar.map;
 
 /**
- *
+ * A position on the grid, with priority for pathfinding algorithms.
+ * 
  * @author MJ
  */
 public class Node implements Comparable<Node>{

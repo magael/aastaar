@@ -23,10 +23,12 @@ public interface Path {
     public void putCameFrom(Node to, Node from);
     
     /**
+     * Returns the Nodes of the shortest path
+     * after the path and it's length are found.
      *
      * @param goal
      * @param start
-     * @param pathLength
+     * @param length
      * @return
      */
     public Node[] shortestPath(Node goal, Node start, int pathLength);

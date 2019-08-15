@@ -7,27 +7,17 @@ import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 
 /**
+ * Implementation of the A* algorithm.
  *
  * @author MJ
  */
 public class AStar implements PathFindingAlgorithm {
-    
+
     private PathWithArray path;
     private CustomPriorityQueue frontier;
     private double cost[][];
 //    private boolean[][] visited; // optional, but might influence speed
 
-    // returns the amount of steps in a shortest path or -1 if not found
-    // NOTE: cannot do multiple searches with the same object
-
-    /**
-     *
-     * @param grid
-     * @param start
-     * @param goal
-     * @param directions
-     * @return
-     */
     @Override
     public int search(Grid grid, Node start, Node goal, int directions) {
         int nx = grid.getLength();
@@ -48,7 +38,7 @@ public class AStar implements PathFindingAlgorithm {
 
         while (!frontier.isEmpty()) {
             Node current = frontier.heapDelMin();
-            
+
             if (current.equals(goal)) {
                 return path.earlyExit(current, start);
             }
@@ -60,21 +50,12 @@ public class AStar implements PathFindingAlgorithm {
         }
         return -1;
     }
-    
-    /**
-     *
-     * @return
-     */
+
     @Override
     public Path getPath() {
         return path;
     }
-    
-    /**
-     *
-     * @param goal
-     * @return
-     */
+
     @Override
     public double getCost(Node goal) {
         double c = cost[goal.getX()][goal.getY()];
@@ -84,7 +65,14 @@ public class AStar implements PathFindingAlgorithm {
         return c;
     }
 
-    // used by the search to put new nodes to the frontier (a.k.a. open set) and path
+    /**
+     * Adding new nodes to the frontier (a.k.a. open set) and path
+     *
+     * @param grid
+     * @param current
+     * @param goal
+     * @param directions
+     */
     private void expandFrontier(Grid grid, Node current, Node goal, int directions) {
 //        visited[current.getX()][current.getY()] = true;
         for (Node next : grid.getNeighbours(current.getX(), current.getY(), directions)) {

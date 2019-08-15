@@ -7,7 +7,8 @@ import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 
 /**
- *
+ * Implementation of Dijkstra's algorithm.
+ * 
  * @author MJ
  */
 public class Dijkstra implements PathFindingAlgorithm {
@@ -17,17 +18,6 @@ public class Dijkstra implements PathFindingAlgorithm {
     private double cost[][];
 //    private boolean[][] visited; // optional, but might influence speed
 
-    // returns the amount of steps in a shortest path or -1 if not found
-    // NOTE: cannot do multiple searches with the same object
-
-    /**
-     *
-     * @param grid
-     * @param start
-     * @param goal
-     * @param directions
-     * @return
-     */
     @Override
     public int search(Grid grid, Node start, Node goal, int directions) {
         int nx = grid.getLength();
@@ -62,20 +52,11 @@ public class Dijkstra implements PathFindingAlgorithm {
         return -1;
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public Path getPath() {
         return path;
     }
 
-    /**
-     *
-     * @param goal
-     * @return
-     */
     @Override
     public double getCost(Node goal) {
         double c = cost[goal.getX()][goal.getY()];
@@ -83,7 +64,13 @@ public class Dijkstra implements PathFindingAlgorithm {
         return c;
     }
 
-    // used by the search to put new nodes to the frontier (a.k.a. open set) and path
+    /**
+     * Adding new nodes to the frontier (a.k.a. open set) and path
+     * 
+     * @param current
+     * @param grid
+     * @param directions 
+     */
     private void expandFrontier(Node current, Grid grid, int directions) {
 //        visited[current.getX()][current.getY()] = true;
 

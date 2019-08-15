@@ -10,7 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
+ * * Unit tests for the Scenario class.
+ * 
  * @author MJ
  */
 public class ScenarioTest {
