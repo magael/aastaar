@@ -24,4 +24,4 @@ Testikattavuus löytyy suorittamalla gradle-projektin juuressa, eli repositorion
 ja navigoimalla <code>build/reports/jacoco/test/html/index.html</code>.
 
 #### Muut
-[TODO-muistiinpanoja](!https://github.com/magael/aastaar/blob/master/documentation/todo.md)
+[TODO-muistiinpanoja](https://github.com/magael/aastaar/blob/master/documentation/todo.md)
