@@ -3,7 +3,9 @@ package mj.aastaar.datastructures;
 import mj.aastaar.map.Node;
 
 /**
- *
+ * A custom implementation of the priority queue data structure,
+ * using a binary min-heap.
+ * 
  * @author MJ
  */
 public class CustomPriorityQueue {
@@ -13,19 +15,22 @@ public class CustomPriorityQueue {
     private final int ROOT = 1;
 
     /**
+     * Constructor for the custom priority queue class.
+     * The heapSize variable holds the index of the current last element
+     * of the heap.
+     * The first element in the array is not used as part of the min-heap.
      *
-     * @param maxSize
+     * @param maxSize Maximum amount of elements that fit in the heap.
      */
     public CustomPriorityQueue(int maxSize) {
         heapSize = 0;
-        //if (maxSize < 1) maxSize = 2; // pointless to have size < 2 heap
         heap = new Node[maxSize + 1];
         heap[0] = new Node(-1, -1, Integer.MIN_VALUE);
     }
 
     /**
      *
-     * @return
+     * @return Heap size
      */
     public int getHeapSize() {
         return heapSize;
@@ -33,7 +38,7 @@ public class CustomPriorityQueue {
 
     /**
      *
-     * @return
+     * @return True if the heap is empty, otherwise false
      */
     public boolean isEmpty() {
         return heapSize <= 0;
@@ -41,15 +46,18 @@ public class CustomPriorityQueue {
 
     /**
      *
-     * @return
+     * @return The root of the heap
      */
     public Node heapMin() {
         return heap[ROOT];
     }
 
     /**
-     *
-     * @return
+     * Polling the priority queue for the smallest priority Node in the heap.
+     * Inserts the former last element as the new root, decreases the heap size
+     * by one and rearranges the heap starting with the new root downwards.
+     * 
+     * @return The root of the heap
      */
     public Node heapDelMin() {
         Node head = heap[ROOT];
@@ -63,6 +71,9 @@ public class CustomPriorityQueue {
     }
 
     /**
+     * Adding a Node to the heap.
+     * Heap size is incremented by one, the new element is added
+     * as the last element and the heap is rearranged from bottom up.
      *
      * @param node
      */
@@ -75,6 +86,11 @@ public class CustomPriorityQueue {
         }
     }
 
+    /**
+     * Swapping elements upwards in the binary tree of the heap
+     * until every element satisfies the heap property constraint,
+     * starting from the last element.
+     */
     private void percolateUp() {
         int current = heapSize;
         int parent = parent(current);
@@ -85,6 +101,13 @@ public class CustomPriorityQueue {
         }
     }
 
+    /**
+     * Swapping elements downwards in the binary tree of the heap
+     * until every element satisfies the heap property constraint,
+     * starting from the provided element.
+     * 
+     * @param current The starting point for rearranging the heap
+     */
     private void percolateDown(int current) {
         if (leftChild(current) <= heapSize) {
             int min = minPriority(leftChild(current), rightChild(current));
@@ -96,28 +119,60 @@ public class CustomPriorityQueue {
         }
     }
 
-    private int minPriority(int leftChild, int rightChild) {
-        if (rightChild <= heapSize
-                && heap[rightChild].getPriority() < heap[leftChild].getPriority()) {
-            return rightChild;
+    /**
+     * Comparing the priorities of two sibling nodes in the binary tree.
+     * 
+     * @param left The index of the leftmost sibling.
+     * @param right
+     * @return The right node index if it is in heap bounds and has a smaller
+     * priority than the left one, otherwise the left index.
+     */
+    private int minPriority(int left, int right) {
+        if (right <= heapSize
+                && heap[right].getPriority() < heap[left].getPriority()) {
+            return right;
         }
-        return leftChild;
+        return left;
     }
 
+    /**
+     * Swapping two elements of the heap.
+     * 
+     * @param i The index of one of the elements to be swapped.
+     * @param j The index of the other element to be swapped.
+     */
     private void swap(int i, int j) {
         Node temp = heap[i];
         heap[i] = heap[j];
         heap[j] = temp;
     }
 
+    /**
+     * Determining the parent element of an element in the heap.
+     * 
+     * @param i The index of the element who's parent is requested.
+     * @return The parent's index.
+     */
     private int parent(int i) {
         return (int) Math.floor(i / 2);
     }
 
+    /**
+     * Determining the leftmost child of an element in the heap.
+     * 
+     * @param i The index of the element who's child is requested.
+     * @return The child's index.
+     */
     private int leftChild(int i) {
         return 2 * i;
     }
 
+    /**
+     * Determining the rightmost child of an element in the heap.
+     * 
+     * @param i The index of the element who's child is requested.
+     * @return The child's index.
+     */
     private int rightChild(int i) {
         return (2 * i) + 1;
     }

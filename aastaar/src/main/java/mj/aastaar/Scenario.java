@@ -6,7 +6,10 @@ import mj.aastaar.map.MapCreator;
 import mj.aastaar.map.Node;
 
 /**
- *
+ * Pathfinding scenario, containing starting and goal positions,
+ * pathfinding grid based on a game map and a method for running pathfinding
+ * algorithms and retrieving their shortest paths.
+ * 
  * @author MJ
  */
 public class Scenario {
@@ -18,96 +21,86 @@ public class Scenario {
     private String[] pathColors;
 
     /**
-     *
-     * @return
+     * @return Grid
      */
     public Grid getGrid() {
         return grid;
     }
 
     /**
-     *
-     * @return
+     * @return Grid as character array
      */
     public char[][] getGrid2D() {
         return grid.getGrid2D();
     }
 
     /**
-     *
-     * @return
+     * @return Start node
      */
     public Node getStart() {
         return start;
     }
 
     /**
-     *
-     * @return
+     * @return Goal node
      */
     public Node getGoal() {
         return goal;
     }
 
     /**
-     *
-     * @return
+     * @return Array of shortest paths (as node arrays)
      */
     public Node[][] getShortestPaths() {
         return shortestPaths;
     }
 
     /**
-     *
-     * @return
+     * @return Color hexadecimal representations for shortest path visualization
      */
     public String[] getPathColors() {
         return pathColors;
     }
 
     /**
-     *
-     * @param grid
+     * @param grid Grid object
      */
     public void setGrid(Grid grid) {
         this.grid = grid;
     }
 
     /**
-     *
-     * @param start
+     * @param start Start node
      */
     public void setStart(Node start) {
         this.start = start;
     }
 
     /**
-     *
-     * @param goal
+     * @param goal Goal node
      */
     public void setGoal(Node goal) {
         this.goal = goal;
     }
 
     /**
-     *
-     * @param shortestPaths
+     * @param shortestPaths Array of shortest paths (as node arrays)
      */
     public void setShortestPaths(Node[][] shortestPaths) {
         this.shortestPaths = shortestPaths;
     }
 
     /**
-     *
-     * @param pathColors
+     * @param pathColors Colors as hex strings for shortest path visualization
      */
     public void setPathColors(String[] pathColors) {
         this.pathColors = pathColors;
     }
 
     /**
+     * Checking if the current starting point is a valid location on the map.
      *
-     * @return
+     * @return True if node is in bounds and passable, otherwise false
      */
     public boolean startNodeIsValid() {
         int x = start.getX();
@@ -123,19 +116,21 @@ public class Scenario {
     }
 
     /**
+     * Running the specified algorithm,
+     * printing the shortest path length and cost
+     * and adding the shortest path (array of nodes) for visualization.
      *
-     * @param algorithm
-     * @param name
-     * @param i
-     * @param color
+     * @param algorithm Object implementing the PathFindingAlgorithm interface
+     * @param name What the algorithm is called
+     * @param i Index for shortestPaths and pathColors arrays
+     * @param color Color as hex strings for shortest path visualization
      */
     public void runPathfindingAlgorithm(PathFindingAlgorithm algorithm, String name, int i, String color) {
         if (startNodeIsValid()) {
             System.out.println("Starting " + name);
             int pathLength = algorithm.search(grid, start, goal, 4);
-            System.out.println(name + " shortest path "
-                    + "length: " + pathLength
-                    + ", cost: " + algorithm.getCost(goal));
+            System.out.print(name + " shortest path length: " + pathLength);
+            System.out.println(", cost: " + algorithm.getCost(goal));
             shortestPaths[i] = algorithm.getPath().shortestPath(goal, start, pathLength);
             System.out.println("Retrieved " + name + " shortest path as array \n");
             pathColors[i] = color;
@@ -144,11 +139,11 @@ public class Scenario {
         }
     }
 
-    // create the pathfinding grid based on a specific map
-
     /**
+     * Create the pathfinding grid based on a specific map.
+     * Work in progress: no ability to read configuration files yet.
      *
-     * @param configFilePath
+     * @param configFilePath Path to file containing configurations.
      */
     public void initConfig(String configFilePath) {
         if (configFilePath == null) {
@@ -157,24 +152,33 @@ public class Scenario {
         }
     }
 
+    /**
+     * Initializing an example map due to the lack of a configuration file.
+     * Initializing grid representation of the map, along with
+     * character representations of map nodes that are marked impassable for
+     * pathfinding, and the penalty for moving through heavier terrain,
+     * in this case "shallow water".
+     * NOTE: The Warcraft 3 maps (wc3maps512-map/*) contain shallow water.
+     */
     private void initDefaultGrid() {
         MapCreator mapCreator = new MapCreator();
-        // example maps
         //mapCreator.createMapFromFile("mapdata/sc1-map/Aftershock.map");
         //mapCreator.createMapFromFile("mapdata/wc3maps512-map/tranquilpaths.map");
-        // the wc3 maps contain shallow water
         mapCreator.createMapFromFile("mapdata/wc3maps512-map/divideandconquer.map");
         //mapCreator.createMapFromFile("mapdata/wc3maps512-map/timbermawhold.map");
         if (mapCreator.getGrid() != null) {
             char[][] gridArray = mapCreator.getGrid();
             char[] impassable = {'T', 'W', '@'};
-            double edgeWeight = 2.0; // penalty for moving to or from shallow water
+            double edgeWeight = 2.0;
             grid = new Grid(gridArray, impassable, edgeWeight);
         }
     }
 
+    /**
+     * Initializing example starting and goal coordinates
+     * due to the lack of a configuration file.
+     */
     private void initDefaultPositions() {
-        // example coordinates for different maps
         // Aftershock
 //        int startX = 82;
 //        int startY = 203;

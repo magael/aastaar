@@ -12,7 +12,8 @@ import mj.aastaar.algorithms.Dijkstra;
 import mj.aastaar.map.Node;
 
 /**
- *
+ * Initializing a pathfinding scenario, and a Java FX graphical user interface
+ * for visualizing pathfinding maps and algorithms.
  * @author MJ
  */
 public class Main extends Application {
@@ -20,15 +21,20 @@ public class Main extends Application {
     private static Scenario scenario;
 
     /**
-     *
+     * The main program.
      * @param args
      */
     public static void main(String[] args) {
         run();
     }
 
+    /**
+     * Initializing the scenario from configurations,
+     * providing the scenario with algorithms to run
+     * and providing arrays for the algorithm's shortest paths.
+     * Launching the Java FX GUI.
+     */
     private static void run() {
-        // initializing the map, start and goal
         scenario = new Scenario();
         scenario.initConfig(null);
 
@@ -37,19 +43,16 @@ public class Main extends Application {
         } else if (scenario.getGrid() == null || scenario.getGrid2D() == null || scenario.getGrid().getLength() < 1) {
             System.out.println("Error creating a pathfinding grid");
         } else {
-            // initialize arrays for the shortest paths of the different algorithms
             scenario.setShortestPaths(new Node[5][]);
             scenario.setPathColors(new String[5]);
                     
             scenario.runPathfindingAlgorithm(new Dijkstra(), "Dijkstra", 0, "#00FFFF"); // color: cyan
             scenario.runPathfindingAlgorithm(new AStar(), "A*", 1, "#FF00FF"); // color: magenta
 
-            // GUI
             launch(Main.class);
         }
      }
 
-    // called automatically after launching the JavaFX Application
     @Override
     public void start(Stage window) throws Exception {
         GridPane layout = gridGUI();
@@ -61,7 +64,13 @@ public class Main extends Application {
         window.show();
     }
 
-    // NOTE: GridPane.add receives coordinates as (..., column, row)
+    /**
+     * Creating the grid visualization with JavaFX objects.
+     * 
+     * NOTE: GridPane.add receives coordinates as (..., column, row)
+     * @return grid of colored rectangles, a.k.a. tiles,
+     * representing the map and shortest paths
+     */
     private GridPane gridGUI() {
         GridPane layout = new GridPane();
         char[][] grid2D = scenario.getGrid2D();
@@ -73,7 +82,13 @@ public class Main extends Application {
         return layout;
     }
 
-    // creating the map tiles
+    /**
+     * Creating the map tiles.
+     * 
+     * @param grid2D 2D character array representation of the map grid
+     * @param layout JavaFX GridPane object
+     * @param tileSize Pixel dimensions for each tile
+     */
     private void addTiles(char[][] grid2D, GridPane layout, double tileSize) {
         Node start = scenario.getStart();
         Node goal = scenario.getGoal();
@@ -92,7 +107,12 @@ public class Main extends Application {
         }
     }
 
-    // coloring different paths found by different algroithms
+    /**
+     * Coloring different paths found by different algorithms.
+     * 
+     * @param layout JavaFX GridPane object
+     * @param tileSize Pixel dimensions for each tile
+     */
     private void colorPaths(GridPane layout, double tileSize) {
         Node[][] shortestPaths = scenario.getShortestPaths();
         String[] pathColors = scenario.getPathColors();
@@ -108,7 +128,12 @@ public class Main extends Application {
         }
     }
 
-    // determine color for map tiles
+    /**
+     * Determine the color for a map tile.
+     * 
+     * @param c Character representation of the map grid node
+     * @return JavaFX Color object
+     */
     private Color tileColor(char c) {
         Color color = Color.RED;
         switch (c) {
