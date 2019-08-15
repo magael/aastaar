@@ -1,7 +1,7 @@
 package mj.aastaar.map;
 
 /**
- * A position on the grid, with priority for pathfinding algorithms.
+ * A position on the grid, with a priority for pathfinding algorithms.
  * 
  * @author MJ
  */
@@ -12,9 +12,9 @@ public class Node implements Comparable<Node>{
 
     /**
      *
-     * @param x
-     * @param y
-     * @param priority
+     * @param x The x-coordinate of the position
+     * @param y The y-coordinate of the position
+     * @param priority The priority of the position for pathfinding algorithms
      */
     public Node(int x, int y, double priority) {
         this.x = x;
@@ -22,50 +22,26 @@ public class Node implements Comparable<Node>{
         this.priority = priority;
     }
 
-    /**
-     *
-     * @return
-     */
     public double getPriority() {
         return priority;
     }
 
-    /**
-     *
-     * @param priority
-     */
     public void setPriority(double priority) {
         this.priority = priority;
     }
 
-    /**
-     *
-     * @param x
-     */
     public void setX(int x) {
         this.x = x;
     }
 
-    /**
-     *
-     * @param y
-     */
     public void setY(int y) {
         this.y = y;
     }
 
-    /**
-     *
-     * @return
-     */
     public int getX() {
         return x;
     }
 
-    /**
-     *
-     * @return
-     */
     public int getY() {
         return y;
     }

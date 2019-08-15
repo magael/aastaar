@@ -12,19 +12,20 @@ public class Grid {
 
     /**
      *
-     * @param grid
-     * @param impassable
-     * @param edgeWeight
+     * @param grid A 2D character array representation of the map grid
+     * @param impassable character representations of map nodes
+     * that are marked impassable for pathfinding
+     * @param heavyEdgeWeight and the penalty for moving through heavier terrain
      */
-    public Grid(char[][] grid, char[] impassable, double edgeWeight) {
+    public Grid(char[][] grid, char[] impassable, double heavyEdgeWeight) {
         this.grid = grid;
         this.impassable = impassable;
-        this.heavyEdgeWeight = edgeWeight;
+        this.heavyEdgeWeight = heavyEdgeWeight;
     }
 
     /**
      *
-     * @return
+     * @return A 2D character array representation of the map grid
      */
     public char[][] getGrid2D() {
         return grid;
@@ -32,7 +33,7 @@ public class Grid {
 
     /**
      *
-     * @return
+     * @return The grid length
      */
     public int getLength() {
         return grid.length;
@@ -133,9 +134,10 @@ public class Grid {
     }
 
     /**
-     *
-     * @param c
-     * @return
+     * Checking if a position on the map is passable.
+     * 
+     * @param c Character representation of the map position.
+     * @return True if the position is passable, otherwise false
      */
     public boolean isPassable(char c) {
         for (char ic : impassable) {

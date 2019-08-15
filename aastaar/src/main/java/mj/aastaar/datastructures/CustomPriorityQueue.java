@@ -75,7 +75,7 @@ public class CustomPriorityQueue {
      * Heap size is incremented by one, the new element is added
      * as the last element and the heap is rearranged from bottom up.
      *
-     * @param node
+     * @param node The node to be inserted
      */
     public void heapInsert(Node node) {
         if (heapSize + 1 < heap.length) {

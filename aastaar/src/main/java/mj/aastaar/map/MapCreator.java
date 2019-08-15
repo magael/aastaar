@@ -38,7 +38,7 @@ public class MapCreator {
 
     /**
      *
-     * @return
+     * @return A 2D character array representation of the map grid
      */
     public char[][] getGrid() {
         return grid;
@@ -46,7 +46,7 @@ public class MapCreator {
 
     /**
      *
-     * @param mapFilePath
+     * @param mapFilePath Map file path
      */
     public void createMapFromFile(String mapFilePath) {
         try {
@@ -62,7 +62,7 @@ public class MapCreator {
      * Checking the file format from the first line,
      * starting "handling" from the second line.
      * 
-     * @param mapData
+     * @param mapData String array of map data file rows
      */
     public void readMapData(String[] mapData) {
         String mapDataLine = "";
@@ -85,8 +85,8 @@ public class MapCreator {
     /**
      * Adding characters to the grid.
      *
-     * @param row
-     * @param mapDataLine
+     * @param row Grid row index
+     * @param mapDataLine Map data file row
      */
     public void objectsFromMapRow(int row, String mapDataLine) {
         for (int col = 0; col < mapDataLine.length(); col++) {
@@ -98,8 +98,8 @@ public class MapCreator {
      * Initializing grid height and width,
      * skipping "map" and handling map characters.
      * 
-     * @param row
-     * @param mapDataLine 
+     * @param row Map data file row index
+     * @param mapDataLine Map data file row
      */
     private void handleMapRow(int row, String mapDataLine) {
         if (row == 1) {

@@ -17,8 +17,8 @@ public class PathWithArray implements Path {
 
     /**
      *
-     * @param nx
-     * @param ny
+     * @param nx The x in n = x * y nodes
+     * @param ny The y in n = x * y nodes
      */
     public PathWithArray(int nx, int ny) {
         cameFrom = new Node[nx][ny];
@@ -26,7 +26,7 @@ public class PathWithArray implements Path {
 
     /**
      *
-     * @return
+     * @return A 2D array containing where each node has come from in the path
      */
     public Node[][] getCameFrom() {
         return cameFrom;
@@ -67,9 +67,9 @@ public class PathWithArray implements Path {
      * Traces the steps back from goal to start,
      * returns the length of the shortest path.
      * 
-     * @param current
-     * @param start
-     * @return
+     * @param current The goal node
+     * @param start The start node
+     * @return Amount of steps in the shortest path
      */
     public int earlyExit(Node current, Node start) {
         int steps = 0;

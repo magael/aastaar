@@ -14,11 +14,7 @@ import java.util.ArrayList;
 public class CustomFileReader {
 
     /**
-     * Reads a file from the given path and puts it's contents in a String array.
-     *
-     * @param filePath
-     * @return The file data in a String ArrayList
-     * @throws java.lang.Exception
+     * 
      */
     private ArrayList<String> data;
 
@@ -44,8 +40,8 @@ public class CustomFileReader {
     /**
      * Reading the file at the provided path.
      * 
-     * @param filePath
-     * @throws Exception
+     * @param filePath The file path
+     * @throws Exception IO exception
      */
     public void readFile(String filePath) throws Exception {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
@@ -59,8 +55,8 @@ public class CustomFileReader {
     /**
      * Adding the data rows in the file into an ArrayList.
      * 
-     * @param br
-     * @throws IOException 
+     * @param br Java IO BufferedReader object
+     * @throws IOException IO exception
      */
     private void addLines(BufferedReader br) throws IOException {
         String dataLine;

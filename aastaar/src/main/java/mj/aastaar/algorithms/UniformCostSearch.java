@@ -7,11 +7,12 @@ import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 
 /**
- * Implementation of Dijkstra's algorithm.
+ * Implementation of uniform cost search, which is a variant of
+ * Dijkstra's algorithm.
  * 
  * @author MJ
  */
-public class Dijkstra implements PathFindingAlgorithm {
+public class UniformCostSearch implements PathFindingAlgorithm {
 
     private PathWithArray path;
     private CustomPriorityQueue frontier;
