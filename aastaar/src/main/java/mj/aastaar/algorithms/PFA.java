@@ -5,24 +5,21 @@ import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 
 /**
- * Interface for pathfinding algorithms, such as Breadth-First search,
- * Dijkstra's algorithm and A*.
  *
  * @author MJ
  */
-public interface PathFindingAlgorithm {
-
+public interface PFA {
+    
     /**
      * The main method for running the pathfinding algorithm.
      * Only one search can be performed with the same object.
      *
-     * @param grid
      * @param start
      * @param goal
      * @param directions
      * @return The amount of steps in a shortest path or -1 if not found
      */
-    public int search(Grid grid, Node start, Node goal, int directions);
+    public int search(Node start, Node goal, int directions);
 
     /**
      * Retrieving the found shortest path.

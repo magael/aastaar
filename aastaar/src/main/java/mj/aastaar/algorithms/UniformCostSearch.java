@@ -7,15 +7,18 @@ import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 
 /**
- * Implementation of the A* algorithm.
+ * Implementation of Uniform Cost Search, which is a variant of
+ * Dijkstra's algorithm.
  *
  * @author MJ
  */
-public class AStar implements PathFindingAlgorithm {
+
+public class UniformCostSearch implements PathFindingAlgorithm {
 
     private PathWithArray path;
     private CustomPriorityQueue frontier;
     private double cost[][];
+    
 //    private boolean[][] visited; // optional, but might influence speed
 
     @Override
@@ -48,7 +51,7 @@ public class AStar implements PathFindingAlgorithm {
 //            }
 //            visited[current.getX()][current.getY()] = true;
 
-            expandFrontier(grid, current, goal, directions);
+            expandFrontier(current, grid, directions);
         }
         return -1;
     }
@@ -70,12 +73,11 @@ public class AStar implements PathFindingAlgorithm {
     /**
      * Adding new nodes to the frontier (a.k.a. open set) and path
      *
-     * @param grid
      * @param current
-     * @param goal
+     * @param grid
      * @param directions
      */
-    private void expandFrontier(Grid grid, Node current, Node goal, int directions) {
+    private void expandFrontier(Node current, Grid grid, int directions) {
         for (Node next : grid.getNeighbours(current.getX(), current.getY(), directions)) {
             if (next == null) {
                 continue;
@@ -83,7 +85,7 @@ public class AStar implements PathFindingAlgorithm {
             double newCost = cost[current.getX()][current.getY()] + grid.cost(current, next);
             if (newCost < cost[next.getX()][next.getY()]) {
                 cost[next.getX()][next.getY()] = newCost;
-                next.setPriority(newCost + grid.heuristic(next, goal));
+                next.setPriority(newCost);
                 frontier.heapInsert(next);
                 path.putCameFrom(next, current);
             }

@@ -8,7 +8,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import mj.aastaar.algorithms.AStar;
-import mj.aastaar.algorithms.Dijkstra;
+import mj.aastaar.algorithms.AX;
+import mj.aastaar.algorithms.UniformCostSearch;
+import mj.aastaar.algorithms.UCS;
 import mj.aastaar.map.Node;
 
 /**
@@ -43,11 +45,14 @@ public class Main extends Application {
         } else if (scenario.getGrid() == null || scenario.getGrid2D() == null || scenario.getGrid().getLength() < 1) {
             System.out.println("Error creating a pathfinding grid");
         } else {
-            scenario.setShortestPaths(new Node[5][]);
-            scenario.setPathColors(new String[5]);
+            scenario.setShortestPaths(new Node[2][]);
+            scenario.setPathColors(new String[2]);
                     
-            scenario.runPathfindingAlgorithm(new Dijkstra(), "Dijkstra", 0, "#00FFFF"); // color: cyan
-            scenario.runPathfindingAlgorithm(new AStar(), "A*", 1, "#FF00FF"); // color: magenta
+            scenario.runPFA(new UCS(scenario.getGrid()), "Uniform cost search", 0, "#00FFFF"); // color: cyan
+            scenario.runPFA(new AX(scenario.getGrid()), "A*", 1, "#FF00FF"); // color: magenta
+            
+//            scenario.runPathfindingAlgorithm(new UniformCostSearch(), "Dijkstra", 0, "#00FFFF"); // color: cyan
+//            scenario.runPathfindingAlgorithm(new AStar(), "A*", 1, "#FF00FF"); // color: magenta
 
             launch(Main.class);
         }

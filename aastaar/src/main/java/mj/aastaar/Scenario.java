@@ -1,5 +1,6 @@
 package mj.aastaar;
 
+import mj.aastaar.algorithms.PFA;
 import mj.aastaar.algorithms.PathFindingAlgorithm;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.MapCreator;
@@ -129,6 +130,20 @@ public class Scenario {
         if (startNodeIsValid()) {
             System.out.println("Starting " + name);
             int pathLength = algorithm.search(grid, start, goal, 4);
+            System.out.print(name + " shortest path length: " + pathLength);
+            System.out.println(", cost: " + algorithm.getCost(goal));
+            shortestPaths[i] = algorithm.getPath().shortestPath(goal, start, pathLength);
+            System.out.println("Retrieved " + name + " shortest path as array \n");
+            pathColors[i] = color;
+        } else {
+            System.out.println("The starting position is not valid");
+        }
+    }
+    
+    public void runPFA(PFA algorithm, String name, int i, String color) {
+        if (startNodeIsValid()) {
+            System.out.println("Starting " + name);
+            int pathLength = algorithm.search(start, goal, 4);
             System.out.print(name + " shortest path length: " + pathLength);
             System.out.println(", cost: " + algorithm.getCost(goal));
             shortestPaths[i] = algorithm.getPath().shortestPath(goal, start, pathLength);
