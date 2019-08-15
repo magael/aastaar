@@ -37,7 +37,7 @@ public class MapCreatorTest {
         assertEquals('T', creator.getGrid()[3][2]);
         assertEquals(4, creator.getGrid().length);
     }
-    
+
     @Test
     public void mapWidthIsSetCorrectly() {
         assertEquals(3, creator.getGrid()[0].length);
@@ -45,7 +45,7 @@ public class MapCreatorTest {
         assertEquals(3, creator.getGrid()[2].length);
         assertEquals(3, creator.getGrid()[3].length);
     }
-    
+
     @Test
     public void mapCreationFailsSafelyWithBadFilePath() {
         MapCreator newCreator = new MapCreator();
@@ -54,7 +54,7 @@ public class MapCreatorTest {
         char[][] emptyGrid = new char[0][0];
         assertArrayEquals(emptyGrid, newCreator.getGrid());
     }
-    
+
     @Test
     public void mapCreationSucceedsWithCorrectFilePath() {
         MapCreator newCreator = new MapCreator();

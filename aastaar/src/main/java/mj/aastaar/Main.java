@@ -19,6 +19,10 @@ public class Main extends Application {
 
     private static Scenario scenario;
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         run();
     }

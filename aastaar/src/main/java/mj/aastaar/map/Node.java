@@ -9,32 +9,62 @@ public class Node implements Comparable<Node>{
     private int x, y;
     private double priority;
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @param priority
+     */
     public Node(int x, int y, double priority) {
         this.x = x;
         this.y = y;
         this.priority = priority;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getPriority() {
         return priority;
     }
 
+    /**
+     *
+     * @param priority
+     */
     public void setPriority(double priority) {
         this.priority = priority;
     }
 
+    /**
+     *
+     * @param x
+     */
     public void setX(int x) {
         this.x = x;
     }
 
+    /**
+     *
+     * @param y
+     */
     public void setY(int y) {
         this.y = y;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getY() {
         return y;
     }

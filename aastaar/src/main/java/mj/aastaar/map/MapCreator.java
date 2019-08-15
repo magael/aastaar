@@ -28,6 +28,9 @@ public class MapCreator {
     private int mapWidth;
     private char[][] grid;
 
+    /**
+     *
+     */
     public MapCreator() {
         mapReader = new CustomFileReader();
         mapHeight = 0;
@@ -35,10 +38,18 @@ public class MapCreator {
         grid = new char[0][0];
     }
 
+    /**
+     *
+     * @return
+     */
     public char[][] getGrid() {
         return grid;
     }
 
+    /**
+     *
+     * @param mapFilePath
+     */
     public void createMapFromFile(String mapFilePath) {
         try {
             mapReader.readFile(mapFilePath);
@@ -50,6 +61,11 @@ public class MapCreator {
     }
 
     // check file format from the first line, start "handling" from the second line
+
+    /**
+     *
+     * @param mapData
+     */
     public void readMapData(String[] mapData) {
         String mapDataLine = "";
         int row = 1;
@@ -85,6 +101,12 @@ public class MapCreator {
     }
 
 // adding characters to the grid
+
+    /**
+     *
+     * @param row
+     * @param mapDataLine
+     */
     public void objectsFromMapRow(int row, String mapDataLine) {
         // DEBUG: print
         // System.out.println(mapDataLine);

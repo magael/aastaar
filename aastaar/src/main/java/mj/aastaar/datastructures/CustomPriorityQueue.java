@@ -12,6 +12,10 @@ public class CustomPriorityQueue {
     private Node[] heap;
     private final int ROOT = 1;
 
+    /**
+     *
+     * @param maxSize
+     */
     public CustomPriorityQueue(int maxSize) {
         heapSize = 0;
         //if (maxSize < 1) maxSize = 2; // pointless to have size < 2 heap
@@ -19,34 +23,52 @@ public class CustomPriorityQueue {
         heap[0] = new Node(-1, -1, Integer.MIN_VALUE);
     }
 
+    /**
+     *
+     * @return
+     */
     public int getHeapSize() {
         return heapSize;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isEmpty() {
         return heapSize <= 0;
     }
 
+    /**
+     *
+     * @return
+     */
     public Node heapMin() {
         return heap[ROOT];
     }
 
+    /**
+     *
+     * @return
+     */
     public Node heapDelMin() {
         Node head = heap[ROOT];
         if (heapSize > 0) {
-            heap[ROOT] = heap[heapSize];
-            heapSize--;
-            percolateDown();
+            heap[ROOT] = heap[heapSize--];
+            percolateDown(ROOT);
         } else {
             System.out.println("The heap is empty.");
         }
         return head;
     }
 
+    /**
+     *
+     * @param node
+     */
     public void heapInsert(Node node) {
         if (heapSize + 1 < heap.length) {
-            heapSize++;
-            heap[heapSize] = node;
+            heap[++heapSize] = node;
             percolateUp();
         } else {
             System.out.println("Not enough space in the heap.");
@@ -55,44 +77,30 @@ public class CustomPriorityQueue {
 
     private void percolateUp() {
         int current = heapSize;
-        while (current > ROOT) {
-            int parent = parent(current);
-            while (heap[current].getPriority() < heap[parent].getPriority()) {
-                swap(current, parent);
-            }
+        int parent = parent(current);
+        while (heap[current].getPriority() < heap[parent].getPriority()) {
+            swap(current, parent);
             current = parent;
+            parent = parent(current);
         }
     }
 
-    private void percolateDown() {
-        int current = ROOT;
-        while (true) {
-            int leftChild = leftChild(current);
-            int rightChild = rightChild(current);
-
-            if (leftChild > heapSize) {
-                break;
+    private void percolateDown(int current) {
+        if (leftChild(current) <= heapSize) {
+            int min = minPriority(leftChild(current), rightChild(current));
+        
+            if (heap[current].getPriority() > heap[min].getPriority()) {
+                swap(current, min);
+                percolateDown(min);
             }
-
-            int min = minPriority(leftChild, rightChild);
-
-            if (heap[current].getPriority() <= heap[min].getPriority()) {
-                break;
-            }
-
-            swap(current, min);
-            current = min;
         }
     }
 
     private int minPriority(int leftChild, int rightChild) {
-        Node left = heap[leftChild];
-        Node right = heap[rightChild];
-
-        if (rightChild <= heapSize && right.getPriority() < left.getPriority()) {
+        if (rightChild <= heapSize
+                && heap[rightChild].getPriority() < heap[leftChild].getPriority()) {
             return rightChild;
         }
-
         return leftChild;
     }
 

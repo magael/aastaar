@@ -17,50 +17,98 @@ public class Scenario {
     private Node[][] shortestPaths;
     private String[] pathColors;
 
+    /**
+     *
+     * @return
+     */
     public Grid getGrid() {
         return grid;
     }
 
+    /**
+     *
+     * @return
+     */
     public char[][] getGrid2D() {
         return grid.getGrid2D();
     }
 
+    /**
+     *
+     * @return
+     */
     public Node getStart() {
         return start;
     }
 
+    /**
+     *
+     * @return
+     */
     public Node getGoal() {
         return goal;
     }
 
+    /**
+     *
+     * @return
+     */
     public Node[][] getShortestPaths() {
         return shortestPaths;
     }
 
+    /**
+     *
+     * @return
+     */
     public String[] getPathColors() {
         return pathColors;
     }
 
+    /**
+     *
+     * @param grid
+     */
     public void setGrid(Grid grid) {
         this.grid = grid;
     }
 
+    /**
+     *
+     * @param start
+     */
     public void setStart(Node start) {
         this.start = start;
     }
 
+    /**
+     *
+     * @param goal
+     */
     public void setGoal(Node goal) {
         this.goal = goal;
     }
 
+    /**
+     *
+     * @param shortestPaths
+     */
     public void setShortestPaths(Node[][] shortestPaths) {
         this.shortestPaths = shortestPaths;
     }
 
+    /**
+     *
+     * @param pathColors
+     */
     public void setPathColors(String[] pathColors) {
         this.pathColors = pathColors;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean startNodeIsValid() {
         int x = start.getX();
         int y = start.getY();
@@ -74,6 +122,13 @@ public class Scenario {
         return false;
     }
 
+    /**
+     *
+     * @param algorithm
+     * @param name
+     * @param i
+     * @param color
+     */
     public void runPathfindingAlgorithm(PathFindingAlgorithm algorithm, String name, int i, String color) {
         if (startNodeIsValid()) {
             System.out.println("Starting " + name);
@@ -90,6 +145,11 @@ public class Scenario {
     }
 
     // create the pathfinding grid based on a specific map
+
+    /**
+     *
+     * @param configFilePath
+     */
     public void initConfig(String configFilePath) {
         if (configFilePath == null) {
             initDefaultGrid();

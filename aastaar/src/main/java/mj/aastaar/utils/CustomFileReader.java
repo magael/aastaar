@@ -22,10 +22,17 @@ public class CustomFileReader {
      */
     private ArrayList<String> data;
 
+    /**
+     *
+     */
     public CustomFileReader() {
         data = new ArrayList<>();
     }
 
+    /**
+     *
+     * @return
+     */
     public String[] getDataArray() {
         String[] dataArray = new String[data.size()];
         for (int i = 0; i < data.size(); i++) {
@@ -34,6 +41,11 @@ public class CustomFileReader {
         return dataArray;
     }
 
+    /**
+     *
+     * @param filePath
+     * @throws Exception
+     */
     public void readFile(String filePath) throws Exception {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         InputStream is = cl.getResourceAsStream(filePath);

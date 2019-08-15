@@ -15,7 +15,7 @@ import org.junit.Test;
 public class GridTest {
 
     Grid grid;
-    
+
     @Before
     public void setUp() {
         char[][] gridArray = {
@@ -29,7 +29,7 @@ public class GridTest {
         double edgeWeight = 2.0;
         grid = new Grid(gridArray, impassable, edgeWeight);
     }
-    
+
     @Test
     public void gettingCorrectNeighboursInTheMiddle() {
         int nodeX = 2;
@@ -53,7 +53,7 @@ public class GridTest {
         assertEquals(2, leftNeighbour.getX());
         assertEquals(1, leftNeighbour.getY());
     }
-    
+
     @Test
     public void gettingCorrectNeighboursFromAnEdge() {
         int nodeX = 4;
@@ -75,7 +75,7 @@ public class GridTest {
         Node leftNeighbour = neighbours[3];
         assertNull(leftNeighbour);
     }
-    
+
     @Test
     public void heuristicReturnsCorrectManhattanDistance() {
         int ax = 2;
@@ -90,7 +90,7 @@ public class GridTest {
         
         assertEquals(h, grid.heuristic(a, b), 0.0);
     }
-    
+
     @Test
     public void heuristicReturnsCorrectManhattanDistance2() {
         int ax = 20;
@@ -105,7 +105,7 @@ public class GridTest {
         
         assertEquals(h, grid.heuristic(a, b), 0.0);
     }
-    
+
     @Test
     public void costReturnsOneForGround() {
         Node from = new Node(1, 1, 0);
@@ -113,7 +113,7 @@ public class GridTest {
         
         assertEquals(1.0, grid.cost(from, to), 0.0);
     }
-    
+
     @Test
     public void costReturnsThreeWhenEnteringWater() {
         Node from = new Node(3, 1, 0);
@@ -121,7 +121,7 @@ public class GridTest {
         
         assertEquals(3.0, grid.cost(from, to), 0.0);
     }
-    
+
     @Test
     public void costReturnsThreeWhenExitingWater() {
         Node from = new Node(3, 0, 0);
@@ -129,7 +129,7 @@ public class GridTest {
         
         assertEquals(3.0, grid.cost(from, to), 0.0);
     }
-    
+
     @Test
     public void costReturnsFiveWhenMovingInWater() {
         Node from = new Node(3, 0, 0);

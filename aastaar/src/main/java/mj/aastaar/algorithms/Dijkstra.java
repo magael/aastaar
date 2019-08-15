@@ -19,6 +19,15 @@ public class Dijkstra implements PathFindingAlgorithm {
 
     // returns the amount of steps in a shortest path or -1 if not found
     // NOTE: cannot do multiple searches with the same object
+
+    /**
+     *
+     * @param grid
+     * @param start
+     * @param goal
+     * @param directions
+     * @return
+     */
     @Override
     public int search(Grid grid, Node start, Node goal, int directions) {
         int nx = grid.getLength();
@@ -53,11 +62,20 @@ public class Dijkstra implements PathFindingAlgorithm {
         return -1;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Path getPath() {
         return path;
     }
 
+    /**
+     *
+     * @param goal
+     * @return
+     */
     @Override
     public double getCost(Node goal) {
         double c = cost[goal.getX()][goal.getY()];

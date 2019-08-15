@@ -10,21 +10,40 @@ public class Grid {
     private char[] impassable;
     private double edgeWeight;
 
+    /**
+     *
+     * @param grid
+     * @param impassable
+     * @param edgeWeight
+     */
     public Grid(char[][] grid, char[] impassable, double edgeWeight) {
         this.grid = grid;
         this.impassable = impassable;
         this.edgeWeight = edgeWeight;
     }
 
+    /**
+     *
+     * @return
+     */
     public char[][] getGrid2D() {
         return grid;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getLength() {
         return grid.length;
     }
     
     // assumes all the rows have equal length
+
+    /**
+     *
+     * @return
+     */
     public int getRowLength() {
         return grid[0].length;
     }
@@ -47,6 +66,13 @@ public class Grid {
 
     // manhattan distance on a square grid
     // with a custom of implementation of calculating absolute value
+
+    /**
+     *
+     * @param a
+     * @param b
+     * @return
+     */
     public double heuristic(Node a, Node b) {
         double x = a.getX() - b.getX();
         x = (x > 0) ? x : 0 - x;
@@ -59,6 +85,13 @@ public class Grid {
     // NOTE: should only be called for nodes that have already been checked
     // as passable and in bounds
     // NOTE: different "shallow water"-penalties yield different paths
+
+    /**
+     *
+     * @param from
+     * @param to
+     * @return
+     */
     public double cost(Node from, Node to) {
         double cost = 1.0;
         char current = grid[from.getX()][from.getY()];
@@ -75,6 +108,14 @@ public class Grid {
     // returns the adjacent nodes which are in bounds and passable
     // NOTE: it would be interesting to test precomputed neighbour lists / matrices
     // or hashtables vs this kind of dynamic check
+
+    /**
+     *
+     * @param x
+     * @param y
+     * @param directions
+     * @return
+     */
     public Node[] getNeighbours(int x, int y, int directions) {
         Node[] neighbours = new Node[directions];
         if (x < (grid.length - 1) && isPassable(grid[x + 1][y])) {
@@ -92,6 +133,11 @@ public class Grid {
         return neighbours;
     }
 
+    /**
+     *
+     * @param c
+     * @return
+     */
     public boolean isPassable(char c) {
         for (char ic : impassable) {
             if (c == ic) {
