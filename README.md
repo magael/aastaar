@@ -6,6 +6,10 @@
 
 [Vaatimusmäärittely](https://github.com/magael/aastaar/blob/master/documentation/maarittely.md)
 
+[Toteutusdokumentaatio](https://github.com/magael/aastaar/blob/master/documentation/toteutus.md)
+
+[Testausdokumenentaatio](https://github.com/magael/aastaar/blob/master/documentation/testaus.md)
+
 [TODO-muistiinpanoja](https://github.com/magael/aastaar/blob/master/documentation/todo.md)
 
 #### Viikkoraportit
