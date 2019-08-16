@@ -7,10 +7,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import mj.aastaar.algorithms.AStar;
-import mj.aastaar.algorithms.AStarNoClosed;
-import mj.aastaar.algorithms.UniformCostSearch;
-import mj.aastaar.algorithms.UCSNoClosed;
+import mj.aastaar.algorithms.BestFirstSearch;
+import mj.aastaar.algorithms.frontier.AStarFrontier;
+import mj.aastaar.algorithms.frontier.AStarFrontierNoClosed;
+import mj.aastaar.algorithms.frontier.UCSFrontier;
+import mj.aastaar.datastructures.CustomPriorityQueue;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 
@@ -41,6 +42,8 @@ public class Main extends Application {
         scenario = new Scenario();
         scenario.initConfig(null);
         Grid grid = scenario.getGrid();
+        int nx = grid.getLength();
+        int ny = grid.getRowLength();
 
         if (scenario.getStart() == null || scenario.getGoal() == null) {
             System.out.println("Error initializing start and goal positions");
@@ -49,11 +52,18 @@ public class Main extends Application {
         } else {
             scenario.setShortestPaths(new Node[4][]);
             scenario.setPathColors(new String[4]);
+            
+            String cyan = "#00FFFF";
+            String magenta = "#FF00FF";
 
-            scenario.runPathfindingAlgorithm(new UniformCostSearch(grid), "Uniform cost search", 0, "#00FFFF"); // color: cyan
-            scenario.runPathfindingAlgorithm(new UCSNoClosed(grid), "UCS without a visited flag / closed set", 1, "#00FFFF"); // color: cyan
-            scenario.runPathfindingAlgorithm(new AStar(grid), "A*", 2, "#FF00FF"); // color: magenta
-            scenario.runPathfindingAlgorithm(new AStarNoClosed(grid), "A* without a visited flag / closed set", 3, "#FF00FF"); // color: magenta
+            BestFirstSearch uniformCostSearch = new BestFirstSearch(grid, new UCSFrontier(new CustomPriorityQueue(nx * ny), new boolean[nx][ny]));
+            scenario.runPathfindingAlgorithm(uniformCostSearch, "Uniform cost search", 0, cyan);
+            BestFirstSearch ucsNoClosed = new BestFirstSearch(grid, new UCSFrontier(new CustomPriorityQueue(nx * ny), new boolean[nx][ny]));
+            scenario.runPathfindingAlgorithm(ucsNoClosed, "Uniform cost search without a visited flag / closed set", 1, cyan);
+            BestFirstSearch aStar = new BestFirstSearch(grid, new AStarFrontier(new CustomPriorityQueue(nx * ny), new boolean[nx][ny]));
+            scenario.runPathfindingAlgorithm(aStar, "A*", 2, magenta);
+            BestFirstSearch aStarNoClosed = new BestFirstSearch(grid, new AStarFrontierNoClosed(new CustomPriorityQueue(nx * ny)));
+            scenario.runPathfindingAlgorithm(aStarNoClosed, "A* without a visited flag / closed set", 3, magenta);
 
             launch(Main.class);
         }

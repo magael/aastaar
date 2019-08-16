@@ -10,16 +10,16 @@ import mj.aastaar.map.Node;
  *
  * @author MJ
  */
-public abstract class BestFirstSearch implements PathFindingAlgorithm {
+public class BestFirstSearch implements PathFindingAlgorithm {
 
-    public Grid grid;
-    public Frontier frontier;
-    
+    private Grid grid;
+    private Frontier frontier;
     private PathWithArray path;
     private double cost[][];
 
-    public BestFirstSearch(Grid grid) {
+    public BestFirstSearch(Grid grid, Frontier frontier) {
         this.grid = grid;
+        this.frontier = frontier;
         int nx = grid.getLength();
         int ny = grid.getRowLength();
         path = new PathWithArray(nx, ny);
@@ -34,7 +34,6 @@ public abstract class BestFirstSearch implements PathFindingAlgorithm {
 
     @Override
     public int search(Node start, Node goal, int directions) {
-        initFrontier();
         if (frontier == null) {
             System.out.println("Failed to initialize frontier");
             return -1;
@@ -69,6 +68,4 @@ public abstract class BestFirstSearch implements PathFindingAlgorithm {
         }
         return c;
     }
-
-    public abstract void initFrontier();
 }
