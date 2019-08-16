@@ -14,9 +14,8 @@ import mj.aastaar.map.Node;
  */
 public class UniformCostSearch implements PathFindingAlgorithm {
 
-    public static Grid grid;
-    public static Node goal;
-    
+    private Grid grid;
+    private Node goal; 
     private PathWithArray path;
     private CustomPriorityQueue frontier;
     private double cost[][];
@@ -71,6 +70,14 @@ public class UniformCostSearch implements PathFindingAlgorithm {
             return -1;
         }
         return c;
+    }
+    
+    public Grid getGrid() {
+        return grid;
+    }
+
+    public Node getGoal() {
+        return goal;
     }
     
     public void setPriority(Node next, double newCost) {

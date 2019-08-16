@@ -11,6 +11,6 @@ public class AStar extends UniformCostSearch {
 
     @Override
     public void setPriority(Node next, double newCost) {
-        next.setPriority(newCost + grid.heuristic(next, goal));
+        next.setPriority(newCost + getGrid().heuristic(next, getGoal()));
     }
 }
