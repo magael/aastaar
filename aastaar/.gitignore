@@ -6,5 +6,5 @@ build/
 nbproject/
 bin/
 gradle.properties
-.settings/
+/**/.settings/
 src/main/resources/mapdata/bg512-map

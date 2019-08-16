@@ -7,6 +7,7 @@ Työtunteja kertyi yhteensä noin 12.
 #### Viikon aikana syntynyttä pohdintaa:
 
 * Saakohan keon solmun vanhemman haussa käyttää Math.flooria, vai tarvitaanko oma toteutus?
+* Main-luokka on jätetty pois testiraportisa, koska se sisältää mahdollisimman pitkälti pelkästään JavaFX-juttuja, joita ei varmaan tarvitse testata?
 
 ---
 
@@ -25,3 +26,13 @@ HashMap-versiot pois masterista, MapCreatorTestin fixaus, A*:sta taulukkoversio,
 #### Ke 14.8.
 
 Custom prioriteetijonon toteutus ja käyttöönotto, checkstyle, dokumentointia, priorityqueuelle testit. N. 6 h.
+
+#### To 15.8.
+
+Javadoceihin ikä ja terveys, prioriteettijonon toteutuksen yksityiskohtien muokkausta ja muuta hiomista. Uuteen branchiin perintää hyödyntävät algoritmiluokat. N. 9h.
+
+### Pe 16.8.
+
+Lisää Javadoceja. Pathille testit. Monta eri branchia, jossa erilaisia kokeiluja algoritmien oliosuunnitteluun: erilaisia komponentteja ja hierarkiaa. Mainiin yksinkertaisempi copypasten eliminointi: A* perii Uniform cost searchin. Dokumentointia ym. N. 6h.
+
+
