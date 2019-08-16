@@ -22,26 +22,50 @@ public class Node {
         this.priority = priority;
     }
 
+    /**
+     *
+     * @return Priority
+     */
     public double getPriority() {
         return priority;
     }
 
+    /**
+     *
+     * @param priority Priority
+     */
     public void setPriority(double priority) {
         this.priority = priority;
     }
 
+    /**
+     *
+     * @param x The x-coordinate
+     */
     public void setX(int x) {
         this.x = x;
     }
 
+    /**
+     *
+     * @param y The y-coordinate
+     */
     public void setY(int y) {
         this.y = y;
     }
 
+    /**
+     *
+     * @return The x-coordinate
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     *
+     * @return The y-coordinate
+     */
     public int getY() {
         return y;
     }

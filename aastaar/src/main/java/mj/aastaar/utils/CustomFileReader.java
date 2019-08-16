@@ -13,9 +13,6 @@ import java.util.ArrayList;
  */
 public class CustomFileReader {
 
-    /**
-     * 
-     */
     private ArrayList<String> data;
 
     /**

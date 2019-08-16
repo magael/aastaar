@@ -1,7 +1,6 @@
 package mj.aastaar.algorithms;
 
 import mj.aastaar.algorithms.path.Path;
-import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 
 /**
@@ -16,8 +15,7 @@ public interface PathFindingAlgorithm {
      * The main method for running the pathfinding algorithm,
      * returns the amount of steps in a shortest path or -1 if not found.
      * Only one search can be performed with the same object.
-     *
-     * @param grid The pathfinding grid
+     * 
      * @param start The start node
      * @param goal The goal node
      * @param directions The amount of allowed directions for valid moves

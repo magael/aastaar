@@ -21,6 +21,10 @@ public class UniformCostSearch implements PathFindingAlgorithm {
     private double cost[][];
 //    private boolean[][] visited; // optional, but might influence speed
 
+    /**
+     *
+     * @param grid Pathfinding grid
+     */
     public UniformCostSearch(Grid grid) {
         this.grid = grid;
     }
@@ -63,16 +67,29 @@ public class UniformCostSearch implements PathFindingAlgorithm {
         return c;
     }
     
+    /**
+     *
+     * @return Pathfinding grid
+     */
     public Grid getGrid() {
         return grid;
     }
 
+    /**
+     *
+     * @return Goal node
+     */
     public Node getGoal() {
         return goal;
     }
     
-    public void setPriority(Node next, double newCost) {
-        next.setPriority(newCost);
+    /**
+     *
+     * @param node The node that needs it's priority set
+     * @param cost The cost to the node
+     */
+    public void setPriority(Node node, double cost) {
+        node.setPriority(cost);
     }
 
     /**

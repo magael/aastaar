@@ -10,12 +10,16 @@ import mj.aastaar.map.Node;
  */
 public class AStar extends UniformCostSearch {
 
+    /**
+     *
+     * @param grid Pathfinding grid
+     */
     public AStar(Grid grid) {
         super(grid);
     }
 
     @Override
-    public void setPriority(Node next, double newCost) {
-        next.setPriority(newCost + getGrid().heuristic(next, getGoal()));
+    public void setPriority(Node node, double cost) {
+        node.setPriority(cost + getGrid().heuristic(node, getGoal()));
     }
 }
