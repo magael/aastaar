@@ -81,8 +81,8 @@ public class Node implements Comparable<Node>{
         return 0;
     }
 
-    @Override
-    public String toString() {
-        return "[" + this.x + ", " + this.y + "]";
-    }
+//    @Override
+//    public String toString() {
+//        return "[" + this.x + ", " + this.y + "]";
+//    }
 }
