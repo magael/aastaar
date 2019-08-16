@@ -3,9 +3,10 @@ package mj.aastaar.algorithms.path;
 import mj.aastaar.map.Node;
 
 /**
- * Interface for classes that provide algorithms with functionality to
- * retrieve the shortest path between two positions on a grid.
- * @author mijamija
+ * Interface for classes that provide functionality to retrieve
+ * the shortest path between two positions on a grid.
+ * 
+ * @author MJ
  */
 public interface Path {
 

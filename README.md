@@ -27,4 +27,4 @@ Projekti hyödyntää checkstyleä. Tyylivirheet voidaan tarkastaa komennolla <c
 
 #### Javadoc
 
-Javadocin saa generoitua komennolla <code>gradle javadoc</code> ja ne löytyy polulta <code>build/docs/javadoc/index.html</code>.
+Javadocin saa generoitua komennolla <code>gradle javadoc</code>. API löytyy polulta <code>build/docs/javadoc/index.html</code>.

@@ -57,19 +57,4 @@ public class NodeTest {
         String example = "not a node";
         assertFalse((nodeA.equals(example)));
     }
-
-    @Test
-    public void priorityIsMoreCorrectly() {
-        assertEquals(1, nodeC.compareTo(nodeA));
-    }
-
-    @Test
-    public void priorityIsLessCorrectly() {
-        assertEquals(-1, nodeA.compareTo(nodeC));
-    }
-
-    @Test
-    public void priorityIsSameCorrectly() {
-        assertEquals(0, nodeA.compareTo(nodeB));
-    }
 }

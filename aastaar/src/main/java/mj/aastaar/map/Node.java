@@ -5,7 +5,7 @@ package mj.aastaar.map;
  * 
  * @author MJ
  */
-public class Node implements Comparable<Node>{
+public class Node {
 
     private int x, y;
     private double priority;
@@ -72,13 +72,6 @@ public class Node implements Comparable<Node>{
             return false;
         }
         return true;
-    }
-
-    @Override
-    public int compareTo(Node o) {
-        if (this.priority > o.priority) return 1;
-        if (this.priority < o.priority) return -1;
-        return 0;
     }
 
 //    @Override

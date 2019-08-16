@@ -1,6 +1,7 @@
 package mj.aastaar.map;
 
 /**
+ * Pathfinding grid with characters representing terrain.
  * 
  * @author MJ
  */
@@ -49,22 +50,6 @@ public class Grid {
         return grid[0].length;
     }
 
-//    @Override
-//    public String toString() {
-//        String s = "";
-//        for (int i = 0; i < grid.length; i++) {
-//            s += Integer.toString(i) + ". ";
-//            if (i < 10) {
-//                s += " ";
-//            }
-//            for (int j = 0; j < grid[i].length; j++) {
-//                s += grid[i][j];
-//            }
-//            s += '\n';
-//        }
-//        return s;
-//    }
-
     /**
      * Manhattan distance on a square grid,
      * with a custom of implementation of calculating absolute value.
@@ -80,7 +65,6 @@ public class Grid {
         y = (y > 0) ? y : 0 - y;
         return x + y;
     }
-
 
     /**
      * Different cost for shallow water than normal ground.
@@ -147,4 +131,20 @@ public class Grid {
         }
         return true;
     }
+
+//    @Override
+//    public String toString() {
+//        String s = "";
+//        for (int i = 0; i < grid.length; i++) {
+//            s += Integer.toString(i) + ". ";
+//            if (i < 10) {
+//                s += " ";
+//            }
+//            for (int j = 0; j < grid[i].length; j++) {
+//                s += grid[i][j];
+//            }
+//            s += '\n';
+//        }
+//        return s;
+//    }
 }
