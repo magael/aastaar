@@ -7,7 +7,12 @@ Työtunteja kertyi yhteensä noin 12.
 #### Viikon aikana syntynyttä pohdintaa:
 
 * Saakohan keon solmun vanhemman haussa käyttää Math.flooria, vai tarvitaanko oma toteutus?
+  
 * Main-luokka on jätetty pois testiraportisa, koska se sisältää mahdollisimman pitkälti pelkästään JavaFX-juttuja, joita ei varmaan tarvitse testata?
+  
+* Olen edelleen muokannut algoritmien luokkien toteutusta huolella, joten niiden testaus on edelleen valitettavasti viivästynyt. Eri vaiheissa toteutettuja erilaisia hahmotelmia kompositiota ja perintää hyödyntävistä toteutuksista löytyy toisista brancheista.
+  
+* Scenario-luokka on myös pitkälti testaamatta, koska vieläkin elättelen toivoa, että ehtisin toteuttaa aivan erilaisen, joustavamman systeemin, jossa eri algoritmeja, karttoja sekä alku- ja loppupisteitä  vaihdellaan käyttäjän syötteestä.
 
 ---
 
