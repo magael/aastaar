@@ -1,5 +1,6 @@
 package mj.aastaar.algorithms;
 
+import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 
 /**
@@ -8,6 +9,10 @@ import mj.aastaar.map.Node;
  * @author MJ
  */
 public class AStar extends UniformCostSearch {
+
+    public AStar(Grid grid) {
+        super(grid);
+    }
 
     @Override
     public void setPriority(Node next, double newCost) {

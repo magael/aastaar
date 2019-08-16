@@ -14,33 +14,24 @@ import mj.aastaar.map.Node;
  */
 public class UniformCostSearch implements PathFindingAlgorithm {
 
-    private Grid grid;
     private Node goal; 
+    private Grid grid;
     private PathWithArray path;
     private CustomPriorityQueue frontier;
     private double cost[][];
 //    private boolean[][] visited; // optional, but might influence speed
 
-    @Override
-    public int search(Grid grid, Node start, Node goal, int directions) {
+    public UniformCostSearch(Grid grid) {
         this.grid = grid;
+    }
+
+    @Override
+    public int search(Node start, Node goal, int directions) {
         this.goal = goal;
-        int nx = grid.getLength();
-        int ny = grid.getRowLength();
-        path = new PathWithArray(nx, ny);
-        frontier = new CustomPriorityQueue(nx * ny);
-        cost = new double[nx][ny];
-//        visited = new boolean[nx][ny];
-
-        for (int i = 0; i < nx; i++) {
-            for (int j = 1; j < ny; j++) {
-                cost[i][j] = 1000000000.0;
-            }
-        }
-
+        initDataStructures();
         frontier.heapInsert(start);
         cost[start.getX()][start.getY()] = 0.0;
-
+        
         while (!frontier.isEmpty()) {
             Node current = frontier.heapDelMin();
 
@@ -101,6 +92,24 @@ public class UniformCostSearch implements PathFindingAlgorithm {
                 setPriority(next, newCost);
                 frontier.heapInsert(next);
                 path.putCameFrom(next, current);
+            }
+        }
+    }
+
+    /**
+     * Initializing data structures for the path, frontier and cost.
+     */
+    private void initDataStructures() {
+        int nx = grid.getLength();
+        int ny = grid.getRowLength();
+        path = new PathWithArray(nx, ny);
+        frontier = new CustomPriorityQueue(nx * ny);
+        cost = new double[nx][ny];
+//        visited = new boolean[nx][ny];
+
+        for (int i = 0; i < nx; i++) {
+            for (int j = 1; j < ny; j++) {
+                cost[i][j] = 1000000000.0;
             }
         }
     }

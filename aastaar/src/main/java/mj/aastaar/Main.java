@@ -9,6 +9,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import mj.aastaar.algorithms.AStar;
 import mj.aastaar.algorithms.UniformCostSearch;
+import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 
 /**
@@ -37,17 +38,18 @@ public class Main extends Application {
     private static void run() {
         scenario = new Scenario();
         scenario.initConfig(null);
+        Grid grid = scenario.getGrid();
 
         if (scenario.getStart() == null || scenario.getGoal() == null) {
             System.out.println("Error initializing start and goal positions");
-        } else if (scenario.getGrid() == null || scenario.getGrid2D() == null || scenario.getGrid().getLength() < 1) {
+        } else if (grid == null || scenario.getGrid2D() == null || scenario.getGrid().getLength() < 1) {
             System.out.println("Error creating a pathfinding grid");
         } else {
             scenario.setShortestPaths(new Node[2][]);
             scenario.setPathColors(new String[2]);
                     
-            scenario.runPathfindingAlgorithm(new UniformCostSearch(), "Uniform cost search (Dijkstra)", 0, "#00FFFF"); // color: cyan
-            scenario.runPathfindingAlgorithm(new AStar(), "A*", 1, "#FF00FF"); // color: magenta
+            scenario.runPathfindingAlgorithm(new UniformCostSearch(grid), "Uniform cost search (Dijkstra)", 0, "#00FFFF"); // color: cyan
+            scenario.runPathfindingAlgorithm(new AStar(grid), "A*", 1, "#FF00FF"); // color: magenta
 
             launch(Main.class);
         }
