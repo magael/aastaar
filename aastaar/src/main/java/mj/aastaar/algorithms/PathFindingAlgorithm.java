@@ -4,8 +4,7 @@ import mj.aastaar.algorithms.path.Path;
 import mj.aastaar.map.Node;
 
 /**
- * Interface for pathfinding algorithms, such as Breadth-First search,
- * Dijkstra's algorithm and A*.
+ * Interface for pathfinding algorithms.
  *
  * @author MJ
  */

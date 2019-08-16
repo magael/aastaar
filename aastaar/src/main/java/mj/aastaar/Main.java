@@ -11,6 +11,7 @@ import mj.aastaar.algorithms.BestFirstSearch;
 import mj.aastaar.algorithms.frontier.AStarFrontier;
 import mj.aastaar.algorithms.frontier.AStarFrontierNoClosed;
 import mj.aastaar.algorithms.frontier.UCSFrontier;
+import mj.aastaar.algorithms.frontier.UCSFrontierNoClosed;
 import mj.aastaar.datastructures.CustomPriorityQueue;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
@@ -58,7 +59,7 @@ public class Main extends Application {
 
             BestFirstSearch uniformCostSearch = new BestFirstSearch(grid, new UCSFrontier(new CustomPriorityQueue(nx * ny), new boolean[nx][ny]));
             scenario.runPathfindingAlgorithm(uniformCostSearch, "Uniform cost search", 0, cyan);
-            BestFirstSearch ucsNoClosed = new BestFirstSearch(grid, new UCSFrontier(new CustomPriorityQueue(nx * ny), new boolean[nx][ny]));
+            BestFirstSearch ucsNoClosed = new BestFirstSearch(grid, new UCSFrontierNoClosed(new CustomPriorityQueue(nx * ny)));
             scenario.runPathfindingAlgorithm(ucsNoClosed, "Uniform cost search without a visited flag / closed set", 1, cyan);
             BestFirstSearch aStar = new BestFirstSearch(grid, new AStarFrontier(new CustomPriorityQueue(nx * ny), new boolean[nx][ny]));
             scenario.runPathfindingAlgorithm(aStar, "A*", 2, magenta);

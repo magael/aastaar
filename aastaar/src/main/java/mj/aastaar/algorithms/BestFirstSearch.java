@@ -34,10 +34,6 @@ public class BestFirstSearch implements PathFindingAlgorithm {
 
     @Override
     public int search(Node start, Node goal, int directions) {
-        if (frontier == null) {
-            System.out.println("Failed to initialize frontier");
-            return -1;
-        }
         frontier.setGoal(goal);
         frontier.getFrontier().heapInsert(start);
         cost[start.getX()][start.getY()] = 0.0;
