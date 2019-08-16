@@ -33,7 +33,8 @@ public class BestFirstSearch implements PathFindingAlgorithm {
     }
 
     @Override
-    public int search(Grid grid, Node start, Node goal, int directions) {
+    public int search(Node start, Node goal, int directions) {
+        frontier.setGoal(goal);
         frontier.getFrontier().heapInsert(start);
         cost[start.getX()][start.getY()] = 0.0;
 

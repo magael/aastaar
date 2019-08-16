@@ -128,7 +128,8 @@ public class Scenario {
     public void runPathfindingAlgorithm(PathFindingAlgorithm algorithm, String name, int i, String color) {
         if (startNodeIsValid()) {
             System.out.println("Starting " + name);
-            int pathLength = algorithm.search(grid, start, goal, 4);
+//            int pathLength = algorithm.search(grid, start, goal, 4);
+            int pathLength = algorithm.search(start, goal, 4);
             System.out.print(name + " shortest path length: " + pathLength);
             System.out.println(", cost: " + algorithm.getCost(goal));
             shortestPaths[i] = algorithm.getPath().shortestPath(goal, start, pathLength);

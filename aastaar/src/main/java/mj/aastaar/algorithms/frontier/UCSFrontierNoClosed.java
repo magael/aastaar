@@ -40,4 +40,8 @@ public class UCSFrontierNoClosed implements Frontier {
     public CustomPriorityQueue getFrontier() {
         return frontier;
     }
+
+    @Override
+    public void setGoal(Node goal) {
+    }
 }

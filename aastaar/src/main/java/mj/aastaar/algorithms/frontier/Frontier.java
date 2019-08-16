@@ -18,4 +18,6 @@ public interface Frontier {
     public void expandFrontier(Node current, Grid grid, Path path, double[][] cost, int directions);
     
     public CustomPriorityQueue getFrontier();
+    
+    public void setGoal(Node goal);
 }

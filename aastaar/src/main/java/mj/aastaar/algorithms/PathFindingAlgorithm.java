@@ -23,7 +23,7 @@ public interface PathFindingAlgorithm {
      * @param directions The amount of allowed directions for valid moves
      * @return The length of the shortest path between two positions
      */
-    public int search(Grid grid, Node start, Node goal, int directions);
+    public int search(Node start, Node goal, int directions);
 
     /**
      * Retrieving the found shortest path.

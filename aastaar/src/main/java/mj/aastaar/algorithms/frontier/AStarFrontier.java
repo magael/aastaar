@@ -14,29 +14,31 @@ import mj.aastaar.map.Node;
  *
  * @author MJ
  */
-public class UCSFrontier implements Frontier {
-    
+public class AStarFrontier implements Frontier {
+
     private CustomPriorityQueue frontier;
     private boolean[][] visited;
+    private Node goal;
 
-    public UCSFrontier(CustomPriorityQueue frontier, boolean[][] visited) {
+    public AStarFrontier(CustomPriorityQueue frontier, boolean[][] visited) {
         this.frontier = frontier;
         this.visited = visited;
     }
-    
+
     @Override
     public void expandFrontier(Node current, Grid grid, Path path, double[][] cost, int directions) {
         if (visited[current.getX()][current.getY()]) {
             return;
         }
         visited[current.getX()][current.getY()] = true;
-
         for (Node next : grid.getNeighbours(current.getX(), current.getY(), directions)) {
-            if (next == null) continue;
+            if (next == null) {
+                continue;
+            }
             double newCost = cost[current.getX()][current.getY()] + grid.cost(current, next);
             if (newCost < cost[next.getX()][next.getY()]) {
                 cost[next.getX()][next.getY()] = newCost;
-                next.setPriority(newCost);
+                next.setPriority(newCost + grid.heuristic(next, goal));
                 frontier.heapInsert(next);
                 path.putCameFrom(next, current);
             }
@@ -50,6 +52,6 @@ public class UCSFrontier implements Frontier {
 
     @Override
     public void setGoal(Node goal) {
+        this.goal = goal;
     }
-    
 }
