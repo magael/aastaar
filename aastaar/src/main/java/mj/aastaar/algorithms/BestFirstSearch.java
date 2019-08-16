@@ -3,7 +3,6 @@ package mj.aastaar.algorithms;
 import mj.aastaar.algorithms.frontier.Frontier;
 import mj.aastaar.algorithms.path.Path;
 import mj.aastaar.algorithms.path.PathWithArray;
-import mj.aastaar.datastructures.CustomPriorityQueue;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 
@@ -11,11 +10,12 @@ import mj.aastaar.map.Node;
  *
  * @author MJ
  */
-public class BestFirstSearch implements PathFindingAlgorithm {
+public abstract class BestFirstSearch implements PathFindingAlgorithm {
 
-    private Grid grid;
-    private PathWithArray path;
+    public Grid grid;
     public Frontier frontier;
+    
+    private PathWithArray path;
     private double cost[][];
 
     public BestFirstSearch(Grid grid) {
@@ -34,6 +34,11 @@ public class BestFirstSearch implements PathFindingAlgorithm {
 
     @Override
     public int search(Node start, Node goal, int directions) {
+        initFrontier();
+        if (frontier == null) {
+            System.out.println("Failed to initialize frontier");
+            return -1;
+        }
         frontier.setGoal(goal);
         frontier.getFrontier().heapInsert(start);
         cost[start.getX()][start.getY()] = 0.0;
@@ -64,4 +69,6 @@ public class BestFirstSearch implements PathFindingAlgorithm {
         }
         return c;
     }
+
+    public abstract void initFrontier();
 }

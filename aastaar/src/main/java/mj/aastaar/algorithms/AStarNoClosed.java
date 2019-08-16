@@ -12,10 +12,15 @@ public class AStarNoClosed extends BestFirstSearch {
 
     public AStarNoClosed(Grid grid) {
         super(grid);
+    }
+
+    @Override
+    public void initFrontier() {
         int nx = grid.getLength();
         int ny = grid.getRowLength();
         CustomPriorityQueue cpq = new CustomPriorityQueue(nx * ny);
         AStarFrontierNoClosed frontier = new AStarFrontierNoClosed(cpq);
         super.frontier = frontier;
-    } 
+    }
+
 }
