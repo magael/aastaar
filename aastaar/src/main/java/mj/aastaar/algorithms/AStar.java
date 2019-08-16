@@ -1,9 +1,5 @@
 package mj.aastaar.algorithms;
 
-import mj.aastaar.algorithms.path.Path;
-import mj.aastaar.algorithms.path.PathWithArray;
-import mj.aastaar.datastructures.CustomPriorityQueue;
-import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 
 /**
@@ -11,81 +7,10 @@ import mj.aastaar.map.Node;
  *
  * @author MJ
  */
-public class AStar implements PathFindingAlgorithm {
-
-    private PathWithArray path;
-    private CustomPriorityQueue frontier;
-    private double cost[][];
-//    private boolean[][] visited; // optional, but might influence speed
+public class AStar extends UniformCostSearch {
 
     @Override
-    public int search(Grid grid, Node start, Node goal, int directions) {
-        int nx = grid.getLength();
-        int ny = grid.getRowLength();
-        path = new PathWithArray(nx, ny);
-        frontier = new CustomPriorityQueue(nx * ny);
-        cost = new double[nx][ny];
-//        visited = new boolean[nx][ny];
-
-        for (int i = 0; i < nx; i++) {
-            for (int j = 1; j < ny; j++) {
-                cost[i][j] = 1000000000.0;
-            }
-        }
-
-        frontier.heapInsert(start);
-        cost[start.getX()][start.getY()] = 0.0;
-
-        while (!frontier.isEmpty()) {
-            Node current = frontier.heapDelMin();
-
-            if (current.equals(goal)) {
-                return path.earlyExit(current, start);
-            }
-
-//            if (visited[current.getX()][current.getY()]) {
-//                continue;
-//            }
-            expandFrontier(grid, current, goal, directions);
-        }
-        return -1;
-    }
-
-    @Override
-    public Path getPath() {
-        return path;
-    }
-
-    @Override
-    public double getCost(Node goal) {
-        double c = cost[goal.getX()][goal.getY()];
-        if (c == 1000000000.0) {
-            return -1;
-        }
-        return c;
-    }
-
-    /**
-     * Adding new nodes to the frontier (a.k.a. open set) and path
-     *
-     * @param grid
-     * @param current
-     * @param goal
-     * @param directions
-     */
-    private void expandFrontier(Grid grid, Node current, Node goal, int directions) {
-//        visited[current.getX()][current.getY()] = true;
-        for (Node next : grid.getNeighbours(current.getX(), current.getY(), directions)) {
-            if (next == null) {
-                continue;
-            }
-            double newCost = cost[current.getX()][current.getY()] + grid.cost(current, next);
-            if (newCost < cost[next.getX()][next.getY()]) {
-                cost[next.getX()][next.getY()] = newCost;
-                next.setPriority(newCost + grid.heuristic(next, goal));
-                frontier.heapInsert(next);
-                path.putCameFrom(next, current);
-            }
-        }
+    public void setPriority(Node next, double newCost) {
+        next.setPriority(newCost + grid.heuristic(next, goal));
     }
 }

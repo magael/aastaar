@@ -43,10 +43,10 @@ public class Main extends Application {
         } else if (scenario.getGrid() == null || scenario.getGrid2D() == null || scenario.getGrid().getLength() < 1) {
             System.out.println("Error creating a pathfinding grid");
         } else {
-            scenario.setShortestPaths(new Node[5][]);
-            scenario.setPathColors(new String[5]);
+            scenario.setShortestPaths(new Node[2][]);
+            scenario.setPathColors(new String[2]);
                     
-            scenario.runPathfindingAlgorithm(new UniformCostSearch(), "Dijkstra", 0, "#00FFFF"); // color: cyan
+            scenario.runPathfindingAlgorithm(new UniformCostSearch(), "Uniform cost search (Dijkstra)", 0, "#00FFFF"); // color: cyan
             scenario.runPathfindingAlgorithm(new AStar(), "A*", 1, "#FF00FF"); // color: magenta
 
             launch(Main.class);
