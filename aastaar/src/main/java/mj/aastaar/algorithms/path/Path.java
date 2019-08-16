@@ -27,6 +27,8 @@ public interface Path {
     /**
      * Returns the Nodes of the shortest path
      * after the path and it's length are found.
+     * The path nodes begin with the first node after the start,
+     * ending with the goal node.
      *
      * @param goal The goal node
      * @param start The start node

@@ -48,7 +48,7 @@ public class PathWithArray implements Path {
     
     @Override
     public Node[] shortestPath(Node goal, Node start, int length) {
-        if (cameFrom == null || length < 1) {
+        if (cameFrom[goal.getX()][goal.getY()] == null || length < 1) {
             System.out.println("Path not found.");
             return null;
         }
