@@ -6,10 +6,10 @@ import mj.aastaar.map.MapCreator;
 import mj.aastaar.map.Node;
 
 /**
- * Pathfinding scenario, containing starting and goal positions,
- * pathfinding grid based on a game map and a method for running pathfinding
- * algorithms and retrieving their shortest paths.
- * 
+ * Pathfinding scenario, containing starting and goal positions, pathfinding
+ * grid based on a game map and a method for running pathfinding algorithms and
+ * retrieving their shortest paths.
+ *
  * @author MJ
  */
 public class Scenario {
@@ -116,9 +116,8 @@ public class Scenario {
     }
 
     /**
-     * Running the specified algorithm,
-     * printing the shortest path length and cost
-     * and adding the shortest path (array of nodes) for visualization.
+     * Running the specified algorithm, printing the shortest path length and
+     * cost and adding the shortest path (array of nodes) for visualization.
      *
      * @param algorithm Object implementing the PathFindingAlgorithm interface
      * @param name What the algorithm is called
@@ -141,29 +140,22 @@ public class Scenario {
 
     /**
      * Create the pathfinding grid based on a specific map.
-     * Work in progress: no ability to read configuration files yet.
-     *
-     * @param configFilePath Path to file containing configurations.
      */
-    public void initConfig(String configFilePath) {
-        if (configFilePath == null) {
-            initDefaultGrid();
-            initDefaultPositions();
-        }
+    public void initConfig() {
+        initDefaultGrid();
+        initDefaultPositions();
     }
 
     /**
-     * Initializing an example map due to the lack of a configuration file.
-     * Initializing grid representation of the map, along with
-     * character representations of map nodes that are marked impassable for
+     * Initializing an example map and a grid representation for it, along with
+     * character representations of map nodes that are marked  impassable for
      * pathfinding, and the penalty for moving through heavier terrain,
      * in this case "shallow water".
-     * NOTE: The Warcraft 3 maps (wc3maps512-map/*) contain shallow water.
+     * The Warcraft 3 maps (wc3maps512-map/*) contain shallow water.
      */
     private void initDefaultGrid() {
         MapCreator mapCreator = new MapCreator();
         //mapCreator.createMapFromFile("mapdata/sc1-map/Aftershock.map");
-        //mapCreator.createMapFromFile("mapdata/wc3maps512-map/tranquilpaths.map");
         mapCreator.createMapFromFile("mapdata/wc3maps512-map/divideandconquer.map");
         //mapCreator.createMapFromFile("mapdata/wc3maps512-map/timbermawhold.map");
         if (mapCreator.getGrid() != null) {
@@ -175,8 +167,7 @@ public class Scenario {
     }
 
     /**
-     * Initializing example starting and goal coordinates
-     * due to the lack of a configuration file.
+     * Initializing example starting and goal coordinates.
      */
     private void initDefaultPositions() {
         // Aftershock

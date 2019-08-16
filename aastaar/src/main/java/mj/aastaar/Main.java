@@ -37,7 +37,7 @@ public class Main extends Application {
      */
     private static void run() {
         scenario = new Scenario();
-        scenario.initConfig(null);
+        scenario.initConfig();
         Grid grid = scenario.getGrid();
 
         if (scenario.getStart() == null || scenario.getGoal() == null) {
