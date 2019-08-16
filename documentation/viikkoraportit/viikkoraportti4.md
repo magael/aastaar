@@ -1,6 +1,6 @@
 ## Viikkoraportti 4
 
-Työtunteja kertyi yhteensä noin 12.
+Työtunteja kertyi yhteensä noin 27.
 
 ---
 
