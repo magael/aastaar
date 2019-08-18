@@ -22,17 +22,17 @@ Koodin seasta on siistitty pois erilliseen tiedostoon tiettyihin metodeihin liit
 
 #### Lähteet
 
+https://www.cs.helsinki.fi/u/ahslaaks/tirakirja/
+
 https://en.wikipedia.org/wiki/A*_search_algorithm
 
-https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
-
 https://en.wikipedia.org/wiki/Binary_heap
+
+https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
 
 https://movingai.com
 
 https://www.redblobgames.com
-
-https://www.cs.helsinki.fi/u/ahslaaks/tirakirja/
 
 #### Checkstyle
 
