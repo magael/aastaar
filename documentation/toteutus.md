@@ -16,7 +16,9 @@ Toivottavasti aikaa jää myös tekemään käyttöliittymästä joustavamman, e
 
 Ohjelman tämänhetkinen tila vastaa pitkälti vaatimusmäärittelyssä määriteltyjä [perustoiminnallisuuksia](https://github.com/magael/aastaar/blob/master/documentation/maarittely.md#perustoiminnallisuuksia).
 
-Lisää suunnitelmia löytää [vatimusmäärittelyn "edistyneitä"](https://github.com/magael/aastaar/blob/master/documentation/maarittely.md#edistyneit%C3%A4--jatkokehityksen-toiminnallisuuksia) kohdasta, sekä [TODO-muistiinpanoista](https://github.com/magael/aastaar/blob/master/documentation/todo.md).
+Lisää suunnitelmia löytyy [vatimusmäärittelyn "edistyneitä"](https://github.com/magael/aastaar/blob/master/documentation/maarittely.md#edistyneit%C3%A4--jatkokehityksen-toiminnallisuuksia) kohdasta. Niistäkin on jo pari kohtaa toteutettu, kuten polun painot.
+
+Koodin seasta on siistitty pois erilliseen tiedostoon tiettyihin metodeihin liittyviä [TODO-muistiinpanoja](https://github.com/magael/aastaar/blob/master/documentation/todo.md).
 
 #### Lähteet
 
