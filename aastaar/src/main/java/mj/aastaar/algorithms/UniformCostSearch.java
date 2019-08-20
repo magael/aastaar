@@ -125,7 +125,7 @@ public class UniformCostSearch implements PathFindingAlgorithm {
 //        visited = new boolean[nx][ny];
 
         for (int i = 0; i < nx; i++) {
-            for (int j = 1; j < ny; j++) {
+            for (int j = 0; j < ny; j++) {
                 cost[i][j] = 1000000000.0;
             }
         }

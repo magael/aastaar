@@ -14,7 +14,7 @@ public interface PathFindingAlgorithm {
     /**
      * The main method for running the pathfinding algorithm,
      * returns the amount of steps in a shortest path or -1 if not found.
-     * Only one search can be performed with the same object.
+     * Assumes that the start node has been checked as in bounds and passable.
      * 
      * @param start The start node
      * @param goal The goal node

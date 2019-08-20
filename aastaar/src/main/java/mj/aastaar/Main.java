@@ -47,10 +47,13 @@ public class Main extends Application {
         } else {
             scenario.setShortestPaths(new Node[2][]);
             scenario.setPathColors(new String[2]);
-                    
-            scenario.runPathfindingAlgorithm(new UniformCostSearch(grid), "Uniform cost search (Dijkstra)", 0, "#00FFFF"); // color: cyan
-            scenario.runPathfindingAlgorithm(new AStar(grid), "A*", 1, "#FF00FF"); // color: magenta
+            String cyan = "#00FFFF";
+            String magenta = "#FF00FF";
 
+            scenario.runPathfindingAlgorithm(new UniformCostSearch(grid), "Dijkstra", 0, cyan);
+            scenario.runPathfindingAlgorithm(new AStar(grid), "A*", 1, magenta);
+
+            System.out.println("Launching visualization, please wait...");
             launch(Main.class);
         }
      }
@@ -58,8 +61,8 @@ public class Main extends Application {
     @Override
     public void start(Stage window) throws Exception {
         GridPane layout = gridGUI();
-        ScrollPane sp = new ScrollPane(layout);
-        Scene scene = new Scene(sp);
+        ScrollPane scrollPane = new ScrollPane(layout);
+        Scene scene = new Scene(scrollPane);
 
         window.setScene(scene);
         window.setTitle("Pathfinding visualization on game maps");
@@ -85,7 +88,9 @@ public class Main extends Application {
     }
 
     /**
-     * Creating the map tiles.
+     * Adding map tiles to the GridPane.
+     * Green for the start, red for the goal and calling the tileColor-method
+     * for the rest.
      * 
      * @param grid2D 2D character array representation of the map grid
      * @param layout JavaFX GridPane object

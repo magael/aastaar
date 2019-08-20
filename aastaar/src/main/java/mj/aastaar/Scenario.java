@@ -155,6 +155,7 @@ public class Scenario {
      */
     private void initDefaultGrid() {
         MapCreator mapCreator = new MapCreator();
+        //mapCreator.createMapFromFile("mapdata/dao-map/ost003d.map");
         //mapCreator.createMapFromFile("mapdata/sc1-map/Aftershock.map");
         mapCreator.createMapFromFile("mapdata/wc3maps512-map/divideandconquer.map");
         //mapCreator.createMapFromFile("mapdata/wc3maps512-map/timbermawhold.map");
@@ -170,6 +171,11 @@ public class Scenario {
      * Initializing example starting and goal coordinates.
      */
     private void initDefaultPositions() {
+        //ost003d
+//        int startX = 30;
+//        int startY = 150;
+//        int goalX = 85;
+//        int goalY = 120;
         // Aftershock
 //        int startX = 82;
 //        int startY = 203;

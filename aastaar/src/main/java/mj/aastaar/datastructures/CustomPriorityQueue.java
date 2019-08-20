@@ -154,7 +154,7 @@ public class CustomPriorityQueue {
      * @return The parent's index.
      */
     private int parent(int i) {
-        return (int) Math.floor(i / 2);
+        return (int) (i / 2);
     }
 
     /**

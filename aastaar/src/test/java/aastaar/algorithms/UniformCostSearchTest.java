@@ -1,0 +1,113 @@
+package aastaar.algorithms;
+
+import mj.aastaar.algorithms.UniformCostSearch;
+import mj.aastaar.map.Grid;
+import mj.aastaar.map.Node;
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+/**
+ *
+ * @author MJ
+ */
+public class UniformCostSearchTest {
+
+    private UniformCostSearch ucs;
+    private Grid grid;
+
+    @Before
+    public void setUp() {
+        char[][] gridArray = {
+            {'T', '.', 'W', '@', '@'},
+            {'T', '.', 'W', 'W', '@'},
+            {'W', '.', '.', '.', 'T'},
+            {'S', 'S', '.', '.', '.'},
+            {'.', '.', '.', 'T', 'T'}
+        };
+        char[] impassable = {'T', 'W', '@'};
+        double edgeWeight = 2.0;
+        grid = new Grid(gridArray, impassable, edgeWeight);
+        ucs = new UniformCostSearch(grid);
+    }
+
+    @Test
+    public void findsTheCorrectPathLengthOfAStraightLinePath() {
+        Node start = new Node(2, 1, 0);
+        Node goal = new Node(2, 3, 0);
+        int shortestPathLength = ucs.search(start, goal, 4);
+        assertEquals(2, shortestPathLength);
+    }
+
+    @Test
+    public void findsTheCorrectPathLengthOfACurvedPath() {
+        Node start = new Node(3, 3, 0);
+        Node goal = new Node(1, 1, 0);
+        int shortestPathLength = ucs.search(start, goal, 4);
+        assertEquals(4, shortestPathLength);
+    }
+
+    @Test
+    public void findsTheCorrectPathLengthGoingAroundShallowWater() {
+        Node start = new Node(2, 2, 0);
+        Node goal = new Node(3, 0, 0);
+        int shortestPathLength = ucs.search(start, goal, 4);
+        assertEquals(5, shortestPathLength);
+    }
+    
+    @Test
+    public void findsTheCorrectPathLengthGoingThroughShallowWater() {
+        Node start = new Node(2, 2, 0);
+        Node goal = new Node(3, 1, 0);
+        int shortestPathLength = ucs.search(start, goal, 4);
+        assertEquals(2, shortestPathLength);
+    }
+    
+    @Test
+    public void findsTheCorrectPathLengthToTheLeftEdge() {
+        Node start = new Node(1, 1, 0);
+        Node goal = new Node(4, 0, 0);
+        int shortestPathLength = ucs.search(start, goal, 4);
+        assertEquals(6, shortestPathLength);
+    }
+    
+    @Test
+    public void findsTheCorrectPathLengthToTheRightEdge() {
+        Node start = new Node(2, 2, 0);
+        Node goal = new Node(3, 4, 0);
+        int shortestPathLength = ucs.search(start, goal, 4);
+        assertEquals(3, shortestPathLength);
+    }
+    
+    @Test
+    public void findsTheCorrectPathLengthToTheTopEdge() {
+        Node start = new Node(2, 2, 0);
+        Node goal = new Node(0, 1, 0);
+        int shortestPathLength = ucs.search(start, goal, 4);
+        assertEquals(3, shortestPathLength);
+    }
+
+    @Test
+    public void findsTheCorrectPathLengthToTheBottomEdge() {
+        Node start = new Node(2, 2, 0);
+        Node goal = new Node(4, 0, 0);
+        int shortestPathLength = ucs.search(start, goal, 4);
+        assertEquals(4, shortestPathLength);
+    }
+
+    @Test
+    public void noPathForImpassableGoal() {
+        Node start = new Node(1, 1, 0);
+        Node goal = new Node(0, 4, 0);
+        int shortestPathLength = ucs.search(start, goal, 4);
+        assertEquals(-1, shortestPathLength);
+    }
+    
+    @Test
+    public void noPathForOutOfBoundsGoal() {
+        Node start = new Node(1, 1, 0);
+        Node goal = new Node(-1, -1, 0);
+        int shortestPathLength = ucs.search(start, goal, 4);
+        assertEquals(-1, shortestPathLength);
+    }
+}

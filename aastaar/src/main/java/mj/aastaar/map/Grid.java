@@ -101,7 +101,7 @@ public class Grid {
      * to the provided position
      */
     public Node[] getNeighbours(int x, int y, int directions) {
-        Node[] neighbours = new Node[directions];
+        Node[] neighbours = new Node[4]; //wip hax
         if (x < (grid.length - 1) && isPassable(grid[x + 1][y])) {
             neighbours[0] = new Node(x + 1, y, 1);
         }
