@@ -31,6 +31,10 @@ public class UniformCostSearch implements PathFindingAlgorithm {
 
     @Override
     public int search(Node start, Node goal, int directions) {
+        if (!grid.isValid(start)) {
+            System.out.println("The starting position is not valid");
+            return -1;
+        }
         this.goal = goal;
         initDataStructures();
         frontier.heapInsert(start);
@@ -38,16 +42,13 @@ public class UniformCostSearch implements PathFindingAlgorithm {
         
         while (!frontier.isEmpty()) {
             Node current = frontier.heapDelMin();
-
             if (current.equals(goal)) {
                 return path.earlyExit(current, start);
             }
-
 //            if (visited[current.getX()][current.getY()]) {
 //                continue;
 //            }
 //            visited[current.getX()][current.getY()] = true;
-
             expandFrontier(current, directions);
         }
         return -1;

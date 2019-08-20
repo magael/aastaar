@@ -107,17 +107,13 @@ public class Scenario {
      * @param color Color as hex strings for shortest path visualization
      */
     public void runPathfindingAlgorithm(PathFindingAlgorithm algorithm, String name, int i, String color) {
-        if (grid.isValid(start)) {
-            System.out.println("Starting " + name);
-            int pathLength = algorithm.search(start, goal, 4);
-            System.out.print(name + " shortest path length: " + pathLength);
-            System.out.println(", cost: " + algorithm.getCost(goal));
-            shortestPaths[i] = algorithm.getPath().shortestPath(goal, start, pathLength);
-            System.out.println("Retrieved " + name + " shortest path as array \n");
-            pathColors[i] = color;
-        } else {
-            System.out.println("The starting position is not valid");
-        }
+        System.out.println("Starting " + name);
+        int pathLength = algorithm.search(start, goal, 4);
+        System.out.print(name + " shortest path length: " + pathLength);
+        System.out.println(", cost: " + algorithm.getCost(goal));
+        shortestPaths[i] = algorithm.getPath().shortestPath(goal, start, pathLength);
+        System.out.println("Retrieved " + name + " shortest path as array \n");
+        pathColors[i] = color;
     }
 
     /**
@@ -130,10 +126,10 @@ public class Scenario {
 
     /**
      * Initializing an example map and a grid representation for it, along with
-     * character representations of map nodes that are marked  impassable for
-     * pathfinding, and the penalty for moving through heavier terrain,
-     * in this case "shallow water".
-     * The Warcraft 3 maps (wc3maps512-map/*) contain shallow water.
+     * character representations of map nodes that are marked impassable for
+     * pathfinding, and the penalty for moving through heavier terrain, in this
+     * case "shallow water". The Warcraft 3 maps (wc3maps512-map/*) contain
+     * shallow water.
      */
     private void initDefaultGrid() {
         MapCreator mapCreator = new MapCreator();

@@ -10,7 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
+ * Testing the Uniform cost search algorithm.
+ * 
  * @author MJ
  */
 public class UniformCostSearchTest {
@@ -28,8 +29,8 @@ public class UniformCostSearchTest {
             {'.', '.', '.', 'T', 'T'}
         };
         char[] impassable = {'T', 'W', '@'};
-        double edgeWeight = 2.0;
-        grid = new Grid(gridArray, impassable, edgeWeight);
+        double heavyEdgeWeight = 2.0;
+        grid = new Grid(gridArray, impassable, heavyEdgeWeight);
         ucs = new UniformCostSearch(grid);
     }
 
@@ -95,6 +96,22 @@ public class UniformCostSearchTest {
         Node goal = new Node(4, 0, 0);
         int shortestPathLength = ucs.search(start, goal, 4);
         assertEquals(4, shortestPathLength);
+    }
+    
+    @Test
+    public void noPathForImpassableStart() {
+        Node start = new Node(0, 0, 0);
+        Node goal = new Node(2, 2, 0);
+        int shortestPathLength = ucs.search(start, goal, 4);
+        assertEquals(-1, shortestPathLength);
+    }
+    
+    @Test
+    public void noPathForOutOfBoundsStart() {
+        Node start = new Node(-1, -1, 0);
+        Node goal = new Node(2, 2, 0);
+        int shortestPathLength = ucs.search(start, goal, 4);
+        assertEquals(-1, shortestPathLength);
     }
 
     @Test
