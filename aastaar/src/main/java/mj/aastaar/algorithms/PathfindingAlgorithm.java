@@ -9,7 +9,7 @@ import mj.aastaar.map.Node;
  *
  * @author MJ
  */
-public interface PathFindingAlgorithm {
+public interface PathfindingAlgorithm {
 
     /**
      * The main method for running the pathfinding algorithm,

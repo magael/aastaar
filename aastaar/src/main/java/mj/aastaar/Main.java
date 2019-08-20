@@ -15,6 +15,7 @@ import mj.aastaar.map.Node;
 /**
  * Initializing a pathfinding scenario, and a Java FX graphical user interface
  * for visualizing pathfinding maps and algorithms.
+ *
  * @author MJ
  */
 public class Main extends Application {
@@ -23,6 +24,7 @@ public class Main extends Application {
 
     /**
      * The main program.
+     *
      * @param args Command-line arguments
      */
     public static void main(String[] args) {
@@ -30,10 +32,9 @@ public class Main extends Application {
     }
 
     /**
-     * Initializing the scenario from configurations,
-     * providing the scenario with algorithms to run
-     * and providing arrays for the algorithm's shortest paths.
-     * Launching the Java FX GUI.
+     * Initializing the scenario from configurations, providing the scenario
+     * with algorithms to run and providing arrays for the algorithm's shortest
+     * paths. Launching the Java FX GUI.
      */
     private static void run() {
         scenario = new Scenario();
@@ -56,7 +57,7 @@ public class Main extends Application {
             System.out.println("Launching visualization, please wait...");
             launch(Main.class);
         }
-     }
+    }
 
     @Override
     public void start(Stage window) throws Exception {
@@ -71,10 +72,11 @@ public class Main extends Application {
 
     /**
      * Creating the grid visualization with JavaFX objects.
-     * 
+     *
      * NOTE: GridPane.add receives coordinates as (..., column, row)
-     * @return grid of colored rectangles, a.k.a. tiles,
-     * representing the map and shortest paths
+     *
+     * @return grid of colored rectangles, a.k.a. tiles, representing the map
+     * and shortest paths
      */
     private GridPane gridGUI() {
         GridPane layout = new GridPane();
@@ -88,10 +90,9 @@ public class Main extends Application {
     }
 
     /**
-     * Adding map tiles to the GridPane.
-     * Green for the start, red for the goal and calling the tileColor-method
-     * for the rest.
-     * 
+     * Adding map tiles to the GridPane. Green for the start, red for the goal
+     * and calling the tileColor-method for the rest.
+     *
      * @param grid2D 2D character array representation of the map grid
      * @param layout JavaFX GridPane object
      * @param tileSize Pixel dimensions for each tile
@@ -116,7 +117,7 @@ public class Main extends Application {
 
     /**
      * Coloring different paths found by different algorithms.
-     * 
+     *
      * @param layout JavaFX GridPane object
      * @param tileSize Pixel dimensions for each tile
      */
@@ -137,7 +138,7 @@ public class Main extends Application {
 
     /**
      * Determine the color for a map tile.
-     * 
+     *
      * @param c Character representation of the map grid node
      * @return JavaFX Color object
      */

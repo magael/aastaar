@@ -152,7 +152,7 @@ public class Grid {
      * @param node The node that is checked
      * @return True if node is in bounds and passable, otherwise false
      */
-    public boolean isValid(Node node) {
+    public boolean nodeIsValid(Node node) {
         int x = node.getX();
         int y = node.getY();
         if (inBounds(x, y) && isPassable(grid[x][y])) {

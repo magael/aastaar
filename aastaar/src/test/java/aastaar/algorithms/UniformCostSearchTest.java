@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Testing the Uniform cost search algorithm.
+ * Unit tests for the Uniform cost search algorithm.
  * 
  * @author MJ
  */

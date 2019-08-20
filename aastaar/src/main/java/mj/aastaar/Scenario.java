@@ -1,9 +1,9 @@
 package mj.aastaar;
 
-import mj.aastaar.algorithms.PathFindingAlgorithm;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.MapCreator;
 import mj.aastaar.map.Node;
+import mj.aastaar.algorithms.PathfindingAlgorithm;
 
 /**
  * Pathfinding scenario, containing starting and goal positions, pathfinding
@@ -106,7 +106,7 @@ public class Scenario {
      * @param i Index for shortestPaths and pathColors arrays
      * @param color Color as hex strings for shortest path visualization
      */
-    public void runPathfindingAlgorithm(PathFindingAlgorithm algorithm, String name, int i, String color) {
+    public void runPathfindingAlgorithm(PathfindingAlgorithm algorithm, String name, int i, String color) {
         System.out.println("Starting " + name);
         int pathLength = algorithm.search(start, goal, 4);
         System.out.print(name + " shortest path length: " + pathLength);

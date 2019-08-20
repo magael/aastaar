@@ -12,7 +12,7 @@ import mj.aastaar.map.Node;
  * 
  * @author MJ
  */
-public class UniformCostSearch implements PathFindingAlgorithm {
+public class UniformCostSearch implements PathfindingAlgorithm {
 
     private Node goal; 
     private Grid grid;
@@ -31,7 +31,7 @@ public class UniformCostSearch implements PathFindingAlgorithm {
 
     @Override
     public int search(Node start, Node goal, int directions) {
-        if (!grid.isValid(start)) {
+        if (!grid.nodeIsValid(start)) {
             System.out.println("The starting position is not valid");
             return -1;
         }
