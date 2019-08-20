@@ -138,4 +138,35 @@ public class GridTest {
         
         assertEquals(5.0, grid.cost(from, to), 0.0);
     }
+    
+    
+    @Test
+    public void ndeIsInvalidWhenImpassable() {
+        assertFalse(grid.isValid(new Node(0, 0, 0)));
+    }
+
+    @Test
+    public void nodeIsInvalidWhenOutOfBoundsLeft() {
+        assertFalse(grid.isValid(new Node(-1, 0, 0)));
+    }
+    
+    @Test
+    public void nodeIsInvalidWhenOutOfBoundsRight() {
+        assertFalse(grid.isValid(new Node(5, 0, 0)));
+    }
+    
+    @Test
+    public void nodeIsInvalidWhenOutOfBoundsUp() {
+        assertFalse(grid.isValid(new Node(0, -1, 0)));
+    }
+    
+    @Test
+    public void nodeIsInvalidWhenOutOfBoundsDown() {
+        assertFalse(grid.isValid(new Node(0, 5, 0)));
+    }
+
+    @Test
+    public void nodeIsValidatedWhenValid() {
+        assertTrue(grid.isValid(new Node(1, 1, 0)));
+    }
 }

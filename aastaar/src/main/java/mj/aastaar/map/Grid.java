@@ -101,17 +101,17 @@ public class Grid {
      * to the provided position
      */
     public Node[] getNeighbours(int x, int y, int directions) {
-        Node[] neighbours = new Node[4]; //wip hax
-        if (x < (grid.length - 1) && isPassable(grid[x + 1][y])) {
+        Node[] neighbours = new Node[directions];
+        if (x < (grid.length - 1) && isPassable(grid[x + 1][y]) && directions > 0) {
             neighbours[0] = new Node(x + 1, y, 1);
         }
-        if (x > 0 && isPassable(grid[x - 1][y])) {
+        if (x > 0 && isPassable(grid[x - 1][y]) && directions > 1) {
             neighbours[1] = new Node(x - 1, y, 1);
         }
-        if (y < (grid[0].length - 1) && isPassable(grid[x][y + 1])) {
+        if (y < (grid[0].length - 1) && isPassable(grid[x][y + 1]) && directions > 2) {
             neighbours[2] = new Node(x, y + 1, 1);
         }
-        if (y > 0 && isPassable(grid[x][y - 1])) {
+        if (y > 0 && isPassable(grid[x][y - 1]) && directions > 3) {
             neighbours[3] = new Node(x, y - 1, 1);
         }
         return neighbours;
@@ -130,6 +130,35 @@ public class Grid {
             }
         }
         return true;
+    }
+    
+    /**
+     * Checking if a position on the map is within the grid bounds.
+     * 
+     * @param x The x-coordinate of the position of that is checked
+     * @param y The y-coordinate of the position of that is checked
+     * @return True if the position is in grid bounds, otherwise false
+     */
+    public boolean inBounds(int x, int y) {
+        if (x < grid.length && x >= 0 && y < grid[0].length && y >= 0) {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Checking if the current starting point is a valid location on the map.
+     *
+     * @param node The node that is checked
+     * @return True if node is in bounds and passable, otherwise false
+     */
+    public boolean isValid(Node node) {
+        int x = node.getX();
+        int y = node.getY();
+        if (inBounds(x, y) && isPassable(grid[x][y])) {
+            return true;
+        }
+        return false;
     }
 
 //    @Override

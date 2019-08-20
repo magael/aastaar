@@ -98,24 +98,6 @@ public class Scenario {
     }
 
     /**
-     * Checking if the current starting point is a valid location on the map.
-     *
-     * @return True if node is in bounds and passable, otherwise false
-     */
-    public boolean startNodeIsValid() {
-        int x = start.getX();
-        int y = start.getY();
-        int gridLength = grid.getLength();
-        if (x >= 0 && y >= 0 && x < gridLength && y < gridLength) {
-            char startChar = grid.getGrid2D()[x][y];
-            if (grid.isPassable(startChar)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Running the specified algorithm, printing the shortest path length and
      * cost and adding the shortest path (array of nodes) for visualization.
      *
@@ -125,7 +107,7 @@ public class Scenario {
      * @param color Color as hex strings for shortest path visualization
      */
     public void runPathfindingAlgorithm(PathFindingAlgorithm algorithm, String name, int i, String color) {
-        if (startNodeIsValid()) {
+        if (grid.isValid(start)) {
             System.out.println("Starting " + name);
             int pathLength = algorithm.search(start, goal, 4);
             System.out.print(name + " shortest path length: " + pathLength);

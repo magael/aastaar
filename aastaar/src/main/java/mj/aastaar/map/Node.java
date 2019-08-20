@@ -70,10 +70,10 @@ public class Node {
         return y;
     }
 
-    @Override
-    public int hashCode() {
-        return (x * 18397) + (y * 20483);
-    }
+//    @Override
+//    public int hashCode() {
+//        return (x * 18397) + (y * 20483);
+//    }
 
     @Override
     public boolean equals(Object obj) {

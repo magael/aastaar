@@ -35,24 +35,4 @@ public class ScenarioTest {
         start = new Node(0, 0, 0);
         scenario.setStart(start);
     }
-
-    @Test
-    public void startNodeIsInvalidWhenImpassable() {
-        assertFalse(scenario.startNodeIsValid());
-    }
-
-    @Test
-    public void startNodeIsInvalidWhenOutOfBounds() {
-        start.setX(-1);
-
-        assertFalse(scenario.startNodeIsValid());
-    }
-
-    @Test
-    public void startNodeIsValidatedWhenValid() {
-        start.setX(1);
-        start.setY(1);
-
-        assertTrue(scenario.startNodeIsValid());
-    }
 }
