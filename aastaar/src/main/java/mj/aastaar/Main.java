@@ -36,7 +36,7 @@ public class Main extends Application {
     /**
      * Initializing the scenario from configurations, providing the scenario
      * with algorithms to run and providing arrays for the algorithm's shortest
-     * paths. Launching the Java FX GUI. Running pathfinding performance tests.
+     * paths. Launching the Java FX GUI and invoking performance tests.
      */
     private static void run() {
         scenario = new Scenario();
@@ -45,7 +45,7 @@ public class Main extends Application {
 
         if (scenario.getStart() == null || scenario.getGoal() == null) {
             System.out.println("Error initializing start and goal positions");
-        } else if (grid == null || scenario.getGrid2D() == null || scenario.getGrid().getLength() < 1) {
+        } else if (grid == null || grid.getGrid2D() == null || grid.getLength() < 1) {
             System.out.println("Error creating a pathfinding grid");
         } else {
             String cyan = "#00FFFF";
@@ -62,24 +62,12 @@ public class Main extends Application {
             }
 
             System.out.println("Launching visualization, please wait...");
-            System.out.println("Closing the window will begin performance testing.");
-            
+            System.out.println("Closing the window will begin performance testing.\n");
+
             launch(Main.class);
 
             runPerformanceTests(algorithms, algoNames);
         }
-    }
-
-    private static void runPerformanceTests(PathfindingAlgorithm[] algorithms, String[] algoNames) {
-        PathfindingPerformanceTester tester = new PathfindingPerformanceTester(scenario);
-//            int[] nums = {10, 50, 100, 500};
-        int[] nums = {10, 20};
-        System.out.print("Beginning performance tests on " + algorithms.length + " algorithms.\n");
-        long t = System.nanoTime();
-        tester.run(algorithms, algoNames, nums);
-        System.out.println("Performance tests ran in a total of "
-                + (double) (System.nanoTime() - t) / 1000000000 + " seconds.\n");
-        System.out.println(tester);
     }
 
     @Override
@@ -91,6 +79,25 @@ public class Main extends Application {
         window.setScene(scene);
         window.setTitle("Pathfinding visualization on game maps");
         window.show();
+    }
+
+    /**
+     * Using the performance tester class to test pathfinding speed. Setting the
+     * number n, where n * n is the number of times the tests are run.
+     *
+     * @param algorithms The algorithms that are tested
+     * @param algoNames The names of the algorithms that are
+     */
+    private static void runPerformanceTests(PathfindingAlgorithm[] algorithms, String[] algoNames) {
+//        int[] nums = {10, 50, 100, 200};
+        int[] nums = {10, 10, 20, 30};
+        PathfindingPerformanceTester tester = new PathfindingPerformanceTester(scenario);
+        System.out.print("Beginning performance tests on the algorithms.\n");
+        long t = System.nanoTime();
+        tester.run(algorithms, algoNames, nums);
+        System.out.println(tester);
+        System.out.println("Performance tests ran in a total of "
+                + (double) (System.nanoTime() - t) / 1000000000 + " seconds.\n");
     }
 
     /**

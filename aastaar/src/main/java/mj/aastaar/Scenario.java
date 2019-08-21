@@ -104,8 +104,7 @@ public class Scenario {
      *
      * @param algorithm Object implementing the PathFindingAlgorithm interface
      * @param name What the algorithm is called
-     * @param i Index for shortestPaths and pathColors arrays
-     * @param color Color as hex strings for shortest path visualization
+     * @param i Index for the shortestPaths array
      */
     public void runPathfindingAlgorithm(PathfindingAlgorithm algorithm, String name, int i) {
         System.out.println("Starting " + name);
@@ -116,6 +115,9 @@ public class Scenario {
         System.out.println("Retrieved " + name + " shortest path as array \n");
     }
     
+    /**
+     * Initializing random valid starting and goal coordinates.
+     */
     public void initRandomPositions() {
         Random random = new Random();
         Node randomStart = new Node(-1, -1, 0.0);

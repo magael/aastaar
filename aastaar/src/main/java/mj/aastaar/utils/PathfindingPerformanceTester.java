@@ -1,10 +1,7 @@
 package mj.aastaar.utils;
 
 import mj.aastaar.Scenario;
-import mj.aastaar.algorithms.AStar;
 import mj.aastaar.algorithms.PathfindingAlgorithm;
-import mj.aastaar.algorithms.UniformCostSearch;
-import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 
 /**
@@ -19,10 +16,20 @@ public class PathfindingPerformanceTester {
     private double[][] times;
     private int[] nums;
 
+    /**
+     *
+     * @param scenario
+     */
     public PathfindingPerformanceTester(Scenario scenario) {
         this.scenario = scenario;
     }
 
+    /**
+     *
+     * @param algorithms
+     * @param names
+     * @param nums
+     */
     public void run(PathfindingAlgorithm[] algorithms, String[] names, int[] nums) {
         this.names = names;
         this.nums = nums;
