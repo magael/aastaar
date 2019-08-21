@@ -47,20 +47,23 @@ public class Main extends Application {
         } else if (grid == null || scenario.getGrid2D() == null || scenario.getGrid().getLength() < 1) {
             System.out.println("Error creating a pathfinding grid");
         } else {
-            scenario.setShortestPaths(new Node[2][]);
-            scenario.setPathColors(new String[2]);
-            String cyan = "#00FFFF";
-            String magenta = "#FF00FF";
-
-            scenario.runPathfindingAlgorithm(new UniformCostSearch(grid), "Dijkstra", 0, cyan);
-            scenario.runPathfindingAlgorithm(new AStar(grid), "A*", 1, magenta);
-
-            System.out.println("Launching visualization, please wait...");
-            launch(Main.class);
+//            scenario.setShortestPaths(new Node[2][]);
+//            scenario.setPathColors(new String[2]);
+//            String cyan = "#00FFFF";
+//            String magenta = "#FF00FF";
+//
+//            scenario.runPathfindingAlgorithm(new UniformCostSearch(grid), "Dijkstra", 0, cyan);
+//            scenario.runPathfindingAlgorithm(new AStar(grid), "A*", 1, magenta);
+//
+//            System.out.println("Launching visualization, please wait...");
+//            launch(Main.class);
 
             // Testing performance
-//            PathfindingPerformanceTester tester = new PathfindingPerformanceTester();
-//            tester.runPathfindingAlgorithm(new AStar(grid), "A*");
+            int n = 20;
+            System.out.println("Testing Dijkstra* performance");
+            scenario.testPathfindingPerformance(new UniformCostSearch(grid), n);
+            System.out.println("Testing A* performance");
+            scenario.testPathfindingPerformance(new AStar(grid), n);
         }
     }
 

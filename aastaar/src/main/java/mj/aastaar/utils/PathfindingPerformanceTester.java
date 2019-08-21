@@ -1,7 +1,7 @@
 package mj.aastaar.utils;
 
-import java.util.Random;
 import mj.aastaar.algorithms.PathfindingAlgorithm;
+import mj.aastaar.map.Grid;
 
 /**
  * Testing the performance of pathfinding algorithms.
@@ -10,18 +10,10 @@ import mj.aastaar.algorithms.PathfindingAlgorithm;
  */
 public class PathfindingPerformanceTester {
 
-    private final Random rand;
-
-    public PathfindingPerformanceTester(Random rand) {
-        this.rand = rand;
-    }
-
-    public PathfindingPerformanceTester() {
-        this(new Random());
-    }
-
-    public void runPathfindingAlgorithm(PathfindingAlgorithm algorithm, String name) {
-        
+    public void runPathfindingAlgorithm(Grid grid, PathfindingAlgorithm algorithm, int n) {
+        for (int i = 0; i < n; i++) {
+            
+        }
 //            System.out.println("Starting " + name);
 //            int pathLength = algorithm.search(start, goal, 4);
 //            System.out.print(name + " shortest path length: " + pathLength);
