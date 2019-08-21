@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import mj.aastaar.algorithms.AStar;
+import mj.aastaar.algorithms.PathfindingAlgorithm;
 import mj.aastaar.algorithms.UniformCostSearch;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
@@ -56,14 +57,31 @@ public class Main extends Application {
 //            scenario.runPathfindingAlgorithm(new AStar(grid), "A*", 1, magenta);
 //
 //            System.out.println("Launching visualization, please wait...");
+//            System.out.println("Closing the window will begin performance testing.");
 //            launch(Main.class);
 
             // Testing performance
-            int n = 20;
-            System.out.println("Testing Dijkstra* performance");
-            scenario.testPathfindingPerformance(new UniformCostSearch(grid), n);
-            System.out.println("Testing A* performance");
-            scenario.testPathfindingPerformance(new AStar(grid), n);
+            PathfindingPerformanceTester tester = new PathfindingPerformanceTester(scenario);
+            PathfindingAlgorithm[] algorithms = new PathfindingAlgorithm[2];
+            algorithms[0] = new UniformCostSearch(grid);
+            algorithms[1] = new AStar(grid);
+            //            int[] nums = {10, 50, 100, 1000};
+            int[] nums = {10, 20};
+            double[][] times = tester.run(algorithms, nums);
+            String[] names = {"Dijkstra", "A*"};
+            tester.printResults(times, nums, names);
+            
+//            System.out.println("Average runtime of pathfinding between two random points");
+//            System.out.println("\nDijkstra");
+//            for (int i = 0; i < nums.length; i++) {
+//                int n = nums[i];
+//                System.out.println((n * n) + " repetitions: " + times[0][i] + " ms");
+//            }
+//            System.out.println("\nA*");
+//            for (int i = 0; i < nums.length; i++) {
+//                int n = nums[i];
+//                System.out.println((n * n) + " repetitions: " + times[1][i] + " ms");
+//            }
         }
     }
 

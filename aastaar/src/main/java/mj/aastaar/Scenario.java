@@ -116,32 +116,23 @@ public class Scenario {
         System.out.println("Retrieved " + name + " shortest path as array \n");
         pathColors[i] = color;
     }
-
-    public void testPathfindingPerformance(PathfindingAlgorithm algorithm, int n) {
-        long times[] = new long[n * n];
-        long tAcc = 0;
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                initRandomPositions();
-                long t = System.nanoTime();
-                algorithm.search(start, goal, 4);
-                tAcc += System.nanoTime() - t;
-            }
-            times[i] = tAcc / n;
-        }
-        
-        System.out.println("Average runtime of pathfinding between two random "
-                + "points" + "\n" + "with " + (n * n) + " repetitions:" + "\n"
-                + getAverage(times) + "\n");
-    }
     
-    private double getAverage(long[] times) {
-        double s = 0;
-        for (long time : times) {
-            s += time;
+    public void initRandomPositions() {
+        Random random = new Random();
+        Node randomStart = new Node(-1, -1, 0.0);
+        Node randomGoal = new Node(-1, -1, 0.0);
+
+        while (!grid.nodeIsValid(randomStart)) {
+            randomStart.setX(random.nextInt(grid.getLength()));
+            randomStart.setY(random.nextInt(grid.getRowLength()));
         }
-        return s / times.length;
+        while (!grid.nodeIsValid(randomGoal)) {
+            randomGoal.setX(random.nextInt(grid.getLength()));
+            randomGoal.setY(random.nextInt(grid.getRowLength()));
+        }
+
+        start = randomStart;
+        goal = randomGoal;
     }
 
     /**
@@ -211,23 +202,5 @@ public class Scenario {
 
         start = new Node(startX, startY, 0.0);
         goal = new Node(goalX, goalY, 0.0);
-    }
-
-    private void initRandomPositions() {
-        Random random = new Random();
-        Node randomStart = new Node(-1, -1, 0.0);
-        Node randomGoal = new Node(-1, -1, 0.0);
-
-        while (!grid.nodeIsValid(randomStart)) {
-            randomStart.setX(random.nextInt(grid.getLength()));
-            randomStart.setY(random.nextInt(grid.getRowLength()));
-        }
-        while (!grid.nodeIsValid(randomGoal)) {
-            randomGoal.setX(random.nextInt(grid.getLength()));
-            randomGoal.setY(random.nextInt(grid.getRowLength()));
-        }
-
-        start = randomStart;
-        goal = randomGoal;
     }
 }
