@@ -21,13 +21,11 @@
 
 [Viikko 4](https://github.com/magael/aastaar/blob/master/documentation/viikkoraportit/viikkoraportti4.md)
 
-#### Testaus
+[Viikko 5](https://github.com/magael/aastaar/blob/master/documentation/viikkoraportit/viikkoraportti5.md)
 
-Testikattavuus löytyy suorittamalla gradle-projektin juuressa, eli repositorion alihakemistossa <code>aastaar</code> komennon <code>gradle test jacocoTestReport</code> ja navigoimalla <code>build/reports/jacoco/test/html/index.html</code>.
+#### Buildaus
 
-#### Checkstyle
-
-Projekti hyödyntää checkstyleä. Tyylivirheet voidaan tarkastaa komennolla <code>gradle check</code> ja ne löytyvät polulta <code>build/reports/checkstyle/test.html</code>.
+Projektin saa buildattua suorittamalla gradle-projektin juuressa, eli repositorion alihakemistossa <code>aastaar</code> komennon <code>gradle build</code>, mikä generoi samalla testikattavuuden tiedostoon <code>build/reports/jacoco/test/html/index.html</code>.
 
 #### Javadoc
 
