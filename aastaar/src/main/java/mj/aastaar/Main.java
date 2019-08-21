@@ -11,6 +11,7 @@ import mj.aastaar.algorithms.AStar;
 import mj.aastaar.algorithms.UniformCostSearch;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
+import mj.aastaar.utils.PathfindingPerformanceTester;
 
 /**
  * Initializing a pathfinding scenario, and a Java FX graphical user interface
@@ -56,6 +57,10 @@ public class Main extends Application {
 
             System.out.println("Launching visualization, please wait...");
             launch(Main.class);
+
+            // Testing performance
+//            PathfindingPerformanceTester tester = new PathfindingPerformanceTester();
+//            tester.runPathfindingAlgorithm(new AStar(grid), "A*");
         }
     }
 

@@ -1,5 +1,6 @@
 package mj.aastaar;
 
+import java.util.Random;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.MapCreator;
 import mj.aastaar.map.Node;
@@ -121,7 +122,8 @@ public class Scenario {
      */
     public void initConfig() {
         initDefaultGrid();
-        initDefaultPositions();
+//        initDefaultPositions();
+        initRandomPositions();
     }
 
     /**
@@ -182,5 +184,23 @@ public class Scenario {
 
         start = new Node(startX, startY, 0.0);
         goal = new Node(goalX, goalY, 0.0);
+    }
+    
+    private void initRandomPositions() {
+        Random random = new Random();
+        Node randomStart = new Node(-1, -1, 0.0);
+        Node randomGoal = new Node(-1, -1, 0.0);
+        
+        while (!grid.nodeIsValid(randomStart)) {
+            randomStart.setX(random.nextInt(grid.getLength()));
+            randomStart.setY(random.nextInt(grid.getRowLength()));
+        }
+        while (!grid.nodeIsValid(randomGoal)) {
+            randomGoal.setX(random.nextInt(grid.getLength()));
+            randomGoal.setY(random.nextInt(grid.getRowLength()));
+        }
+        
+        start = randomStart;
+        goal = randomGoal;
     }
 }
