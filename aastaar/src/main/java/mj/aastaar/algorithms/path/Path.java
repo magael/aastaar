@@ -18,7 +18,7 @@ public interface Path {
     public boolean containsNode(Node node);
     
     /**
-     * Adds a link between two nodes
+     * Adds a link between two nodes.
      *
      * @param to One of the nodes in the path
      * @param from One of the nodes in the path

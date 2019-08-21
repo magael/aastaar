@@ -16,10 +16,12 @@ public class PathfindingPerformanceTester {
     private String[] names;
     private double[][] times;
     private int[] nums;
+    private Node[][] startNodes;
+    private Node[][] goalNodes;
 
     /**
      * The constructor for the PathfindingPerformanceTester class.
-     * 
+     *
      * @param scenario Pathfinding scenario with helpful methods and an
      * initialized grid
      */
@@ -29,15 +31,18 @@ public class PathfindingPerformanceTester {
 
     /**
      * Running performance tests on pathfinding algorithms.
-     * 
+     *
      * @param algorithms The algorithms that are tested
      * @param names The names of the algorithms that are tested
-     * @param nums Array of numbers n, where n * n is the number of times the tests are run
+     * @param nums Array of numbers n, where n * n is the number of times the
+     * tests are run
      */
     public void run(PathfindingAlgorithm[] algorithms, String[] names, int[] nums) {
         this.names = names;
         this.nums = nums;
         times = new double[algorithms.length][nums.length];
+        initRandomPositions();
+
         for (int i = 0; i < times.length; i++) {
             for (int j = 0; j < nums.length; j++) {
                 int n = nums[j];
@@ -62,7 +67,7 @@ public class PathfindingPerformanceTester {
 
     /**
      * Testing a pathfinding algorithm's runtime across several repetitions.
-     * 
+     *
      * @param algorithm The pathfinding algorithm
      * @param n n * n is the number of times the tests are run
      * @return The average runtime
@@ -73,11 +78,8 @@ public class PathfindingPerformanceTester {
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                scenario.initRandomPositions();
-                Node start = scenario.getStart();
-                Node goal = scenario.getGoal();
                 long t = System.nanoTime();
-                algorithm.search(start, goal, 4);
+                algorithm.search(startNodes[i][j], goalNodes[i][j], 4);
                 tAcc += System.nanoTime() - t;
             }
             times[i] = tAcc / n;
@@ -87,8 +89,8 @@ public class PathfindingPerformanceTester {
     }
 
     /**
-     * Function to return the average of run times.
-     * 
+     * Calculating the average of run times.
+     *
      * @param times array of run times
      * @return the average runtime
      */
@@ -98,5 +100,19 @@ public class PathfindingPerformanceTester {
             s += time;
         }
         return s / times.length;
+    }
+
+    private void initRandomPositions() {
+        startNodes = new Node[nums.length][];
+        goalNodes = new Node[nums.length][];
+        for (int i = 0; i < nums.length; i++) {
+            startNodes[i] = new Node[nums[i]];
+            goalNodes[i] = new Node[nums[i]];
+            for (int j = 0; j < nums[i]; j++) {
+                scenario.initRandomPositions();
+                startNodes[i][j] = scenario.getStart();
+                goalNodes[i][j] = scenario.getGoal();
+            }
+        }
     }
 }
