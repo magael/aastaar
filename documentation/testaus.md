@@ -3,7 +3,7 @@
 
 Ohjelmaa on testattu JUnit-yksikkötesteillä, ja algoritmien polunetsinnälle on suoritustestausta. Yksikkötestit löytyvät testihakemistosta <code>aastaar/src/test</code> ja suorituskykytestit <code>main</code>-hakemistosta, luokasta <code>PathfindingPerformanceTester.java</code>.
 
-#### Yksikkötestit
+### Yksikkötestit
 
 Testit kattavat kaikki luokat, paitsi käyttöliittymäluokkina raporteista poissuljetut <code>Main</code> ja <code>Scenario</code> -luokat, sekä suorituskykytestauksen.
 
@@ -13,9 +13,13 @@ Yksikkötestit voidaan toistaa suorittamalla gradle-projektin juuressa, eli repo
 
 Testikattavuus löytyy komennolla <code>gradle test jacocoTestReport</code> ja navigoimalla <code>build/reports/jacoco/test/html/index.html</code>.
 
-#### Suorituskykytestit
+### Suorituskykytestit
 
 Polunetsinnän suorituskykytestit ajetaan automaattisesti sen jälkeen, kun käyttäjä on sulkenut visuaalisaatioon käytetyn käyttöliittymäikkunan.
+
+Suorituskykytestit ottavat mallia kurssin testausmateriaaleista, mutta sovellus on erilainen ja toistoja tulee eri määrä.
+
+#### Suorituskykytetauksen analysointia
 
 Esimerkkitulos suorituskykytestauksesta:
 
@@ -48,10 +52,10 @@ A*
 Performance tests ran in a total of 609.855288603 seconds.
 </code>
 
-#### Suorituskykytetauksen analysointia
-
 Esimerkissä toistoja oli 100, 2500, 10000 ja 40000, ja testien suorittamiseen kului reilut 10 minuuttia.
 
 A* on testien perusteella noin kolme kertaa yhtä nopea, kuin Dijkstra (Uniform cost search).
 
 Dijkstran suuret ajat pienillä toistoilla tarkoittavat varmaan, että erittäin hitaita ääritapauksia on runsaasti, ja niiden vaikutus keskiarvoihin hiipuu vasta suuremmilla toistoilla.
+
+Toisaalta testien <code>n * n</code> aiheuttaa sen, että jos ymmärsin oikein, niin roskienkeruun ym. aiheuttaman hälyn minimoimiseksi käytetään huomattavasti vähemmän vaivaa. Ehkä toisen muuttujan <code>n</code> sijaan voitaisiin käyttää jotain vakiota, kuten materiaalissa.

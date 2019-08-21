@@ -161,7 +161,8 @@ public class Main extends Application {
             }
             Color color = Color.web(pathColors[i]);
             for (int j = 0; j < path.length - 1; j++) {
-                layout.add(new Rectangle(tileSize, tileSize, color), path[j].getY(), path[j].getX());
+                layout.add(new Rectangle(tileSize, tileSize, color),
+                        path[j].getY(), path[j].getX());
             }
         }
     }

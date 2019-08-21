@@ -5,7 +5,8 @@ import mj.aastaar.algorithms.PathfindingAlgorithm;
 import mj.aastaar.map.Node;
 
 /**
- * Testing the performance of pathfinding algorithms.
+ * Testing the performance of pathfinding algorithms. Tries to follow the
+ * example from the course testing materials.
  *
  * @author MJ
  */
@@ -17,18 +18,21 @@ public class PathfindingPerformanceTester {
     private int[] nums;
 
     /**
-     *
-     * @param scenario
+     * The constructor for the PathfindingPerformanceTester class.
+     * 
+     * @param scenario Pathfinding scenario with helpful methods and an
+     * initialized grid
      */
     public PathfindingPerformanceTester(Scenario scenario) {
         this.scenario = scenario;
     }
 
     /**
-     *
-     * @param algorithms
-     * @param names
-     * @param nums
+     * Running performance tests on pathfinding algorithms.
+     * 
+     * @param algorithms The algorithms that are tested
+     * @param names The names of the algorithms that are tested
+     * @param nums Array of numbers n, where n * n is the number of times the tests are run
      */
     public void run(PathfindingAlgorithm[] algorithms, String[] names, int[] nums) {
         this.names = names;
@@ -47,7 +51,7 @@ public class PathfindingPerformanceTester {
         String results = "";
         results += "Average runtime of pathfinding between two random points:\n";
         for (int i = 0; i < times.length; i++) {
-        results += "\n" + names[i] + "\n";
+            results += "\n" + names[i] + "\n";
             for (int j = 0; j < times[i].length; j++) {
                 int n = nums[j];
                 results += (n * n) + " repetitions: " + times[i][j] + " ns" + "\n";
@@ -56,6 +60,13 @@ public class PathfindingPerformanceTester {
         return results;
     }
 
+    /**
+     * Testing a pathfinding algorithm's runtime across several repetitions.
+     * 
+     * @param algorithm The pathfinding algorithm
+     * @param n n * n is the number of times the tests are run
+     * @return The average runtime
+     */
     private double testPathfindingPerformance(PathfindingAlgorithm algorithm, int n) {
         long times[] = new long[n * n];
         long tAcc = 0;
@@ -75,6 +86,12 @@ public class PathfindingPerformanceTester {
         return getAverage(times);
     }
 
+    /**
+     * Function to return the average of run times.
+     * 
+     * @param times array of run times
+     * @return the average runtime
+     */
     private double getAverage(long[] times) {
         double s = 0;
         for (long time : times) {

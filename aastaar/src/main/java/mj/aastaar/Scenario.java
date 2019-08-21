@@ -1,10 +1,10 @@
 package mj.aastaar;
 
 import java.util.Random;
+import mj.aastaar.algorithms.PathfindingAlgorithm;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.MapCreator;
 import mj.aastaar.map.Node;
-import mj.aastaar.algorithms.PathfindingAlgorithm;
 
 /**
  * Pathfinding scenario, containing starting and goal positions, pathfinding
@@ -22,7 +22,7 @@ public class Scenario {
     private String[] pathColors;
 
     /**
-     * @return Grid
+     * @return Grid The pathfinding grid
      */
     public Grid getGrid() {
         return grid;
@@ -114,7 +114,7 @@ public class Scenario {
         shortestPaths[i] = algorithm.getPath().shortestPath(goal, start, pathLength);
         System.out.println("Retrieved " + name + " shortest path as array \n");
     }
-    
+
     /**
      * Initializing random valid starting and goal coordinates.
      */
