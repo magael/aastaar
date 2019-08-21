@@ -1,13 +1,29 @@
 ## Viikkoraportti 5
 
-Työtunteja kertyi yhteensä noin 
+Työtunteja kertyi yhteensä noin 14h.
 
 ---
 
-#### Viikon aikana syntynyttä pohdintaa:
+#### Pohdintaa ja huomioita:
 
-* 
+* Mielelläni vastaanottaisin vielä parannus- ja lisäysehdotuksia testeihin liittyen.
+
+* Jacoco-raportista poissuljettu myös Scenario-käyttöliittymäluokka ja suorituskykytestiluokka.
 
 ---
 
-#### 
+#### La 17.8. - Su 18.8.
+
+Dokumentaation parantelua 1-2h.
+
+#### Ma 19.8.
+
+Koodikatselmointi ja vertaispalaute 1-2h.
+
+#### Ti 20.8.
+
+Algoritmeille yksikkötestejä, pientä koodin selkeytystä. Verkon painojen alustuksien indeksitypon fiksaus. Start-noden tarkistus geneeriseksi nodetarkistukseksi, refaktorointi skenaariosta algoritmiin ym. Yhteensä n. 4h.
+
+#### Ke 21.8.
+
+Alku- ja loppupisteiden satunnaisgenerointi, algoritmien suorituskykytestausta ja dokumentointia. N. 7h.

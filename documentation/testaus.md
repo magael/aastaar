@@ -59,3 +59,5 @@ A* on testien perusteella noin kolme kertaa yhtä nopea, kuin Dijkstra (Uniform 
 Dijkstran suuret ajat pienillä toistoilla tarkoittavat varmaan, että erittäin hitaita ääritapauksia on runsaasti, ja niiden vaikutus keskiarvoihin hiipuu vasta suuremmilla toistoilla.
 
 Toisaalta testien <code>n * n</code> aiheuttaa sen, että jos ymmärsin oikein, niin roskienkeruun ym. aiheuttaman hälyn minimoimiseksi käytetään huomattavasti vähemmän vaivaa. Ehkä toisen muuttujan <code>n</code> sijaan voitaisiin käyttää jotain vakiota, kuten materiaalissa.
+
+Toisessa branchissa on kesken sen toteuttaminen, että eri algoritmit käyttävät samoja satunnaisia alku- ja lähtöpisteitä, jolloin vertailu on tarkempaa.
