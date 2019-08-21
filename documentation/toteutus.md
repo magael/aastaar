@@ -36,7 +36,7 @@ https://www.redblobgames.com
 
 #### Checkstyle
 
-Projekti hyödyntää checkstyleä. Tyylivirheet voidaan tarkastaa komennolla <code>gradle check</code> ja ne löytyvät polulta <code>build/reports/checkstyle/main.html</code>.
+Projekti hyödyntää checkstyleä. Tyylivirheet voidaan tarkastaa komennolla <code>gradle check</code> ja ne löytyvät polulta <code>build/reports/checkstyle/</code>. Checkstyle valittaa ainakin tällä hetkellä myös getterien ja setterien Javadoceista, ynnä muusta turhasta.
 
 #### Javadoc
 

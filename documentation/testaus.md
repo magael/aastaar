@@ -52,7 +52,7 @@ A*
 Performance tests ran in a total of 609.855288603 seconds.
 </code>
 
-Esimerkissä toistoja oli 100, 2500, 10000 ja 40000, ja testien suorittamiseen kului reilut 10 minuuttia.
+Esimerkissä toistoja oli 100, 2500, 10000 ja 40000, ja testien suorittamiseen kului reilut 10 minuuttia koneella, jossa on Intel i5-8400 suoritin ja 16 GB keskusmuistia.
 
 A* on testien perusteella noin kolme kertaa yhtä nopea, kuin Dijkstra (Uniform cost search).
 
