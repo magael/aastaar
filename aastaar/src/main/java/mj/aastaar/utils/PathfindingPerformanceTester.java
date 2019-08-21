@@ -15,31 +15,38 @@ import mj.aastaar.map.Node;
 public class PathfindingPerformanceTester {
 
     private Scenario scenario;
+    private String[] names;
+    private double[][] times;
+    private int[] nums;
 
     public PathfindingPerformanceTester(Scenario scenario) {
         this.scenario = scenario;
     }
 
-    public double[][] run(PathfindingAlgorithm[] algorithms, int[] nums) {
-        double[][] times = new double[algorithms.length][nums.length];
+    public void run(PathfindingAlgorithm[] algorithms, String[] names, int[] nums) {
+        this.names = names;
+        this.nums = nums;
+        times = new double[algorithms.length][nums.length];
         for (int i = 0; i < times.length; i++) {
             for (int j = 0; j < nums.length; j++) {
                 int n = nums[j];
                 times[i][j] = testPathfindingPerformance(algorithms[i], n);
             }
         }
-        return times;
     }
 
-    public void printResults(double[][] times, int[] nums, String[] names) {
-        System.out.println("Average runtime of pathfinding between two random points");
+    @Override
+    public String toString() {
+        String results = "";
+        results += "Average runtime of pathfinding between two random points:\n";
         for (int i = 0; i < times.length; i++) {
-        System.out.println("\n" + names[i]);
+        results += "\n" + names[i] + "\n";
             for (int j = 0; j < times[i].length; j++) {
                 int n = nums[j];
-                System.out.println((n * n) + " repetitions: " + times[i][j] + " ms");
+                results += (n * n) + " repetitions: " + times[i][j] + " ns" + "\n";
             }
         }
+        return results;
     }
 
     private double testPathfindingPerformance(PathfindingAlgorithm algorithm, int n) {

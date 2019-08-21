@@ -65,23 +65,14 @@ public class Main extends Application {
             PathfindingAlgorithm[] algorithms = new PathfindingAlgorithm[2];
             algorithms[0] = new UniformCostSearch(grid);
             algorithms[1] = new AStar(grid);
-            //            int[] nums = {10, 50, 100, 1000};
-            int[] nums = {10, 20};
-            double[][] times = tester.run(algorithms, nums);
             String[] names = {"Dijkstra", "A*"};
-            tester.printResults(times, nums, names);
-            
-//            System.out.println("Average runtime of pathfinding between two random points");
-//            System.out.println("\nDijkstra");
-//            for (int i = 0; i < nums.length; i++) {
-//                int n = nums[i];
-//                System.out.println((n * n) + " repetitions: " + times[0][i] + " ms");
-//            }
-//            System.out.println("\nA*");
-//            for (int i = 0; i < nums.length; i++) {
-//                int n = nums[i];
-//                System.out.println((n * n) + " repetitions: " + times[1][i] + " ms");
-//            }
+//            int[] nums = {10, 50, 100, 1000};
+            int[] nums = {10, 20};
+            System.out.print("Beginning performance tests on " + algorithms.length + " algorithms.\n");
+            long t = System.nanoTime();
+            tester.run(algorithms, names, nums);
+            System.out.println("Performance tests ran in a total of " + (double) (System.nanoTime() - t) / 1000000000 + " seconds.\n");
+            System.out.println(tester);
         }
     }
 
