@@ -107,14 +107,13 @@ public class Scenario {
      * @param i Index for shortestPaths and pathColors arrays
      * @param color Color as hex strings for shortest path visualization
      */
-    public void runPathfindingAlgorithm(PathfindingAlgorithm algorithm, String name, int i, String color) {
+    public void runPathfindingAlgorithm(PathfindingAlgorithm algorithm, String name, int i) {
         System.out.println("Starting " + name);
         int pathLength = algorithm.search(start, goal, 4);
         System.out.print(name + " shortest path length: " + pathLength);
         System.out.println(", cost: " + algorithm.getCost(goal));
         shortestPaths[i] = algorithm.getPath().shortestPath(goal, start, pathLength);
         System.out.println("Retrieved " + name + " shortest path as array \n");
-        pathColors[i] = color;
     }
     
     public void initRandomPositions() {

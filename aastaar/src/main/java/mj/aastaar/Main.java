@@ -36,7 +36,7 @@ public class Main extends Application {
     /**
      * Initializing the scenario from configurations, providing the scenario
      * with algorithms to run and providing arrays for the algorithm's shortest
-     * paths. Launching the Java FX GUI.
+     * paths. Launching the Java FX GUI. Running pathfinding performance tests.
      */
     private static void run() {
         scenario = new Scenario();
@@ -48,32 +48,38 @@ public class Main extends Application {
         } else if (grid == null || scenario.getGrid2D() == null || scenario.getGrid().getLength() < 1) {
             System.out.println("Error creating a pathfinding grid");
         } else {
-//            scenario.setShortestPaths(new Node[2][]);
-//            scenario.setPathColors(new String[2]);
-//            String cyan = "#00FFFF";
-//            String magenta = "#FF00FF";
-//
-//            scenario.runPathfindingAlgorithm(new UniformCostSearch(grid), "Dijkstra", 0, cyan);
-//            scenario.runPathfindingAlgorithm(new AStar(grid), "A*", 1, magenta);
-//
-//            System.out.println("Launching visualization, please wait...");
-//            System.out.println("Closing the window will begin performance testing.");
-//            launch(Main.class);
+            String cyan = "#00FFFF";
+            String magenta = "#FF00FF";
+            String[] pathColors = {cyan, magenta};
+            scenario.setPathColors(pathColors);
+            scenario.setShortestPaths(new Node[pathColors.length][]);
 
-            // Testing performance
-            PathfindingPerformanceTester tester = new PathfindingPerformanceTester(scenario);
-            PathfindingAlgorithm[] algorithms = new PathfindingAlgorithm[2];
-            algorithms[0] = new UniformCostSearch(grid);
-            algorithms[1] = new AStar(grid);
-            String[] names = {"Dijkstra", "A*"};
-//            int[] nums = {10, 50, 100, 1000};
-            int[] nums = {10, 20};
-            System.out.print("Beginning performance tests on " + algorithms.length + " algorithms.\n");
-            long t = System.nanoTime();
-            tester.run(algorithms, names, nums);
-            System.out.println("Performance tests ran in a total of " + (double) (System.nanoTime() - t) / 1000000000 + " seconds.\n");
-            System.out.println(tester);
+            PathfindingAlgorithm[] algorithms = {new UniformCostSearch(grid), new AStar(grid)};
+            String[] algoNames = {"Dijkstra", "A*"};
+
+            for (int i = 0; i < algorithms.length; i++) {
+                scenario.runPathfindingAlgorithm(algorithms[i], algoNames[i], i);
+            }
+
+            System.out.println("Launching visualization, please wait...");
+            System.out.println("Closing the window will begin performance testing.");
+            
+            launch(Main.class);
+
+            runPerformanceTests(algorithms, algoNames);
         }
+    }
+
+    private static void runPerformanceTests(PathfindingAlgorithm[] algorithms, String[] algoNames) {
+        PathfindingPerformanceTester tester = new PathfindingPerformanceTester(scenario);
+//            int[] nums = {10, 50, 100, 500};
+        int[] nums = {10, 20};
+        System.out.print("Beginning performance tests on " + algorithms.length + " algorithms.\n");
+        long t = System.nanoTime();
+        tester.run(algorithms, algoNames, nums);
+        System.out.println("Performance tests ran in a total of "
+                + (double) (System.nanoTime() - t) / 1000000000 + " seconds.\n");
+        System.out.println(tester);
     }
 
     @Override
