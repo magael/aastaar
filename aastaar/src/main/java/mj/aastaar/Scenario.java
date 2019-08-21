@@ -1,5 +1,6 @@
 package mj.aastaar;
 
+import java.util.Random;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.MapCreator;
 import mj.aastaar.map.Node;
@@ -103,17 +104,36 @@ public class Scenario {
      *
      * @param algorithm Object implementing the PathFindingAlgorithm interface
      * @param name What the algorithm is called
-     * @param i Index for shortestPaths and pathColors arrays
-     * @param color Color as hex strings for shortest path visualization
+     * @param i Index for the shortestPaths array
      */
-    public void runPathfindingAlgorithm(PathfindingAlgorithm algorithm, String name, int i, String color) {
+    public void runPathfindingAlgorithm(PathfindingAlgorithm algorithm, String name, int i) {
         System.out.println("Starting " + name);
         int pathLength = algorithm.search(start, goal, 4);
         System.out.print(name + " shortest path length: " + pathLength);
         System.out.println(", cost: " + algorithm.getCost(goal));
         shortestPaths[i] = algorithm.getPath().shortestPath(goal, start, pathLength);
         System.out.println("Retrieved " + name + " shortest path as array \n");
-        pathColors[i] = color;
+    }
+    
+    /**
+     * Initializing random valid starting and goal coordinates.
+     */
+    public void initRandomPositions() {
+        Random random = new Random();
+        Node randomStart = new Node(-1, -1, 0.0);
+        Node randomGoal = new Node(-1, -1, 0.0);
+
+        while (!grid.nodeIsValid(randomStart)) {
+            randomStart.setX(random.nextInt(grid.getLength()));
+            randomStart.setY(random.nextInt(grid.getRowLength()));
+        }
+        while (!grid.nodeIsValid(randomGoal)) {
+            randomGoal.setX(random.nextInt(grid.getLength()));
+            randomGoal.setY(random.nextInt(grid.getRowLength()));
+        }
+
+        start = randomStart;
+        goal = randomGoal;
     }
 
     /**
@@ -121,7 +141,8 @@ public class Scenario {
      */
     public void initConfig() {
         initDefaultGrid();
-        initDefaultPositions();
+//        initDefaultPositions();
+        initRandomPositions();
     }
 
     /**

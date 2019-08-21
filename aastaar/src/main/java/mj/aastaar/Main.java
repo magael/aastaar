@@ -8,9 +8,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import mj.aastaar.algorithms.AStar;
+import mj.aastaar.algorithms.PathfindingAlgorithm;
 import mj.aastaar.algorithms.UniformCostSearch;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
+import mj.aastaar.utils.PathfindingPerformanceTester;
 
 /**
  * Initializing a pathfinding scenario, and a Java FX graphical user interface
@@ -34,7 +36,7 @@ public class Main extends Application {
     /**
      * Initializing the scenario from configurations, providing the scenario
      * with algorithms to run and providing arrays for the algorithm's shortest
-     * paths. Launching the Java FX GUI.
+     * paths. Launching the Java FX GUI and invoking performance tests.
      */
     private static void run() {
         scenario = new Scenario();
@@ -43,19 +45,28 @@ public class Main extends Application {
 
         if (scenario.getStart() == null || scenario.getGoal() == null) {
             System.out.println("Error initializing start and goal positions");
-        } else if (grid == null || scenario.getGrid2D() == null || scenario.getGrid().getLength() < 1) {
+        } else if (grid == null || grid.getGrid2D() == null || grid.getLength() < 1) {
             System.out.println("Error creating a pathfinding grid");
         } else {
-            scenario.setShortestPaths(new Node[2][]);
-            scenario.setPathColors(new String[2]);
             String cyan = "#00FFFF";
             String magenta = "#FF00FF";
+            String[] pathColors = {cyan, magenta};
+            scenario.setPathColors(pathColors);
+            scenario.setShortestPaths(new Node[pathColors.length][]);
 
-            scenario.runPathfindingAlgorithm(new UniformCostSearch(grid), "Dijkstra", 0, cyan);
-            scenario.runPathfindingAlgorithm(new AStar(grid), "A*", 1, magenta);
+            PathfindingAlgorithm[] algorithms = {new UniformCostSearch(grid), new AStar(grid)};
+            String[] algoNames = {"Dijkstra", "A*"};
+
+            for (int i = 0; i < algorithms.length; i++) {
+                scenario.runPathfindingAlgorithm(algorithms[i], algoNames[i], i);
+            }
 
             System.out.println("Launching visualization, please wait...");
+            System.out.println("Closing the window will begin performance testing.\n");
+
             launch(Main.class);
+
+            runPerformanceTests(algorithms, algoNames);
         }
     }
 
@@ -68,6 +79,25 @@ public class Main extends Application {
         window.setScene(scene);
         window.setTitle("Pathfinding visualization on game maps");
         window.show();
+    }
+
+    /**
+     * Using the performance tester class to test pathfinding speed. Setting the
+     * number n, where n * n is the number of times the tests are run.
+     *
+     * @param algorithms The algorithms that are tested
+     * @param algoNames The names of the algorithms that are
+     */
+    private static void runPerformanceTests(PathfindingAlgorithm[] algorithms, String[] algoNames) {
+//        int[] nums = {10, 50, 100, 200};
+        int[] nums = {10, 10, 20, 30};
+        PathfindingPerformanceTester tester = new PathfindingPerformanceTester(scenario);
+        System.out.print("Beginning performance tests on the algorithms.\n");
+        long t = System.nanoTime();
+        tester.run(algorithms, algoNames, nums);
+        System.out.println(tester);
+        System.out.println("Performance tests ran in a total of "
+                + (double) (System.nanoTime() - t) / 1000000000 + " seconds.\n");
     }
 
     /**
