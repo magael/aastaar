@@ -8,8 +8,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import mj.aastaar.algorithms.AStar;
-import mj.aastaar.algorithms.AStarVisited;
-import mj.aastaar.algorithms.DijkstraVisited;
 import mj.aastaar.algorithms.PathfindingAlgorithm;
 import mj.aastaar.algorithms.UniformCostSearch;
 import mj.aastaar.map.Grid;
@@ -91,7 +89,7 @@ public class Main extends Application {
      * @param algoNames The names of the algorithms that are
      */
     private static void runPerformanceTests(PathfindingAlgorithm[] algorithms, String[] algoNames) {
-//        int[] nums = {10, 50, 100, 500};
+//        int[] nums = {10, 50, 100, 500, 1000};
         int[] nums = {10, 10, 20, 30};
         PathfindingPerformanceTester tester = new PathfindingPerformanceTester(scenario);
         System.out.print("Beginning performance tests on the algorithms.\n");
