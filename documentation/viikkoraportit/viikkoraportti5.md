@@ -4,9 +4,7 @@ Työtunteja kertyi yhteensä noin 19h.
 
 ---
 
-#### Pohdintaa ja huomioita:
-
-* Mielelläni vastaanottaisin vielä parannus- ja lisäysehdotuksia testeihin liittyen.
+#### Huomioita:
 
 * Jacoco-raportista poissuljettu myös Scenario-käyttöliittymäluokka ja suorituskykytestiluokka.
 
