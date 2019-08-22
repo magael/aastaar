@@ -19,7 +19,6 @@ public class UniformCostSearch implements PathfindingAlgorithm {
     private PathWithArray path;
     private CustomPriorityQueue frontier;
     private double cost[][];
-//    private boolean[][] visited; // optional, but might influence speed
 
     /**
      *
@@ -45,10 +44,6 @@ public class UniformCostSearch implements PathfindingAlgorithm {
             if (current.equals(goal)) {
                 return path.earlyExit(current, start);
             }
-//            if (visited[current.getX()][current.getY()]) {
-//                continue;
-//            }
-//            visited[current.getX()][current.getY()] = true;
             expandFrontier(current, directions);
         }
         return -1;
@@ -123,7 +118,6 @@ public class UniformCostSearch implements PathfindingAlgorithm {
         path = new PathWithArray(nx, ny);
         frontier = new CustomPriorityQueue(nx * ny);
         cost = new double[nx][ny];
-//        visited = new boolean[nx][ny];
 
         for (int i = 0; i < nx; i++) {
             for (int j = 0; j < ny; j++) {

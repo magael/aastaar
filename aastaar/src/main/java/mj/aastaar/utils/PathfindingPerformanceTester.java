@@ -1,5 +1,7 @@
 package mj.aastaar.utils;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import mj.aastaar.Scenario;
 import mj.aastaar.algorithms.PathfindingAlgorithm;
 import mj.aastaar.map.Node;
@@ -62,7 +64,8 @@ public class PathfindingPerformanceTester {
             results += "\n" + names[i] + "\n";
             for (int j = 0; j < times[i].length; j++) {
                 int n = nums[j];
-                results += n + " repetitions: " + (times[i][j] / 1000000) + " ms" + "\n";
+                BigDecimal ms = new BigDecimal(times[i][j] / 1000000);
+                results += n + " repetitions: " + ms.round(new MathContext(4)) + " ms" + "\n";
             }
         }
         return results;

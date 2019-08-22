@@ -1,4 +1,4 @@
-# Polunetsintäohjelma
+# Pathfinding application
 
 ## Aineopintojen harjoitustyö: Tietorakenteet ja algoritmit (loppukesä 2019)
 

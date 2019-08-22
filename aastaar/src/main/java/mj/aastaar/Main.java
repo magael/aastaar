@@ -90,7 +90,7 @@ public class Main extends Application {
      */
     private static void runPerformanceTests(PathfindingAlgorithm[] algorithms, String[] algoNames) {
 //        int[] nums = {10, 50, 100, 500, 1000};
-        int[] nums = {10, 10, 20, 30};
+        int[] nums = {10, 10, 20, 30, 50};
         PathfindingPerformanceTester tester = new PathfindingPerformanceTester(scenario);
         System.out.print("Beginning performance tests on the algorithms.\n");
         long t = System.nanoTime();
