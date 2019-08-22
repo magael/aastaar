@@ -8,6 +8,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import mj.aastaar.algorithms.AStar;
+import mj.aastaar.algorithms.AStarVisited;
+import mj.aastaar.algorithms.DijkstraVisited;
 import mj.aastaar.algorithms.PathfindingAlgorithm;
 import mj.aastaar.algorithms.UniformCostSearch;
 import mj.aastaar.map.Grid;
@@ -83,21 +85,22 @@ public class Main extends Application {
 
     /**
      * Using the performance tester class to test pathfinding speed. Setting the
-     * number n, where n * n is the number of times the tests are run.
+     * number n, where n is the number of times the tests are run.
      *
      * @param algorithms The algorithms that are tested
      * @param algoNames The names of the algorithms that are
      */
     private static void runPerformanceTests(PathfindingAlgorithm[] algorithms, String[] algoNames) {
-//        int[] nums = {10, 50, 100, 200};
+//        int[] nums = {10, 50, 100, 500};
         int[] nums = {10, 10, 20, 30};
         PathfindingPerformanceTester tester = new PathfindingPerformanceTester(scenario);
         System.out.print("Beginning performance tests on the algorithms.\n");
         long t = System.nanoTime();
         tester.run(algorithms, algoNames, nums);
+        double elapsedTime = (double) (System.nanoTime() - t) / 1000000000;
         System.out.println(tester);
         System.out.println("Performance tests ran in a total of "
-                + (double) (System.nanoTime() - t) / 1000000000 + " seconds.\n");
+                + elapsedTime + " seconds.\n");
     }
 
     /**
