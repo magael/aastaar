@@ -23,41 +23,38 @@ Suorituskykytestit ottavat mallia kurssin testausmateriaaleista, mutta sovellus 
 
 Esimerkkitulos suorituskykytestauksesta:
 
-<code>
-Average runtime of pathfinding between two random points:
+<code>Dijkstra
 
+10 repetitions: 77.3481342 ms
 
-Dijkstra
+50 repetitions: 221.90776054 ms
 
-100 repetitions: 8281923.97 ns
+100 repetitions: 435.38649045 ms
 
-2500 repetitions: 4911397.5388 ns
+500 repetitions: 2311.442512906 ms
 
-10000 repetitions: 4448395.5014 ns
-
-40000 repetitions: 4506471.535825 ns
-
+1000 repetitions: 4411.7864732279995 ms
 
 A*
 
-100 repetitions: 1587182.68 ns
+10 repetitions: 13.640928800000001 ms
 
-2500 repetitions: 1348058.5236 ns
+50 repetitions: 70.80646542 ms
 
-10000 repetitions: 1296579.5467 ns
+100 repetitions: 109.17883205 ms
 
-40000 repetitions: 1295177.181425 ns
+500 repetitions: 659.588384864 ms
 
+1000 repetitions: 1333.773475862 ms
 
-Performance tests ran in a total of 609.855288603 seconds.
-</code>
+Performance tests ran in a total of 968.585246135 seconds.</code>
 
-Esimerkissä toistoja oli 100, 2500, 10000 ja 40000, ja testien suorittamiseen kului reilut 10 minuuttia koneella, jossa on Intel i5-8400 suoritin ja 16 GB keskusmuistia.
+Esimerkin testien suorittamiseen kului reilu vartti koneella, jossa on Intel i5-8400 suoritin ja 16 GB keskusmuistia. Toistoja oli 10, 50, 100 ja 500 ja 1000 niin, että jokaista tulosta varten sama haku toistettiin 50 kertaa, joista otettiin keskiarvo roskienkeruun ym. aiheuttaman hälyn minimoimiseksi.
 
-A* on testien perusteella noin kolme kertaa yhtä nopea, kuin Dijkstra (Uniform cost search).
+Suoritustestaamista edeltää alustus, jossa eri toistokerroille arvotaan lähtö- ja maalipisteet. Eri kierroksilla käytetään (arvonnasta riippuen) eri sijainteja, mutta eri algoritmit käyttävät samoja sijainteja.
 
-Dijkstran suuret ajat pienillä toistoilla tarkoittavat varmaan, että erittäin hitaita ääritapauksia on runsaasti, ja niiden vaikutus keskiarvoihin hiipuu vasta suuremmilla toistoilla.
+A* on esimerkin ja muiden testien perusteella noin neljä kertaa yhtä nopea, kuin Dijkstra (Uniform cost search).
 
-Toisaalta testien <code>n * n</code> aiheuttaa sen, että jos ymmärsin oikein, niin roskienkeruun ym. aiheuttaman hälyn minimoimiseksi käytetään huomattavasti vähemmän vaivaa. Ehkä toisen muuttujan <code>n</code> sijaan voitaisiin käyttää jotain vakiota, kuten materiaalissa.
+Dijkstran suhteessa paljon suuremmat ajat pienillä toistoilla tarkoittavat varmaan, että erittäin hitaita ääritapauksia on runsaasti, ja niiden vaikutus keskiarvoihin hiipuu vasta suuremmilla toistoilla.
 
-Toisessa branchissa on kesken sen toteuttaminen, että eri algoritmit käyttävät samoja satunnaisia alku- ja lähtöpisteitä, jolloin vertailu on tarkempaa.
+Algoritmeja on testattu myös "visited"-taulukolla ja ilman. Visited-merkinnällä voidaan luoda tarkistus, onko jonon kärjestä juuri poistetu solmu käsitelty aiemmin, joka käydään ennen haun laajennusta seuraaviin vierussolmuihin. Suoritusajat vaihtelivat, mutta mitään suurta tai selkeää eroa en onnistunut saamaan. Päätin toistaiseksi poistaa kommentoidut visited-merkinnät koodista.

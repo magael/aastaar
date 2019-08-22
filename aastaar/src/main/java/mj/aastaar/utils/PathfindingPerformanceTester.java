@@ -86,6 +86,7 @@ public class PathfindingPerformanceTester {
                 tAcc += System.nanoTime() - t;
             }
             times[i] = tAcc / 50;
+            tAcc = 0;
         }
 
         return getAverage(times);

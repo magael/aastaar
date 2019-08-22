@@ -1,6 +1,6 @@
 ## Viikkoraportti 5
 
-Työtunteja kertyi yhteensä noin 14h.
+Työtunteja kertyi yhteensä noin 16h.
 
 ---
 
@@ -27,3 +27,7 @@ Algoritmeille yksikkötestejä, pientä koodin selkeytystä. Verkon painojen alu
 #### Ke 21.8.
 
 Alku- ja loppupisteiden satunnaisgenerointi, algoritmien suorituskykytestausta ja dokumentointia. N. 7h.
+
+#### To 22.8.
+
+Suorituskykytestauksen parantelua n. 2h.
