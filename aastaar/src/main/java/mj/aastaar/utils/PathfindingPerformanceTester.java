@@ -85,14 +85,15 @@ public class PathfindingPerformanceTester {
     private double testAlgorithm(PathfindingAlgorithm algorithm, int numIndex, int num) {
         long times[] = new long[num];
         long tAcc = 0;
+        int n = 50;
 
         for (int i = 0; i < num; i++) {
-            for (int j = 0; j < 50; j++) {
+            for (int j = 0; j < n; j++) {
                 long t = System.nanoTime();
                 algorithm.search(startNodes[numIndex][i], goalNodes[numIndex][i], 4);
                 tAcc += System.nanoTime() - t;
             }
-            times[i] = tAcc / 50;
+            times[i] = tAcc / n;
             tAcc = 0;
         }
 

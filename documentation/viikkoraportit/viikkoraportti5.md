@@ -8,6 +8,8 @@ Työtunteja kertyi yhteensä noin 19h.
 
 * Jacoco-raportista poissuljettu myös Scenario-käyttöliittymäluokka ja suorituskykytestiluokka.
 
+* Seuraavaksi on suunnitelmissa toteuttaa mahdollisuus viistosuuntaiselle liikkeelle ruudukossa, siihen liittyen pari eri heuristiikkaa ja muita lisäyksiä, sekä algoritmien tarkastelemien ruutujen (niiden, joille on laskettu etäisyys) visualisointi.
+
 ---
 
 #### La 17.8. - Su 18.8.
