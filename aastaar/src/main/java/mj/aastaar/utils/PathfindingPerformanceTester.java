@@ -38,6 +38,10 @@ public class PathfindingPerformanceTester {
      * are run
      */
     public void run(PathfindingAlgorithm[] algorithms, String[] names, int[] nums) {
+        if (scenario.getGrid() == null || scenario.getGrid2D() == null || scenario.getGrid().getLength() < 1) {
+            System.out.println("The scenario has no grid. Aborting tests.");
+            return;
+        }
         this.names = names;
         this.nums = nums;
         times = new double[algorithms.length][nums.length];

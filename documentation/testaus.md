@@ -23,31 +23,33 @@ Suorituskykytestit ottavat mallia kurssin testausmateriaaleista, mutta sovellus 
 
 Esimerkkitulos suorituskykytestauksesta:
 
-<code>Dijkstra
+<code>Average runtime of pathfinding between two random points:
 
-10 repetitions: 77.3481342 ms
+Dijkstra
 
-50 repetitions: 221.90776054 ms
+10 repetitions: 11.494981300000001 ms
 
-100 repetitions: 435.38649045 ms
+50 repetitions: 7.86717338 ms
 
-500 repetitions: 2311.442512906 ms
+100 repetitions: 8.46128165 ms
 
-1000 repetitions: 4411.7864732279995 ms
+500 repetitions: 8.910111534 ms
+
+1000 repetitions: 8.743191996 ms
 
 A*
 
-10 repetitions: 13.640928800000001 ms
+10 repetitions: 2.8967281000000002 ms
 
-50 repetitions: 70.80646542 ms
+50 repetitions: 2.3123797799999997 ms
 
-100 repetitions: 109.17883205 ms
+100 repetitions: 2.33421557 ms
 
-500 repetitions: 659.588384864 ms
+500 repetitions: 2.6272582239999998 ms
 
-1000 repetitions: 1333.773475862 ms
+1000 repetitions: 2.5015800720000003 ms
 
-Performance tests ran in a total of 968.585246135 seconds.</code>
+Performance tests ran in a total of 937.341475022 seconds.</code>
 
 Esimerkin testien suorittamiseen kului reilu vartti koneella, jossa on Intel i5-8400 suoritin ja 16 GB keskusmuistia. Toistoja oli 10, 50, 100 ja 500 ja 1000 niin, että jokaista tulosta varten sama haku toistettiin 50 kertaa, joista otettiin keskiarvo roskienkeruun ym. aiheuttaman hälyn minimoimiseksi.
 
@@ -57,4 +59,4 @@ A* on esimerkin ja muiden testien perusteella noin neljä kertaa yhtä nopea, ku
 
 Dijkstran suhteessa paljon suuremmat ajat pienillä toistoilla tarkoittavat varmaan, että erittäin hitaita ääritapauksia on runsaasti, ja niiden vaikutus keskiarvoihin hiipuu vasta suuremmilla toistoilla.
 
-Algoritmeja on testattu myös "visited"-taulukolla ja ilman. Visited-merkinnällä voidaan luoda tarkistus, onko jonon kärjestä juuri poistetu solmu käsitelty aiemmin, joka käydään ennen haun laajennusta seuraaviin vierussolmuihin. Suoritusajat vaihtelivat, mutta mitään suurta tai selkeää eroa en onnistunut saamaan. Päätin toistaiseksi poistaa kommentoidut visited-merkinnät koodista.
+Algoritmeja on testattu myös "visited"-taulukolla ja ilman. Visited-merkinnällä voidaan luoda tarkistus, onko jonon kärjestä juuri poistetu solmu käsitelty aiemmin. Tarkistus tehdään ennen haun laajennusta seuraaviin vierussolmuihin. Suoritusajat vaihtelivat, mutta mitään suurta tai selkeää eroa en onnistunut saamaan. Päätin toistaiseksi poistaa kommentoidut visited-merkinnät koodista.
