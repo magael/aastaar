@@ -63,9 +63,9 @@ public class Main extends Application {
                 new DijkstraVisited(grid), new AStar(grid), new AStarVisited(grid)};
             String[] algoNames = {"Dijkstra", "Dijkstra with visited flag", "A*", "A* with visited flag"};
             
-//            scenario.setPathColors(pathColors);
-//            scenario.setShortestPaths(new Node[pathColors.length][]);
-//
+            scenario.setPathColors(pathColors);
+            scenario.setShortestPaths(new Node[pathColors.length][]);
+
 //            PathfindingAlgorithm[] algorithms = {new UniformCostSearch(grid), new AStar(grid)};
 //            String[] algoNames = {"Dijkstra", "A*"};
 
@@ -73,10 +73,10 @@ public class Main extends Application {
                 scenario.runPathfindingAlgorithm(algorithms[i], algoNames[i], i);
             }
 
-//            System.out.println("Launching visualization, please wait...");
-//            System.out.println("Closing the window will begin performance testing.\n");
-//
-//            launch(Main.class);
+            System.out.println("Launching visualization, please wait...");
+            System.out.println("Closing the window will begin performance testing.\n");
+
+            launch(Main.class);
 
             runPerformanceTests(algorithms, algoNames);
         }
@@ -95,14 +95,14 @@ public class Main extends Application {
 
     /**
      * Using the performance tester class to test pathfinding speed. Setting the
-     * number n, where n * n is the number of times the tests are run.
+     * number n, where n is the number of times the tests are run.
      *
      * @param algorithms The algorithms that are tested
      * @param algoNames The names of the algorithms that are
      */
     private static void runPerformanceTests(PathfindingAlgorithm[] algorithms, String[] algoNames) {
-//        int[] nums = {10, 50, 100, 200};
         int[] nums = {10, 10, 20, 30};
+//        int[] nums = {10, 50, 100, 500, 1000};
         PathfindingPerformanceTester tester = new PathfindingPerformanceTester(scenario);
         System.out.print("Beginning performance tests on the algorithms.\n");
         long t = System.nanoTime();

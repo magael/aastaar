@@ -34,7 +34,7 @@ public class PathfindingPerformanceTester {
      *
      * @param algorithms The algorithms that are tested
      * @param names The names of the algorithms that are tested
-     * @param nums Array of numbers n, where n * n is the number of times the
+     * @param nums Array of numbers n, where n is the number of times the
      * tests are run
      */
     public void run(PathfindingAlgorithm[] algorithms, String[] names, int[] nums) {
@@ -43,10 +43,11 @@ public class PathfindingPerformanceTester {
         times = new double[algorithms.length][nums.length];
         initRandomPositions();
 
-        for (int i = 0; i < times.length; i++) {
+        for (int i = 0; i < algorithms.length; i++) {
             for (int j = 0; j < nums.length; j++) {
-                int n = nums[j];
-                times[i][j] = testPathfindingPerformance(algorithms[i], n);
+                int numIndex = j;
+                int num = nums[j];
+                times[i][j] = testPathfindingPerformance(algorithms[i], numIndex, num);
             }
         }
     }
@@ -59,30 +60,34 @@ public class PathfindingPerformanceTester {
             results += "\n" + names[i] + "\n";
             for (int j = 0; j < times[i].length; j++) {
                 int n = nums[j];
-                results += (n * n) + " repetitions: " + times[i][j] + " ns" + "\n";
+                results += n + " repetitions: " + (times[i][j] / 1000000) + " ms" + "\n";
             }
         }
         return results;
     }
 
     /**
-     * Testing a pathfinding algorithm's runtime across several repetitions.
+     * Testing a pathfinding algorithm's runtime across several repetitions. For
+     * every result on a given starting and goal position, the path is
+     * calculated 50 times, and the average of those results is added to the
+     * times. The parameter num determines how many of those results are
+     * calculated.
      *
      * @param algorithm The pathfinding algorithm
-     * @param n n * n is the number of times the tests are run
+     * @param num n is the number of times the tests are run
      * @return The average runtime
      */
-    private double testPathfindingPerformance(PathfindingAlgorithm algorithm, int n) {
-        long times[] = new long[n * n];
+    private double testPathfindingPerformance(PathfindingAlgorithm algorithm, int numIndex, int num) {
+        long times[] = new long[num];
         long tAcc = 0;
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
+        for (int i = 0; i < num; i++) {
+            for (int j = 0; j < 50; j++) {
                 long t = System.nanoTime();
-                algorithm.search(startNodes[i][j], goalNodes[i][j], 4);
+                algorithm.search(startNodes[numIndex][i], goalNodes[numIndex][i], 4);
                 tAcc += System.nanoTime() - t;
             }
-            times[i] = tAcc / n;
+            times[i] = tAcc / 50;
         }
 
         return getAverage(times);
