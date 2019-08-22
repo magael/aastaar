@@ -1,6 +1,6 @@
 ## Viikkoraportti 5
 
-Työtunteja kertyi yhteensä noin 16h.
+Työtunteja kertyi yhteensä noin 19h.
 
 ---
 
@@ -30,4 +30,4 @@ Alku- ja loppupisteiden satunnaisgenerointi, algoritmien suorituskykytestausta j
 
 #### To 22.8.
 
-Suorituskykytestauksen parantelua n. 2h.
+Suorituskykytestauksen kehittämistä ja dokumentointia n. 5h.
