@@ -123,7 +123,7 @@ public class Main extends Application {
     }
 
     /**
-     * Adding map tiles to the GridPane. Green for the start, red for the goal
+     * Adding map tiles to the GridPane. Red for the start, green for the goal
      * and calling the tileColor-method for the rest.
      *
      * @param grid2D 2D character array representation of the map grid
