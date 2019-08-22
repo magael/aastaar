@@ -1,5 +1,7 @@
 package mj.aastaar;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
@@ -95,10 +97,10 @@ public class Main extends Application {
         System.out.print("Beginning performance tests on the algorithms.\n");
         long t = System.nanoTime();
         tester.run(algorithms, algoNames, nums);
-        double elapsedTime = (double) (System.nanoTime() - t) / 1000000000;
+        BigDecimal elapsedTime = new BigDecimal((System.nanoTime() - t) / 1000000000);
         System.out.println(tester);
         System.out.println("Performance tests ran in a total of "
-                + elapsedTime + " seconds.\n");
+                + elapsedTime.round(new MathContext(3)) + " seconds.\n");
     }
 
     /**
