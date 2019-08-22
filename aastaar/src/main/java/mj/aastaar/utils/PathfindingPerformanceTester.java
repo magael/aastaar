@@ -14,8 +14,8 @@ public class PathfindingPerformanceTester {
 
     private Scenario scenario;
     private String[] names;
-    private double[][] times;
     private int[] nums;
+    private double[][] times;
     private Node[][] startNodes;
     private Node[][] goalNodes;
 
@@ -34,8 +34,8 @@ public class PathfindingPerformanceTester {
      *
      * @param algorithms The algorithms that are tested
      * @param names The names of the algorithms that are tested
-     * @param nums Array of numbers n, where n is the number of times the
-     * tests are run
+     * @param nums Array of numbers n, where n is the number of times the tests
+     * are run
      */
     public void run(PathfindingAlgorithm[] algorithms, String[] names, int[] nums) {
         this.names = names;
@@ -45,9 +45,7 @@ public class PathfindingPerformanceTester {
 
         for (int i = 0; i < algorithms.length; i++) {
             for (int j = 0; j < nums.length; j++) {
-                int numIndex = j;
-                int num = nums[j];
-                times[i][j] = testPathfindingPerformance(algorithms[i], numIndex, num);
+                times[i][j] = testAlgorithm(algorithms[i], j, nums[j]);
             }
         }
     }
@@ -68,16 +66,16 @@ public class PathfindingPerformanceTester {
 
     /**
      * Testing a pathfinding algorithm's runtime across several repetitions. For
-     * every result on a given starting and goal position, the path is
-     * calculated 50 times, and the average of those results is added to the
-     * times. The parameter num determines how many of those results are
-     * calculated.
+     * every given starting and goal position, the path is calculated 50 times,
+     * and the average of those results is added to the result times. The
+     * parameter num determines how many of those results are calculated.
      *
      * @param algorithm The pathfinding algorithm
-     * @param num n is the number of times the tests are run
+     * @param numIndex An index in the nums array that the test run was given
+     * @param num The number of results generated
      * @return The average runtime
      */
-    private double testPathfindingPerformance(PathfindingAlgorithm algorithm, int numIndex, int num) {
+    private double testAlgorithm(PathfindingAlgorithm algorithm, int numIndex, int num) {
         long times[] = new long[num];
         long tAcc = 0;
 

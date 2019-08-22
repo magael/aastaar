@@ -52,22 +52,12 @@ public class Main extends Application {
         } else {
             String cyan = "#00FFFF";
             String magenta = "#FF00FF";
-            //            String[] pathColors = {cyan, magenta};
-            
-            // Testing visited
-            String[] pathColors = {cyan, cyan, magenta, magenta};
+            String[] pathColors = {cyan, magenta};
             scenario.setPathColors(pathColors);
             scenario.setShortestPaths(new Node[pathColors.length][]);
 
-            PathfindingAlgorithm[] algorithms = {new UniformCostSearch(grid),
-                new DijkstraVisited(grid), new AStar(grid), new AStarVisited(grid)};
-            String[] algoNames = {"Dijkstra", "Dijkstra with visited flag", "A*", "A* with visited flag"};
-            
-            scenario.setPathColors(pathColors);
-            scenario.setShortestPaths(new Node[pathColors.length][]);
-
-//            PathfindingAlgorithm[] algorithms = {new UniformCostSearch(grid), new AStar(grid)};
-//            String[] algoNames = {"Dijkstra", "A*"};
+            PathfindingAlgorithm[] algorithms = {new UniformCostSearch(grid), new AStar(grid)};
+            String[] algoNames = {"Dijkstra", "A*"};
 
             for (int i = 0; i < algorithms.length; i++) {
                 scenario.runPathfindingAlgorithm(algorithms[i], algoNames[i], i);
@@ -101,8 +91,8 @@ public class Main extends Application {
      * @param algoNames The names of the algorithms that are
      */
     private static void runPerformanceTests(PathfindingAlgorithm[] algorithms, String[] algoNames) {
-        int[] nums = {10, 10, 20, 30};
-//        int[] nums = {10, 50, 100, 500, 1000};
+//        int[] nums = {10, 10, 20, 30};
+        int[] nums = {10, 50, 100, 500, 1000};
         PathfindingPerformanceTester tester = new PathfindingPerformanceTester(scenario);
         System.out.print("Beginning performance tests on the algorithms.\n");
         long t = System.nanoTime();
