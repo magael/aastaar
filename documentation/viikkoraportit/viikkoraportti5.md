@@ -8,7 +8,7 @@ Työtunteja kertyi yhteensä noin 21h.
 
 * Jacoco-raportista poissuljettu myös Scenario-käyttöliittymäluokka ja suorituskykytestiluokka.
 
-* Meinasin jo tyytyä nykyisiin kaksiulotteisia taulukoita käyttäviin ratkaisuihin, mutta vertailtuani (branchisssa variations2) niitä suorituskykytesteillä versioihin Javan valmiilla HashMapeilla & -Seteillä, tajusin kuinka merkittävä ero on. Jälkeenpäin ajateltuna asia on ilmiselvä, mutta taitaa nyt mennä prioriteetit uusiksi: täytynee ottaa seuraavaksi työn alle oma hajautustaulu (ja sille testit, dokumentaatio jne).
+* Meinasin jo tyytyä nykyisiin kaksiulotteisia taulukoita käyttäviin ratkaisuihin ja keskittyä uusien toiminnallisuuksien toteuttamiseen. Rupesin kuitenkin miettimään uudelleen aikavaativuuksia, ja asia rupesi häiritsemään. Vertailin (branchisssa variations2) vielä mielenkiinnosta suorituskykytesteillä nykyisiä toteutuksia versioihin Javan valmiilla HashMapeilla & -Seteillä. Taitaa mennä prioriteetit uusiksi: täytynee ottaa seuraavaksi työn alle oma hajautustaulu (ja sille testit, dokumentaatio jne).
 
 ---
 
