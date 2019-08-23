@@ -21,6 +21,11 @@ public class Node {
         this.y = y;
         this.priority = priority;
     }
+    
+    @Override
+    public int hashCode() {
+        return (x * 18397) + (y * 20483);
+    }
 
     /**
      *

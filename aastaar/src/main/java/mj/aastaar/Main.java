@@ -10,6 +10,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import mj.aastaar.algorithms.AStar;
+import mj.aastaar.algorithms.AStarWithHashMap;
+import mj.aastaar.algorithms.DijkstraWithHashMap;
 import mj.aastaar.algorithms.PathfindingAlgorithm;
 import mj.aastaar.algorithms.UniformCostSearch;
 import mj.aastaar.map.Grid;
@@ -52,22 +54,23 @@ public class Main extends Application {
         } else {
             String cyan = "#00FFFF";
             String magenta = "#FF00FF";
-            String[] pathColors = {cyan, magenta};
+            String[] pathColors = {cyan, cyan, magenta, magenta};
             scenario.setPathColors(pathColors);
             scenario.setShortestPaths(new Node[pathColors.length][]);
 
-            PathfindingAlgorithm[] algorithms = {new UniformCostSearch(grid), new AStar(grid)};
-            String[] algoNames = {"Dijkstra", "A*"};
+            PathfindingAlgorithm[] algorithms = {new UniformCostSearch(grid),
+                new DijkstraWithHashMap(grid), new AStar(grid), new AStarWithHashMap(grid)};
+            String[] algoNames = {"Dijkstra with arrays", "Dijkstra with hash tables", "A* with arrays", "A* with hash tables"};
 
             for (int i = 0; i < algorithms.length; i++) {
                 scenario.runPathfindingAlgorithm(algorithms[i], algoNames[i], i);
             }
 
-            System.out.println("Launching visualization, please wait...");
-            System.out.println("Closing the window will begin performance testing.\n");
-
-            launch(Main.class);
-
+//            System.out.println("Launching visualization, please wait...");
+//            System.out.println("Closing the window will begin performance testing.\n");
+//
+//            launch(Main.class);
+//
             runPerformanceTests(algorithms, algoNames);
         }
     }
