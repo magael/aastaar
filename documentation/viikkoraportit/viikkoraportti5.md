@@ -8,7 +8,7 @@ Työtunteja kertyi yhteensä noin 20h.
 
 * Jacoco-raportista poissuljettu myös Scenario-käyttöliittymäluokka ja suorituskykytestiluokka.
 
-* Suorituskykytestien mukaan Javan valmiit HashMapit & -Setit aiheuttavat noin 40 kertaa paremman nopeuden verrattuna nykyiseen (staattiset 2D-taulukot), joten täytynee ottaa seuraavaksi työn alle oma hajautustaulu (ja sille testit, dokumentaatio jne). Vertailu löytyy branchista variations2.
+* Meinasin jo tyytyä nykyisiin kaksiulotteisia taulukoita käyttäviin ratkaisuihin, mutta vertailtuani (branchisssa variations2) niitä suorituskykytesteillä versioihin Javan valmiilla HashMapeilla & -Seteillä, tajusin kuinka merkittävä ero on. Jälkeenpäin ajateltuna asia on ilmiselvä, mutta taitaa nyt mennä prioriteetit uusiksi: täytynee ottaa seuraavaksi työn alle oma hajautustaulu (ja sille testit, dokumentaatio jne).
 
 * Sen jälkeen on suunnitelmissa toteuttaa mahdollisuus viistosuuntaiselle liikkeelle ruudukossa, siihen liittyen pari eri heuristiikkaa ja muita lisäyksiä, sekä algoritmien tarkastelemien ruutujen (niiden, joille on laskettu etäisyys) visualisointi.
 
