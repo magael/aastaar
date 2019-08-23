@@ -1,6 +1,6 @@
 ## Viikkoraportti 5
 
-Työtunteja kertyi yhteensä noin 19h.
+Työtunteja kertyi yhteensä noin 20h.
 
 ---
 
