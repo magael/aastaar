@@ -1,6 +1,5 @@
 package mj.aastaar.algorithms;
 
-import mj.aastaar.algorithms.path.Path;
 import mj.aastaar.algorithms.path.PathWithArray;
 import mj.aastaar.datastructures.CustomPriorityQueue;
 import mj.aastaar.map.Grid;
@@ -50,7 +49,7 @@ public class UniformCostSearch implements PathfindingAlgorithm {
     }
 
     @Override
-    public Path getPath() {
+    public PathWithArray getPath() {
         return path;
     }
 

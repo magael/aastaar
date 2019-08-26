@@ -4,7 +4,10 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ToolBar;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -23,7 +26,7 @@ import mj.aastaar.utils.PathfindingPerformanceTester;
  * @author MJ
  */
 public class Main extends Application {
-
+    
     private static Scenario scenario;
 
     /**
@@ -44,7 +47,7 @@ public class Main extends Application {
         scenario = new Scenario();
         scenario.initConfig();
         Grid grid = scenario.getGrid();
-
+        
         if (scenario.getStart() == null || scenario.getGoal() == null) {
             System.out.println("Error initializing start and goal positions");
         } else if (grid == null || grid.getGrid2D() == null || grid.getLength() < 1) {
@@ -52,32 +55,49 @@ public class Main extends Application {
         } else {
             String cyan = "#00FFFF";
             String magenta = "#FF00FF";
-            String[] pathColors = {cyan, magenta};
+//            String[] pathColors = {cyan, magenta};
+//            scenario.setPathColors(pathColors);
+//            scenario.setShortestPaths(new Node[pathColors.length][]);
+//
+//            PathfindingAlgorithm[] algorithms = {new UniformCostSearch(grid), new AStar(grid)};
+//            String[] algoNames = {"Dijkstra", "A*"};
+
+//            String[] pathColors = {cyan};
+//            scenario.setPathColors(pathColors);
+//            scenario.setShortestPaths(new Node[pathColors.length][]);
+//
+//            PathfindingAlgorithm[] algorithms = {new UniformCostSearch(grid)};
+//            String[] algoNames = {"Dijkstra"};
+            String[] pathColors = {magenta};
             scenario.setPathColors(pathColors);
             scenario.setShortestPaths(new Node[pathColors.length][]);
-
-            PathfindingAlgorithm[] algorithms = {new UniformCostSearch(grid), new AStar(grid)};
-            String[] algoNames = {"Dijkstra", "A*"};
-
+            
+            PathfindingAlgorithm[] algorithms = {new AStar(grid)};
+            scenario.setAlgorithms(algorithms);
+            String[] algoNames = {"A*"};
+            scenario.setAlgoNames(algoNames);
             for (int i = 0; i < algorithms.length; i++) {
                 scenario.runPathfindingAlgorithm(algorithms[i], algoNames[i], i);
             }
-
+            
             System.out.println("Launching visualization, please wait...");
             System.out.println("Closing the window will begin performance testing.\n");
-
+            
             launch(Main.class);
 
-            runPerformanceTests(algorithms, algoNames);
+//            runPerformanceTests(algorithms, algoNames);
         }
     }
-
+    
     @Override
     public void start(Stage window) throws Exception {
-        GridPane layout = gridGUI();
-        ScrollPane scrollPane = new ScrollPane(layout);
+        double tileSize = 2.0;
+        GridPane layout = gridGUI(tileSize);
+        BorderPane toolBarPane = addToolBar(scenario.getGrid2D(), layout, tileSize);
+        toolBarPane.setBottom(layout);
+        ScrollPane scrollPane = new ScrollPane(toolBarPane);
         Scene scene = new Scene(scrollPane);
-
+        
         window.setScene(scene);
         window.setTitle("Pathfinding visualization on game maps");
         window.show();
@@ -111,15 +131,53 @@ public class Main extends Application {
      * @return grid of colored rectangles, a.k.a. tiles, representing the map
      * and shortest paths
      */
-    private GridPane gridGUI() {
+    private GridPane gridGUI(double tileSize) {
         GridPane layout = new GridPane();
         char[][] grid2D = scenario.getGrid2D();
-        double tileSize = 2.0;
-
+        
         addTiles(grid2D, layout, tileSize);
+        colorStartAndGoal(layout, tileSize, Color.RED, Color.LAWNGREEN);
+        colorExplored(layout, tileSize);
         colorPaths(layout, tileSize);
-
+        
         return layout;
+    }
+    
+    private void colorStartAndGoal(GridPane layout, double tileSize, Color startColor, Color goalColor) {
+        Node start = scenario.getStart();
+        Node goal = scenario.getGoal();
+        layout.add(new Rectangle(tileSize, tileSize, startColor), start.getY(), start.getX());
+        layout.add(new Rectangle(tileSize, tileSize, goalColor), goal.getY(), goal.getX());
+    }
+    
+    private BorderPane addToolBar(char[][] grid2D, GridPane layout, double tileSize) {
+        BorderPane pane = new BorderPane();
+        ToolBar toolbar = new ToolBar();
+        Button randomPositionsButton = new Button("New random positions");
+        
+        randomPositionsButton.setOnAction(value -> {
+            clickRandomPositions(grid2D, layout, tileSize);
+        });
+        
+        toolbar.getItems().add(randomPositionsButton);
+        pane.setTop(toolbar);
+        return pane;
+    }
+    
+    private void clickRandomPositions(char[][] grid2D, GridPane layout, double tileSize) {
+        clearStartAndGoalColors(grid2D, layout, tileSize);
+        scenario.initRandomPositions();
+        scenario.runPathfindingAlgorithm(scenario.getAlgorithms()[0], scenario.getAlgoNames()[0], 0);
+        colorStartAndGoal(layout, tileSize, Color.RED, Color.LAWNGREEN);
+        System.out.println("click");
+    }
+
+    private void clearStartAndGoalColors(char[][] grid2D, GridPane layout, double tileSize) {
+        Node start = scenario.getStart();
+        Node goal = scenario.getGoal();
+        Color startColor = tileColor(grid2D[start.getX()][start.getY()]);
+        Color goalColor = tileColor(grid2D[goal.getX()][goal.getY()]);
+        colorStartAndGoal(layout, tileSize, startColor, goalColor);
     }
 
     /**
@@ -131,19 +189,17 @@ public class Main extends Application {
      * @param tileSize Pixel dimensions for each tile
      */
     private void addTiles(char[][] grid2D, GridPane layout, double tileSize) {
-        Node start = scenario.getStart();
-        Node goal = scenario.getGoal();
         for (int i = 0; i < grid2D.length - 1; i++) {
             for (int j = 0; j < grid2D[i].length - 1; j++) {
-                Color color;
-                if (i == start.getX() && j == start.getY()) {
-                    color = Color.RED;
-                } else if (i == goal.getX() && j == goal.getY()) {
-                    color = Color.LAWNGREEN;
-                } else {
-                    color = tileColor(grid2D[i][j]);
-                }
-                layout.add(new Rectangle(tileSize, tileSize, color), j, i);
+//                Color color;
+//                if (i == start.getX() && j == start.getY()) {
+//                    color = Color.RED;
+//                } else if (i == goal.getX() && j == goal.getY()) {
+//                    color = Color.LAWNGREEN;
+//                } else {
+//                    color = tileColor(grid2D[i][j]);
+//                }
+                layout.add(new Rectangle(tileSize, tileSize, tileColor(grid2D[i][j])), j, i);
             }
         }
     }
@@ -166,6 +222,24 @@ public class Main extends Application {
             for (int j = 0; j < path.length - 1; j++) {
                 layout.add(new Rectangle(tileSize, tileSize, color),
                         path[j].getY(), path[j].getX());
+            }
+        }
+    }
+    
+    private void colorExplored(GridPane layout, double tileSize) {
+        Node[][] cameFrom = scenario.getCameFrom();
+        for (int i = 0; i < cameFrom.length; i++) {
+            Node[] nodes = cameFrom[i];
+            if (nodes == null) {
+                continue;
+            }
+            for (int j = 0; j < nodes.length - 1; j++) {
+                if (nodes[j] == null) {
+                    continue;
+                }
+                Color exploredColor = Color.web("#564A30");
+                layout.add(new Rectangle(tileSize, tileSize, exploredColor),
+                        nodes[j].getY(), nodes[j].getX());
             }
         }
     }

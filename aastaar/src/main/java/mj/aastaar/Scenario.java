@@ -19,7 +19,10 @@ public class Scenario {
     private Node start;
     private Node goal;
     private Node[][] shortestPaths;
+    private Node[][] cameFrom;
     private String[] pathColors;
+    private PathfindingAlgorithm[] algorithms;
+    private String[] algoNames;
 
     /**
      * @return Grid The pathfinding grid
@@ -63,6 +66,18 @@ public class Scenario {
         return pathColors;
     }
 
+    public Node[][] getCameFrom() {
+        return cameFrom;
+    }
+
+    public String[] getAlgoNames() {
+        return algoNames;
+    }
+
+    public PathfindingAlgorithm[] getAlgorithms() {
+        return algorithms;
+    }
+
     /**
      * @param grid Grid object
      */
@@ -98,6 +113,14 @@ public class Scenario {
         this.pathColors = pathColors;
     }
 
+    public void setAlgoNames(String[] algoNames) {
+        this.algoNames = algoNames;
+    }
+
+    public void setAlgorithms(PathfindingAlgorithm[] algorithms) {
+        this.algorithms = algorithms;
+    }
+
     /**
      * Running the specified algorithm, printing the shortest path length and
      * cost and adding the shortest path (array of nodes) for visualization.
@@ -113,6 +136,7 @@ public class Scenario {
         System.out.println(", cost: " + algorithm.getCost(goal));
         shortestPaths[i] = algorithm.getPath().shortestPath(goal, start, pathLength);
         System.out.println("Retrieved " + name + " shortest path as array \n");
+        cameFrom = algorithm.getPath().cameFrom;
     }
 
     /**
