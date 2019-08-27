@@ -6,6 +6,8 @@ import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -14,10 +16,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Separator;
 import javafx.scene.control.ToolBar;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import mj.aastaar.algorithms.AStar;
 import mj.aastaar.algorithms.PathfindingAlgorithm;
@@ -84,27 +92,6 @@ public class Main extends Application {
         }
     }
 
-    @Override
-    public void start(Stage window) throws Exception {
-        double tileSize = 2.0;
-        Grid grid = scenario.getGrid();
-
-        Canvas canvas = new Canvas(grid.getLength() * tileSize, grid.getRowLength() * tileSize);
-        gc = canvas.getGraphicsContext2D();
-
-        Pane layout = tilePane(tileSize);
-        ScrollPane scrollPane = new ScrollPane(layout);
-        ToolBar toolbar = toolBar(tileSize);
-
-        Group root = new Group();
-        root.getChildren().addAll(scrollPane, canvas, toolbar);
-        Scene scene = new Scene(root);
-
-        window.setScene(scene);
-        window.setTitle("Pathfinding visualization on game maps");
-        window.show();
-    }
-
     /**
      * Using the performance tester class to test pathfinding speed. Setting the
      * number n, where n is the number of times the tests are run.
@@ -123,6 +110,29 @@ public class Main extends Application {
         System.out.println(tester);
         System.out.println("Performance tests ran in a total of "
                 + elapsedTime.round(new MathContext(3)) + " seconds.\n");
+    }
+
+    @Override
+    public void start(Stage window) throws Exception {
+        double tileSize = 2.0;
+        Grid grid = scenario.getGrid();
+
+        Canvas canvas = new Canvas(grid.getLength() * tileSize, grid.getRowLength() * tileSize);
+        gc = canvas.getGraphicsContext2D();
+
+        Pane layout = tilePane(tileSize);
+        ScrollPane scrollPane = new ScrollPane(layout);
+        ToolBar toolbar = toolBar(tileSize);
+        BorderPane bp = new BorderPane(canvas);
+        bp.setRight(toolbar);
+
+        Group root = new Group();
+        root.getChildren().addAll(scrollPane, bp);
+        Scene scene = new Scene(root);
+
+        window.setScene(scene);
+        window.setTitle("Pathfinding visualization on game maps");
+        window.show();
     }
 
     /**
@@ -157,7 +167,11 @@ public class Main extends Application {
     }
 
     private ToolBar toolBar(double tileSize) {
-        ToolBar toolbar = new ToolBar();
+        int fontSize = 16;
+        ToolBar toolBar = new ToolBar();
+        toolBar.setOrientation(Orientation.VERTICAL);
+        toolBar.setPadding(new Insets(20));
+        toolBar.setBackground(new Background(new BackgroundFill(Color.web("#130d14"), CornerRadii.EMPTY, Insets.EMPTY)));
         Button randomPositionsButton = new Button("New random positions");
 
         randomPositionsButton.setOnAction(value -> {
@@ -165,6 +179,8 @@ public class Main extends Application {
         });
 
         Label exploredLabel = new Label("Visualize explored nodes: ");
+        exploredLabel.setTextFill(Color.WHITE);
+        exploredLabel.setFont(new Font(fontSize));
         final String[] exploredCoices = {"None", scenario.getAlgoNames()[0], scenario.getAlgoNames()[1]};
         ChoiceBox exploredBox = new ChoiceBox(FXCollections.observableArrayList(exploredCoices));
         exploredBox.setValue("None");
@@ -181,8 +197,28 @@ public class Main extends Application {
             }
         });
 
-        toolbar.getItems().addAll(randomPositionsButton, exploredLabel, exploredBox);
-        return toolbar;
+        Label colorsLabel = new Label("Algorithms used: ");
+        colorsLabel.setTextFill(Color.WHITE);
+        colorsLabel.setFont(new Font(fontSize));
+        toolBar.getItems().add(colorsLabel);
+        
+        Separator separator = new Separator(Orientation.VERTICAL);
+        separator.setPadding(new Insets(10));
+        separator.setOpacity(0.5);
+        Separator separator2 = new Separator(Orientation.VERTICAL);
+        separator2.setPadding(new Insets(10));
+        separator2.setOpacity(0.5);
+
+        for (int i = 0; i < scenario.getAlgorithms().length; i++) {
+            Text colorsText = new Text(scenario.getAlgoNames()[i]);
+            colorsText.setFill(Color.web(scenario.getPathColors()[i]));
+            colorsText.setFont(Font.font(fontSize));
+            toolBar.getItems().add(colorsText);
+        }
+
+        toolBar.getItems().addAll(separator, randomPositionsButton);
+        toolBar.getItems().addAll(separator2, exploredLabel, exploredBox);
+        return toolBar;
     }
 
     private void clickRandomPositions(double tileSize) {
@@ -291,7 +327,8 @@ public class Main extends Application {
                 if (nodes[j] == null) {
                     continue;
                 }
-                gc.setFill(Color.web("#706A4E"));
+
+                gc.setFill(Color.web("#C5C3DA"));
                 gc.fillRect((int) (nodes[j].getY() * tileSize), (int) (nodes[j].getX() * tileSize), tileSize, tileSize);
             }
         }
