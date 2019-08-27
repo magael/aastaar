@@ -58,26 +58,13 @@ public class Main extends Application {
         } else {
             String cyan = "#00FFFF";
             String magenta = "#FF00FF";
-//            String[] pathColors = {cyan, magenta};
-//            scenario.setPathColors(pathColors);
-//            scenario.setShortestPaths(new Node[pathColors.length][]);
-//
-//            PathfindingAlgorithm[] algorithms = {new UniformCostSearch(grid), new AStar(grid)};
-//            String[] algoNames = {"Dijkstra", "A*"};
-
-//            String[] pathColors = {cyan};
-//            scenario.setPathColors(pathColors);
-//            scenario.setShortestPaths(new Node[pathColors.length][]);
-//
-//            PathfindingAlgorithm[] algorithms = {new UniformCostSearch(grid)};
-//            String[] algoNames = {"Dijkstra"};
-            String[] pathColors = {magenta};
+            String[] pathColors = {cyan, magenta};
             scenario.setPathColors(pathColors);
             scenario.setShortestPaths(new Node[pathColors.length][]);
             
-            PathfindingAlgorithm[] algorithms = {new AStar(grid)};
+            PathfindingAlgorithm[] algorithms = {new UniformCostSearch(grid), new AStar(grid)};
             scenario.setAlgorithms(algorithms);
-            String[] algoNames = {"A*"};
+            String[] algoNames = {"Dijkstra", "A*"};
             scenario.setAlgoNames(algoNames);
             for (int i = 0; i < algorithms.length; i++) {
                 scenario.runPathfindingAlgorithm(algorithms[i], algoNames[i], i);
@@ -88,7 +75,7 @@ public class Main extends Application {
             
             launch(Main.class);
 
-//            runPerformanceTests(algorithms, algoNames);
+            runPerformanceTests(algorithms, algoNames);
         }
     }
     
@@ -180,9 +167,13 @@ public class Main extends Application {
     
     private void clickRandomPositions(double tileSize) {
         clearStartAndGoalColors(tileSize);
-        clearPath(tileSize);
+        clearPaths(tileSize);
         scenario.initRandomPositions();
-        scenario.runPathfindingAlgorithm(scenario.getAlgorithms()[0], scenario.getAlgoNames()[0], 0);
+        PathfindingAlgorithm[] algorithms = scenario.getAlgorithms();
+        String[] algoNames = scenario.getAlgoNames();
+        for (int i = 0; i < algorithms.length; i++) {
+                scenario.runPathfindingAlgorithm(algorithms[i], algoNames[i], i);
+            }
         colorStartAndGoal(tileSize, Color.RED, Color.LAWNGREEN);
         colorPaths(tileSize);
     }
@@ -252,7 +243,7 @@ public class Main extends Application {
         }
     }
     
-    private void clearPath(double tileSize) {
+    private void clearPaths(double tileSize) {
         Node[][] shortestPaths = scenario.getShortestPaths();
         for (int i = 0; i < shortestPaths.length; i++) {
             Node[] path = shortestPaths[i];
