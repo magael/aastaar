@@ -66,18 +66,34 @@ public class Scenario {
         return pathColors;
     }
 
+    /**
+     *
+     * @param algoName Name of the algorithm which has explored the requested
+     * nodes
+     * @return The nodes explored by a pathfinding algorithm
+     */
     public Node[][] getCameFrom(String algoName) {
         int index = 0;
         for (int i = 0; i < algoNames.length; i++) {
-            if (algoNames[i].equals(algoName)) index = i;
+            if (algoNames[i].equals(algoName)) {
+                index = i;
+            }
         }
         return cameFrom[index];
     }
 
+    /**
+     *
+     * @return Names of algorithms
+     */
     public String[] getAlgoNames() {
         return algoNames;
     }
 
+    /**
+     *
+     * @return Pathfinding algorithms
+     */
     public PathfindingAlgorithm[] getAlgorithms() {
         return algorithms;
     }
@@ -117,13 +133,29 @@ public class Scenario {
         this.pathColors = pathColors;
     }
 
+    /**
+     *
+     * @param algoNames Names of algorithms
+     */
     public void setAlgoNames(String[] algoNames) {
         this.algoNames = algoNames;
     }
 
+    /**
+     *
+     * @param algorithms Pathfinding algorithms
+     */
     public void setAlgorithms(PathfindingAlgorithm[] algorithms) {
-        cameFrom = new Node[algorithms.length][][];
+        setCameFrom(new Node[algorithms.length][][]);
         this.algorithms = algorithms;
+    }
+
+    /**
+     *
+     * @param cameFrom The nodes explored by the different pathfinding algorithms
+     */
+    public void setCameFrom(Node[][][] cameFrom) {
+        this.cameFrom = cameFrom;
     }
 
     /**

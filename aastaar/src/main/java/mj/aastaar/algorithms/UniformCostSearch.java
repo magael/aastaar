@@ -17,7 +17,7 @@ public class UniformCostSearch implements PathfindingAlgorithm {
     private Grid grid;
     private PathWithArray path;
     private CustomPriorityQueue frontier;
-    private double cost[][];
+    private double cost [][];
 
     /**
      *

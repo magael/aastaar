@@ -83,7 +83,8 @@ public class Main extends Application {
                 scenario.runPathfindingAlgorithm(algorithms[i], algoNames[i], i);
             }
 
-            System.out.println("Launching visualization. Closing the window will begin performance testing.\n");
+            System.out.println("Launching visualization. "
+                    + "Closing the window will begin performance testing.\n");
             launch(Main.class);
 
             runPerformanceTests(algorithms, algoNames);
@@ -115,13 +116,15 @@ public class Main extends Application {
         double tileSize = 2.0;
         Grid grid = scenario.getGrid();
 
-        Canvas canvas = new Canvas(grid.getLength() * tileSize, grid.getRowLength() * tileSize);
+        Canvas canvas = new Canvas(grid.getLength() * tileSize,
+                grid.getRowLength() * tileSize);
         gc = canvas.getGraphicsContext2D();
 
-        ScrollPane scrollPane = new ScrollPane(tileCanvas(grid.getGrid2D(), tileSize));
         ToolBar toolbar = toolBar(tileSize);
         BorderPane bp = new BorderPane(canvas);
         bp.setRight(toolbar);
+        ScrollPane scrollPane = new ScrollPane(tileCanvas(grid.getGrid2D(),
+                tileSize));
 
         colorStartAndGoal(tileSize);
         colorPaths(tileSize);
@@ -142,11 +145,12 @@ public class Main extends Application {
      * @return JavaFX ToolBar object
      */
     private ToolBar toolBar(double tileSize) {
-        int fontSize = 16;
         ToolBar toolbar = new ToolBar();
         toolbar.setOrientation(Orientation.VERTICAL);
         toolbar.setPadding(new Insets(20));
-        toolbar.setBackground(new Background(new BackgroundFill(Color.web("#130d14"), CornerRadii.EMPTY, Insets.EMPTY)));
+        toolbar.setBackground(new Background(new BackgroundFill(
+                Color.web("#130d14"), null, Insets.EMPTY)));
+        int fontSize = 16;
 
         algorithmsLegend(fontSize, toolbar);
 
@@ -158,13 +162,15 @@ public class Main extends Application {
         Label exploredLabel = new Label("Visualize explored nodes: ");
         exploredLabel.setTextFill(Color.WHITE);
         exploredLabel.setFont(new Font(fontSize));
-        final String[] exploredCoices = {"None", scenario.getAlgoNames()[0], scenario.getAlgoNames()[1]};
+        final String[] exploredCoices = {"None", scenario.getAlgoNames()[0],
+            scenario.getAlgoNames()[1]};
         ChoiceBox exploredBox = exploredBox(exploredCoices, tileSize);
 
         Separator separator = separator();
         Separator separator2 = separator();
 
-        toolbar.getItems().addAll(separator, randomPositionsButton, separator2, exploredLabel, exploredBox);
+        toolbar.getItems().addAll(separator, randomPositionsButton, separator2,
+                exploredLabel, exploredBox);
         return toolbar;
     }
 
