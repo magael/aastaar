@@ -10,11 +10,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToolBar;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import mj.aastaar.algorithms.AStar;
 import mj.aastaar.algorithms.PathfindingAlgorithm;
@@ -98,17 +96,16 @@ public class Main extends Application {
     public void start(Stage window) throws Exception {
         double tileSize = 2.0;
         Grid grid = scenario.getGrid();
-        Group root = new Group();
+        
         Canvas canvas = new Canvas(grid.getLength() * tileSize, grid.getRowLength() * tileSize);
         gc = canvas.getGraphicsContext2D();
+        
         Pane layout = tilePane(tileSize);
         ScrollPane scrollPane = new ScrollPane(layout);
         ToolBar toolbar = toolBar(tileSize);
-        BorderPane bp = new BorderPane();
-        bp.setCenter(scrollPane);
-        root.getChildren().add(bp);
-        root.getChildren().add(canvas);
-        root.getChildren().add(toolbar);
+        
+        Group root = new Group();
+        root.getChildren().addAll(scrollPane, canvas, toolbar);
         Scene scene = new Scene(root);
         
         window.setScene(scene);
@@ -188,7 +185,6 @@ public class Main extends Application {
         scenario.runPathfindingAlgorithm(scenario.getAlgorithms()[0], scenario.getAlgoNames()[0], 0);
         colorStartAndGoal(tileSize, Color.RED, Color.LAWNGREEN);
         colorPaths(tileSize);
-        System.out.println("click");
     }
     
     private void colorStartAndGoal(double tileSize, Color startColor, Color goalColor) {
@@ -198,8 +194,6 @@ public class Main extends Application {
         gc.fillRect((int) (start.getY() * tileSize), (int) (start.getX() * tileSize), tileSize, tileSize);
         gc.setFill(goalColor);
         gc.fillRect((int) (goal.getY() * tileSize), (int) (goal.getX() * tileSize), tileSize, tileSize);
-//        layout.add(new Rectangle(tileSize, tileSize, startColor), start.getY(), start.getX());
-//        layout.add(new Rectangle(tileSize, tileSize, goalColor), goal.getY(), goal.getX());
     }
     
     private void clearStartAndGoalColors(double tileSize) {
@@ -208,14 +202,6 @@ public class Main extends Application {
         gc.clearRect((int) (start.getY() * tileSize), (int) (start.getX() * tileSize), tileSize, tileSize);
         gc.clearRect((int) (goal.getY() * tileSize), (int) (goal.getX() * tileSize), tileSize, tileSize);
     }
-
-//    private void clearStartAndGoalColors(char[][] grid2D, GridPane layout, double tileSize) {
-//        Node start = scenario.getStart();
-//        Node goal = scenario.getGoal();
-//        Color startColor = tileColor(grid2D[start.getX()][start.getY()]);
-//        Color goalColor = tileColor(grid2D[goal.getX()][goal.getY()]);
-//        colorStartAndGoal(layout, tileSize, startColor, goalColor);
-//    }
 
     /**
      * Adding map tiles to the GridPane.
@@ -263,11 +249,6 @@ public class Main extends Application {
             for (int j = 0; j < path.length - 1; j++) {
                 gc.fillRect((int) (path[j].getY() * tileSize), (int) (path[j].getX() * tileSize), tileSize, tileSize);
             }
-//            Color color = Color.web(pathColors[i]);
-//            for (int j = 0; j < path.length - 1; j++) {
-//                layout.add(new Rectangle(tileSize, tileSize, color),
-//                        path[j].getY(), path[j].getX());
-//            }
         }
     }
     
@@ -297,9 +278,6 @@ public class Main extends Application {
                 }
                 gc.setFill(Color.web("#706A4E"));
                 gc.fillRect((int) (nodes[j].getX() * tileSize), (int) (nodes[j].getY() * tileSize), tileSize, tileSize);
-//                Color exploredColor = Color.web("#706A4E");
-//                layout.add(new Rectangle(tileSize, tileSize, exploredColor),
-//                        nodes[j].getY(), nodes[j].getX());
             }
         }
     }
