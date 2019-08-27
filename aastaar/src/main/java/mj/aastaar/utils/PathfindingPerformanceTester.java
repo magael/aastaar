@@ -40,7 +40,8 @@ public class PathfindingPerformanceTester {
      * are run
      */
     public void run(PathfindingAlgorithm[] algorithms, String[] names, int[] nums) {
-        if (scenario.getGrid() == null || scenario.getGrid2D() == null || scenario.getGrid().getLength() < 1) {
+        if (scenario.getGrid() == null || scenario.getGrid2D() == null
+                || scenario.getGrid().getLength() < 1) {
             System.out.println("The scenario has no grid. Aborting tests.");
             return;
         }
@@ -83,7 +84,7 @@ public class PathfindingPerformanceTester {
      * @return The average runtime
      */
     private double testAlgorithm(PathfindingAlgorithm algorithm, int numIndex, int num) {
-        long times[] = new long[num];
+        long algoTimes[] = new long[num];
         long tAcc = 0;
         int n = 50;
 
@@ -93,11 +94,11 @@ public class PathfindingPerformanceTester {
                 algorithm.search(startNodes[numIndex][i], goalNodes[numIndex][i], 4);
                 tAcc += System.nanoTime() - t;
             }
-            times[i] = tAcc / n;
+            algoTimes[i] = tAcc / n;
             tAcc = 0;
         }
 
-        return getAverage(times);
+        return getAverage(algoTimes);
     }
 
     /**
