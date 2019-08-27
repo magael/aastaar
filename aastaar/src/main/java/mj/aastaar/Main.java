@@ -3,12 +3,16 @@ package mj.aastaar;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -28,6 +32,7 @@ import mj.aastaar.utils.PathfindingPerformanceTester;
 public class Main extends Application {
     
     private static Scenario scenario;
+    private GraphicsContext gc;
 
     /**
      * The main program.
@@ -91,12 +96,25 @@ public class Main extends Application {
     
     @Override
     public void start(Stage window) throws Exception {
+        Grid grid = scenario.getGrid();
+        Group root = new Group();
+        Canvas canvas = new Canvas(grid.getLength(), grid.getRowLength());
+        gc = canvas.getGraphicsContext2D();
         double tileSize = 2.0;
-        GridPane layout = gridGUI(tileSize);
-        BorderPane toolBarPane = addToolBar(scenario.getGrid2D(), layout, tileSize);
-        toolBarPane.setBottom(layout);
-        ScrollPane scrollPane = new ScrollPane(toolBarPane);
-        Scene scene = new Scene(scrollPane);
+//        GridPane layout = gridGUI(tileSize);
+        Pane layout = tilePane(tileSize);
+        ScrollPane scrollPane = new ScrollPane(layout);
+        ToolBar toolbar = toolBar(tileSize);
+        BorderPane bp = new BorderPane();
+        bp.setCenter(scrollPane);
+//        bp.setBottom(toolbar);
+        root.getChildren().add(bp);
+        root.getChildren().add(canvas);
+        root.getChildren().add(toolbar);
+//        root.getChildren().add(scrollPane);
+//        root.getChildren().add(canvas);
+//        root.getChildren().add(toolBarPane);
+        Scene scene = new Scene(root);
         
         window.setScene(scene);
         window.setTitle("Pathfinding visualization on game maps");
@@ -131,77 +149,106 @@ public class Main extends Application {
      * @return grid of colored rectangles, a.k.a. tiles, representing the map
      * and shortest paths
      */
-    private GridPane gridGUI(double tileSize) {
-        GridPane layout = new GridPane();
+//    private GridPane gridGUI(double tileSize) {
+//        GridPane layout = new GridPane();
+//        char[][] grid2D = scenario.getGrid2D();
+//        
+//        addTiles(grid2D, layout, tileSize);
+//        colorStartAndGoal(tileSize, Color.RED, Color.LAWNGREEN);
+////        colorExplored(layout, tileSize);
+//        colorPaths(tileSize);
+//        
+//        return layout;
+//    }
+    
+    private Pane tilePane(double tileSize) {
+        Pane layout = new Pane();
         char[][] grid2D = scenario.getGrid2D();
+        Canvas tileCanvas = tileCanvas(grid2D, tileSize);
+        layout.getChildren().add(tileCanvas);
         
-        addTiles(grid2D, layout, tileSize);
-        colorStartAndGoal(layout, tileSize, Color.RED, Color.LAWNGREEN);
-        colorExplored(layout, tileSize);
-        colorPaths(layout, tileSize);
+        colorStartAndGoal(tileSize, Color.RED, Color.LAWNGREEN);
+//        colorExplored(layout, tileSize);
+        colorPaths(tileSize);
         
         return layout;
     }
     
-    private void colorStartAndGoal(GridPane layout, double tileSize, Color startColor, Color goalColor) {
-        Node start = scenario.getStart();
-        Node goal = scenario.getGoal();
-        layout.add(new Rectangle(tileSize, tileSize, startColor), start.getY(), start.getX());
-        layout.add(new Rectangle(tileSize, tileSize, goalColor), goal.getY(), goal.getX());
-    }
-    
-    private BorderPane addToolBar(char[][] grid2D, GridPane layout, double tileSize) {
-        BorderPane pane = new BorderPane();
+    private ToolBar toolBar(double tileSize) {
         ToolBar toolbar = new ToolBar();
         Button randomPositionsButton = new Button("New random positions");
         
         randomPositionsButton.setOnAction(value -> {
-            clickRandomPositions(grid2D, layout, tileSize);
+            clickRandomPositions(tileSize);
         });
         
         toolbar.getItems().add(randomPositionsButton);
-        pane.setTop(toolbar);
-        return pane;
+        return toolbar;
     }
     
-    private void clickRandomPositions(char[][] grid2D, GridPane layout, double tileSize) {
-        clearStartAndGoalColors(grid2D, layout, tileSize);
+    private void clickRandomPositions(double tileSize) {
+        clearStartAndGoalColors(tileSize);
+        clearPath(tileSize);
         scenario.initRandomPositions();
         scenario.runPathfindingAlgorithm(scenario.getAlgorithms()[0], scenario.getAlgoNames()[0], 0);
-        colorStartAndGoal(layout, tileSize, Color.RED, Color.LAWNGREEN);
+        colorStartAndGoal(tileSize, Color.RED, Color.LAWNGREEN);
+        colorPaths(tileSize);
         System.out.println("click");
     }
-
-    private void clearStartAndGoalColors(char[][] grid2D, GridPane layout, double tileSize) {
+    
+    private void colorStartAndGoal(double tileSize, Color startColor, Color goalColor) {
         Node start = scenario.getStart();
         Node goal = scenario.getGoal();
-        Color startColor = tileColor(grid2D[start.getX()][start.getY()]);
-        Color goalColor = tileColor(grid2D[goal.getX()][goal.getY()]);
-        colorStartAndGoal(layout, tileSize, startColor, goalColor);
+        gc.setFill(startColor);
+        gc.fillRect(start.getX(), start.getY(), tileSize, tileSize);
+        gc.setFill(goalColor);
+        gc.fillRect(goal.getX(), goal.getY(), tileSize, tileSize);
+//        layout.add(new Rectangle(tileSize, tileSize, startColor), start.getY(), start.getX());
+//        layout.add(new Rectangle(tileSize, tileSize, goalColor), goal.getY(), goal.getX());
+    }
+    
+    private void clearStartAndGoalColors(double tileSize) {
+        Node start = scenario.getStart();
+        Node goal = scenario.getGoal();
+        gc.clearRect(start.getX(), start.getY(), tileSize, tileSize);
+        gc.clearRect(goal.getX(), goal.getY(), tileSize, tileSize);
     }
 
+//    private void clearStartAndGoalColors(char[][] grid2D, GridPane layout, double tileSize) {
+//        Node start = scenario.getStart();
+//        Node goal = scenario.getGoal();
+//        Color startColor = tileColor(grid2D[start.getX()][start.getY()]);
+//        Color goalColor = tileColor(grid2D[goal.getX()][goal.getY()]);
+//        colorStartAndGoal(layout, tileSize, startColor, goalColor);
+//    }
+
     /**
-     * Adding map tiles to the GridPane. Red for the start, green for the goal
-     * and calling the tileColor-method for the rest.
+     * Adding map tiles to the GridPane.
      *
      * @param grid2D 2D character array representation of the map grid
      * @param layout JavaFX GridPane object
      * @param tileSize Pixel dimensions for each tile
      */
-    private void addTiles(char[][] grid2D, GridPane layout, double tileSize) {
-        for (int i = 0; i < grid2D.length - 1; i++) {
-            for (int j = 0; j < grid2D[i].length - 1; j++) {
-//                Color color;
-//                if (i == start.getX() && j == start.getY()) {
-//                    color = Color.RED;
-//                } else if (i == goal.getX() && j == goal.getY()) {
-//                    color = Color.LAWNGREEN;
-//                } else {
-//                    color = tileColor(grid2D[i][j]);
-//                }
-                layout.add(new Rectangle(tileSize, tileSize, tileColor(grid2D[i][j])), j, i);
+//    private void addTiles(char[][] grid2D, GridPane layout, double tileSize) {
+//        for (int i = 0; i < grid2D.length - 1; i++) {
+//            for (int j = 0; j < grid2D[i].length - 1; j++) {
+//                layout.add(new Rectangle(tileSize, tileSize, tileColor(grid2D[i][j])), j, i);
+//            }
+//        }
+//    }
+    
+     private Canvas tileCanvas(char[][] grid2D, double tileSize) {
+        int gridX = grid2D.length;
+        int gridY = grid2D[0].length;
+        Canvas tileCanvas = new Canvas(gridX, gridY);
+        GraphicsContext tileGC = tileCanvas.getGraphicsContext2D();
+        for (int i = 0; i < gridX - 1; i++) {
+            for (int j = 0; j < gridY - 1; j++) {
+                tileGC.setFill(tileColor(grid2D[i][j]));
+                tileGC.fillRect(i, j, tileSize, tileSize);
             }
         }
+        return tileCanvas;
     }
 
     /**
@@ -210,7 +257,7 @@ public class Main extends Application {
      * @param layout JavaFX GridPane object
      * @param tileSize Pixel dimensions for each tile
      */
-    private void colorPaths(GridPane layout, double tileSize) {
+    private void colorPaths(double tileSize) {
         Node[][] shortestPaths = scenario.getShortestPaths();
         String[] pathColors = scenario.getPathColors();
         for (int i = 0; i < shortestPaths.length; i++) {
@@ -218,10 +265,27 @@ public class Main extends Application {
             if (path == null) {
                 continue;
             }
-            Color color = Color.web(pathColors[i]);
+            gc.setFill(Color.web(pathColors[i]));
             for (int j = 0; j < path.length - 1; j++) {
-                layout.add(new Rectangle(tileSize, tileSize, color),
-                        path[j].getY(), path[j].getX());
+                gc.fillRect(path[j].getX(), path[j].getY(), tileSize, tileSize);
+            }
+//            Color color = Color.web(pathColors[i]);
+//            for (int j = 0; j < path.length - 1; j++) {
+//                layout.add(new Rectangle(tileSize, tileSize, color),
+//                        path[j].getY(), path[j].getX());
+//            }
+        }
+    }
+    
+    private void clearPath(double tileSize) {
+        Node[][] shortestPaths = scenario.getShortestPaths();
+        for (int i = 0; i < shortestPaths.length; i++) {
+            Node[] path = shortestPaths[i];
+            if (path == null) {
+                continue;
+            }
+            for (int j = 0; j < path.length - 1; j++) {
+                gc.clearRect(path[j].getX(), path[j].getY(), tileSize, tileSize);
             }
         }
     }
@@ -237,9 +301,11 @@ public class Main extends Application {
                 if (nodes[j] == null) {
                     continue;
                 }
-                Color exploredColor = Color.web("#564A30");
-                layout.add(new Rectangle(tileSize, tileSize, exploredColor),
-                        nodes[j].getY(), nodes[j].getX());
+                gc.setFill(Color.web("#706A4E"));
+                gc.fillRect(nodes[j].getX(), nodes[j].getY(), tileSize, tileSize);
+//                Color exploredColor = Color.web("#706A4E");
+//                layout.add(new Rectangle(tileSize, tileSize, exploredColor),
+//                        nodes[j].getY(), nodes[j].getX());
             }
         }
     }
