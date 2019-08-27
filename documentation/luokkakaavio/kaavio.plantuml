@@ -8,35 +8,33 @@ skinparam linetype polyline
 package aastaar {
   class Main
   class Scenario
-}
 
-package aastaar.map {
-  class MapCreator 
-  class Grid
-  class Node
-}
+  package .map {
+    class MapCreator 
+    class Grid
+    class Node
+  }
 
-package aastaar.algorithms {
-  class AStar
-  class UniformCostSearch
-  interface PathfindingAlgorithm <<interface>>
+  package algorithms {
+    class AStar
+    class UniformCostSearch
+    interface PathfindingAlgorithm <<interface>>
 
-  package Path {
-    class PathWithArray
-    interface Path <<interface>>
+    package path {
+      class PathWithArray
+      interface Path <<interface>>
+    }
+  }
+
+  package utils {
+    class PathfindingPerformanceTester
+    class CustomFileReader
+  }
+
+  package datastructures {
+    class CustomPriorityQueue
   }
 }
-
-package aastaar.utils {
-  class PathfindingPerformanceTester
-  class CustomFileReader
-}
-
-package aastaar.datastructures {
-  class CustomPriorityQueue
-}
-
-hide circle
 
 Main --> Scenario
 Main ..> PathfindingAlgorithm
@@ -75,5 +73,7 @@ PathWithArray ..> Node
 
 CustomPriorityQueue --> Node
 
+hide members
+hide circles
 
 @enduml
