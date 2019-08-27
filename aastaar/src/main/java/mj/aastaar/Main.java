@@ -96,24 +96,19 @@ public class Main extends Application {
     
     @Override
     public void start(Stage window) throws Exception {
+        double tileSize = 2.0;
         Grid grid = scenario.getGrid();
         Group root = new Group();
-        Canvas canvas = new Canvas(grid.getLength(), grid.getRowLength());
+        Canvas canvas = new Canvas(grid.getLength() * tileSize, grid.getRowLength() * tileSize);
         gc = canvas.getGraphicsContext2D();
-        double tileSize = 2.0;
-//        GridPane layout = gridGUI(tileSize);
         Pane layout = tilePane(tileSize);
         ScrollPane scrollPane = new ScrollPane(layout);
         ToolBar toolbar = toolBar(tileSize);
         BorderPane bp = new BorderPane();
         bp.setCenter(scrollPane);
-//        bp.setBottom(toolbar);
         root.getChildren().add(bp);
         root.getChildren().add(canvas);
         root.getChildren().add(toolbar);
-//        root.getChildren().add(scrollPane);
-//        root.getChildren().add(canvas);
-//        root.getChildren().add(toolBarPane);
         Scene scene = new Scene(root);
         
         window.setScene(scene);
@@ -200,9 +195,9 @@ public class Main extends Application {
         Node start = scenario.getStart();
         Node goal = scenario.getGoal();
         gc.setFill(startColor);
-        gc.fillRect(start.getX(), start.getY(), tileSize, tileSize);
+        gc.fillRect((int) (start.getY() * tileSize), (int) (start.getX() * tileSize), tileSize, tileSize);
         gc.setFill(goalColor);
-        gc.fillRect(goal.getX(), goal.getY(), tileSize, tileSize);
+        gc.fillRect((int) (goal.getY() * tileSize), (int) (goal.getX() * tileSize), tileSize, tileSize);
 //        layout.add(new Rectangle(tileSize, tileSize, startColor), start.getY(), start.getX());
 //        layout.add(new Rectangle(tileSize, tileSize, goalColor), goal.getY(), goal.getX());
     }
@@ -210,8 +205,8 @@ public class Main extends Application {
     private void clearStartAndGoalColors(double tileSize) {
         Node start = scenario.getStart();
         Node goal = scenario.getGoal();
-        gc.clearRect(start.getX(), start.getY(), tileSize, tileSize);
-        gc.clearRect(goal.getX(), goal.getY(), tileSize, tileSize);
+        gc.clearRect((int) (start.getY() * tileSize), (int) (start.getX() * tileSize), tileSize, tileSize);
+        gc.clearRect((int) (goal.getY() * tileSize), (int) (goal.getX() * tileSize), tileSize, tileSize);
     }
 
 //    private void clearStartAndGoalColors(char[][] grid2D, GridPane layout, double tileSize) {
@@ -237,15 +232,14 @@ public class Main extends Application {
 //        }
 //    }
     
+    // coordinates -1 hack to fix offset between canvases
      private Canvas tileCanvas(char[][] grid2D, double tileSize) {
-        int gridX = grid2D.length;
-        int gridY = grid2D[0].length;
-        Canvas tileCanvas = new Canvas(gridX, gridY);
+        Canvas tileCanvas = new Canvas(grid2D.length * tileSize, grid2D[0].length * tileSize);
         GraphicsContext tileGC = tileCanvas.getGraphicsContext2D();
-        for (int i = 0; i < gridX - 1; i++) {
-            for (int j = 0; j < gridY - 1; j++) {
+        for (int i = 0; i < grid2D.length - 1; i++) {
+            for (int j = 0; j < grid2D[i].length - 1; j++) {
                 tileGC.setFill(tileColor(grid2D[i][j]));
-                tileGC.fillRect(i, j, tileSize, tileSize);
+                tileGC.fillRect((int) (j * tileSize) -1, (int) (i * tileSize) -1, tileSize, tileSize);
             }
         }
         return tileCanvas;
@@ -267,7 +261,7 @@ public class Main extends Application {
             }
             gc.setFill(Color.web(pathColors[i]));
             for (int j = 0; j < path.length - 1; j++) {
-                gc.fillRect(path[j].getX(), path[j].getY(), tileSize, tileSize);
+                gc.fillRect((int) (path[j].getY() * tileSize), (int) (path[j].getX() * tileSize), tileSize, tileSize);
             }
 //            Color color = Color.web(pathColors[i]);
 //            for (int j = 0; j < path.length - 1; j++) {
@@ -285,7 +279,7 @@ public class Main extends Application {
                 continue;
             }
             for (int j = 0; j < path.length - 1; j++) {
-                gc.clearRect(path[j].getX(), path[j].getY(), tileSize, tileSize);
+                gc.clearRect((int) (path[j].getY() * tileSize), (int) (path[j].getX() * tileSize), tileSize, tileSize);
             }
         }
     }
@@ -302,7 +296,7 @@ public class Main extends Application {
                     continue;
                 }
                 gc.setFill(Color.web("#706A4E"));
-                gc.fillRect(nodes[j].getX(), nodes[j].getY(), tileSize, tileSize);
+                gc.fillRect((int) (nodes[j].getX() * tileSize), (int) (nodes[j].getY() * tileSize), tileSize, tileSize);
 //                Color exploredColor = Color.web("#706A4E");
 //                layout.add(new Rectangle(tileSize, tileSize, exploredColor),
 //                        nodes[j].getY(), nodes[j].getX());
