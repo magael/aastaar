@@ -10,8 +10,6 @@
 
 [Testausdokumenentaatio](https://github.com/magael/aastaar/blob/master/documentation/testaus.md)
 
-[TODO-muistiinpanoja](https://github.com/magael/aastaar/blob/master/documentation/todo.md)
-
 #### Viikkoraportit
 [Viikko 1](https://github.com/magael/aastaar/blob/master/documentation/viikkoraportit/viikkoraportti1.md)
 
@@ -22,6 +20,8 @@
 [Viikko 4](https://github.com/magael/aastaar/blob/master/documentation/viikkoraportit/viikkoraportti4.md)
 
 [Viikko 5](https://github.com/magael/aastaar/blob/master/documentation/viikkoraportit/viikkoraportti5.md)
+
+[Viikko 6](https://github.com/magael/aastaar/blob/master/documentation/viikkoraportit/viikkoraportti6.md)
 
 #### Buildaus
 
