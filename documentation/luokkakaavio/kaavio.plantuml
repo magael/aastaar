@@ -1,0 +1,79 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam ClassFontStyle bold
+skinparam linetype polyline
+
+/'title Yksityiskohtaisempi komponenttiarkkitehtuuri'/
+
+package aastaar {
+  class Main
+  class Scenario
+}
+
+package aastaar.map {
+  class MapCreator 
+  class Grid
+  class Node
+}
+
+package aastaar.algorithms {
+  class AStar
+  class UniformCostSearch
+  interface PathfindingAlgorithm <<interface>>
+
+  package Path {
+    class PathWithArray
+    interface Path <<interface>>
+  }
+}
+
+package aastaar.utils {
+  class PathfindingPerformanceTester
+  class CustomFileReader
+}
+
+package aastaar.datastructures {
+  class CustomPriorityQueue
+}
+
+hide circle
+
+Main --> Scenario
+Main ..> PathfindingAlgorithm
+Main ..> AStar
+Main ..> UniformCostSearch
+Main ..> PathfindingPerformanceTester
+
+Scenario --> Grid
+Scenario ..> MapCreator
+Scenario -left-> Node
+Scenario --> PathfindingAlgorithm
+
+MapCreator --> CustomFileReader
+
+PathfindingPerformanceTester ..> Scenario
+PathfindingPerformanceTester ..> Node
+PathfindingPerformanceTester ..> PathfindingAlgorithm
+
+PathfindingAlgorithm ..> Path
+PathfindingAlgorithm ..> Node
+PathfindingAlgorithm <|.. UniformCostSearch
+PathfindingAlgorithm <|.. AStar
+
+UniformCostSearch <|-up AStar
+UniformCostSearch ..> CustomPriorityQueue
+UniformCostSearch ..> PathWithArray
+UniformCostSearch ..> Node
+UniformCostSearch ..> Grid
+
+AStar ..> Grid
+AStar ..> Node
+
+Path <|. PathWithArray
+
+PathWithArray ..> Node
+
+CustomPriorityQueue --> Node
+
+
+@enduml

@@ -20,6 +20,22 @@ Käyttöliittymäikkunan sulkemisen jälkeen aloitetaan suorituskykytestaus. Kun
 
 ---
 
+### Ohjelmiston rakenne
+
+Lähdekoodin juuressa <code>aastaar/src/main/java/mj/aastaar</code> on ohjelman käynnistyksestä ja graafisesta käyttöliittymästä huolehtiva <code>Main</code>, joka hyödyntää luokan <code>Scenario</code> ilmentävää polunetsintäskenaariota. <code>Scenarion</code> avulla voidaan suorittaa polunetsintäalgoritmeja, ja sen attribuutteihin kuuluvat algoritmien palauttamien polkujen lisäksi lähtö- ja maalipisteet sekä polunetsintäruudukko.
+
+Kansiossa <code>aastaar.map</code> on luokka <code>MapCreator</code>, joka luo tiedostonlukijan antaman datan perusteella kartan maastoa kuvaavan merkistötaulukon. Samasta kansiosta löytyvän <code>Grid</code>-luokan ilmentymä alustetaan merkistötaulukon avulla, jonka jälkeen oliota voidaan käyttää tarkastelemaan polunetsintäruudukon soluja: tietyn solun saavutettavissa olevia naapureita, solujen / solmujen välisen "kaaripainon" laskemiseen ja niin edelleen. <code>Node</code>-luokka ylläpitää yhden ruudun / solmun koordinaatteja.
+
+Algoritmit ja niiden lyhyimmän polun tilan tallentamiseen käyttävä <code>Path</code>-rajapinnan toteuttava luokka löytyvät hakemistosta <code>aastaar.algorithms</code>. A* perii Uniform cost searchin, erona on vain solmujen välisen matkan kustannukseen käytetty heuristiikka. Molemmat toteuttavat <code>PathfindingAlgorithm</code>-rajapinnan. Algoritmien käyttämä prioriteettijonototeutus löytyy kansiosta <code>aastaar.datastructures</code>. 
+
+<code>aastaar.utils</code>-hakemisto sisältää tiedostonlukijan sekä algoritmien suorituskykytestaukseen käytettävän luokan <code>PathfindingPerformanceTester</code>.
+
+#### Luokkakaavio
+
+![Luokkakaavio](https://github.com/magael/aastaar/blob/master/documentation/luokkakaavio/kaavio.png)
+
+---
+
 ### Algoritmien ja tietorakenteiden toteutus tarkemmin
 
 Algoritmit käyttävät itse toteutettua prioriteettijonoa, eli minimikekoa. Algoritmit lopettavat haun ja palauttavat lyhyimmän reitin pituuden heti, kun maalisolmu löytyy jonosta.
