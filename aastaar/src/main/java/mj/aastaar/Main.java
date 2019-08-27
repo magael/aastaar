@@ -21,7 +21,6 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -120,18 +119,17 @@ public class Main extends Application {
                 grid.getRowLength() * tileSize);
         gc = canvas.getGraphicsContext2D();
 
+        BorderPane bp = new BorderPane();
+        bp.setCenter(tileCanvas(grid.getGrid2D(), tileSize));
+        
         ToolBar toolbar = toolBar(tileSize);
-        BorderPane bp = new BorderPane(canvas);
         bp.setRight(toolbar);
-        ScrollPane scrollPane = new ScrollPane(tileCanvas(grid.getGrid2D(),
-                tileSize));
 
         colorStartAndGoal(tileSize);
         colorPaths(tileSize);
 
-        Group root = new Group();
-        root.getChildren().addAll(scrollPane, bp);
-        Scene scene = new Scene(root);
+        ScrollPane scrollPane = new ScrollPane(new Group(bp, canvas));
+        Scene scene = new Scene(scrollPane);
 
         window.setScene(scene);
         window.setTitle("Pathfinding visualization on game maps");
