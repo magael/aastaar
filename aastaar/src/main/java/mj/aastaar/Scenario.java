@@ -135,12 +135,10 @@ public class Scenario {
      * @param i Index for the shortestPaths array
      */
     public void runPathfindingAlgorithm(PathfindingAlgorithm algorithm, String name, int i) {
-        System.out.println("Starting " + name);
         int pathLength = algorithm.search(start, goal, 4);
         System.out.print(name + " shortest path length: " + pathLength);
-        System.out.println(", cost: " + algorithm.getCost(goal));
+        System.out.println(", cost: " + algorithm.getCost(goal) + "\n");
         shortestPaths[i] = algorithm.getPath().shortestPath(goal, start, pathLength);
-        System.out.println("Retrieved " + name + " shortest path as array \n");
         cameFrom[i] = algorithm.getPath().cameFrom;
     }
 
