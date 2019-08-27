@@ -8,11 +8,13 @@ Projekti toteuttaa polunetsintää kahden pisteen välillä pelikartoilla. Ohjel
 
 Ohjelma lukee resurssikansiosta [Moving AI Labs:in 2D Pathfinding Benchmark -karttoja](https://movingai.com/benchmarks/grids.html) ja muuntaa niistä polunetsintään soveltuvia kaksiulotteisia taulukoita.
 
-Kartta on tällä hetkellä kovakoodattuna ja vaihdettavissa Scenario-luokan init-medoteissa. Lähtö- ja maalipisteet generoidaan joka suorituskerralla satunnaisesti.
+Pääohjelman käynnistyttyä luodaan pelikarttaa vastaava ruudukko, ja suoritetaan sillä eri polunetsintäalgoritmeja. Kartta on tällä hetkellä kovakoodattuna ja vaihdettavissa Scenario-luokan init-medoteissa. Alustavat lähtö- ja maalipisteet generoidaan joka suorituskerralla satunnaisesti.
 
 Karttoihin sovelletaan Dijkstran algoritmin Uniform cost search -variaatiota (jonoon alustetaan vain lähtösolmu) sekä A*-algoritmia. Ohjelma kertoo tulostuksilla konsoliin, kun algoritmi on suorittanut toimintonsa.
 
 Algoritmien suoritusten jälkeen avataan graafisen käyttöliittymän ikkuna, jossa kartan maasto on visualisoitu kuvaavin värein. Eri algoritmien löytämät lyhyimmät polut, sekä alku- ja maalipisteet ovat meritty kirkkain värein.
+
+Käyttöliittymän oikeassa reunassa on valikko, jossa kerrotaan käytetyt algoritmit ja värit. Valikossa on myös nappi, jonka avulla käyttäjä voi alustaa uudet satunnaiset lähtö- ja maalipisteet. Uusien pisteiden valinta pyyhkii välittömästi vanhat pisteet ja reitit pois, suorittaa algoritmit uudelleen ja piirtää uudet pisteet ja polut. Tämän lisäksi valikkopalkissa on valikkonappi, jonka avulla käyttäjä voi halutessaan piirtää kartalle esityksen kunkin algoritmin tarkastelemat ruuduista.
 
 Käyttöliittymäikkunan sulkemisen jälkeen aloitetaan suorituskykytestaus. Kun testit on suoritettu, tulokset tulostetaan konsoliin.
 
@@ -26,7 +28,7 @@ Algoritmien ja prioriteetijonon yksinkertaistamiseksi etäisyysarvioita ei päiv
 
 Prioriteettijonojen lisäksi algoritmit hyödyntävät kaksiulotteisia taulukoita, jotka vievät paljon tilaa, mutta joista alkion hakeminen on nopeaa. Tilaa varataan siis jokaiselle verkon/ruudukon solmulle, esim. <code>cameFrom</code> taulukkoon (n * n), missä n on solmujen lukumäärä.
 
-Hajautustaulua hyödyntämällä tilaa varattaisiin pahimmassa tapauksessa yhtä paljon, mutta yleisesti vain algoritmin tarkastelemille solmuille. Etenkin etäisyysarviot olisi oletettavasti nopeampaa ja vähemmän tilaa vievää toteuttaa hajautustaululla. Tällä hetkellä <code>cost</code>-taulukkoon alustetaan jokaiselle solmulle lähtöarvo.
+Hajautustaulua hyödyntämällä tilaa varattaisiin vain algoritmin tarkastelemille solmuille. Etenkin etäisyysarviot olisi oletettavasti nopeampaa ja vähemmän tilaa vievää toteuttaa hajautustaululla. Tällä hetkellä <code>cost</code>-taulukkoon alustetaan jokaiselle solmulle lähtöarvo.
 
 Koodin yksinkertaistamiseksi ja tilavaatimuksen minimoimiseksi algoritmit eivät hyödynnä "vierailtu"-tarkistusta (<code>visited</code>). Tästä voi lukea lisää [testausdokumentista](https://github.com/magael/aastaar/blob/master/documentation/testaus.md).
 
@@ -34,9 +36,7 @@ Koodin yksinkertaistamiseksi ja tilavaatimuksen minimoimiseksi algoritmit eivät
 
 ### Jatkosuunnitelmia
 
-Tarkoitus on vielä toteuttaa algoritmeista eri variaatioita ja optimointeja: Esimerkiksi viistosuuntainen liikkuminen ja eri heuristiikkoja.
-
-Toivottavasti aikaa jää myös tekemään käyttöliittymästä joustavamman, ettei pisteiden, karttojen ja variaatioiden muokkaamiseksi tarvitse muokata lähdekoodia.
+Tarkoitus on vielä toteuttaa algoritmeista eri variaatioita ja optimointeja: Esimerkiksi viistosuuntainen liikkuminen ja eri heuristiikkoja. Myös käyttöliittymää on tarkoitus kehittää: esim. antamalla käyttäjän valita useasta eri kartasta. Oman HashMapin toteuttaminen ja soveltaminen on myös korkealla prioriteettilistalla.
 
 Ohjelman tämänhetkinen tila vastaa pitkälti vaatimusmäärittelyssä määriteltyjä [perustoiminnallisuuksia](https://github.com/magael/aastaar/blob/master/documentation/maarittely.md#perustoiminnallisuuksia).
 
