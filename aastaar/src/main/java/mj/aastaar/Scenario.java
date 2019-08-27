@@ -19,7 +19,7 @@ public class Scenario {
     private Node start;
     private Node goal;
     private Node[][] shortestPaths;
-    private Node[][] cameFrom;
+    private Node[][][] cameFrom;
     private String[] pathColors;
     private PathfindingAlgorithm[] algorithms;
     private String[] algoNames;
@@ -66,8 +66,12 @@ public class Scenario {
         return pathColors;
     }
 
-    public Node[][] getCameFrom() {
-        return cameFrom;
+    public Node[][] getCameFrom(String algoName) {
+        int index = 0;
+        for (int i = 0; i < algoNames.length; i++) {
+            if (algoNames[i].equals(algoName)) index = i;
+        }
+        return cameFrom[index];
     }
 
     public String[] getAlgoNames() {
@@ -118,6 +122,7 @@ public class Scenario {
     }
 
     public void setAlgorithms(PathfindingAlgorithm[] algorithms) {
+        cameFrom = new Node[algorithms.length][][];
         this.algorithms = algorithms;
     }
 
@@ -136,7 +141,7 @@ public class Scenario {
         System.out.println(", cost: " + algorithm.getCost(goal));
         shortestPaths[i] = algorithm.getPath().shortestPath(goal, start, pathLength);
         System.out.println("Retrieved " + name + " shortest path as array \n");
-        cameFrom = algorithm.getPath().cameFrom;
+        cameFrom[i] = algorithm.getPath().cameFrom;
     }
 
     /**
@@ -165,7 +170,6 @@ public class Scenario {
      */
     public void initConfig() {
         initDefaultGrid();
-//        initDefaultPositions();
         initRandomPositions();
     }
 
@@ -178,9 +182,9 @@ public class Scenario {
      */
     private void initDefaultGrid() {
         MapCreator mapCreator = new MapCreator();
-        mapCreator.createMapFromFile("mapdata/dao-map/ost003d.map");
+//        mapCreator.createMapFromFile("mapdata/dao-map/ost003d.map");
         //mapCreator.createMapFromFile("mapdata/sc1-map/Aftershock.map");
-        //mapCreator.createMapFromFile("mapdata/wc3maps512-map/divideandconquer.map");
+        mapCreator.createMapFromFile("mapdata/wc3maps512-map/divideandconquer.map");
         //mapCreator.createMapFromFile("mapdata/wc3maps512-map/timbermawhold.map");
         if (mapCreator.getGrid() != null) {
             char[][] gridArray = mapCreator.getGrid();
@@ -188,44 +192,5 @@ public class Scenario {
             double heavyEdgeWeight = 2.0;
             grid = new Grid(gridArray, impassable, heavyEdgeWeight);
         }
-    }
-
-    /**
-     * Initializing example starting and goal coordinates.
-     */
-    private void initDefaultPositions() {
-        //ost003d
-//        int startX = 30;
-//        int startY = 150;
-//        int goalX = 85;
-//        int goalY = 120;
-        // Aftershock
-//        int startX = 82;
-//        int startY = 203;
-//        int goalX = 400;
-//        int goalY = 390;
-        // arena2
-//        int startX = 84;
-//        int startY = 106;
-//        int goalX = 77;
-//        int goalY = 85;
-        // arena2 other
-//        int startX = 104;
-//        int startY = 44;
-//        int goalX = 70;
-//        int goalY = 190;
-        // divideandconquer
-        int startX = 95;
-        int startY = 270;
-        int goalX = 420;
-        int goalY = 440;
-        // timbermawhold
-//        int startX = 70;
-//        int startY = 380;
-//        int goalX = 394;
-//        int goalY = 101;
-
-        start = new Node(startX, startY, 0.0);
-        goal = new Node(goalX, goalY, 0.0);
     }
 }
