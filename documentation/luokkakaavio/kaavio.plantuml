@@ -9,7 +9,7 @@ package aastaar {
   class Main
   class Scenario
 
-  package .map {
+  package map {
     class MapCreator 
     class Grid
     class Node

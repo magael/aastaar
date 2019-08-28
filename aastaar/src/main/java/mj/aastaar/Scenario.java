@@ -152,7 +152,8 @@ public class Scenario {
 
     /**
      *
-     * @param cameFrom The nodes explored by the different pathfinding algorithms
+     * @param cameFrom The nodes explored by the different pathfinding
+     * algorithms
      */
     public void setCameFrom(Node[][][] cameFrom) {
         this.cameFrom = cameFrom;
@@ -213,9 +214,10 @@ public class Scenario {
     private void initDefaultGrid() {
         MapCreator mapCreator = new MapCreator();
 //        mapCreator.createMapFromFile("mapdata/dao-map/ost003d.map");
-        //mapCreator.createMapFromFile("mapdata/sc1-map/Aftershock.map");
+//        mapCreator.createMapFromFile("mapdata/sc1-map/Aftershock.map");
         mapCreator.createMapFromFile("mapdata/wc3maps512-map/divideandconquer.map");
-        //mapCreator.createMapFromFile("mapdata/wc3maps512-map/timbermawhold.map");
+//        mapCreator.createMapFromFile("mapdata/wc3maps512-map/bootybay.map");
+//        mapCreator.createMapFromFile("mapdata/wc3maps512-map/timbermawhold.map");
         if (mapCreator.getGrid() != null) {
             char[][] gridArray = mapCreator.getGrid();
             char[] impassable = {'T', 'W', '@'};
