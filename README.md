@@ -11,17 +11,10 @@
 [Testausdokumenentaatio](https://github.com/magael/aastaar/blob/master/documentation/testaus.md)
 
 #### Viikkoraportit
-[Viikko 1](https://github.com/magael/aastaar/blob/master/documentation/viikkoraportit/viikkoraportti1.md)
-
-[Viikko 2](https://github.com/magael/aastaar/blob/master/documentation/viikkoraportit/viikkoraportti2.md)
-
-[Viikko 3](https://github.com/magael/aastaar/blob/master/documentation/viikkoraportit/viikkoraportti3.md)
-
-[Viikko 4](https://github.com/magael/aastaar/blob/master/documentation/viikkoraportit/viikkoraportti4.md)
-
-[Viikko 5](https://github.com/magael/aastaar/blob/master/documentation/viikkoraportit/viikkoraportti5.md)
 
 [Viikko 6](https://github.com/magael/aastaar/blob/master/documentation/viikkoraportit/viikkoraportti6.md)
+
+[Aiemmat viikot](https://github.com/magael/aastaar/blob/master/documentation/viikkoraportit/)
 
 #### Buildaus
 
