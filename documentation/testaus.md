@@ -51,7 +51,7 @@ A*
 
 Performance tests ran in a total of 937.341475022 seconds.</code>
 
-Esimerkin testien suorittamiseen kului reilu vartti koneella, jossa on Intel i5-8400 suoritin ja 16 GB keskusmuistia. Toistoja oli 10, 50, 100, 500 ja 1000 niin, että jokaista tulosta varten sama haku toistettiin 50 kertaa, joista otettiin keskiarvo roskienkeruun ym. aiheuttaman hälyn minimoimiseksi.
+Esimerkissä käytettiin Warcraft 3 -pelin Divide and Conquer -karttaa 512 * 512 -ruudukolla (Moving AI Labs:in formaatissa). Testien suorittamiseen kului reilu vartti koneella, jossa on Intel i5-8400 suoritin ja 16 GB keskusmuistia. Toistoja oli 10, 50, 100, 500 ja 1000 niin, että jokaista tulosta varten sama haku toistettiin 50 kertaa, joista otettiin keskiarvo roskienkeruun ym. aiheuttaman hälyn minimoimiseksi.
 
 Suoritustestaamista edeltää alustus, jossa eri toistokerroille arvotaan lähtö- ja maalipisteet. Eri kierroksilla käytetään (arvonnasta riippuen) eri sijainteja, mutta eri algoritmit käyttävät samoja sijainteja.
 

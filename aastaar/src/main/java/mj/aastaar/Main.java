@@ -41,7 +41,7 @@ import mj.aastaar.utils.PathfindingPerformanceTester;
 public class Main extends Application {
 
     private static Scenario scenario;
-    private GraphicsContext gc;
+    private GraphicsContext pathGraphics;
     private String showExplored;
 
     /**
@@ -115,20 +115,20 @@ public class Main extends Application {
         double tileSize = 2.0;
         Grid grid = scenario.getGrid();
 
-        Canvas canvas = new Canvas(grid.getLength() * tileSize,
+        Canvas pathCanvas = new Canvas(grid.getLength() * tileSize,
                 grid.getRowLength() * tileSize);
-        gc = canvas.getGraphicsContext2D();
+        pathGraphics = pathCanvas.getGraphicsContext2D();
 
-        BorderPane bp = new BorderPane();
-        bp.setCenter(tileCanvas(grid.getGrid2D(), tileSize));
+        BorderPane borderPane = new BorderPane();
+        borderPane.setCenter(tileCanvas(grid.getGrid2D(), tileSize));
         
         ToolBar toolbar = toolBar(tileSize);
-        bp.setRight(toolbar);
+        borderPane.setRight(toolbar);
 
         colorStartAndGoal(tileSize);
         colorPaths(tileSize);
 
-        ScrollPane scrollPane = new ScrollPane(new Group(bp, canvas));
+        ScrollPane scrollPane = new ScrollPane(new Group(borderPane, pathCanvas));
         Scene scene = new Scene(scrollPane);
 
         window.setScene(scene);
@@ -148,11 +148,14 @@ public class Main extends Application {
         toolbar.setPadding(new Insets(20));
         toolbar.setBackground(new Background(new BackgroundFill(
                 Color.web("#130d14"), null, Insets.EMPTY)));
-        int fontSize = 16;
+        int fontSize = 14;
 
         algorithmsLegend(fontSize, toolbar);
 
-        Button randomPositionsButton = new Button("New random positions");
+        Label randomPositionsLabel = new Label("New random positions: ");
+        randomPositionsLabel.setTextFill(Color.WHITE);
+        randomPositionsLabel.setFont(new Font(fontSize));
+        Button randomPositionsButton = new Button("Randomize");
         randomPositionsButton.setOnAction(value -> {
             clickRandomPositions(tileSize);
         });
@@ -167,8 +170,8 @@ public class Main extends Application {
         Separator separator = separator();
         Separator separator2 = separator();
 
-        toolbar.getItems().addAll(separator, randomPositionsButton, separator2,
-                exploredLabel, exploredBox);
+        toolbar.getItems().addAll(separator, randomPositionsLabel,
+                randomPositionsButton, separator2, exploredLabel, exploredBox);
         return toolbar;
     }
 
@@ -263,10 +266,10 @@ public class Main extends Application {
         Color startColor = Color.RED;
         Color goalColor = Color.LAWNGREEN;
 
-        gc.setFill(startColor);
-        gc.fillRect((int) (start.getY() * tileSize), (int) (start.getX() * tileSize), tileSize, tileSize);
-        gc.setFill(goalColor);
-        gc.fillRect((int) (goal.getY() * tileSize), (int) (goal.getX() * tileSize), tileSize, tileSize);
+        pathGraphics.setFill(startColor);
+        pathGraphics.fillRect((int) (start.getY() * tileSize), (int) (start.getX() * tileSize), tileSize, tileSize);
+        pathGraphics.setFill(goalColor);
+        pathGraphics.fillRect((int) (goal.getY() * tileSize), (int) (goal.getX() * tileSize), tileSize, tileSize);
     }
 
     /**
@@ -277,8 +280,8 @@ public class Main extends Application {
     private void clearStartAndGoalColors(double tileSize) {
         Node start = scenario.getStart();
         Node goal = scenario.getGoal();
-        gc.clearRect((int) (start.getY() * tileSize), (int) (start.getX() * tileSize), tileSize, tileSize);
-        gc.clearRect((int) (goal.getY() * tileSize), (int) (goal.getX() * tileSize), tileSize, tileSize);
+        pathGraphics.clearRect((int) (start.getY() * tileSize), (int) (start.getX() * tileSize), tileSize, tileSize);
+        pathGraphics.clearRect((int) (goal.getY() * tileSize), (int) (goal.getX() * tileSize), tileSize, tileSize);
     }
 
     /**
@@ -315,9 +318,9 @@ public class Main extends Application {
             if (path == null) {
                 continue;
             }
-            gc.setFill(Color.web(pathColors[i]));
+            pathGraphics.setFill(Color.web(pathColors[i]));
             for (int j = 0; j < path.length - 1; j++) {
-                gc.fillRect((int) (path[j].getY() * tileSize), (int) (path[j].getX() * tileSize), tileSize, tileSize);
+                pathGraphics.fillRect((int) (path[j].getY() * tileSize), (int) (path[j].getX() * tileSize), tileSize, tileSize);
             }
         }
     }
@@ -335,7 +338,7 @@ public class Main extends Application {
                 continue;
             }
             for (int j = 0; j < path.length - 1; j++) {
-                gc.clearRect((int) (path[j].getY() * tileSize), (int) (path[j].getX() * tileSize), tileSize, tileSize);
+                pathGraphics.clearRect((int) (path[j].getY() * tileSize), (int) (path[j].getX() * tileSize), tileSize, tileSize);
             }
         }
     }
@@ -357,8 +360,8 @@ public class Main extends Application {
                     continue;
                 }
 
-                gc.setFill(Color.web("#C5C3DA"));
-                gc.fillRect((int) (nodes[j].getY() * tileSize), (int) (nodes[j].getX() * tileSize), tileSize, tileSize);
+                pathGraphics.setFill(Color.web("#C5C3DA"));
+                pathGraphics.fillRect((int) (nodes[j].getY() * tileSize), (int) (nodes[j].getX() * tileSize), tileSize, tileSize);
             }
         }
     }
@@ -379,7 +382,7 @@ public class Main extends Application {
                 if (nodes[j] == null) {
                     continue;
                 }
-                gc.clearRect((int) (nodes[j].getY() * tileSize), (int) (nodes[j].getX() * tileSize), tileSize, tileSize);
+                pathGraphics.clearRect((int) (nodes[j].getY() * tileSize), (int) (nodes[j].getX() * tileSize), tileSize, tileSize);
             }
         }
     }
