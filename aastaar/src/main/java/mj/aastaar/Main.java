@@ -23,6 +23,7 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -70,7 +71,6 @@ public class Main extends Application {
             "mapdata/sc1-map/Aftershock.map"};
         scenario.initGrids(mapPaths);
         scenario.initRandomPositions();
-
         Grid grid = scenario.getGrid();
 
         if (scenario.getStart() == null || scenario.getGoal() == null) {
@@ -78,31 +78,7 @@ public class Main extends Application {
         } else if (grid == null || grid.getGrid2D() == null || grid.getLength() < 1) {
             System.out.println("Error creating a pathfinding grid");
         } else {
-            String cyan = "#00FFFF";
-            String magenta = "#FF00FF";
-            
-            AlgorithmVisualization dijkstra = new AlgorithmVisualization(new UniformCostSearch(grid), "Dijkstra", cyan);
-            AlgorithmVisualization aStar = new AlgorithmVisualization(new AStar(grid), "A*", magenta);
-            AlgorithmVisualization[] algorithmVisuals = {dijkstra, aStar};
-            scenario.setAlgorithmVisuals(algorithmVisuals);
-            
-            String[] pathColors = {cyan, magenta};
-            scenario.setPathColors(pathColors);
-            scenario.setShortestPaths(new Node[pathColors.length][]);
-            
-            for (int i = 0; i < algorithmVisuals.length; i++) {
-                scenario.runPathfindingAlgorithm(algorithmVisuals[i]);
-            }
-
-//            PathfindingAlgorithm[] algorithms = {new UniformCostSearch(grid), new AStar(grid)};
-//            scenario.setAlgorithms(algorithms);
-//            String[] algoNames = {"Dijkstra", "A*"};
-//            scenario.setAlgoNames(algoNames);
-//            for (int i = 0; i < algorithms.length; i++) {
-//                scenario.runPathfindingAlgorithm(algorithms[i], algoNames[i], i);
-//            }
-
-            System.out.println("Launching visualization.");
+            initAlgorithms(grid);
             launch(Main.class);
         }
     }
@@ -121,10 +97,23 @@ public class Main extends Application {
         long t = System.nanoTime();
         tester.run(nums);
         BigDecimal elapsedTime = new BigDecimal((System.nanoTime() - t) / 1000000000);
-        
+
         String testResults = tester.toString() + "\nPerformance tests ran\nin a total of "
                 + elapsedTime.round(new MathContext(3)) + " seconds.";
         return testResults;
+    }
+
+    private static void initAlgorithms(Grid grid) {
+        String cyan = "#00FFFF";
+        String magenta = "#FF00FF";
+        AlgorithmVisualization dijkstra = new AlgorithmVisualization(new UniformCostSearch(grid), "Dijkstra", cyan);
+        AlgorithmVisualization aStar = new AlgorithmVisualization(new AStar(grid), "A*", magenta);
+        AlgorithmVisualization[] algorithmVisuals = {dijkstra, aStar};
+        scenario.setAlgorithmVisuals(algorithmVisuals);
+
+        for (int i = 0; i < algorithmVisuals.length; i++) {
+            scenario.runPathfindingAlgorithm(algorithmVisuals[i]);
+        }
     }
 
     @Override
@@ -146,20 +135,6 @@ public class Main extends Application {
         ScrollPane scrollPane = new ScrollPane(new Group(borderPane, pathCanvas));
         Scene scene = new Scene(scrollPane);
         window.setScene(scene);
-
-//        Button[] mapButtons = new Button[grids.length];
-//        for (int i = 0; i < grids.length; i++) {
-//            int j = i;
-//            Button mapButton = new Button(Integer.toString(i + 1));
-//            mapButton.setOnAction(value -> {
-//                scenario.setGrid(grids[j]);
-//                Scene newScene = initScene(grids[j], tileSize);
-//                window.setScene(newScene);
-//            });
-//            mapButtons[i] = mapButton;
-//        }
-//        HBox hBox = new HBox(mapButtons);
-//        toolbar.getItems().add(hBox);
         window.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
@@ -167,7 +142,6 @@ public class Main extends Application {
                 System.exit(0);
             }
         });
-
         window.setTitle("Pathfinding visualization on game maps");
         window.show();
     }
@@ -234,15 +208,35 @@ public class Main extends Application {
                 separator2, randomPositionsLabel, randomPositionsButton,
                 separator3, mapsLabel);
 
-        Button mapButton = new Button("Next");
-        mapButton.setOnAction(value -> {
+        Button nextMapButton = new Button("Next");
+        nextMapButton.setOnAction(value -> {
             scenario.setNextGrid();
+            scenario.initRandomPositions();
             initAlgorithms(scenario.getGrid());
             Scene newScene = initScene(window, scenario.getGrid(), tileSize);
             window.setScene(newScene);
             window.show();
         });
-        toolbar.getItems().add(mapButton);
+        toolbar.getItems().add(nextMapButton);
+        Grid[] grids = scenario.getGrids();
+        Button[] mapButtons = new Button[grids.length];
+        for (int i = 0; i < grids.length; i++) {
+            int j = i;
+            Button mapButton = new Button(Integer.toString(i + 1));
+            mapButton.setOnAction(value -> {
+                scenario.setGridIndex(j);
+                scenario.setGrid(grids[j]);
+                scenario.initRandomPositions();
+                initAlgorithms(scenario.getGrid());
+                Scene newScene = initScene(window, scenario.getGrid(), tileSize);
+                window.setScene(newScene);
+                window.show();
+            });
+            mapButtons[i] = mapButton;
+        }
+        HBox hBox = new HBox(nextMapButton);
+        hBox.getChildren().addAll(mapButtons);
+        toolbar.getItems().add(hBox);
 
         Label perfTestLabel = new Label("WARNING:\n"
                 + "While the tests are running,\nthe application will be "
@@ -295,7 +289,9 @@ public class Main extends Application {
         showExplored = -1;
         exploredBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue ov, Number value, Number new_value) {
-                if (showExplored >= 0) clearExplored(tileSize);
+                if (showExplored >= 0) {
+                    clearExplored(tileSize);
+                }
                 showExplored = new_value.intValue() - 1;
                 if (showExplored >= 0) {
                     colorExplored(tileSize);
@@ -327,7 +323,9 @@ public class Main extends Application {
     private void clickRandomPositions(double tileSize) {
         clearStartAndGoalColors(tileSize);
         clearPaths(tileSize);
-        if (showExplored >= 0) clearExplored(tileSize);
+        if (showExplored >= 0) {
+            clearExplored(tileSize);
+        }
         scenario.initRandomPositions();
         AlgorithmVisualization[] algoVisuals = scenario.getAlgorithmVisuals();
         for (int i = 0; i < algoVisuals.length; i++) {
@@ -393,13 +391,10 @@ public class Main extends Application {
     /**
      * Coloring different paths found by different algorithms.
      *
-     * @param layout JavaFX GridPane object
      * @param tileSize The map tile size
      */
     private void colorPaths(double tileSize) {
         AlgorithmVisualization[] algoVisuals = scenario.getAlgorithmVisuals();
-//        Node[][] shortestPaths = scenario.getShortestPaths();
-//        String[] pathColors = scenario.getPathColors();
         for (int i = 0; i < algoVisuals.length; i++) {
             Node[] path = algoVisuals[i].getShortestPath();
             if (path == null) {
@@ -502,30 +497,5 @@ public class Main extends Application {
                 break;
         }
         return color;
-    }
-
-    //TODO: 
-    private void initAlgorithms(Grid grid) {
-        scenario.initRandomPositions();
-        if (scenario.getStart() == null || scenario.getGoal() == null) {
-            System.out.println("Error initializing start and goal positions");
-        } else if (grid == null || grid.getGrid2D() == null || grid.getLength() < 1) {
-            System.out.println("Error creating a pathfinding grid");
-        } else {
-            String cyan = "#00FFFF";
-            String magenta = "#FF00FF";
-            String[] pathColors = {cyan, magenta};
-            scenario.setPathColors(pathColors);
-            scenario.setShortestPaths(new Node[pathColors.length][]);
-
-            AlgorithmVisualization dijkstra = new AlgorithmVisualization(new UniformCostSearch(grid), "Dijkstra", cyan);
-            AlgorithmVisualization aStar = new AlgorithmVisualization(new AStar(grid), "A*", magenta);
-            AlgorithmVisualization[] algorithmVisuals = {dijkstra, aStar};
-            scenario.setAlgorithmVisuals(algorithmVisuals);
-            
-            for (int i = 0; i < algorithmVisuals.length; i++) {
-                scenario.runPathfindingAlgorithm(algorithmVisuals[i]);
-            }
-        }
     }
 }

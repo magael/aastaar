@@ -20,11 +20,6 @@ public class Scenario {
     private Grid[] grids;
     private Node start;
     private Node goal;
-    private Node[][] shortestPaths;
-    private Node[][][] cameFrom;
-    private String[] pathColors;
-    private PathfindingAlgorithm[] algorithms;
-    private String[] algoNames;
     private AlgorithmVisualization[] algorithmVisuals;
     private int gridIndex;
 
@@ -54,52 +49,6 @@ public class Scenario {
      */
     public Node getGoal() {
         return goal;
-    }
-
-    /**
-     * @return Array of shortest paths (as node arrays)
-     */
-    public Node[][] getShortestPaths() {
-        return shortestPaths;
-    }
-
-    /**
-     * @return Color hexadecimal representations for shortest path visualization
-     */
-    public String[] getPathColors() {
-        return pathColors;
-    }
-
-    /**
-     *
-     * @param algoName Name of the algorithm which has explored the requested
-     * nodes
-     * @return The nodes explored by a pathfinding algorithm
-     */
-    public Node[][] getCameFrom(String algoName) {
-        int index = 0;
-        for (int i = 0; i < algoNames.length; i++) {
-            if (algoNames[i].equals(algoName)) {
-                index = i;
-            }
-        }
-        return cameFrom[index];
-    }
-
-    /**
-     *
-     * @return Names of algorithms
-     */
-    public String[] getAlgoNames() {
-        return algoNames;
-    }
-
-    /**
-     *
-     * @return Pathfinding algorithms
-     */
-    public PathfindingAlgorithm[] getAlgorithms() {
-        return algorithms;
     }
 
     public Grid[] getGrids() {
@@ -135,46 +84,6 @@ public class Scenario {
         this.goal = goal;
     }
 
-    /**
-     * @param shortestPaths Array of shortest paths (as node arrays)
-     */
-    public void setShortestPaths(Node[][] shortestPaths) {
-        this.shortestPaths = shortestPaths;
-    }
-
-    /**
-     * @param pathColors Colors as hex strings for shortest path visualization
-     */
-    public void setPathColors(String[] pathColors) {
-        this.pathColors = pathColors;
-    }
-
-    /**
-     *
-     * @param algoNames Names of algorithms
-     */
-    public void setAlgoNames(String[] algoNames) {
-        this.algoNames = algoNames;
-    }
-
-    /**
-     *
-     * @param algorithms Pathfinding algorithms
-     */
-    public void setAlgorithms(PathfindingAlgorithm[] algorithms) {
-        setCameFrom(new Node[algorithms.length][][]);
-        this.algorithms = algorithms;
-    }
-
-    /**
-     *
-     * @param cameFrom The nodes explored by the different pathfinding
-     * algorithms
-     */
-    public void setCameFrom(Node[][][] cameFrom) {
-        this.cameFrom = cameFrom;
-    }
-
     public void setNextGrid() {
         if (gridIndex >= grids.length - 1) {
             gridIndex = -1;
@@ -182,21 +91,16 @@ public class Scenario {
         grid = grids[++gridIndex];
     }
 
+    public void setGridIndex(int gridIndex) {
+        this.gridIndex = gridIndex;
+    }
+
     /**
-     * Running the specified algorithm, printing the shortest path length and
-     * cost and adding the shortest path (array of nodes) for visualization.
+     * Running the specified algorithm, adding the shortest path (array of
+     * nodes) for visualization.
      *
-     * @param algorithmVisual Object implementing the PathFindingAlgorithm interface
-     * @param name What the algorithm is called
-     * @param i Index for the shortestPaths array
+     * @param algorithmVisual Composition of an algorithm, name and color etc.
      */
-//    public void runPathfindingAlgorithm(PathfindingAlgorithm algorithm, String name, int i) {
-//        int pathLength = algorithm.search(start, goal, 4);
-//        System.out.print(name + " shortest path length: " + pathLength);
-//        System.out.println(", cost: " + algorithm.getCost(goal) + "\n");
-//        shortestPaths[i] = algorithm.getPath().shortestPath(goal, start, pathLength);
-//        cameFrom[i] = algorithm.getPath().cameFrom;
-//    }
     public void runPathfindingAlgorithm(AlgorithmVisualization algorithmVisual) {
         PathfindingAlgorithm algorithm = algorithmVisual.getAlgorithm();
         int pathLength = algorithm.search(start, goal, 4);
