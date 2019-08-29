@@ -131,14 +131,6 @@ public class Scenario {
         goal = randomGoal;
     }
 
-    /**
-     * Create the pathfinding grid based on a specific map.
-     */
-    public void initConfig() {
-        initDefaultGrid();
-        initRandomPositions();
-    }
-
     public void initGrids(String[] mapPaths) {
         grids = new Grid[mapPaths.length];
         for (int i = 0; i < mapPaths.length; i++) {
@@ -153,27 +145,5 @@ public class Scenario {
         }
         setGrid(grids[0]);
         gridIndex = 0;
-    }
-
-    /**
-     * Initializing an example map and a grid representation for it, along with
-     * character representations of map nodes that are marked impassable for
-     * pathfinding, and the penalty for moving through heavier terrain, in this
-     * case "shallow water". The Warcraft 3 maps (wc3maps512-map/*) contain
-     * shallow water.
-     */
-    private void initDefaultGrid() {
-        MapCreator mapCreator = new MapCreator();
-//        mapCreator.createMapFromFile("mapdata/dao-map/ost003d.map");
-//        mapCreator.createMapFromFile("mapdata/sc1-map/Aftershock.map");
-        mapCreator.createMapFromFile("mapdata/wc3maps512-map/divideandconquer.map");
-//        mapCreator.createMapFromFile("mapdata/wc3maps512-map/bootybay.map");
-//        mapCreator.createMapFromFile("mapdata/wc3maps512-map/timbermawhold.map");
-        if (mapCreator.getGrid() != null) {
-            char[][] gridArray = mapCreator.getGrid();
-            char[] impassable = {'T', 'W', '@'};
-            double heavyEdgeWeight = 2.0;
-            grid = new Grid(gridArray, impassable, heavyEdgeWeight);
-        }
     }
 }

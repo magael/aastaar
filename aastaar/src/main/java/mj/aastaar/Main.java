@@ -60,16 +60,15 @@ public class Main extends Application {
 
     /**
      * Initializing the scenario from configurations, providing the scenario
-     * with algorithms to run and providing arrays for the algorithm's shortest
-     * paths. Launching the Java FX GUI and invoking performance tests.
+     * with algorithms to run. Initializing maps, along with character
+     * representations of map nodes that are marked impassable for pathfinding,
+     * and the penalty for moving through heavier terrain, in this case "shallow
+     * water". The Warcraft 3 maps (wc3maps512-map/*) contain shallow water.
+     * Launching the Java FX GUI.
      */
     private static void run() {
         scenario = new Scenario();
-        String[] mapPaths = {"mapdata/wc3maps512-map/divideandconquer.map",
-            "mapdata/wc3maps512-map/timbermawhold.map",
-            "mapdata/wc3maps512-map/bootybay.map",
-            "mapdata/sc1-map/Aftershock.map"};
-        scenario.initGrids(mapPaths);
+        initMaps();
         scenario.initRandomPositions();
         Grid grid = scenario.getGrid();
 
@@ -81,6 +80,16 @@ public class Main extends Application {
             initAlgorithms(grid);
             launch(Main.class);
         }
+    }
+
+    private static void initMaps() {
+        String[] mapPaths = {"mapdata/wc3maps512-map/divideandconquer.map",
+            "mapdata/wc3maps512-map/timbermawhold.map",
+            "mapdata/wc3maps512-map/bootybay.map",
+            "mapdata/sc1-map/Aftershock.map"};
+        char[] impassable = {'T', 'W', '@'};
+        double heavyEdgeWeight = 2.0;
+        scenario.initGrids(mapPaths, impassable, heavyEdgeWeight);
     }
 
     /**
