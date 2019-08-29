@@ -105,6 +105,16 @@ public class Scenario {
         }
         grid = grids[++gridIndex];
     }
+    
+    /**
+     * Set the next grid in the array of Grids
+     */
+    public void setPreviousGrid() {
+        if (gridIndex <= 0) {
+            gridIndex = grids.length;
+        }
+        grid = grids[--gridIndex];
+    }
 
     /**
      * Set the index for the Grid array

@@ -80,8 +80,7 @@ public class Main extends Application {
 
     /**
      * Initialize the maps, impassable characters and edge weights for passing
-     * through heavier terrain (in this case "shallow water", represented with
-     * the character "S").
+     * through heavier terrain.
      */
     private static void initMaps() {
         String[] mapPaths = {"mapdata/wc3maps512-map/divideandconquer.map",
@@ -221,28 +220,22 @@ public class Main extends Application {
             clickRandomPositions(tileSize);
         });
 
-        Separator separator = separator();
-        Separator separator2 = separator();
-        Separator separator3 = separator();
-
         Label mapsLabel = new Label("Switch between maps: ");
         mapsLabel.setTextFill(Color.WHITE);
         mapsLabel.setFont(new Font(fontSize));
 
-        toolbar.getItems().addAll(separator, exploredLabel, exploredBox,
-                separator2, randomPositionsLabel, randomPositionsButton,
-                separator3, mapsLabel);
-
+        Button previousMapButton = new Button("Prev");
+        previousMapButton.setOnAction(value -> {
+            scenario.setPreviousGrid();
+            switchMap(window, tileSize);
+        });
         Button nextMapButton = new Button("Next");
         nextMapButton.setOnAction(value -> {
             scenario.setNextGrid();
-            scenario.initRandomPositions();
-            initAlgorithms(scenario.getGrid());
-            Scene newScene = initScene(window, scenario.getGrid(), tileSize);
-            window.setScene(newScene);
-            window.show();
+            switchMap(window, tileSize);
         });
-        toolbar.getItems().add(nextMapButton);
+        HBox prevNextMapButtons = new HBox(previousMapButton, nextMapButton);
+
         Grid[] grids = scenario.getGrids();
         Button[] mapButtons = new Button[grids.length];
         for (int i = 0; i < grids.length; i++) {
@@ -251,21 +244,15 @@ public class Main extends Application {
             mapButton.setOnAction(value -> {
                 scenario.setGridIndex(j);
                 scenario.setGrid(grids[j]);
-                scenario.initRandomPositions();
-                initAlgorithms(scenario.getGrid());
-                Scene newScene = initScene(window, scenario.getGrid(), tileSize);
-                window.setScene(newScene);
-                window.show();
+                switchMap(window, tileSize);
             });
             mapButtons[i] = mapButton;
         }
-        HBox hBox = new HBox(nextMapButton);
-        hBox.getChildren().addAll(mapButtons);
-        toolbar.getItems().add(hBox);
+        HBox mapNumberButtons = new HBox(mapButtons);
 
         Label perfTestLabel = new Label("WARNING:\n"
                 + "While the tests are running,\nthe application will be "
-                + "frozen\nfor a few seconds\nup to a few minutes.");
+                + "frozen\nfor a few seconds up to\na few minutes.");
         perfTestLabel.setTextFill(Color.WHITE);
         Button perfTestButton = new Button("Run performance tests");
         Text testResults = new Text();
@@ -274,9 +261,21 @@ public class Main extends Application {
         perfTestButton.setOnAction(value -> {
             testResults.setText(runPerformanceTests(scenario.getAlgorithmVisuals()));
         });
-        toolbar.getItems().addAll(separator(), perfTestLabel, perfTestButton, testResults);
+
+        toolbar.getItems().addAll(separator(), exploredLabel, exploredBox,
+                separator(), randomPositionsLabel, randomPositionsButton,
+                separator(), mapsLabel, prevNextMapButtons, mapNumberButtons,
+                separator(), perfTestLabel, perfTestButton, testResults);
 
         return toolbar;
+    }
+
+    private void switchMap(Stage window, double tileSize) {
+        scenario.initRandomPositions();
+        initAlgorithms(scenario.getGrid());
+        Scene newScene = initScene(window, scenario.getGrid(), tileSize);
+        window.setScene(newScene);
+        window.show();
     }
 
     /**

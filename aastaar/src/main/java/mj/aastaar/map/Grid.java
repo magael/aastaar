@@ -160,20 +160,4 @@ public class Grid {
         }
         return false;
     }
-
-//    @Override
-//    public String toString() {
-//        String s = "";
-//        for (int i = 0; i < grid.length; i++) {
-//            s += Integer.toString(i) + ". ";
-//            if (i < 10) {
-//                s += " ";
-//            }
-//            for (int j = 0; j < grid[i].length; j++) {
-//                s += grid[i][j];
-//            }
-//            s += '\n';
-//        }
-//        return s;
-//    }
 }
