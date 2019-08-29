@@ -26,6 +26,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import mj.aastaar.algorithms.AStar;
@@ -121,14 +122,13 @@ public class Main extends Application {
 //        int[] nums = {10, 50, 100, 500, 1000};
         int[] nums = {10, 10, 20};
         PathfindingPerformanceTester tester = new PathfindingPerformanceTester(scenario);
-        System.out.print("Beginning performance tests on the algorithms.\n");
         long t = System.nanoTime();
         tester.run(algorithms, algoNames, nums);
         BigDecimal elapsedTime = new BigDecimal((System.nanoTime() - t) / 1000000000);
-        System.out.println(tester);
-        System.out.println("Performance tests ran in a total of "
-                + elapsedTime.round(new MathContext(3)) + " seconds.\n");
-        return tester.toString();
+        
+        String testResults = tester.toString() + "\nPerformance tests ran\nin a total of "
+                + elapsedTime.round(new MathContext(3)) + " seconds.";
+        return testResults;
     }
 
     @Override
@@ -177,7 +177,6 @@ public class Main extends Application {
     }
 
     private Scene initScene(Stage window, Grid grid, double tileSize) {
-        System.out.println("---------------------" + grid.getLength());
         Canvas pathCanvas = new Canvas(grid.getLength() * tileSize,
                 grid.getRowLength() * tileSize);
         pathGraphics = pathCanvas.getGraphicsContext2D();
@@ -201,7 +200,7 @@ public class Main extends Application {
     private ToolBar toolBar(Stage window, double tileSize) {
         ToolBar toolbar = new ToolBar();
         toolbar.setOrientation(Orientation.VERTICAL);
-        toolbar.setPadding(new Insets(20));
+        toolbar.setPadding(new Insets(15));
         toolbar.setBackground(new Background(new BackgroundFill(
                 Color.web("#130d14"), null, Insets.EMPTY)));
         int fontSize = 14;
@@ -227,7 +226,7 @@ public class Main extends Application {
         Separator separator2 = separator();
         Separator separator3 = separator();
 
-        Label mapsLabel = new Label("Switch between maps");
+        Label mapsLabel = new Label("Switch between maps: ");
         mapsLabel.setTextFill(Color.WHITE);
         mapsLabel.setFont(new Font(fontSize));
 
@@ -245,14 +244,18 @@ public class Main extends Application {
         });
         toolbar.getItems().add(mapButton);
 
-        Button performanceTestButton = new Button("Run performance tests");
+        Label perfTestLabel = new Label("WARNING:\n"
+                + "While the tests are running,\nthe application will be "
+                + "frozen\nfor a few seconds\nup to a few minutes.");
+        perfTestLabel.setTextFill(Color.WHITE);
+        Button perfTestButton = new Button("Run performance tests");
         Text testResults = new Text();
+        testResults.setTextAlignment(TextAlignment.CENTER);
         testResults.setFill(Color.WHITE);
-        performanceTestButton.setOnAction(value -> {
-            testResults.setText("Beginning performance tests on the algorithms.");
+        perfTestButton.setOnAction(value -> {
             testResults.setText(runPerformanceTests(scenario.getAlgorithms(), scenario.getAlgoNames()));
         });
-        toolbar.getItems().addAll(separator(), performanceTestButton, testResults);
+        toolbar.getItems().addAll(separator(), perfTestLabel, perfTestButton, testResults);
 
         return toolbar;
     }
@@ -309,7 +312,7 @@ public class Main extends Application {
      */
     private Separator separator() {
         Separator separator = new Separator(Orientation.VERTICAL);
-        separator.setPadding(new Insets(10));
+        separator.setPadding(new Insets(5));
         separator.setOpacity(0.5);
         return separator;
     }
