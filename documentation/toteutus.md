@@ -28,21 +28,13 @@ Käyttöliittymäikkunan sulkeminen, esimerkiksi yläkulman ruksipainikkeesta, l
 
 ### Ohjelmiston rakenne
 
-<<<<<<< HEAD
 Lähdekoodin juuressa <code>aastaar/src/main/java/mj/aastaar</code> on ohjelman käynnistyksestä ja graafisesta käyttöliittymästä huolehtiva <code>Main</code>, joka hyödyntää luokan <code>Scenario</code> ilmentävää polunetsintäskenaariota. <code>Scenarion</code> avulla kerätään algoritmien palauttamat polut ja ylläpidetään tietoa käytössä olevista lähtö- ja maalipisteestä sekä polunetsintäruudukosta.
-=======
-Lähdekoodin juuressa <code>aastaar/src/main/java/mj/aastaar</code> on ohjelman käynnistyksestä ja graafisesta käyttöliittymästä huolehtiva <code>Main</code>, joka hyödyntää luokan <code>Scenario</code> ilmentävää polunetsintäskenaariota. <code>Scenarion</code> avulla voidaan suorittaa polunetsintäalgoritmeja, ja sen attribuutteihin kuuluvat algoritmien lisäksi lähtö- ja maalipisteet sekä polunetsintäruudukko.
->>>>>>> visualAlgorithm
 
 Kansiossa <code>aastaar.map</code> on luokka <code>MapCreator</code>, joka luo tiedostonlukijan antaman datan perusteella kartan maastoa kuvaavan merkistötaulukon. Taulukon avulla alustetaan <code>Grid</code>-luokan ilmentymä, jonka jälkeen oliota voidaan käyttää tarkastelemaan polunetsintäruudukon soluja: tietyn solun saavutettavissa olevia naapureita, solujen / ruutujen / solmujen välisen "kaaripainon" laskemiseen ja niin edelleen. <code>Node</code>-luokka ylläpitää yhden ruudun koordinaatteja.
 
-<<<<<<< HEAD
 Algoritmit ja niiden lyhyimmän polun tilan tallentamiseen käyttävä <code>Path</code>-rajapinnan toteuttava luokka löytyvät hakemistosta <code>aastaar.algorithms</code>. <code>A*</code> perii <code>UniformCostSarchin</code>, erona on vain solmujen välisen matkan kustannukseen käytetty heuristiikka. Molemmat toteuttavat <code>PathfindingAlgorithm</code>-rajapinnan. Algoritmien käyttämä prioriteettijonototeutus löytyy kansiosta <code>aastaar.datastructures</code>. 
-=======
-Algoritmit ja niiden lyhyimmän polun tilan tallentamiseen käyttävä <code>Path</code>-rajapinnan toteuttava luokka löytyvät hakemistosta <code>aastaar.algorithms</code>. A* perii Uniform cost searchin, erona on vain solmujen välisen matkan kustannukseen käytetty heuristiikka. Molemmat toteuttavat <code>PathfindingAlgorithm</code>-rajapinnan. <code>AlgorithmVisualization</code> koostuu algoritmistä, sen palauttamista polunetsintään liittyvistä <code>Node</code>-taulukoista, sekä algoritmin nimestä ja polun piirtämiseen käytettävästä väristä. Algoritmien käyttämä prioriteettijonototeutus löytyy kansiosta <code>aastaar.datastructures</code>. 
->>>>>>> visualAlgorithm
 
-<code>aastaar.utils</code>-hakemisto sisältää tiedostonlukijan sekä algoritmien suorituskykytestaukseen käytettävän luokan <code>PathfindingPerformanceTester</code>.
+<code>aastaar.utils</code>-hakemisto sisältää tiedostonlukijan sekä algoritmien suorituskykytestaukseen käytettävän luokan <code>PathfindingPerformanceTester</code>. Pelikarttojen tiedostot löytyvät hakemistosta <code>aastaar/src/main/resources</code>.
 
 #### Luokkakaavio
 
