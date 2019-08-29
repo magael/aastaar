@@ -24,6 +24,7 @@ public class Scenario {
     private String[] pathColors;
     private PathfindingAlgorithm[] algorithms;
     private String[] algoNames;
+    private int gridIndex;
 
     /**
      * @return Grid The pathfinding grid
@@ -164,6 +165,14 @@ public class Scenario {
         this.cameFrom = cameFrom;
     }
 
+    public void setNextGrid() {
+        if (gridIndex >= grids.length - 1) {
+            gridIndex = -1;
+        }
+        grid = grids[++gridIndex];
+        System.out.println("+++++" + grid.getLength());
+    }
+
     /**
      * Running the specified algorithm, printing the shortest path length and
      * cost and adding the shortest path (array of nodes) for visualization.
@@ -211,8 +220,8 @@ public class Scenario {
 
     public void initGrids(String[] mapPaths) {
         grids = new Grid[mapPaths.length];
-        MapCreator mapCreator = new MapCreator();
         for (int i = 0; i < mapPaths.length; i++) {
+            MapCreator mapCreator = new MapCreator();
             mapCreator.createMapFromFile(mapPaths[i]);
             if (mapCreator.getGrid() != null) {
                 char[][] gridArray = mapCreator.getGrid();
@@ -222,6 +231,7 @@ public class Scenario {
             }
         }
         setGrid(grids[0]);
+        gridIndex = 0;
     }
 
     /**

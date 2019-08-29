@@ -44,6 +44,7 @@ public class Main extends Application {
     private static Scenario scenario;
     private GraphicsContext pathGraphics;
     private String showExplored;
+    private Scene currentScene;
 
     /**
      * The main program.
@@ -65,11 +66,10 @@ public class Main extends Application {
         String[] mapPaths = {"mapdata/wc3maps512-map/divideandconquer.map",
             "mapdata/wc3maps512-map/timbermawhold.map",
             "mapdata/wc3maps512-map/bootybay.map",
-            "mapdata/sc1-map/Aftershock.map",
-            "mapdata/dao-map/ost003d.map"};
+            "mapdata/sc1-map/Aftershock.map"};
         scenario.initGrids(mapPaths);
         scenario.initRandomPositions();
-        
+
         Grid grid = scenario.getGrid();
 
         if (scenario.getStart() == null || scenario.getGoal() == null) {
@@ -127,22 +127,50 @@ public class Main extends Application {
         Canvas pathCanvas = new Canvas(grid.getLength() * tileSize,
                 grid.getRowLength() * tileSize);
         pathGraphics = pathCanvas.getGraphicsContext2D();
-
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(tileCanvas(grid.getGrid2D(), tileSize));
-        
-        ToolBar toolbar = toolBar(tileSize);
+        ToolBar toolbar = toolBar(window, tileSize);
         borderPane.setRight(toolbar);
-
         colorStartAndGoal(tileSize);
         colorPaths(tileSize);
-
         ScrollPane scrollPane = new ScrollPane(new Group(borderPane, pathCanvas));
         Scene scene = new Scene(scrollPane);
+        if (currentScene == null) {
+            currentScene = scene;
+        }
+        window.setScene(currentScene);
 
-        window.setScene(scene);
+//        Button[] mapButtons = new Button[grids.length];
+//        for (int i = 0; i < grids.length; i++) {
+//            int j = i;
+//            Button mapButton = new Button(Integer.toString(i + 1));
+//            mapButton.setOnAction(value -> {
+//                scenario.setGrid(grids[j]);
+//                Scene newScene = initScene(grids[j], tileSize);
+//                window.setScene(newScene);
+//            });
+//            mapButtons[i] = mapButton;
+//        }
+//        HBox hBox = new HBox(mapButtons);
+//        toolbar.getItems().add(hBox);
         window.setTitle("Pathfinding visualization on game maps");
         window.show();
+    }
+
+    private Scene initScene(Stage window, Grid grid, double tileSize) {
+        System.out.println("---------------------" + grid.getLength());
+        Canvas pathCanvas = new Canvas(grid.getLength() * tileSize,
+                grid.getRowLength() * tileSize);
+        pathGraphics = pathCanvas.getGraphicsContext2D();
+        BorderPane borderPane = new BorderPane();
+        borderPane.setCenter(tileCanvas(grid.getGrid2D(), tileSize));
+        ToolBar toolbar = toolBar(window, tileSize);
+        borderPane.setRight(toolbar);
+        colorStartAndGoal(tileSize);
+        colorPaths(tileSize);
+        ScrollPane scrollPane = new ScrollPane(new Group(borderPane, pathCanvas));
+        Scene scene = new Scene(scrollPane);
+        return scene;
     }
 
     /**
@@ -151,7 +179,7 @@ public class Main extends Application {
      * @param tileSize The map tile size
      * @return JavaFX ToolBar object
      */
-    private ToolBar toolBar(double tileSize) {
+    private ToolBar toolBar(Stage window, double tileSize) {
         ToolBar toolbar = new ToolBar();
         toolbar.setOrientation(Orientation.VERTICAL);
         toolbar.setPadding(new Insets(20));
@@ -175,31 +203,27 @@ public class Main extends Application {
         final String[] exploredCoices = {"None", scenario.getAlgoNames()[0],
             scenario.getAlgoNames()[1]};
         ChoiceBox exploredBox = exploredBox(exploredCoices, tileSize);
-        
+
         Separator separator = separator();
         Separator separator2 = separator();
         Separator separator3 = separator();
-        
+
         Label mapsLabel = new Label("Switch between maps");
 
         toolbar.getItems().addAll(separator, randomPositionsLabel,
                 randomPositionsButton, separator2, exploredLabel, exploredBox,
                 separator3, mapsLabel);
-        
-        Grid[] grids = scenario.getGrids();
-        Button[] mapButtons = new Button[grids.length];
-        for (int i = 0; i < grids.length; i++) {
-            int j = i;
-            Button mapButton = new Button(Integer.toString(i + 1));
-            mapButton.setOnAction(value -> {
-                scenario.setGrid(grids[j]);
-                clickRandomPositions(tileSize);
-            });
-            mapButtons[i] = mapButton;
-        }
-        HBox hBox = new HBox(mapButtons);
-        toolbar.getItems().add(hBox);
-        
+
+        Button mapButton = new Button("Next");
+        mapButton.setOnAction(value -> {
+            scenario.setNextGrid();
+            Scene newScene = initScene(window, scenario.getGrid(), tileSize);
+            currentScene = newScene;
+            window.setScene(newScene);
+            window.show();
+        });
+        toolbar.getItems().add(mapButton);
+
         return toolbar;
     }
 
