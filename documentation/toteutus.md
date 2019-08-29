@@ -42,7 +42,7 @@ Algoritmit ja niiden lyhyimmän polun tilan tallentamiseen käyttävä <code>Pat
 
 ---
 
-### Algoritmien ja tietorakenteiden toteutus tarkemmin
+### Algoritmien ja tietorakenteiden toteutus
 
 Algoritmit käyttävät itse toteutettua prioriteettijonoa, eli minimikekoa. Algoritmit lopettavat haun ja palauttavat lyhyimmän reitin pituuden heti, kun maalisolmu löytyy jonosta.
 
@@ -58,11 +58,9 @@ Koodin yksinkertaistamiseksi ja tilavaatimuksen minimoimiseksi algoritmit eivät
 
 ### Jatkosuunnitelmia
 
-Tarkoitus on vielä toteuttaa algoritmeista eri variaatioita ja optimointeja: Esimerkiksi viistosuuntainen liikkuminen ja eri heuristiikkoja. Myös käyttöliittymää on tarkoitus kehittää: esim. antamalla käyttäjän valita useasta eri kartasta. Oman HashMapin toteuttaminen ja soveltaminen on myös korkealla prioriteettilistalla.
+Oman HashMapin toteuttaminen ja soveltaminen ovat korkealla prioriteettilistalla. Mikäli aikaa jää, niin olisi kiinnostavaa toteuttaa viistosuuntainen liikkuminen ja eri heuristiikkoja.
 
-Ohjelman tämänhetkinen tila vastaa pitkälti vaatimusmäärittelyssä määriteltyjä [perustoiminnallisuuksia](https://github.com/magael/aastaar/blob/master/documentation/maarittely.md#perustoiminnallisuuksia).
-
-Lisää suunnitelmia löytyy [vatimusmäärittelyn "edistyneitä"](https://github.com/magael/aastaar/blob/master/documentation/maarittely.md#edistyneit%C3%A4--jatkokehityksen-toiminnallisuuksia) kohdasta. Niistä ainakin polun painot on jo toteutettu.
+Ohjelman toteuttaa tällä hetkellä kaikki vaatimusmäärittelyssä määritellyt [perustoiminnallisuudet](https://github.com/magael/aastaar/blob/master/documentation/maarittely.md#perustoiminnallisuuksia) (BFS on poistettu koodista, koska sen ei koettu tuovan projektille paljoa lisäarvoa). Vatimusmäärittelyn kohdasta ["edistyneitä / jatkokehityksen toiminnallisuuksia"](https://github.com/magael/aastaar/blob/master/documentation/maarittely.md#edistyneit%C3%A4--jatkokehityksen-toiminnallisuuksia) ainakin polun painot ja kartan valinta käyttäjän syötteestä on jo toteutettu.
 
 Koodin seasta on siistitty pois erilliseen tiedostoon tiettyihin metodeihin liittyviä [TODO-muistiinpanoja](https://github.com/magael/aastaar/blob/master/documentation/todo.md).
 
