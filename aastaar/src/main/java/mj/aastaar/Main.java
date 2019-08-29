@@ -125,8 +125,8 @@ public class Main extends Application {
         ToolBar toolbar = toolBar(tileSize);
         borderPane.setRight(toolbar);
 
-        colorStartAndGoal(tileSize);
         colorPaths(tileSize);
+        colorStartAndGoal(tileSize);
 
         ScrollPane scrollPane = new ScrollPane(new Group(borderPane, pathCanvas));
         Scene scene = new Scene(scrollPane);
@@ -150,7 +150,7 @@ public class Main extends Application {
                 Color.web("#130d14"), null, Insets.EMPTY)));
         int fontSize = 14;
 
-        algorithmsLegend(fontSize, toolbar);
+        addAlgorithmsLegend(fontSize, toolbar);
 
         Label randomPositionsLabel = new Label("New random positions: ");
         randomPositionsLabel.setTextFill(Color.WHITE);
@@ -182,7 +182,7 @@ public class Main extends Application {
      * @param fontSize The font size used for the toolbar elements
      * @param toolbar
      */
-    private void algorithmsLegend(int fontSize, ToolBar toolbar) {
+    private void addAlgorithmsLegend(int fontSize, ToolBar toolbar) {
         Label colorsLabel = new Label("Shortest paths: ");
         colorsLabel.setTextFill(Color.WHITE);
         colorsLabel.setFont(new Font(fontSize));
@@ -213,8 +213,8 @@ public class Main extends Application {
                 if (!showExplored.equals("None")) {
                     colorExplored(tileSize);
                 }
-                colorStartAndGoal(tileSize);
                 colorPaths(tileSize);
+                colorStartAndGoal(tileSize);
             }
         });
         return exploredBox;
@@ -230,58 +230,6 @@ public class Main extends Application {
         separator.setPadding(new Insets(10));
         separator.setOpacity(0.5);
         return separator;
-    }
-
-    /**
-     * Handling the user clicking the "New random positions"-button.
-     *
-     * @param tileSize The map tile size
-     */
-    private void clickRandomPositions(double tileSize) {
-        clearStartAndGoalColors(tileSize);
-        clearPaths(tileSize);
-        clearExplored(tileSize);
-        scenario.initRandomPositions();
-        PathfindingAlgorithm[] algorithms = scenario.getAlgorithms();
-        String[] algoNames = scenario.getAlgoNames();
-        for (int i = 0; i < algorithms.length; i++) {
-            scenario.runPathfindingAlgorithm(algorithms[i], algoNames[i], i);
-        }
-
-        if (showExplored != null && !showExplored.equals("None")) {
-            colorExplored(tileSize);
-        }
-        colorStartAndGoal(tileSize);
-        colorPaths(tileSize);
-    }
-
-    /**
-     * Coloring the start and goal nodes.
-     *
-     * @param tileSize The map tile size
-     */
-    private void colorStartAndGoal(double tileSize) {
-        Node start = scenario.getStart();
-        Node goal = scenario.getGoal();
-        Color startColor = Color.RED;
-        Color goalColor = Color.LAWNGREEN;
-
-        pathGraphics.setFill(startColor);
-        pathGraphics.fillRect((int) (start.getY() * tileSize), (int) (start.getX() * tileSize), tileSize, tileSize);
-        pathGraphics.setFill(goalColor);
-        pathGraphics.fillRect((int) (goal.getY() * tileSize), (int) (goal.getX() * tileSize), tileSize, tileSize);
-    }
-
-    /**
-     * Clearing the start and goal colors.
-     *
-     * @param tileSize The map tile size
-     */
-    private void clearStartAndGoalColors(double tileSize) {
-        Node start = scenario.getStart();
-        Node goal = scenario.getGoal();
-        pathGraphics.clearRect((int) (start.getY() * tileSize), (int) (start.getX() * tileSize), tileSize, tileSize);
-        pathGraphics.clearRect((int) (goal.getY() * tileSize), (int) (goal.getX() * tileSize), tileSize, tileSize);
     }
 
     /**
@@ -302,6 +250,63 @@ public class Main extends Application {
             }
         }
         return tileCanvas;
+    }
+
+    /**
+     * Handling the user clicking the "New random positions"-button.
+     *
+     * @param tileSize The map tile size
+     */
+    private void clickRandomPositions(double tileSize) {
+        clearPaths(tileSize);
+        clearStartAndGoalColors(tileSize);
+        clearExplored(tileSize);
+        scenario.initRandomPositions();
+        PathfindingAlgorithm[] algorithms = scenario.getAlgorithms();
+        String[] algoNames = scenario.getAlgoNames();
+        for (int i = 0; i < algorithms.length; i++) {
+            scenario.runPathfindingAlgorithm(algorithms[i], algoNames[i], i);
+        }
+
+        if (showExplored != null && !showExplored.equals("None")) {
+            colorExplored(tileSize);
+        }
+        colorPaths(tileSize);
+        colorStartAndGoal(tileSize);
+    }
+
+    /**
+     * Coloring the start and goal nodes.
+     *
+     * @param tileSize The map tile size
+     */
+    private void colorStartAndGoal(double tileSize) {
+        Node start = scenario.getStart();
+        Node goal = scenario.getGoal();
+        Color startColor = Color.RED;
+        Color goalColor = Color.LAWNGREEN;
+        Color strokeColor = Color.web("#130d14");
+
+        pathGraphics.setStroke(strokeColor);
+        pathGraphics.setLineWidth(tileSize + 1);
+        pathGraphics.strokeRect((int) (start.getY() * tileSize), (int) (start.getX() * tileSize), tileSize, tileSize);
+        pathGraphics.strokeRect((int) (goal.getY() * tileSize), (int) (goal.getX() * tileSize), tileSize, tileSize);
+        pathGraphics.setFill(startColor);
+        pathGraphics.fillRect((int) (start.getY() * tileSize), (int) (start.getX() * tileSize), tileSize, tileSize);
+        pathGraphics.setFill(goalColor);
+        pathGraphics.fillRect((int) (goal.getY() * tileSize), (int) (goal.getX() * tileSize), tileSize, tileSize);
+    }
+
+    /**
+     * Clearing the start and goal colors.
+     *
+     * @param tileSize The map tile size
+     */
+    private void clearStartAndGoalColors(double tileSize) {
+        Node start = scenario.getStart();
+        Node goal = scenario.getGoal();
+        pathGraphics.clearRect((int) (start.getY() * tileSize) - tileSize, (int) (start.getX() * tileSize) - tileSize, (tileSize * tileSize) + tileSize, (tileSize * tileSize) + tileSize);
+        pathGraphics.clearRect((int) (goal.getY() * tileSize) - tileSize, (int) (goal.getX() * tileSize) - tileSize, (tileSize * tileSize) + tileSize, (tileSize * tileSize) + tileSize);
     }
 
     /**
