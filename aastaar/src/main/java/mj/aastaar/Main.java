@@ -3,9 +3,11 @@ package mj.aastaar;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Group;
@@ -25,6 +27,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import mj.aastaar.algorithms.AStar;
 import mj.aastaar.algorithms.PathfindingAlgorithm;
 import mj.aastaar.algorithms.UniformCostSearch;
@@ -88,11 +91,10 @@ public class Main extends Application {
                 scenario.runPathfindingAlgorithm(algorithms[i], algoNames[i], i);
             }
 
-            System.out.println("Launching visualization. "
-                    + "Closing the window will begin performance testing.\n");
+            System.out.println("Launching visualization. ");
             launch(Main.class);
 
-            runPerformanceTests(algorithms, algoNames);
+//            runPerformanceTests(algorithms, algoNames);
         }
     }
 
@@ -103,9 +105,21 @@ public class Main extends Application {
      * @param algorithms The algorithms that are tested
      * @param algoNames The names of the algorithms that are
      */
-    private static void runPerformanceTests(PathfindingAlgorithm[] algorithms, String[] algoNames) {
+//    private static void runPerformanceTests(PathfindingAlgorithm[] algorithms, String[] algoNames) {
+////        int[] nums = {10, 50, 100, 500, 1000};
+//        int[] nums = {10, 10, 20, 30, 50};
+//        PathfindingPerformanceTester tester = new PathfindingPerformanceTester(scenario);
+//        System.out.print("Beginning performance tests on the algorithms.\n");
+//        long t = System.nanoTime();
+//        tester.run(algorithms, algoNames, nums);
+//        BigDecimal elapsedTime = new BigDecimal((System.nanoTime() - t) / 1000000000);
+//        System.out.println(tester);
+//        System.out.println("Performance tests ran in a total of "
+//                + elapsedTime.round(new MathContext(3)) + " seconds.\n");
+//    }
+    private static String runPerformanceTests(PathfindingAlgorithm[] algorithms, String[] algoNames) {
 //        int[] nums = {10, 50, 100, 500, 1000};
-        int[] nums = {10, 10, 20, 30, 50};
+        int[] nums = {10, 10, 20};
         PathfindingPerformanceTester tester = new PathfindingPerformanceTester(scenario);
         System.out.print("Beginning performance tests on the algorithms.\n");
         long t = System.nanoTime();
@@ -114,6 +128,7 @@ public class Main extends Application {
         System.out.println(tester);
         System.out.println("Performance tests ran in a total of "
                 + elapsedTime.round(new MathContext(3)) + " seconds.\n");
+        return tester.toString();
     }
 
     @Override
@@ -149,6 +164,14 @@ public class Main extends Application {
 //        }
 //        HBox hBox = new HBox(mapButtons);
 //        toolbar.getItems().add(hBox);
+        window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
+
         window.setTitle("Pathfinding visualization on game maps");
         window.show();
     }
@@ -185,6 +208,13 @@ public class Main extends Application {
 
         algorithmsLegend(fontSize, toolbar);
 
+        Label exploredLabel = new Label("Visualize explored nodes: ");
+        exploredLabel.setTextFill(Color.WHITE);
+        exploredLabel.setFont(new Font(fontSize));
+        final String[] exploredCoices = {"None", scenario.getAlgoNames()[0],
+            scenario.getAlgoNames()[1]};
+        ChoiceBox exploredBox = exploredBox(exploredCoices, tileSize);
+
         Label randomPositionsLabel = new Label("New random positions: ");
         randomPositionsLabel.setTextFill(Color.WHITE);
         randomPositionsLabel.setFont(new Font(fontSize));
@@ -193,21 +223,16 @@ public class Main extends Application {
             clickRandomPositions(tileSize);
         });
 
-        Label exploredLabel = new Label("Visualize explored nodes: ");
-        exploredLabel.setTextFill(Color.WHITE);
-        exploredLabel.setFont(new Font(fontSize));
-        final String[] exploredCoices = {"None", scenario.getAlgoNames()[0],
-            scenario.getAlgoNames()[1]};
-        ChoiceBox exploredBox = exploredBox(exploredCoices, tileSize);
-
         Separator separator = separator();
         Separator separator2 = separator();
         Separator separator3 = separator();
 
         Label mapsLabel = new Label("Switch between maps");
+        mapsLabel.setTextFill(Color.WHITE);
+        mapsLabel.setFont(new Font(fontSize));
 
-        toolbar.getItems().addAll(separator, randomPositionsLabel,
-                randomPositionsButton, separator2, exploredLabel, exploredBox,
+        toolbar.getItems().addAll(separator, exploredLabel, exploredBox,
+                separator2, randomPositionsLabel, randomPositionsButton,
                 separator3, mapsLabel);
 
         Button mapButton = new Button("Next");
@@ -215,11 +240,19 @@ public class Main extends Application {
             scenario.setNextGrid();
             initAlgorithms(scenario.getGrid());
             Scene newScene = initScene(window, scenario.getGrid(), tileSize);
-//            clickRandomPositions(tileSize);
             window.setScene(newScene);
             window.show();
         });
         toolbar.getItems().add(mapButton);
+
+        Button performanceTestButton = new Button("Run performance tests");
+        Text testResults = new Text();
+        testResults.setFill(Color.WHITE);
+        performanceTestButton.setOnAction(value -> {
+            testResults.setText("Beginning performance tests on the algorithms.");
+            testResults.setText(runPerformanceTests(scenario.getAlgorithms(), scenario.getAlgoNames()));
+        });
+        toolbar.getItems().addAll(separator(), performanceTestButton, testResults);
 
         return toolbar;
     }
@@ -466,20 +499,27 @@ public class Main extends Application {
         return color;
     }
 
+    //TODO: 
     private void initAlgorithms(Grid grid) {
         scenario.initRandomPositions();
-        String cyan = "#00FFFF";
-        String magenta = "#FF00FF";
-        String[] pathColors = {cyan, magenta};
-        scenario.setPathColors(pathColors);
-        scenario.setShortestPaths(new Node[pathColors.length][]);
+        if (scenario.getStart() == null || scenario.getGoal() == null) {
+            System.out.println("Error initializing start and goal positions");
+        } else if (grid == null || grid.getGrid2D() == null || grid.getLength() < 1) {
+            System.out.println("Error creating a pathfinding grid");
+        } else {
+            String cyan = "#00FFFF";
+            String magenta = "#FF00FF";
+            String[] pathColors = {cyan, magenta};
+            scenario.setPathColors(pathColors);
+            scenario.setShortestPaths(new Node[pathColors.length][]);
 
-        PathfindingAlgorithm[] algorithms = {new UniformCostSearch(grid), new AStar(grid)};
-        scenario.setAlgorithms(algorithms);
-        String[] algoNames = {"Dijkstra", "A*"};
-        scenario.setAlgoNames(algoNames);
-        for (int i = 0; i < algorithms.length; i++) {
-            scenario.runPathfindingAlgorithm(algorithms[i], algoNames[i], i);
+            PathfindingAlgorithm[] algorithms = {new UniformCostSearch(grid), new AStar(grid)};
+            scenario.setAlgorithms(algorithms);
+            String[] algoNames = {"Dijkstra", "A*"};
+            scenario.setAlgoNames(algoNames);
+            for (int i = 0; i < algorithms.length; i++) {
+                scenario.runPathfindingAlgorithm(algorithms[i], algoNames[i], i);
+            }
         }
     }
 }
