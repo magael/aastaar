@@ -34,8 +34,6 @@ public class PathfindingPerformanceTester {
     /**
      * Running performance tests on pathfinding algorithms.
      *
-     * @param algorithms The algorithms that are tested
-     * @param names The names of the algorithms that are tested
      * @param nums Array of numbers n, where n is the number of times the tests
      * are run
      */

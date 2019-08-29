@@ -51,14 +51,26 @@ public class Scenario {
         return goal;
     }
 
+    /**
+     *
+     * @return
+     */
     public Grid[] getGrids() {
         return grids;
     }
 
+    /**
+     *
+     * @return
+     */
     public AlgorithmVisualization[] getAlgorithmVisuals() {
         return algorithmVisuals;
     }
 
+    /**
+     *
+     * @param algorithmVisuals
+     */
     public void setAlgorithmVisuals(AlgorithmVisualization[] algorithmVisuals) {
         this.algorithmVisuals = algorithmVisuals;
     }
@@ -84,6 +96,9 @@ public class Scenario {
         this.goal = goal;
     }
 
+    /**
+     *
+     */
     public void setNextGrid() {
         if (gridIndex >= grids.length - 1) {
             gridIndex = -1;
@@ -91,6 +106,10 @@ public class Scenario {
         grid = grids[++gridIndex];
     }
 
+    /**
+     *
+     * @param gridIndex
+     */
     public void setGridIndex(int gridIndex) {
         this.gridIndex = gridIndex;
     }
@@ -131,15 +150,19 @@ public class Scenario {
         goal = randomGoal;
     }
 
-    public void initGrids(String[] mapPaths) {
+    /**
+     *
+     * @param mapPaths
+     * @param impassable
+     * @param heavyEdgeWeight
+     */
+    public void initGrids(String[] mapPaths, char[] impassable, double heavyEdgeWeight) {
         grids = new Grid[mapPaths.length];
         for (int i = 0; i < mapPaths.length; i++) {
             MapCreator mapCreator = new MapCreator();
             mapCreator.createMapFromFile(mapPaths[i]);
             if (mapCreator.getGrid() != null) {
                 char[][] gridArray = mapCreator.getGrid();
-                char[] impassable = {'T', 'W', '@'};
-                double heavyEdgeWeight = 2.0;
                 grids[i] = new Grid(gridArray, impassable, heavyEdgeWeight);
             }
         }
