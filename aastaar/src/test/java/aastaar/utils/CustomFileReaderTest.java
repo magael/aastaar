@@ -28,8 +28,8 @@ public class CustomFileReaderTest {
         reader.readFile(filePath);
         String[] dataArray = reader.getDataArray();
         assertEquals("type octile", dataArray[0]);
-        assertEquals("width 4", dataArray[1]);
-        assertEquals("height 4", dataArray[2]);
+        assertEquals("height 4", dataArray[1]);
+        assertEquals("width 4", dataArray[2]);
         assertEquals("map", dataArray[3]);
         assertEquals("T@@T", dataArray[4]);
         assertEquals("T..T", dataArray[5]);

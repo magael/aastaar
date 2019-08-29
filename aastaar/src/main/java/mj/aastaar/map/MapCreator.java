@@ -103,9 +103,9 @@ public class MapCreator {
      */
     private void handleMapRow(int row, String mapDataLine) {
         if (row == 1) {
-            mapHeight = Integer.parseInt(mapDataLine.split(" ")[1]);
+            mapHeight = Integer.parseInt(mapDataLine.substring("height ".length()));
         } else if (row == 2) {
-            mapWidth = Integer.parseInt(mapDataLine.split(" ")[1]);
+            mapWidth = Integer.parseInt(mapDataLine.substring("width ".length()));
         } else if (row > 3) {
             if (grid.length < 1) {
                 grid = new char[mapHeight][mapWidth];

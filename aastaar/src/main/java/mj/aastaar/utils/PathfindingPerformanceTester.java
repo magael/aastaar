@@ -3,6 +3,7 @@ package mj.aastaar.utils;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import mj.aastaar.Scenario;
+import mj.aastaar.algorithms.AlgorithmVisualization;
 import mj.aastaar.algorithms.PathfindingAlgorithm;
 import mj.aastaar.map.Node;
 
@@ -15,7 +16,6 @@ import mj.aastaar.map.Node;
 public class PathfindingPerformanceTester {
 
     private Scenario scenario;
-    private String[] names;
     private int[] nums;
     private double[][] times;
     private Node[][] startNodes;
@@ -34,25 +34,23 @@ public class PathfindingPerformanceTester {
     /**
      * Running performance tests on pathfinding algorithms.
      *
-     * @param algorithms The algorithms that are tested
-     * @param names The names of the algorithms that are tested
      * @param nums Array of numbers n, where n is the number of times the tests
      * are run
      */
-    public void run(PathfindingAlgorithm[] algorithms, String[] names, int[] nums) {
+    public void run(int[] nums) {
+        AlgorithmVisualization[] algoVisuals = scenario.getAlgorithmVisuals();
         if (scenario.getGrid() == null || scenario.getGrid2D() == null
                 || scenario.getGrid().getLength() < 1) {
             System.out.println("The scenario has no grid. Aborting tests.");
             return;
         }
-        this.names = names;
         this.nums = nums;
-        times = new double[algorithms.length][nums.length];
+        times = new double[algoVisuals.length][nums.length];
         initRandomPositions();
 
-        for (int i = 0; i < algorithms.length; i++) {
+        for (int i = 0; i < algoVisuals.length; i++) {
             for (int j = 0; j < nums.length; j++) {
-                times[i][j] = testAlgorithm(algorithms[i], j, nums[j]);
+                times[i][j] = testAlgorithm(algoVisuals[i].getAlgorithm(), j, nums[j]);
             }
         }
     }
@@ -60,9 +58,9 @@ public class PathfindingPerformanceTester {
     @Override
     public String toString() {
         String results = "";
-        results += "Average runtime of pathfinding between two random points:\n";
+        results += "Average runtime of\npathfinding between\ntwo random points:\n";
         for (int i = 0; i < times.length; i++) {
-            results += "\n" + names[i] + "\n";
+            results += "\n" + scenario.getAlgorithmVisuals()[i].getName() + "\n";
             for (int j = 0; j < times[i].length; j++) {
                 int n = nums[j];
                 BigDecimal ms = new BigDecimal(times[i][j] / 1000000);

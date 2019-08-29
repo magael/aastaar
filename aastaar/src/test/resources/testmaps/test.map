@@ -1,6 +1,6 @@
 type octile
-width 4
 height 4
+width 4
 map
 T@@T
 T..T

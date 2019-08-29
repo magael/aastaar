@@ -92,9 +92,4 @@ public class Node {
         }
         return true;
     }
-
-//    @Override
-//    public String toString() {
-//        return "[" + this.x + ", " + this.y + "]";
-//    }
 }

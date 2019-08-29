@@ -15,7 +15,9 @@ Testikattavuus löytyy komennolla <code>gradle test jacocoTestReport</code> ja n
 
 ### Suorituskykytestit
 
-Polunetsinnän suorituskykytestit ajetaan automaattisesti sen jälkeen, kun käyttäjä on sulkenut visuaalisaatioon käytetyn käyttöliittymäikkunan.
+Polunetsinnän suorituskykytestit voidaan ajaa käyttöliittymäikkunassa napista "Run performance tests". Tällä hetkellä testeille annetaan suoritettavaksi kovakoodatun joukon kierroksia {10, 10, 20}. Testit vievät omalla koneellani n. 24 sekuntia.
+
+Kierrosjoukkoa voidaan muokata lähdekoodista, <code>Main</code>-luokan metodista <code>runPerformanceTests</code>. Tulokset voidaan myös esimerkiksi tulostaa konsoliin komennolla <code>System.out.println(runPerformanceTests(scenario.getAlgorithmVisuals()));</code>.
 
 Suorituskykytestit ottavat mallia kurssin testausmateriaaleista, mutta sovellus on erilainen ja toistoja tulee eri määrä.
 
@@ -56,7 +58,5 @@ Esimerkissä käytettiin Warcraft 3 -pelin Divide and Conquer -karttaa 512 * 512
 Suoritustestaamista edeltää alustus, jossa eri toistokerroille arvotaan lähtö- ja maalipisteet. Eri kierroksilla käytetään (arvonnasta riippuen) eri sijainteja, mutta eri algoritmit käyttävät samoja sijainteja.
 
 A* on esimerkin ja muiden testien perusteella noin kolme-neljä kertaa niin nopea, kuin Dijkstra (Uniform cost search).
-
-Dijkstran suhteessa paljon suuremmat ajat pienillä toistoilla tarkoittavat varmaan, että erittäin hitaita ääritapauksia on runsaasti, ja niiden vaikutus keskiarvoihin hiipuu vasta suuremmilla toistoilla.
 
 Algoritmeja on testattu myös "visited"-taulukolla ja ilman (erillisillä kopioilla algoritmiluokista, joissa visited on käytössä). Visited-merkinnällä voidaan luoda tarkistus, onko jonon kärjestä juuri poistetu solmu käsitelty aiemmin. Tarkistus tehdään ennen haun laajennusta seuraaviin vierussolmuihin. Taulukon alustus ja tarkistus vievät tilaa ja aikaa, mutta ilman niitä saatetaan tarkastella turhaan samaa solmua useamman kerran. Suoritusajat vaihtelivat, mutta mitään suurta tai selkeää eroa en onnistunut saamaan. Päätin toistaiseksi poistaa kommentoidut visited-merkinnät koodista. Näin koodi on yksinkertaisempaa ja algoritmit varaavat hieman vähemmän tilaa. Aiempia toteutuksia löytyy repositorion commit-historiasta ja eri brancheista.

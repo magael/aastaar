@@ -1,6 +1,7 @@
 package mj.aastaar;
 
 import java.util.Random;
+import mj.aastaar.algorithms.AlgorithmVisualization;
 import mj.aastaar.algorithms.PathfindingAlgorithm;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.MapCreator;
@@ -16,13 +17,11 @@ import mj.aastaar.map.Node;
 public class Scenario {
 
     private Grid grid;
+    private Grid[] grids;
     private Node start;
     private Node goal;
-    private Node[][] shortestPaths;
-    private Node[][][] cameFrom;
-    private String[] pathColors;
-    private PathfindingAlgorithm[] algorithms;
-    private String[] algoNames;
+    private AlgorithmVisualization[] algorithmVisuals;
+    private int gridIndex;
 
     /**
      * @return Grid The pathfinding grid
@@ -53,49 +52,27 @@ public class Scenario {
     }
 
     /**
-     * @return Array of shortest paths (as node arrays)
+     *
+     * @return The pathfinding grids
      */
-    public Node[][] getShortestPaths() {
-        return shortestPaths;
-    }
-
-    /**
-     * @return Color hexadecimal representations for shortest path visualization
-     */
-    public String[] getPathColors() {
-        return pathColors;
+    public Grid[] getGrids() {
+        return grids;
     }
 
     /**
      *
-     * @param algoName Name of the algorithm which has explored the requested
-     * nodes
-     * @return The nodes explored by a pathfinding algorithm
+     * @return
      */
-    public Node[][] getCameFrom(String algoName) {
-        int index = 0;
-        for (int i = 0; i < algoNames.length; i++) {
-            if (algoNames[i].equals(algoName)) {
-                index = i;
-            }
-        }
-        return cameFrom[index];
+    public AlgorithmVisualization[] getAlgorithmVisuals() {
+        return algorithmVisuals;
     }
 
     /**
      *
-     * @return Names of algorithms
+     * @param algorithmVisuals
      */
-    public String[] getAlgoNames() {
-        return algoNames;
-    }
-
-    /**
-     *
-     * @return Pathfinding algorithms
-     */
-    public PathfindingAlgorithm[] getAlgorithms() {
-        return algorithms;
+    public void setAlgorithmVisuals(AlgorithmVisualization[] algorithmVisuals) {
+        this.algorithmVisuals = algorithmVisuals;
     }
 
     /**
@@ -120,59 +97,47 @@ public class Scenario {
     }
 
     /**
-     * @param shortestPaths Array of shortest paths (as node arrays)
+     * Set the next grid in the array of Grids
      */
-    public void setShortestPaths(Node[][] shortestPaths) {
-        this.shortestPaths = shortestPaths;
+    public void setNextGrid() {
+        if (gridIndex >= grids.length - 1) {
+            gridIndex = -1;
+        }
+        grid = grids[++gridIndex];
+    }
+    
+    /**
+     * Set the next grid in the array of Grids
+     */
+    public void setPreviousGrid() {
+        if (gridIndex <= 0) {
+            gridIndex = grids.length;
+        }
+        grid = grids[--gridIndex];
     }
 
     /**
-     * @param pathColors Colors as hex strings for shortest path visualization
+     * Set the index for the Grid array
+     * 
+     * @param gridIndex index for the Grid array
      */
-    public void setPathColors(String[] pathColors) {
-        this.pathColors = pathColors;
+    public void setGridIndex(int gridIndex) {
+        this.gridIndex = gridIndex;
     }
 
     /**
+     * Running the specified algorithm, adding the shortest path (array of
+     * nodes) for visualization.
      *
-     * @param algoNames Names of algorithms
+     * @param algorithmVisual Composition of an algorithm, name and color etc.
      */
-    public void setAlgoNames(String[] algoNames) {
-        this.algoNames = algoNames;
-    }
-
-    /**
-     *
-     * @param algorithms Pathfinding algorithms
-     */
-    public void setAlgorithms(PathfindingAlgorithm[] algorithms) {
-        setCameFrom(new Node[algorithms.length][][]);
-        this.algorithms = algorithms;
-    }
-
-    /**
-     *
-     * @param cameFrom The nodes explored by the different pathfinding
-     * algorithms
-     */
-    public void setCameFrom(Node[][][] cameFrom) {
-        this.cameFrom = cameFrom;
-    }
-
-    /**
-     * Running the specified algorithm, printing the shortest path length and
-     * cost and adding the shortest path (array of nodes) for visualization.
-     *
-     * @param algorithm Object implementing the PathFindingAlgorithm interface
-     * @param name What the algorithm is called
-     * @param i Index for the shortestPaths array
-     */
-    public void runPathfindingAlgorithm(PathfindingAlgorithm algorithm, String name, int i) {
+    public void runPathfindingAlgorithm(AlgorithmVisualization algorithmVisual) {
+        PathfindingAlgorithm algorithm = algorithmVisual.getAlgorithm();
         int pathLength = algorithm.search(start, goal, 4);
-        System.out.print(name + " shortest path length: " + pathLength);
+        System.out.print(algorithmVisual.getName() + " shortest path length: " + pathLength);
         System.out.println(", cost: " + algorithm.getCost(goal) + "\n");
-        shortestPaths[i] = algorithm.getPath().shortestPath(goal, start, pathLength);
-        cameFrom[i] = algorithm.getPath().cameFrom;
+        algorithmVisual.setShortestPath(algorithm.getPath().shortestPath(goal, start, pathLength));
+        algorithmVisual.setCameFrom(algorithm.getPath().cameFrom);
     }
 
     /**
@@ -197,32 +162,23 @@ public class Scenario {
     }
 
     /**
-     * Create the pathfinding grid based on a specific map.
+     *  Initialize Grids for maps based on map file data.
+     * 
+     * @param mapPaths Map data file paths
+     * @param impassable Characters representing impassable terrain
+     * @param heavyEdgeWeight Edge weight for passing through heavier terrain
      */
-    public void initConfig() {
-        initDefaultGrid();
-        initRandomPositions();
-    }
-
-    /**
-     * Initializing an example map and a grid representation for it, along with
-     * character representations of map nodes that are marked impassable for
-     * pathfinding, and the penalty for moving through heavier terrain, in this
-     * case "shallow water". The Warcraft 3 maps (wc3maps512-map/*) contain
-     * shallow water.
-     */
-    private void initDefaultGrid() {
-        MapCreator mapCreator = new MapCreator();
-//        mapCreator.createMapFromFile("mapdata/dao-map/ost003d.map");
-//        mapCreator.createMapFromFile("mapdata/sc1-map/Aftershock.map");
-        mapCreator.createMapFromFile("mapdata/wc3maps512-map/divideandconquer.map");
-//        mapCreator.createMapFromFile("mapdata/wc3maps512-map/bootybay.map");
-//        mapCreator.createMapFromFile("mapdata/wc3maps512-map/timbermawhold.map");
-        if (mapCreator.getGrid() != null) {
-            char[][] gridArray = mapCreator.getGrid();
-            char[] impassable = {'T', 'W', '@'};
-            double heavyEdgeWeight = 2.0;
-            grid = new Grid(gridArray, impassable, heavyEdgeWeight);
+    public void initGrids(String[] mapPaths, char[] impassable, double heavyEdgeWeight) {
+        grids = new Grid[mapPaths.length];
+        for (int i = 0; i < mapPaths.length; i++) {
+            MapCreator mapCreator = new MapCreator();
+            mapCreator.createMapFromFile(mapPaths[i]);
+            if (mapCreator.getGrid() != null) {
+                char[][] gridArray = mapCreator.getGrid();
+                grids[i] = new Grid(gridArray, impassable, heavyEdgeWeight);
+            }
         }
+        setGrid(grids[0]);
+        gridIndex = 0;
     }
 }
