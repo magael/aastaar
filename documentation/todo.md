@@ -13,10 +13,6 @@
   * for each line in mapFilePaths: add to grids
   * or maybe init one grid at a time when the user chooses a map
 
-#### initDefaultPositions()
-
-* no magic numbers
-
 ---
 
 ### PathWithArray

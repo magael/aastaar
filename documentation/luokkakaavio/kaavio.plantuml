@@ -17,6 +17,7 @@ package aastaar {
 
   package algorithms {
     class AStar
+    class AlgorithmVisualization
     class UniformCostSearch
     interface PathfindingAlgorithm <<interface>>
 
@@ -37,28 +38,35 @@ package aastaar {
 }
 
 Main --> Scenario
-Main ..> PathfindingAlgorithm
+Main ..> AlgorithmVisualization
 Main ..> AStar
+Main ..> Grid
+Main ..> Node
 Main ..> UniformCostSearch
 Main ..> PathfindingPerformanceTester
 
+Scenario --> AlgorithmVisualization
 Scenario --> Grid
 Scenario ..> MapCreator
-Scenario -left-> Node
-Scenario --> PathfindingAlgorithm
+Scenario --> Node
+Scenario ..> PathfindingAlgorithm
 
 MapCreator --> CustomFileReader
 
-PathfindingPerformanceTester ..> Scenario
-PathfindingPerformanceTester ..> Node
+PathfindingPerformanceTester --> Scenario
+PathfindingPerformanceTester --> Node
 PathfindingPerformanceTester ..> PathfindingAlgorithm
+PathfindingPerformanceTester ..> AlgorithmVisualization
+
+AlgorithmVisualization --> Node
+AlgorithmVisualization -o PathfindingAlgorithm
 
 PathfindingAlgorithm ..> Path
 PathfindingAlgorithm ..> Node
 PathfindingAlgorithm <|.. UniformCostSearch
 PathfindingAlgorithm <|.. AStar
 
-UniformCostSearch <|-up AStar
+UniformCostSearch <|- AStar
 UniformCostSearch ..> CustomPriorityQueue
 UniformCostSearch ..> PathWithArray
 UniformCostSearch ..> Node

@@ -6,7 +6,8 @@ Työtunteja kertyi yhteensä noin 12h.
 
 #### Huomioita:
 
-* 
+* Uusi AlgorithmVisualization-luokka myös excludettu jacoco-raportista: Sisältää vain yksinkertaisia gettereitä ja settereitä.
+
 ---
 
 #### Ma 26.8.
@@ -20,3 +21,6 @@ GUI-juttuja: Kartan, pisteiden ja polkujen renderöinti uudella, nopeammalla tav
 #### Ke 28.8.
 
 Vertaispalaute vajaa 2h.
+
+#### To 29.8.
+
