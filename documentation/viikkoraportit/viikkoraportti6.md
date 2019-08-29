@@ -6,6 +6,8 @@ Työtunteja kertyi yhteensä noin 12h.
 
 #### Huomioita:
 
+* Kun edelliset viikot meni pitkälti dokumentointiin, testailuun, tietorakenteisiin jne., niin tekikin mieli keskittyä tällä viikolla käyttöliittymään ynnä muuhun. Oma HashMappi olisi vielä listan kärjessä ensi viikolle. Joitain suunnitelmia sitten vaan jää tämän kurssin puitteissa toteuttamatta, kun uudet kurssit puskee päälle.
+
 * Uusi AlgorithmVisualization-luokka myös excludettu jacoco-raportista: Sisältää vain yksinkertaisia gettereitä ja settereitä.
 
 ---
@@ -20,7 +22,7 @@ GUI-juttuja: Kartan, pisteiden ja polkujen renderöinti uudella, nopeammalla tav
 
 #### Ke 28.8.
 
-Vertaispalaute vajaa 2h.
+Vertaispalaute. Pientä kälin säätöä, mm. polun pisteille ääriivivat. N. 2h.
 
 #### To 29.8.
 

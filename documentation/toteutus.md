@@ -14,19 +14,25 @@ Karttoihin sovelletaan Dijkstran algoritmin Uniform cost search -variaatiota (jo
 
 Algoritmien suoritusten jälkeen avataan graafisen käyttöliittymän ikkuna, jossa kartan maasto on visualisoitu kuvaavin värein. Eri algoritmien löytämät lyhyimmät polut, sekä alku- ja maalipisteet ovat meritty kirkkain värein.
 
-Käyttöliittymän oikeassa reunassa on valikko, jossa kerrotaan käytetyt algoritmit ja värit. Valikossa on myös nappi, jonka avulla käyttäjä voi alustaa uudet satunnaiset lähtö- ja maalipisteet. Uusien pisteiden valinta pyyhkii välittömästi vanhat pisteet ja reitit pois, suorittaa algoritmit uudelleen ja piirtää uudet pisteet ja polut. Tämän lisäksi valikkopalkissa on valikkonappi, jonka avulla käyttäjä voi halutessaan piirtää kartalle esityksen kunkin algoritmin tarkastelemat ruuduista.
+Käyttöliittymän oikeassa reunassa on työkalupalkki, jossa kerrotaan käytetyt algoritmit ja värit. Palkissaa on myös nappi, jonka avulla käyttäjä voi alustaa uudet satunnaiset lähtö- ja maalipisteet. Uusien pisteiden valinta pyyhkii välittömästi vanhat pisteet ja reitit pois, suorittaa algoritmit uudelleen ja piirtää uudet pisteet ja polut.
 
-Käyttöliittymäikkunan sulkemisen jälkeen aloitetaan suorituskykytestaus. Kun testit on suoritettu, tulokset tulostetaan konsoliin.
+Työkalupalkissa on lisäksi valikkonappi, jonka avulla käyttäjä voi halutessaan piirtää kartalle esityksen kunkin algoritmin tarkastelemat ruuduista.
+
+Käyttäjä voi valita useasta eri kartasta, joko "Previous" ja "Next", tai numeroiduista napeista.
+
+Alimpana on painike, josta voidaan suorittaa suorituskykytestejä. Testit jäädyttävät sovelluksen toiminnallisuuden testien ajaksi. Testien suoriuduttua, tulokset kirjataan työkalupalkkiin testausnapin alle.
+
+Käyttöliittymäikkunan sulkeminen, esimerkiksi yläkulman ruksipainikkeesta, lopettaa sovelluksen suorituksen.
 
 ---
 
 ### Ohjelmiston rakenne
 
-Lähdekoodin juuressa <code>aastaar/src/main/java/mj/aastaar</code> on ohjelman käynnistyksestä ja graafisesta käyttöliittymästä huolehtiva <code>Main</code>, joka hyödyntää luokan <code>Scenario</code> ilmentävää polunetsintäskenaariota. <code>Scenarion</code> avulla voidaan suorittaa polunetsintäalgoritmeja, ja sen attribuutteihin kuuluvat algoritmien palauttamien polkujen lisäksi lähtö- ja maalipisteet sekä polunetsintäruudukko.
+Lähdekoodin juuressa <code>aastaar/src/main/java/mj/aastaar</code> on ohjelman käynnistyksestä ja graafisesta käyttöliittymästä huolehtiva <code>Main</code>, joka hyödyntää luokan <code>Scenario</code> ilmentävää polunetsintäskenaariota. <code>Scenarion</code> avulla voidaan suorittaa polunetsintäalgoritmeja, ja sen attribuutteihin kuuluvat algoritmien lisäksi lähtö- ja maalipisteet sekä polunetsintäruudukko.
 
 Kansiossa <code>aastaar.map</code> on luokka <code>MapCreator</code>, joka luo tiedostonlukijan antaman datan perusteella kartan maastoa kuvaavan merkistötaulukon. Samasta kansiosta löytyvän <code>Grid</code>-luokan ilmentymä alustetaan merkistötaulukon avulla, jonka jälkeen oliota voidaan käyttää tarkastelemaan polunetsintäruudukon soluja: tietyn solun saavutettavissa olevia naapureita, solujen / solmujen välisen "kaaripainon" laskemiseen ja niin edelleen. <code>Node</code>-luokka ylläpitää yhden ruudun / solmun koordinaatteja.
 
-Algoritmit ja niiden lyhyimmän polun tilan tallentamiseen käyttävä <code>Path</code>-rajapinnan toteuttava luokka löytyvät hakemistosta <code>aastaar.algorithms</code>. A* perii Uniform cost searchin, erona on vain solmujen välisen matkan kustannukseen käytetty heuristiikka. Molemmat toteuttavat <code>PathfindingAlgorithm</code>-rajapinnan. Algoritmien käyttämä prioriteettijonototeutus löytyy kansiosta <code>aastaar.datastructures</code>. 
+Algoritmit ja niiden lyhyimmän polun tilan tallentamiseen käyttävä <code>Path</code>-rajapinnan toteuttava luokka löytyvät hakemistosta <code>aastaar.algorithms</code>. A* perii Uniform cost searchin, erona on vain solmujen välisen matkan kustannukseen käytetty heuristiikka. Molemmat toteuttavat <code>PathfindingAlgorithm</code>-rajapinnan. <code>AlgorithmVisualization</code> koostuu algoritmistä, sen palauttamista polunetsintään liittyvistä <code>Node</code>-taulukoista, sekä algoritmin nimestä ja polun piirtämiseen käytettävästä väristä. Algoritmien käyttämä prioriteettijonototeutus löytyy kansiosta <code>aastaar.datastructures</code>. 
 
 <code>aastaar.utils</code>-hakemisto sisältää tiedostonlukijan sekä algoritmien suorituskykytestaukseen käytettävän luokan <code>PathfindingPerformanceTester</code>.
 
