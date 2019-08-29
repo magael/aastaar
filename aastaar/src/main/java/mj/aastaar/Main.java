@@ -21,6 +21,7 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -60,7 +61,15 @@ public class Main extends Application {
      */
     private static void run() {
         scenario = new Scenario();
-        scenario.initConfig();
+//        scenario.initConfig();
+        String[] mapPaths = {"mapdata/wc3maps512-map/divideandconquer.map",
+            "mapdata/wc3maps512-map/timbermawhold.map",
+            "mapdata/wc3maps512-map/bootybay.map",
+            "mapdata/sc1-map/Aftershock.map",
+            "mapdata/dao-map/ost003d.map"};
+        scenario.initGrids(mapPaths);
+        scenario.initRandomPositions();
+        
         Grid grid = scenario.getGrid();
 
         if (scenario.getStart() == null || scenario.getGoal() == null) {
@@ -166,12 +175,31 @@ public class Main extends Application {
         final String[] exploredCoices = {"None", scenario.getAlgoNames()[0],
             scenario.getAlgoNames()[1]};
         ChoiceBox exploredBox = exploredBox(exploredCoices, tileSize);
-
+        
         Separator separator = separator();
         Separator separator2 = separator();
+        Separator separator3 = separator();
+        
+        Label mapsLabel = new Label("Switch between maps");
 
         toolbar.getItems().addAll(separator, randomPositionsLabel,
-                randomPositionsButton, separator2, exploredLabel, exploredBox);
+                randomPositionsButton, separator2, exploredLabel, exploredBox,
+                separator3, mapsLabel);
+        
+        Grid[] grids = scenario.getGrids();
+        Button[] mapButtons = new Button[grids.length];
+        for (int i = 0; i < grids.length; i++) {
+            int j = i;
+            Button mapButton = new Button(Integer.toString(i + 1));
+            mapButton.setOnAction(value -> {
+                scenario.setGrid(grids[j]);
+                clickRandomPositions(tileSize);
+            });
+            mapButtons[i] = mapButton;
+        }
+        HBox hBox = new HBox(mapButtons);
+        toolbar.getItems().add(hBox);
+        
         return toolbar;
     }
 

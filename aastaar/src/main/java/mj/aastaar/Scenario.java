@@ -16,6 +16,7 @@ import mj.aastaar.map.Node;
 public class Scenario {
 
     private Grid grid;
+    private Grid[] grids;
     private Node start;
     private Node goal;
     private Node[][] shortestPaths;
@@ -96,6 +97,10 @@ public class Scenario {
      */
     public PathfindingAlgorithm[] getAlgorithms() {
         return algorithms;
+    }
+
+    public Grid[] getGrids() {
+        return grids;
     }
 
     /**
@@ -202,6 +207,21 @@ public class Scenario {
     public void initConfig() {
         initDefaultGrid();
         initRandomPositions();
+    }
+
+    public void initGrids(String[] mapPaths) {
+        grids = new Grid[mapPaths.length];
+        MapCreator mapCreator = new MapCreator();
+        for (int i = 0; i < mapPaths.length; i++) {
+            mapCreator.createMapFromFile(mapPaths[i]);
+            if (mapCreator.getGrid() != null) {
+                char[][] gridArray = mapCreator.getGrid();
+                char[] impassable = {'T', 'W', '@'};
+                double heavyEdgeWeight = 2.0;
+                grids[i] = new Grid(gridArray, impassable, heavyEdgeWeight);
+            }
+        }
+        setGrid(grids[0]);
     }
 
     /**
