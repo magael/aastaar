@@ -21,7 +21,6 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -44,7 +43,6 @@ public class Main extends Application {
     private static Scenario scenario;
     private GraphicsContext pathGraphics;
     private String showExplored;
-    private Scene currentScene;
 
     /**
      * The main program.
@@ -62,7 +60,6 @@ public class Main extends Application {
      */
     private static void run() {
         scenario = new Scenario();
-//        scenario.initConfig();
         String[] mapPaths = {"mapdata/wc3maps512-map/divideandconquer.map",
             "mapdata/wc3maps512-map/timbermawhold.map",
             "mapdata/wc3maps512-map/bootybay.map",
@@ -124,21 +121,20 @@ public class Main extends Application {
         double tileSize = 2.0;
         Grid grid = scenario.getGrid();
 
-        Canvas pathCanvas = new Canvas(grid.getLength() * tileSize,
-                grid.getRowLength() * tileSize);
+        Canvas pathCanvas = new Canvas(grid.getLength() * tileSize, grid.getRowLength() * tileSize);
         pathGraphics = pathCanvas.getGraphicsContext2D();
+
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(tileCanvas(grid.getGrid2D(), tileSize));
         ToolBar toolbar = toolBar(window, tileSize);
         borderPane.setRight(toolbar);
+
         colorStartAndGoal(tileSize);
         colorPaths(tileSize);
+
         ScrollPane scrollPane = new ScrollPane(new Group(borderPane, pathCanvas));
         Scene scene = new Scene(scrollPane);
-        if (currentScene == null) {
-            currentScene = scene;
-        }
-        window.setScene(currentScene);
+        window.setScene(scene);
 
 //        Button[] mapButtons = new Button[grids.length];
 //        for (int i = 0; i < grids.length; i++) {
@@ -217,8 +213,9 @@ public class Main extends Application {
         Button mapButton = new Button("Next");
         mapButton.setOnAction(value -> {
             scenario.setNextGrid();
+            initAlgorithms(scenario.getGrid());
             Scene newScene = initScene(window, scenario.getGrid(), tileSize);
-            currentScene = newScene;
+//            clickRandomPositions(tileSize);
             window.setScene(newScene);
             window.show();
         });
@@ -467,5 +464,22 @@ public class Main extends Application {
                 break;
         }
         return color;
+    }
+
+    private void initAlgorithms(Grid grid) {
+        scenario.initRandomPositions();
+        String cyan = "#00FFFF";
+        String magenta = "#FF00FF";
+        String[] pathColors = {cyan, magenta};
+        scenario.setPathColors(pathColors);
+        scenario.setShortestPaths(new Node[pathColors.length][]);
+
+        PathfindingAlgorithm[] algorithms = {new UniformCostSearch(grid), new AStar(grid)};
+        scenario.setAlgorithms(algorithms);
+        String[] algoNames = {"Dijkstra", "A*"};
+        scenario.setAlgoNames(algoNames);
+        for (int i = 0; i < algorithms.length; i++) {
+            scenario.runPathfindingAlgorithm(algorithms[i], algoNames[i], i);
+        }
     }
 }
