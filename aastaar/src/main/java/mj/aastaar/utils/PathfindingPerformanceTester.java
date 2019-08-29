@@ -60,7 +60,7 @@ public class PathfindingPerformanceTester {
     @Override
     public String toString() {
         String results = "";
-        results += "Average runtime\nof pathfinding between\ntwo random points:\n";
+        results += "Average runtime of\npathfinding between\ntwo random points:\n";
         for (int i = 0; i < times.length; i++) {
             results += "\n" + names[i] + "\n";
             for (int j = 0; j < times[i].length; j++) {
