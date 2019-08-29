@@ -53,7 +53,7 @@ public class Scenario {
 
     /**
      *
-     * @return
+     * @return The pathfinding grids
      */
     public Grid[] getGrids() {
         return grids;
@@ -97,7 +97,7 @@ public class Scenario {
     }
 
     /**
-     *
+     * Set the next grid in the array of Grids
      */
     public void setNextGrid() {
         if (gridIndex >= grids.length - 1) {
@@ -107,8 +107,9 @@ public class Scenario {
     }
 
     /**
-     *
-     * @param gridIndex
+     * Set the index for the Grid array
+     * 
+     * @param gridIndex index for the Grid array
      */
     public void setGridIndex(int gridIndex) {
         this.gridIndex = gridIndex;
@@ -151,10 +152,11 @@ public class Scenario {
     }
 
     /**
-     *
-     * @param mapPaths
-     * @param impassable
-     * @param heavyEdgeWeight
+     *  Initialize Grids for maps based on map file data.
+     * 
+     * @param mapPaths Map data file paths
+     * @param impassable Characters representing impassable terrain
+     * @param heavyEdgeWeight Edge weight for passing through heavier terrain
      */
     public void initGrids(String[] mapPaths, char[] impassable, double heavyEdgeWeight) {
         grids = new Grid[mapPaths.length];

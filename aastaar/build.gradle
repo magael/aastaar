@@ -38,8 +38,9 @@ jacocoTestReport {
                     fileTree(dir: it,
                         exclude: ['**/mj/aastaar/Main**',
                             '**/mj/aastaar/Scenario**',
+                            '**/mj/aastaar/algorithms/AlgorithmVisualization**',
                             '**/mj/aastaar/utils/PathfindingPerformanceTester**'])
-                }))
+        }))
     }
 }
 

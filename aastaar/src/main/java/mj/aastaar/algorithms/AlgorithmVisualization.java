@@ -1,14 +1,15 @@
-
 package mj.aastaar.algorithms;
 
 import mj.aastaar.map.Node;
 
 /**
+ * A composition consisting of a pathfinding algorithm, it's visualization
+ * components and information retrieved by the algorithm.
  *
  * @author User
  */
 public class AlgorithmVisualization {
-    
+
     private PathfindingAlgorithm algorithm;
     private String name;
     private String color;
@@ -17,9 +18,9 @@ public class AlgorithmVisualization {
 
     /**
      *
-     * @param algorithm
-     * @param name
-     * @param color
+     * @param algorithm Pathfinding algorithm
+     * @param name The name of the algorithm
+     * @param color Hex representation of a color for visualizing the path
      */
     public AlgorithmVisualization(PathfindingAlgorithm algorithm, String name, String color) {
         this.algorithm = algorithm;
@@ -29,7 +30,7 @@ public class AlgorithmVisualization {
 
     /**
      *
-     * @return
+     * @return Pathfinding algorithm
      */
     public PathfindingAlgorithm getAlgorithm() {
         return algorithm;
@@ -37,7 +38,7 @@ public class AlgorithmVisualization {
 
     /**
      *
-     * @return
+     * @return Hex representation of a color for visualizing the path
      */
     public String getColor() {
         return color;
@@ -45,7 +46,7 @@ public class AlgorithmVisualization {
 
     /**
      *
-     * @return
+     * @return The name of the algorithm
      */
     public String getName() {
         return name;
@@ -53,7 +54,7 @@ public class AlgorithmVisualization {
 
     /**
      *
-     * @return
+     * @return Links between nodes
      */
     public Node[][] getCameFrom() {
         return cameFrom;
@@ -61,7 +62,7 @@ public class AlgorithmVisualization {
 
     /**
      *
-     * @return
+     * @return Nodes included in the shortest path found by the algorithm
      */
     public Node[] getShortestPath() {
         return shortestPath;
@@ -69,7 +70,7 @@ public class AlgorithmVisualization {
 
     /**
      *
-     * @param algorithm
+     * @param algorithm Pathfinding algorithm
      */
     public void setAlgorithm(PathfindingAlgorithm algorithm) {
         this.algorithm = algorithm;
@@ -77,7 +78,7 @@ public class AlgorithmVisualization {
 
     /**
      *
-     * @param color
+     * @param color Hex representation of a color for visualizing the path
      */
     public void setColor(String color) {
         this.color = color;
@@ -85,7 +86,7 @@ public class AlgorithmVisualization {
 
     /**
      *
-     * @param name
+     * @param name The name of the algorithm
      */
     public void setName(String name) {
         this.name = name;
@@ -93,7 +94,7 @@ public class AlgorithmVisualization {
 
     /**
      *
-     * @param cameFrom
+     * @param cameFrom Links between nodes
      */
     public void setCameFrom(Node[][] cameFrom) {
         this.cameFrom = cameFrom;
@@ -101,7 +102,7 @@ public class AlgorithmVisualization {
 
     /**
      *
-     * @param shortestPath
+     * @param shortestPath Nodes included in the shortest path found by the algorithm
      */
     public void setShortestPath(Node[] shortestPath) {
         this.shortestPath = shortestPath;

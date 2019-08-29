@@ -59,12 +59,8 @@ public class Main extends Application {
     }
 
     /**
-     * Initializing the scenario from configurations, providing the scenario
-     * with algorithms to run. Initializing maps, along with character
-     * representations of map nodes that are marked impassable for pathfinding,
-     * and the penalty for moving through heavier terrain, in this case "shallow
-     * water". The Warcraft 3 maps (wc3maps512-map/*) contain shallow water.
-     * Launching the Java FX GUI.
+     * Initializing the scenario and maps. Initializing the pathfinding
+     * algorithms and launching the Java FX GUI.
      */
     private static void run() {
         scenario = new Scenario();
@@ -82,11 +78,18 @@ public class Main extends Application {
         }
     }
 
+    /**
+     * Initialize the maps, impassable characters and edge weights for passing
+     * through heavier terrain (in this case "shallow water", represented with
+     * the character "S").
+     */
     private static void initMaps() {
         String[] mapPaths = {"mapdata/wc3maps512-map/divideandconquer.map",
             "mapdata/wc3maps512-map/timbermawhold.map",
             "mapdata/wc3maps512-map/bootybay.map",
-            "mapdata/sc1-map/Aftershock.map"};
+            "mapdata/sc1-map/Aftershock.map",
+            "mapdata/sc1-map/Legacy.map",
+            "mapdata/sc1-map/Rosewood.map"};
         char[] impassable = {'T', 'W', '@'};
         double heavyEdgeWeight = 2.0;
         scenario.initGrids(mapPaths, impassable, heavyEdgeWeight);
@@ -112,6 +115,11 @@ public class Main extends Application {
         return testResults;
     }
 
+    /**
+     * Initialize the algorithms and their visualization components.
+     *
+     * @param grid
+     */
     private static void initAlgorithms(Grid grid) {
         String cyan = "#00FFFF";
         String magenta = "#FF00FF";
@@ -155,6 +163,14 @@ public class Main extends Application {
         window.show();
     }
 
+    /**
+     * Initialize a new scene with the given grid.
+     *
+     * @param window JavaFX stage component, where the scene is to be set
+     * @param grid Pathfinding grid
+     * @param tileSize The map tile size
+     * @return JavaFX Scene object
+     */
     private Scene initScene(Stage window, Grid grid, double tileSize) {
         Canvas pathCanvas = new Canvas(grid.getLength() * tileSize, grid.getRowLength() * tileSize);
         pathGraphics = pathCanvas.getGraphicsContext2D();
@@ -288,13 +304,13 @@ public class Main extends Application {
     /**
      * Menu box to select to show the nodes explored by zero or more algorithms
      *
-     * @param exploredCoices Choices listed in the menu
+     * @param exploredChoices Choices listed in the menu
      * @param tileSize The map tile size
      * @return JavaFX ChoiceBox object
      */
-    private ChoiceBox exploredBox(final String[] exploredCoices, double tileSize) {
-        ChoiceBox exploredBox = new ChoiceBox(FXCollections.observableArrayList(exploredCoices));
-        exploredBox.setValue("None");
+    private ChoiceBox exploredBox(final String[] exploredChoices, double tileSize) {
+        ChoiceBox exploredBox = new ChoiceBox(FXCollections.observableArrayList(exploredChoices));
+        exploredBox.setValue(exploredChoices[0]);
         showExplored = -1;
         exploredBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue ov, Number value, Number new_value) {
