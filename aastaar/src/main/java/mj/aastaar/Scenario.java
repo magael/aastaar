@@ -1,6 +1,7 @@
 package mj.aastaar;
 
 import java.util.Random;
+import mj.aastaar.algorithms.AlgorithmVisualization;
 import mj.aastaar.algorithms.PathfindingAlgorithm;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.MapCreator;
@@ -24,6 +25,7 @@ public class Scenario {
     private String[] pathColors;
     private PathfindingAlgorithm[] algorithms;
     private String[] algoNames;
+    private AlgorithmVisualization[] algorithmVisuals;
     private int gridIndex;
 
     /**
@@ -104,6 +106,14 @@ public class Scenario {
         return grids;
     }
 
+    public AlgorithmVisualization[] getAlgorithmVisuals() {
+        return algorithmVisuals;
+    }
+
+    public void setAlgorithmVisuals(AlgorithmVisualization[] algorithmVisuals) {
+        this.algorithmVisuals = algorithmVisuals;
+    }
+
     /**
      * @param grid Grid object
      */
@@ -170,23 +180,30 @@ public class Scenario {
             gridIndex = -1;
         }
         grid = grids[++gridIndex];
-        System.out.println("+++++" + grid.getLength());
     }
 
     /**
      * Running the specified algorithm, printing the shortest path length and
      * cost and adding the shortest path (array of nodes) for visualization.
      *
-     * @param algorithm Object implementing the PathFindingAlgorithm interface
+     * @param algorithmVisual Object implementing the PathFindingAlgorithm interface
      * @param name What the algorithm is called
      * @param i Index for the shortestPaths array
      */
-    public void runPathfindingAlgorithm(PathfindingAlgorithm algorithm, String name, int i) {
+//    public void runPathfindingAlgorithm(PathfindingAlgorithm algorithm, String name, int i) {
+//        int pathLength = algorithm.search(start, goal, 4);
+//        System.out.print(name + " shortest path length: " + pathLength);
+//        System.out.println(", cost: " + algorithm.getCost(goal) + "\n");
+//        shortestPaths[i] = algorithm.getPath().shortestPath(goal, start, pathLength);
+//        cameFrom[i] = algorithm.getPath().cameFrom;
+//    }
+    public void runPathfindingAlgorithm(AlgorithmVisualization algorithmVisual) {
+        PathfindingAlgorithm algorithm = algorithmVisual.getAlgorithm();
         int pathLength = algorithm.search(start, goal, 4);
-        System.out.print(name + " shortest path length: " + pathLength);
+        System.out.print(algorithmVisual.getName() + " shortest path length: " + pathLength);
         System.out.println(", cost: " + algorithm.getCost(goal) + "\n");
-        shortestPaths[i] = algorithm.getPath().shortestPath(goal, start, pathLength);
-        cameFrom[i] = algorithm.getPath().cameFrom;
+        algorithmVisual.setShortestPath(algorithm.getPath().shortestPath(goal, start, pathLength));
+        algorithmVisual.setCameFrom(algorithm.getPath().cameFrom);
     }
 
     /**

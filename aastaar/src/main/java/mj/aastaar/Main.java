@@ -30,7 +30,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import mj.aastaar.algorithms.AStar;
-import mj.aastaar.algorithms.PathfindingAlgorithm;
+import mj.aastaar.algorithms.AlgorithmVisualization;
 import mj.aastaar.algorithms.UniformCostSearch;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
@@ -46,7 +46,7 @@ public class Main extends Application {
 
     private static Scenario scenario;
     private GraphicsContext pathGraphics;
-    private String showExplored;
+    private int showExplored;
 
     /**
      * The main program.
@@ -80,50 +80,46 @@ public class Main extends Application {
         } else {
             String cyan = "#00FFFF";
             String magenta = "#FF00FF";
+            
+            AlgorithmVisualization dijkstra = new AlgorithmVisualization(new UniformCostSearch(grid), "Dijkstra", cyan);
+            AlgorithmVisualization aStar = new AlgorithmVisualization(new AStar(grid), "A*", magenta);
+            AlgorithmVisualization[] algorithmVisuals = {dijkstra, aStar};
+            scenario.setAlgorithmVisuals(algorithmVisuals);
+            
             String[] pathColors = {cyan, magenta};
             scenario.setPathColors(pathColors);
             scenario.setShortestPaths(new Node[pathColors.length][]);
-
-            PathfindingAlgorithm[] algorithms = {new UniformCostSearch(grid), new AStar(grid)};
-            scenario.setAlgorithms(algorithms);
-            String[] algoNames = {"Dijkstra", "A*"};
-            scenario.setAlgoNames(algoNames);
-            for (int i = 0; i < algorithms.length; i++) {
-                scenario.runPathfindingAlgorithm(algorithms[i], algoNames[i], i);
+            
+            for (int i = 0; i < algorithmVisuals.length; i++) {
+                scenario.runPathfindingAlgorithm(algorithmVisuals[i]);
             }
 
-            System.out.println("Launching visualization. ");
-            launch(Main.class);
+//            PathfindingAlgorithm[] algorithms = {new UniformCostSearch(grid), new AStar(grid)};
+//            scenario.setAlgorithms(algorithms);
+//            String[] algoNames = {"Dijkstra", "A*"};
+//            scenario.setAlgoNames(algoNames);
+//            for (int i = 0; i < algorithms.length; i++) {
+//                scenario.runPathfindingAlgorithm(algorithms[i], algoNames[i], i);
+//            }
 
-//            runPerformanceTests(algorithms, algoNames);
+            System.out.println("Launching visualization.");
+            launch(Main.class);
         }
     }
 
     /**
      * Using the performance tester class to test pathfinding speed. Setting the
-     * number n, where n is the number of times the tests are run.
+     * number of times the tests are run.
      *
      * @param algorithms The algorithms that are tested
      * @param algoNames The names of the algorithms that are
      */
-//    private static void runPerformanceTests(PathfindingAlgorithm[] algorithms, String[] algoNames) {
-////        int[] nums = {10, 50, 100, 500, 1000};
-//        int[] nums = {10, 10, 20, 30, 50};
-//        PathfindingPerformanceTester tester = new PathfindingPerformanceTester(scenario);
-//        System.out.print("Beginning performance tests on the algorithms.\n");
-//        long t = System.nanoTime();
-//        tester.run(algorithms, algoNames, nums);
-//        BigDecimal elapsedTime = new BigDecimal((System.nanoTime() - t) / 1000000000);
-//        System.out.println(tester);
-//        System.out.println("Performance tests ran in a total of "
-//                + elapsedTime.round(new MathContext(3)) + " seconds.\n");
-//    }
-    private static String runPerformanceTests(PathfindingAlgorithm[] algorithms, String[] algoNames) {
+    private static String runPerformanceTests(AlgorithmVisualization[] algoVisuals) {
 //        int[] nums = {10, 50, 100, 500, 1000};
         int[] nums = {10, 10, 20};
         PathfindingPerformanceTester tester = new PathfindingPerformanceTester(scenario);
         long t = System.nanoTime();
-        tester.run(algorithms, algoNames, nums);
+        tester.run(nums);
         BigDecimal elapsedTime = new BigDecimal((System.nanoTime() - t) / 1000000000);
         
         String testResults = tester.toString() + "\nPerformance tests ran\nin a total of "
@@ -177,8 +173,7 @@ public class Main extends Application {
     }
 
     private Scene initScene(Stage window, Grid grid, double tileSize) {
-        Canvas pathCanvas = new Canvas(grid.getLength() * tileSize,
-                grid.getRowLength() * tileSize);
+        Canvas pathCanvas = new Canvas(grid.getLength() * tileSize, grid.getRowLength() * tileSize);
         pathGraphics = pathCanvas.getGraphicsContext2D();
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(tileCanvas(grid.getGrid2D(), tileSize));
@@ -210,9 +205,14 @@ public class Main extends Application {
         Label exploredLabel = new Label("Visualize explored nodes: ");
         exploredLabel.setTextFill(Color.WHITE);
         exploredLabel.setFont(new Font(fontSize));
-        final String[] exploredCoices = {"None", scenario.getAlgoNames()[0],
-            scenario.getAlgoNames()[1]};
-        ChoiceBox exploredBox = exploredBox(exploredCoices, tileSize);
+        AlgorithmVisualization[] algoVisuals = scenario.getAlgorithmVisuals();
+        String[] exploredCoices = new String[algoVisuals.length + 1];
+        exploredCoices[0] = "None";
+        for (int i = 0; i < algoVisuals.length; i++) {
+            exploredCoices[i + 1] = algoVisuals[i].getName();
+        }
+        final String[] finalChoices = exploredCoices;
+        ChoiceBox exploredBox = exploredBox(finalChoices, tileSize);
 
         Label randomPositionsLabel = new Label("New random positions: ");
         randomPositionsLabel.setTextFill(Color.WHITE);
@@ -253,7 +253,7 @@ public class Main extends Application {
         testResults.setTextAlignment(TextAlignment.CENTER);
         testResults.setFill(Color.WHITE);
         perfTestButton.setOnAction(value -> {
-            testResults.setText(runPerformanceTests(scenario.getAlgorithms(), scenario.getAlgoNames()));
+            testResults.setText(runPerformanceTests(scenario.getAlgorithmVisuals()));
         });
         toolbar.getItems().addAll(separator(), perfTestLabel, perfTestButton, testResults);
 
@@ -273,9 +273,10 @@ public class Main extends Application {
         colorsLabel.setFont(new Font(fontSize));
         toolbar.getItems().add(colorsLabel);
 
-        for (int i = 0; i < scenario.getAlgorithms().length; i++) {
-            Text colorsText = new Text(scenario.getAlgoNames()[i]);
-            colorsText.setFill(Color.web(scenario.getPathColors()[i]));
+        AlgorithmVisualization[] algoVisuals = scenario.getAlgorithmVisuals();
+        for (int i = 0; i < algoVisuals.length; i++) {
+            Text colorsText = new Text(algoVisuals[i].getName());
+            colorsText.setFill(Color.web(algoVisuals[i].getColor()));
             colorsText.setFont(Font.font(fontSize));
             toolbar.getItems().add(colorsText);
         }
@@ -291,11 +292,12 @@ public class Main extends Application {
     private ChoiceBox exploredBox(final String[] exploredCoices, double tileSize) {
         ChoiceBox exploredBox = new ChoiceBox(FXCollections.observableArrayList(exploredCoices));
         exploredBox.setValue("None");
+        showExplored = -1;
         exploredBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue ov, Number value, Number new_value) {
-                clearExplored(tileSize);
-                showExplored = exploredCoices[new_value.intValue()];
-                if (!showExplored.equals("None")) {
+                if (showExplored >= 0) clearExplored(tileSize);
+                showExplored = new_value.intValue() - 1;
+                if (showExplored >= 0) {
                     colorExplored(tileSize);
                 }
                 colorStartAndGoal(tileSize);
@@ -325,15 +327,14 @@ public class Main extends Application {
     private void clickRandomPositions(double tileSize) {
         clearStartAndGoalColors(tileSize);
         clearPaths(tileSize);
-        clearExplored(tileSize);
+        if (showExplored >= 0) clearExplored(tileSize);
         scenario.initRandomPositions();
-        PathfindingAlgorithm[] algorithms = scenario.getAlgorithms();
-        String[] algoNames = scenario.getAlgoNames();
-        for (int i = 0; i < algorithms.length; i++) {
-            scenario.runPathfindingAlgorithm(algorithms[i], algoNames[i], i);
+        AlgorithmVisualization[] algoVisuals = scenario.getAlgorithmVisuals();
+        for (int i = 0; i < algoVisuals.length; i++) {
+            scenario.runPathfindingAlgorithm(algoVisuals[i]);
         }
 
-        if (showExplored != null && !showExplored.equals("None")) {
+        if (showExplored >= 0) {
             colorExplored(tileSize);
         }
         colorStartAndGoal(tileSize);
@@ -396,14 +397,15 @@ public class Main extends Application {
      * @param tileSize The map tile size
      */
     private void colorPaths(double tileSize) {
-        Node[][] shortestPaths = scenario.getShortestPaths();
-        String[] pathColors = scenario.getPathColors();
-        for (int i = 0; i < shortestPaths.length; i++) {
-            Node[] path = shortestPaths[i];
+        AlgorithmVisualization[] algoVisuals = scenario.getAlgorithmVisuals();
+//        Node[][] shortestPaths = scenario.getShortestPaths();
+//        String[] pathColors = scenario.getPathColors();
+        for (int i = 0; i < algoVisuals.length; i++) {
+            Node[] path = algoVisuals[i].getShortestPath();
             if (path == null) {
                 continue;
             }
-            pathGraphics.setFill(Color.web(pathColors[i]));
+            pathGraphics.setFill(Color.web(algoVisuals[i].getColor()));
             for (int j = 0; j < path.length - 1; j++) {
                 pathGraphics.fillRect((int) (path[j].getY() * tileSize), (int) (path[j].getX() * tileSize), tileSize, tileSize);
             }
@@ -416,9 +418,9 @@ public class Main extends Application {
      * @param tileSize The map tile size
      */
     private void clearPaths(double tileSize) {
-        Node[][] shortestPaths = scenario.getShortestPaths();
-        for (int i = 0; i < shortestPaths.length; i++) {
-            Node[] path = shortestPaths[i];
+        AlgorithmVisualization[] algoVisuals = scenario.getAlgorithmVisuals();
+        for (int i = 0; i < algoVisuals.length; i++) {
+            Node[] path = algoVisuals[i].getShortestPath();
             if (path == null) {
                 continue;
             }
@@ -434,7 +436,7 @@ public class Main extends Application {
      * @param tileSize The map tile size
      */
     private void colorExplored(double tileSize) {
-        Node[][] cameFrom = scenario.getCameFrom(showExplored);
+        Node[][] cameFrom = scenario.getAlgorithmVisuals()[showExplored].getCameFrom();
         for (int i = 0; i < cameFrom.length; i++) {
             Node[] nodes = cameFrom[i];
             if (nodes == null) {
@@ -457,7 +459,7 @@ public class Main extends Application {
      * @param tileSize The map tile size
      */
     private void clearExplored(double tileSize) {
-        Node[][] cameFrom = scenario.getCameFrom(showExplored);
+        Node[][] cameFrom = scenario.getAlgorithmVisuals()[showExplored].getCameFrom();
         for (int i = 0; i < cameFrom.length; i++) {
             Node[] nodes = cameFrom[i];
             if (nodes == null) {
@@ -516,12 +518,13 @@ public class Main extends Application {
             scenario.setPathColors(pathColors);
             scenario.setShortestPaths(new Node[pathColors.length][]);
 
-            PathfindingAlgorithm[] algorithms = {new UniformCostSearch(grid), new AStar(grid)};
-            scenario.setAlgorithms(algorithms);
-            String[] algoNames = {"Dijkstra", "A*"};
-            scenario.setAlgoNames(algoNames);
-            for (int i = 0; i < algorithms.length; i++) {
-                scenario.runPathfindingAlgorithm(algorithms[i], algoNames[i], i);
+            AlgorithmVisualization dijkstra = new AlgorithmVisualization(new UniformCostSearch(grid), "Dijkstra", cyan);
+            AlgorithmVisualization aStar = new AlgorithmVisualization(new AStar(grid), "A*", magenta);
+            AlgorithmVisualization[] algorithmVisuals = {dijkstra, aStar};
+            scenario.setAlgorithmVisuals(algorithmVisuals);
+            
+            for (int i = 0; i < algorithmVisuals.length; i++) {
+                scenario.runPathfindingAlgorithm(algorithmVisuals[i]);
             }
         }
     }
