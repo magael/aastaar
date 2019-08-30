@@ -13,6 +13,8 @@ Yksikkötestit voidaan toistaa suorittamalla gradle-projektin juuressa, eli repo
 
 Testikattavuus löytyy komennolla <code>gradle test jacocoTestReport</code> ja navigoimalla <code>build/reports/jacoco/test/html/index.html</code>.
 
+Yksikkötestit löytyvät hakemistosta <code>aastaar/src/test/java/aastaar</code> ja niiden käyttämä testikartta <code>aastaar/src/test/resources/testmaps</code>.
+
 ### Suorituskykytestit
 
 Polunetsinnän suorituskykytestit voidaan ajaa käyttöliittymäikkunassa napista "Run performance tests". Tällä hetkellä testeille annetaan suoritettavaksi kovakoodatun joukon kierroksia {10, 10, 20}. Testit vievät omalla koneellani n. 24 sekuntia.

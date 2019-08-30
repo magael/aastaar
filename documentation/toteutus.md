@@ -2,30 +2,6 @@
 
 ---
 
-### Ohjelman suoritus
-
-Projekti toteuttaa polunetsintää kahden pisteen välillä pelikartoilla. Ohjelmointikieli on Java ja graafinen käyttöliittymä on tehty Java FX:llä.
-
-Ohjelma lukee resurssikansiosta [Moving AI Labs:in 2D Pathfinding Benchmark -karttoja](https://movingai.com/benchmarks/grids.html) ja muuntaa niistä polunetsintään soveltuvia kaksiulotteisia taulukoita.
-
-Pääohjelman käynnistyttyä luodaan pelikarttaa vastaava ruudukko, ja suoritetaan sillä eri polunetsintäalgoritmeja. Kartta on tällä hetkellä kovakoodattuna ja vaihdettavissa Scenario-luokan init-medoteissa. Alustavat lähtö- ja maalipisteet generoidaan joka suorituskerralla satunnaisesti.
-
-Karttoihin sovelletaan Dijkstran algoritmin Uniform cost search -variaatiota (jonoon alustetaan vain lähtösolmu) sekä A*-algoritmia. Ohjelma kertoo tulostuksilla konsoliin, kun algoritmi on suorittanut toimintonsa.
-
-Algoritmien suoritusten jälkeen avataan graafisen käyttöliittymän ikkuna, jossa kartan maasto on visualisoitu kuvaavin värein. Eri algoritmien löytämät lyhyimmät polut, sekä alku- ja maalipisteet ovat meritty kirkkain värein.
-
-Käyttöliittymän oikeassa reunassa on työkalupalkki, jossa kerrotaan käytetyt algoritmit ja värit. Palkissaa on myös nappi, jonka avulla käyttäjä voi alustaa uudet satunnaiset lähtö- ja maalipisteet. Uusien pisteiden valinta pyyhkii välittömästi vanhat pisteet ja reitit pois, suorittaa algoritmit uudelleen ja piirtää uudet pisteet ja polut.
-
-Työkalupalkissa on lisäksi valikkonappi, jonka avulla käyttäjä voi halutessaan piirtää kartalle esityksen kunkin algoritmin tarkastelemat ruuduista.
-
-Käyttäjä voi valita useasta eri kartasta, joko "Previous" ja "Next", tai numeroiduista napeista.
-
-Alimpana on painike, josta voidaan suorittaa suorituskykytestejä. Testit jäädyttävät sovelluksen toiminnallisuuden testien ajaksi. Testien suoriuduttua, tulokset kirjataan työkalupalkkiin testausnapin alle.
-
-Käyttöliittymäikkunan sulkeminen, esimerkiksi yläkulman ruksipainikkeesta, lopettaa sovelluksen suorituksen.
-
----
-
 ### Ohjelmiston rakenne
 
 Lähdekoodin juuressa <code>aastaar/src/main/java/mj/aastaar</code> on ohjelman käynnistyksestä ja graafisesta käyttöliittymästä huolehtiva <code>Main</code>, joka hyödyntää luokan <code>Scenario</code> ilmentävää polunetsintäskenaariota. <code>Scenarion</code> avulla kerätään algoritmien palauttamat polut ja ylläpidetään tietoa käytössä olevista lähtö- ja maalipisteestä sekä polunetsintäruudukosta.

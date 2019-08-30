@@ -4,6 +4,8 @@
 
 ### Dokumentaatio
 
+[Käyttöohje](https://github.com/magael/aastaar/blob/master/documentation/instructions.md)
+
 [Vaatimusmäärittely](https://github.com/magael/aastaar/blob/master/documentation/maarittely.md)
 
 [Toteutusdokumentaatio](https://github.com/magael/aastaar/blob/master/documentation/toteutus.md)
