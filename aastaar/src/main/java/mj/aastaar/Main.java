@@ -199,8 +199,32 @@ public class Main extends Application {
         toolbar.setBackground(new Background(new BackgroundFill(
                 Color.web("#130d14"), null, Insets.EMPTY)));
         int fontSize = 14;
+        AlgorithmVisualization[] algoVisuals = scenario.getAlgorithmVisuals();
 
         addAlgorithmsLegend(fontSize, toolbar);
+
+        //TODO: texts into private global array, update on clickRandom or clickNew
+        VBox pathLengthTexts = new VBox();
+        pathLengthTexts.setPadding(new Insets(5));
+        VBox pathCostTexts = new VBox();
+        pathCostTexts.setPadding(new Insets(5));
+        HBox pathTexts = new HBox();
+        Text pathLengthText = new Text();
+        Text pathCostText = new Text();
+        for (int i = 0; i < algoVisuals.length; i++) {
+            pathLengthText = new Text(algoVisuals[i].getName()
+                    + "\npath length:\n"
+                    + algoVisuals[i].getShortestPath().length + "\n");
+            pathLengthText.setFill(Color.WHITE);
+            pathLengthTexts.getChildren().add(pathLengthText);
+
+            pathCostText = new Text("\npath cost:\n"
+                    + algoVisuals[i].getAlgorithm().getCost(scenario.getGoal())
+                    + "\n");
+            pathCostText.setFill(Color.WHITE);
+            pathCostTexts.getChildren().add(pathCostText);
+        }
+        pathTexts.getChildren().addAll(pathLengthTexts, pathCostTexts);
 
         Label startPositionLabel = new Label("Start position x, y");
         startPositionLabel.setTextFill(Color.WHITE);
@@ -209,8 +233,6 @@ public class Main extends Application {
         goalPositionLabel.setTextFill(Color.WHITE);
         goalPositionLabel.setFont(new Font(fontSize));
 
-        //TODO: method updatePositionTexts, called on clickRandom
-        //TODO: check node validity, error message if invalid
         TextField startXField = new TextField(Integer.toString(scenario.getStart().getX()));
         startXField.setMaxWidth(50);
         TextField startYField = new TextField(Integer.toString(scenario.getStart().getY()));
@@ -223,50 +245,37 @@ public class Main extends Application {
         goalYField.setMaxWidth(50);
         HBox goalTextFields = new HBox();
         goalTextFields.getChildren().addAll(goalXField, goalYField);
+        Label invalidPositionLabel = new Label("");
+        invalidPositionLabel.setTextFill(Color.RED);
+        invalidPositionLabel.setFont(new Font(fontSize));
         Button newPositionsButton = new Button("New positions");
         newPositionsButton.setOnAction(value -> {
-            clearPaths(tileSize);
-            clearStartAndGoalColors(tileSize);
-            if (showExplored >= 0) {
-                clearExplored(tileSize);
-            }
             Node start = new Node(Integer.parseInt(startXField.getText()), Integer.parseInt(startYField.getText()), 0);
             Node goal = new Node(Integer.parseInt(goalXField.getText()), Integer.parseInt(goalYField.getText()), 0);
-            scenario.setStart(start);
-            scenario.setGoal(goal);
-            AlgorithmVisualization[] algoVisuals = scenario.getAlgorithmVisuals();
-            for (int i = 0; i < algoVisuals.length; i++) {
-                scenario.runPathfindingAlgorithm(algoVisuals[i]);
+            Grid grid = scenario.getGrid();
+            if (grid.nodeIsValid(start) && grid.nodeIsValid(goal)) {
+                invalidPositionLabel.setText("");
+                clearPaths(tileSize);
+                clearStartAndGoalColors(tileSize);
+                if (showExplored >= 0) {
+                    clearExplored(tileSize);
+                }
+                scenario.setStart(start);
+                scenario.setGoal(goal);
+                for (int i = 0; i < algoVisuals.length; i++) {
+                    scenario.runPathfindingAlgorithm(algoVisuals[i]);
+                    //TODO:
+                    //updatePathText(pathLengthText, pathCostText);
+                }
+                if (showExplored >= 0) {
+                    colorExplored(tileSize);
+                }
+                colorPaths(tileSize);
+                colorStartAndGoal(tileSize);
+            } else {
+                invalidPositionLabel.setText("Invalid positions");
             }
-
-            if (showExplored >= 0) {
-                colorExplored(tileSize);
-            }
-            colorPaths(tileSize);
-            colorStartAndGoal(tileSize);
         });
-
-        AlgorithmVisualization[] algoVisuals = scenario.getAlgorithmVisuals();
-        //TODO: texts into private global array, update on clickRandom or clickNew
-        VBox pathLengthTexts = new VBox();
-        pathLengthTexts.setPadding(new Insets(5));
-        VBox pathCostTexts = new VBox();
-        pathCostTexts.setPadding(new Insets(5));
-        HBox pathTexts = new HBox();
-        for (int i = 0; i < algoVisuals.length; i++) {
-            Text pathLengthText = new Text(algoVisuals[i].getName()
-                    + "\npath length:\n"
-                    + algoVisuals[i].getShortestPath().length + "\n");
-            pathLengthText.setFill(Color.WHITE);
-            pathLengthTexts.getChildren().add(pathLengthText);
-
-            Text pathCostText = new Text("\npath cost:\n"
-                    + algoVisuals[i].getAlgorithm().getCost(scenario.getGoal())
-                    + "\n");
-            pathCostText.setFill(Color.WHITE);
-            pathCostTexts.getChildren().add(pathCostText);
-        }
-        pathTexts.getChildren().addAll(pathLengthTexts, pathCostTexts);
 
         Label exploredLabel = new Label("Visualize explored nodes: ");
         exploredLabel.setTextFill(Color.WHITE);
@@ -285,6 +294,10 @@ public class Main extends Application {
         Button randomPositionsButton = new Button("Randomize");
         randomPositionsButton.setOnAction(value -> {
             clickRandomPositions(tileSize);
+            updatePositionTexts(startXField, startYField, goalXField, goalYField);
+            //TODO: for each algo
+            //updatePathText(pathLengthText, pathCostText);
+            invalidPositionLabel.setText("");
         });
 
         Label mapsLabel = new Label("Switch between maps: ");
@@ -331,7 +344,7 @@ public class Main extends Application {
 
         toolbar.getItems().addAll(separator(), startPositionLabel,
                 startTextFields, goalPositionLabel, goalTextFields,
-                newPositionsButton,
+                newPositionsButton, invalidPositionLabel,
                 separator(), pathTexts,
                 separator(), exploredLabel, exploredBox,
                 separator(), randomPositionsLabel, randomPositionsButton,
@@ -339,6 +352,20 @@ public class Main extends Application {
                 separator(), perfTestLabel, perfTestButton, testResults);
 
         return toolbar;
+    }
+
+    private void updatePathText(AlgorithmVisualization[] algoVisuals, Text pathLengthText, Text pathCostText) {
+        for (int i = 0; i < algoVisuals.length; i++) {
+            pathLengthText.setText(algoVisuals[i].getName()
+                    + "\npath length:\n"
+                    + algoVisuals[i].getShortestPath().length + "\n");
+            pathLengthText.setFill(Color.WHITE);
+
+            pathCostText.setText("\npath cost:\n"
+                    + algoVisuals[i].getAlgorithm().getCost(scenario.getGoal())
+                    + "\n");
+            pathCostText.setFill(Color.WHITE);
+        }
     }
 
     private void switchMap(Stage window, double tileSize) {
@@ -452,6 +479,13 @@ public class Main extends Application {
         }
         colorPaths(tileSize);
         colorStartAndGoal(tileSize);
+    }
+
+    private void updatePositionTexts(TextField startXField, TextField startYField, TextField goalXField, TextField goalYField) {
+        startXField.setText(Integer.toString(scenario.getStart().getX()));
+        startYField.setText(Integer.toString(scenario.getStart().getY()));
+        goalXField.setText(Integer.toString(scenario.getGoal().getX()));
+        goalYField.setText(Integer.toString(scenario.getGoal().getY()));
     }
 
     /**
