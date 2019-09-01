@@ -203,7 +203,6 @@ public class Main extends Application {
 
         addAlgorithmsLegend(fontSize, toolbar);
 
-        //TODO: texts into private global array, update on clickRandom or clickNew
         VBox pathLengthTextBox = new VBox();
         pathLengthTextBox.setPadding(new Insets(5));
         VBox pathCostTextBox = new VBox();
@@ -346,6 +345,15 @@ public class Main extends Application {
         return toolbar;
     }
 
+    /**
+     * Updating the info text for the shortest paths and their costs found by
+     * the pathfinding algorithms.
+     * 
+     * @param pathLengthTexts A JavaFX Text array to hold path length text
+     * @param i Index of the algorithm array
+     * @param algoVisuals Array containing AlgorithmVisualization objects
+     * @param pathCostTexts A JavaFX Text array to hold path cost text
+     */
     private void updatePathTexts(Text[] pathLengthTexts, int i, AlgorithmVisualization[] algoVisuals, Text[] pathCostTexts) {
         if (pathLengthTexts[i] == null) {
             pathLengthTexts[i] = new Text();
@@ -364,6 +372,13 @@ public class Main extends Application {
         pathCostTexts[i].setFill(Color.WHITE);
     }
 
+    /**
+     * Initializing new positions, running pathfinding algorithms and rendering
+     * the new map after the grid has been set in the Scenario.
+     * 
+     * @param window JavaFX Stage object
+     * @param tileSize The map tile size
+     */
     private void switchMap(Stage window, double tileSize) {
         scenario.initRandomPositions();
         initAlgorithms(scenario.getGrid());
