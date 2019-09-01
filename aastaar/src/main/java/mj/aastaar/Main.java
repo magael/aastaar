@@ -19,11 +19,13 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -197,13 +199,77 @@ public class Main extends Application {
         toolbar.setBackground(new Background(new BackgroundFill(
                 Color.web("#130d14"), null, Insets.EMPTY)));
         int fontSize = 14;
+        AlgorithmVisualization[] algoVisuals = scenario.getAlgorithmVisuals();
 
         addAlgorithmsLegend(fontSize, toolbar);
+
+        VBox pathLengthTextBox = new VBox();
+        pathLengthTextBox.setPadding(new Insets(5));
+        VBox pathCostTextBox = new VBox();
+        pathCostTextBox.setPadding(new Insets(5));
+        HBox pathTexts = new HBox();
+        Text[] pathLengthTexts = new Text[algoVisuals.length];
+        Text[] pathCostTexts = new Text[algoVisuals.length];
+        for (int i = 0; i < algoVisuals.length; i++) {
+            updatePathTexts(pathLengthTexts, i, algoVisuals, pathCostTexts);
+            pathLengthTextBox.getChildren().add(pathLengthTexts[i]);
+            pathCostTextBox.getChildren().add(pathCostTexts[i]);
+        }
+        pathTexts.getChildren().addAll(pathLengthTextBox, pathCostTextBox);
+
+        Label startPositionLabel = new Label("Start position x, y");
+        startPositionLabel.setTextFill(Color.WHITE);
+        startPositionLabel.setFont(new Font(fontSize));
+        Label goalPositionLabel = new Label("Goal position x, y");
+        goalPositionLabel.setTextFill(Color.WHITE);
+        goalPositionLabel.setFont(new Font(fontSize));
+
+        TextField startXField = new TextField(Integer.toString(scenario.getStart().getX()));
+        startXField.setMaxWidth(50);
+        TextField startYField = new TextField(Integer.toString(scenario.getStart().getY()));
+        startYField.setMaxWidth(50);
+        HBox startTextFields = new HBox();
+        startTextFields.getChildren().addAll(startXField, startYField);
+        TextField goalXField = new TextField(Integer.toString(scenario.getGoal().getX()));
+        goalXField.setMaxWidth(50);
+        TextField goalYField = new TextField(Integer.toString(scenario.getGoal().getY()));
+        goalYField.setMaxWidth(50);
+        HBox goalTextFields = new HBox();
+        goalTextFields.getChildren().addAll(goalXField, goalYField);
+        Label invalidPositionLabel = new Label("");
+        invalidPositionLabel.setTextFill(Color.RED);
+        invalidPositionLabel.setFont(new Font(fontSize));
+        Button newPositionsButton = new Button("New positions");
+        newPositionsButton.setOnAction(value -> {
+            Node start = new Node(Integer.parseInt(startXField.getText()), Integer.parseInt(startYField.getText()), 0);
+            Node goal = new Node(Integer.parseInt(goalXField.getText()), Integer.parseInt(goalYField.getText()), 0);
+            Grid grid = scenario.getGrid();
+            if (grid.nodeIsValid(start) && grid.nodeIsValid(goal)) {
+                invalidPositionLabel.setText("");
+                clearPaths(tileSize);
+                clearStartAndGoalColors(tileSize);
+                if (showExplored >= 0) {
+                    clearExplored(tileSize);
+                }
+                scenario.setStart(start);
+                scenario.setGoal(goal);
+                for (int i = 0; i < algoVisuals.length; i++) {
+                    scenario.runPathfindingAlgorithm(algoVisuals[i]);
+                    updatePathTexts(pathLengthTexts, i, algoVisuals, pathCostTexts);
+                }
+                if (showExplored >= 0) {
+                    colorExplored(tileSize);
+                }
+                colorPaths(tileSize);
+                colorStartAndGoal(tileSize);
+            } else {
+                invalidPositionLabel.setText("Invalid positions");
+            }
+        });
 
         Label exploredLabel = new Label("Visualize explored nodes: ");
         exploredLabel.setTextFill(Color.WHITE);
         exploredLabel.setFont(new Font(fontSize));
-        AlgorithmVisualization[] algoVisuals = scenario.getAlgorithmVisuals();
         String[] exploredCoices = new String[algoVisuals.length + 1];
         exploredCoices[0] = "None";
         for (int i = 0; i < algoVisuals.length; i++) {
@@ -218,6 +284,11 @@ public class Main extends Application {
         Button randomPositionsButton = new Button("Randomize");
         randomPositionsButton.setOnAction(value -> {
             clickRandomPositions(tileSize);
+            updatePositionTexts(startXField, startYField, goalXField, goalYField);
+            for (int i = 0; i < algoVisuals.length; i++) {
+                updatePathTexts(pathLengthTexts, i, algoVisuals, pathCostTexts);
+            }
+            invalidPositionLabel.setText("");
         });
 
         Label mapsLabel = new Label("Switch between maps: ");
@@ -262,7 +333,11 @@ public class Main extends Application {
             testResults.setText(runPerformanceTests(scenario.getAlgorithmVisuals()));
         });
 
-        toolbar.getItems().addAll(separator(), exploredLabel, exploredBox,
+        toolbar.getItems().addAll(separator(), startPositionLabel,
+                startTextFields, goalPositionLabel, goalTextFields,
+                newPositionsButton, invalidPositionLabel,
+                separator(), pathTexts,
+                separator(), exploredLabel, exploredBox,
                 separator(), randomPositionsLabel, randomPositionsButton,
                 separator(), mapsLabel, prevNextMapButtons, mapNumberButtons,
                 separator(), perfTestLabel, perfTestButton, testResults);
@@ -270,6 +345,40 @@ public class Main extends Application {
         return toolbar;
     }
 
+    /**
+     * Updating the info text for the shortest paths and their costs found by
+     * the pathfinding algorithms.
+     * 
+     * @param pathLengthTexts A JavaFX Text array to hold path length text
+     * @param i Index of the algorithm array
+     * @param algoVisuals Array containing AlgorithmVisualization objects
+     * @param pathCostTexts A JavaFX Text array to hold path cost text
+     */
+    private void updatePathTexts(Text[] pathLengthTexts, int i, AlgorithmVisualization[] algoVisuals, Text[] pathCostTexts) {
+        if (pathLengthTexts[i] == null) {
+            pathLengthTexts[i] = new Text();
+        }
+        pathLengthTexts[i].setText(algoVisuals[i].getName()
+                + "\npath length:\n"
+                + algoVisuals[i].getShortestPath().length + "\n");
+        pathLengthTexts[i].setFill(Color.WHITE);
+        
+        if (pathCostTexts[i] == null) {
+            pathCostTexts[i] = new Text();
+        }
+        pathCostTexts[i].setText("\npath cost:\n"
+                + algoVisuals[i].getAlgorithm().getCost(scenario.getGoal())
+                + "\n");
+        pathCostTexts[i].setFill(Color.WHITE);
+    }
+
+    /**
+     * Initializing new positions, running pathfinding algorithms and rendering
+     * the new map after the grid has been set in the Scenario.
+     * 
+     * @param window JavaFX Stage object
+     * @param tileSize The map tile size
+     */
     private void switchMap(Stage window, double tileSize) {
         scenario.initRandomPositions();
         initAlgorithms(scenario.getGrid());
@@ -381,6 +490,13 @@ public class Main extends Application {
         }
         colorPaths(tileSize);
         colorStartAndGoal(tileSize);
+    }
+
+    private void updatePositionTexts(TextField startXField, TextField startYField, TextField goalXField, TextField goalYField) {
+        startXField.setText(Integer.toString(scenario.getStart().getX()));
+        startYField.setText(Integer.toString(scenario.getStart().getY()));
+        goalXField.setText(Integer.toString(scenario.getGoal().getX()));
+        goalYField.setText(Integer.toString(scenario.getGoal().getY()));
     }
 
     /**
