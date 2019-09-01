@@ -50,6 +50,7 @@ public class Main extends Application {
     private static Scenario scenario;
     private GraphicsContext pathGraphics;
     private int showExplored;
+    private double tileSize;
 
     /**
      * The main program.
@@ -136,19 +137,19 @@ public class Main extends Application {
 
     @Override
     public void start(Stage window) throws Exception {
-        double tileSize = 2.0;
+        tileSize = 2.0;
         Grid grid = scenario.getGrid();
 
         Canvas pathCanvas = new Canvas(grid.getLength() * tileSize, grid.getRowLength() * tileSize);
         pathGraphics = pathCanvas.getGraphicsContext2D();
 
         BorderPane borderPane = new BorderPane();
-        borderPane.setCenter(tileCanvas(grid.getGrid2D(), tileSize));
-        ToolBar toolbar = toolBar(window, tileSize);
+        borderPane.setCenter(tileCanvas(grid.getGrid2D()));
+        ToolBar toolbar = toolBar(window);
         borderPane.setRight(toolbar);
 
-        colorPaths(tileSize);
-        colorStartAndGoal(tileSize);
+        colorPaths();
+        colorStartAndGoal();
 
         ScrollPane scrollPane = new ScrollPane(new Group(borderPane, pathCanvas));
         Scene scene = new Scene(scrollPane);
@@ -164,6 +165,10 @@ public class Main extends Application {
         window.show();
     }
 
+    public void setTileSize(int size) {
+        tileSize = size;
+    }
+
     /**
      * Initialize a new scene with the given grid.
      *
@@ -172,15 +177,15 @@ public class Main extends Application {
      * @param tileSize The map tile size
      * @return JavaFX Scene object
      */
-    private Scene initScene(Stage window, Grid grid, double tileSize) {
+    private Scene initScene(Stage window, Grid grid) {
         Canvas pathCanvas = new Canvas(grid.getLength() * tileSize, grid.getRowLength() * tileSize);
         pathGraphics = pathCanvas.getGraphicsContext2D();
         BorderPane borderPane = new BorderPane();
-        borderPane.setCenter(tileCanvas(grid.getGrid2D(), tileSize));
-        ToolBar toolbar = toolBar(window, tileSize);
+        borderPane.setCenter(tileCanvas(grid.getGrid2D()));
+        ToolBar toolbar = toolBar(window);
         borderPane.setRight(toolbar);
-        colorPaths(tileSize);
-        colorStartAndGoal(tileSize);
+        colorPaths();
+        colorStartAndGoal();
         ScrollPane scrollPane = new ScrollPane(new Group(borderPane, pathCanvas));
         Scene scene = new Scene(scrollPane);
         return scene;
@@ -192,7 +197,7 @@ public class Main extends Application {
      * @param tileSize The map tile size
      * @return JavaFX ToolBar object
      */
-    private ToolBar toolBar(Stage window, double tileSize) {
+    private ToolBar toolBar(Stage window) {
         ToolBar toolbar = new ToolBar();
         toolbar.setOrientation(Orientation.VERTICAL);
         toolbar.setPadding(new Insets(15));
@@ -246,10 +251,10 @@ public class Main extends Application {
             Grid grid = scenario.getGrid();
             if (grid.nodeIsValid(start) && grid.nodeIsValid(goal)) {
                 invalidPositionLabel.setText("");
-                clearPaths(tileSize);
-                clearStartAndGoalColors(tileSize);
+                clearPaths();
+                clearStartAndGoalColors();
                 if (showExplored >= 0) {
-                    clearExplored(tileSize);
+                    clearExplored();
                 }
                 scenario.setStart(start);
                 scenario.setGoal(goal);
@@ -258,10 +263,10 @@ public class Main extends Application {
                     updatePathTexts(pathLengthTexts, i, algoVisuals, pathCostTexts);
                 }
                 if (showExplored >= 0) {
-                    colorExplored(tileSize);
+                    colorExplored();
                 }
-                colorPaths(tileSize);
-                colorStartAndGoal(tileSize);
+                colorPaths();
+                colorStartAndGoal();
             } else {
                 invalidPositionLabel.setText("Invalid positions");
             }
@@ -276,14 +281,14 @@ public class Main extends Application {
             exploredCoices[i + 1] = algoVisuals[i].getName();
         }
         final String[] finalChoices = exploredCoices;
-        ChoiceBox exploredBox = exploredBox(finalChoices, tileSize);
+        ChoiceBox exploredBox = exploredBox(finalChoices);
 
         Label randomPositionsLabel = new Label("New random positions: ");
         randomPositionsLabel.setTextFill(Color.WHITE);
         randomPositionsLabel.setFont(new Font(fontSize));
         Button randomPositionsButton = new Button("Randomize");
         randomPositionsButton.setOnAction(value -> {
-            clickRandomPositions(tileSize);
+            clickRandomPositions();
             updatePositionTexts(startXField, startYField, goalXField, goalYField);
             for (int i = 0; i < algoVisuals.length; i++) {
                 updatePathTexts(pathLengthTexts, i, algoVisuals, pathCostTexts);
@@ -298,12 +303,12 @@ public class Main extends Application {
         Button previousMapButton = new Button("Prev");
         previousMapButton.setOnAction(value -> {
             scenario.setPreviousGrid();
-            switchMap(window, tileSize);
+            switchMap(window);
         });
         Button nextMapButton = new Button("Next");
         nextMapButton.setOnAction(value -> {
             scenario.setNextGrid();
-            switchMap(window, tileSize);
+            switchMap(window);
         });
         HBox prevNextMapButtons = new HBox(previousMapButton, nextMapButton);
 
@@ -315,7 +320,7 @@ public class Main extends Application {
             mapButton.setOnAction(value -> {
                 scenario.setGridIndex(j);
                 scenario.setGrid(grids[j]);
-                switchMap(window, tileSize);
+                switchMap(window);
             });
             mapButtons[i] = mapButton;
         }
@@ -333,6 +338,20 @@ public class Main extends Application {
             testResults.setText(runPerformanceTests(scenario.getAlgorithmVisuals()));
         });
 
+        Label tileSizeLabel = new Label("Set tilesize: ");
+        final String[] tileSizeChoices = {"1", "2", "3", "4"};
+        ChoiceBox tileSizeBox = new ChoiceBox(FXCollections.observableArrayList(tileSizeChoices));
+        if (tileSizeBox.getValue() == null) tileSizeBox.setValue(tileSizeChoices[1]);
+        tileSizeBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue ov, Number value, Number new_value) {
+                setTileSize(Integer.parseInt(tileSizeChoices[new_value.intValue()]));
+                Scene newScene = initScene(window, scenario.getGrid());
+//                switchMap(newScene);
+                window.setScene(newScene);
+                window.show();
+            }
+        });
+
         toolbar.getItems().addAll(separator(), startPositionLabel,
                 startTextFields, goalPositionLabel, goalTextFields,
                 newPositionsButton, invalidPositionLabel,
@@ -340,7 +359,8 @@ public class Main extends Application {
                 separator(), exploredLabel, exploredBox,
                 separator(), randomPositionsLabel, randomPositionsButton,
                 separator(), mapsLabel, prevNextMapButtons, mapNumberButtons,
-                separator(), perfTestLabel, perfTestButton, testResults);
+                separator(), perfTestLabel, perfTestButton, testResults,
+                separator(), tileSizeLabel, tileSizeBox);
 
         return toolbar;
     }
@@ -348,7 +368,7 @@ public class Main extends Application {
     /**
      * Updating the info text for the shortest paths and their costs found by
      * the pathfinding algorithms.
-     * 
+     *
      * @param pathLengthTexts A JavaFX Text array to hold path length text
      * @param i Index of the algorithm array
      * @param algoVisuals Array containing AlgorithmVisualization objects
@@ -362,7 +382,7 @@ public class Main extends Application {
                 + "\npath length:\n"
                 + algoVisuals[i].getShortestPath().length + "\n");
         pathLengthTexts[i].setFill(Color.WHITE);
-        
+
         if (pathCostTexts[i] == null) {
             pathCostTexts[i] = new Text();
         }
@@ -375,14 +395,14 @@ public class Main extends Application {
     /**
      * Initializing new positions, running pathfinding algorithms and rendering
      * the new map after the grid has been set in the Scenario.
-     * 
+     *
      * @param window JavaFX Stage object
      * @param tileSize The map tile size
      */
-    private void switchMap(Stage window, double tileSize) {
+    private void switchMap(Stage window) {
         scenario.initRandomPositions();
         initAlgorithms(scenario.getGrid());
-        Scene newScene = initScene(window, scenario.getGrid(), tileSize);
+        Scene newScene = initScene(window, scenario.getGrid());
         window.setScene(newScene);
         window.show();
     }
@@ -416,21 +436,21 @@ public class Main extends Application {
      * @param tileSize The map tile size
      * @return JavaFX ChoiceBox object
      */
-    private ChoiceBox exploredBox(final String[] exploredChoices, double tileSize) {
+    private ChoiceBox exploredBox(final String[] exploredChoices) {
         ChoiceBox exploredBox = new ChoiceBox(FXCollections.observableArrayList(exploredChoices));
         exploredBox.setValue(exploredChoices[0]);
         showExplored = -1;
         exploredBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue ov, Number value, Number new_value) {
                 if (showExplored >= 0) {
-                    clearExplored(tileSize);
+                    clearExplored();
                 }
                 showExplored = new_value.intValue() - 1;
                 if (showExplored >= 0) {
-                    colorExplored(tileSize);
+                    colorExplored();
                 }
-                colorPaths(tileSize);
-                colorStartAndGoal(tileSize);
+                colorPaths();
+                colorStartAndGoal();
             }
         });
         return exploredBox;
@@ -456,7 +476,7 @@ public class Main extends Application {
      * @param tileSize Pixel dimensions for each tile
      * @return
      */
-    private Canvas tileCanvas(char[][] grid2D, double tileSize) {
+    private Canvas tileCanvas(char[][] grid2D) {
         Canvas tileCanvas = new Canvas(grid2D.length * tileSize, grid2D[0].length * tileSize);
         GraphicsContext tileGC = tileCanvas.getGraphicsContext2D();
         for (int i = 0; i < grid2D.length - 1; i++) {
@@ -473,11 +493,11 @@ public class Main extends Application {
      *
      * @param tileSize The map tile size
      */
-    private void clickRandomPositions(double tileSize) {
-        clearPaths(tileSize);
-        clearStartAndGoalColors(tileSize);
+    private void clickRandomPositions() {
+        clearPaths();
+        clearStartAndGoalColors();
         if (showExplored >= 0) {
-            clearExplored(tileSize);
+            clearExplored();
         }
         scenario.initRandomPositions();
         AlgorithmVisualization[] algoVisuals = scenario.getAlgorithmVisuals();
@@ -486,10 +506,10 @@ public class Main extends Application {
         }
 
         if (showExplored >= 0) {
-            colorExplored(tileSize);
+            colorExplored();
         }
-        colorPaths(tileSize);
-        colorStartAndGoal(tileSize);
+        colorPaths();
+        colorStartAndGoal();
     }
 
     private void updatePositionTexts(TextField startXField, TextField startYField, TextField goalXField, TextField goalYField) {
@@ -504,7 +524,7 @@ public class Main extends Application {
      *
      * @param tileSize The map tile size
      */
-    private void colorStartAndGoal(double tileSize) {
+    private void colorStartAndGoal() {
         Node start = scenario.getStart();
         Node goal = scenario.getGoal();
         Color startColor = Color.RED;
@@ -526,7 +546,7 @@ public class Main extends Application {
      *
      * @param tileSize The map tile size
      */
-    private void clearStartAndGoalColors(double tileSize) {
+    private void clearStartAndGoalColors() {
         Node start = scenario.getStart();
         Node goal = scenario.getGoal();
         pathGraphics.clearRect((int) (start.getY() * tileSize) - tileSize, (int) (start.getX() * tileSize) - tileSize, (tileSize * tileSize) + tileSize, (tileSize * tileSize) + tileSize);
@@ -538,7 +558,7 @@ public class Main extends Application {
      *
      * @param tileSize The map tile size
      */
-    private void colorPaths(double tileSize) {
+    private void colorPaths() {
         AlgorithmVisualization[] algoVisuals = scenario.getAlgorithmVisuals();
         for (int i = 0; i < algoVisuals.length; i++) {
             Node[] path = algoVisuals[i].getShortestPath();
@@ -557,7 +577,7 @@ public class Main extends Application {
      *
      * @param tileSize The map tile size
      */
-    private void clearPaths(double tileSize) {
+    private void clearPaths() {
         AlgorithmVisualization[] algoVisuals = scenario.getAlgorithmVisuals();
         for (int i = 0; i < algoVisuals.length; i++) {
             Node[] path = algoVisuals[i].getShortestPath();
@@ -575,7 +595,7 @@ public class Main extends Application {
      *
      * @param tileSize The map tile size
      */
-    private void colorExplored(double tileSize) {
+    private void colorExplored() {
         Node[][] cameFrom = scenario.getAlgorithmVisuals()[showExplored].getCameFrom();
         for (int i = 0; i < cameFrom.length; i++) {
             Node[] nodes = cameFrom[i];
@@ -598,7 +618,7 @@ public class Main extends Application {
      *
      * @param tileSize The map tile size
      */
-    private void clearExplored(double tileSize) {
+    private void clearExplored() {
         Node[][] cameFrom = scenario.getAlgorithmVisuals()[showExplored].getCameFrom();
         for (int i = 0; i < cameFrom.length; i++) {
             Node[] nodes = cameFrom[i];
