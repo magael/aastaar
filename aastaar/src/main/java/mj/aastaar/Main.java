@@ -302,7 +302,7 @@ public class Main extends Application {
 
         Label perfTestLabel = new Label("WARNING:\n"
                 + "While the tests are running,\nthe application will be "
-                + "frozen\nfor ~30 seconds.");
+                + "frozen\nfor ~30-60 seconds.");
         perfTestLabel.setTextFill(Color.WHITE);
         Button perfTestButton = new Button("Run performance tests");
         Text testResults = new Text();
