@@ -10,26 +10,29 @@ Projektin saa buildattua suorittamalla gradle-projektin juuressa, eli repositori
 
 Suoritettavan <code>.jar</code>-tiedoston saa generoitua komennolla <code>gradle jar</code>, jonka jälkeen se löytyy hakemistosta <code>aastaar/build/libs/</code>.
 
-
 #### Ohjelman suoritus
 
 Projekti toteuttaa polunetsintää kahden pisteen välillä pelikartoilla. Ohjelmointikieli on Java ja graafinen käyttöliittymä on tehty Java FX:llä.
 
-Ohjelma lukee resurssikansiosta [Moving AI Labs:in 2D Pathfinding Benchmark -karttoja](https://movingai.com/benchmarks/grids.html) ja muuntaa niistä polunetsintään soveltuvia kaksiulotteisia taulukoita.
+Pääohjelman käynnistyttyä luetaan  resuirssikansiosta pelikarttoja ja luodaan niitä vastaavat ruudukot. Alustavat lähtö- ja maalipisteet generoidaan joka suorituskerralla satunnaisesti.
 
-Pääohjelman käynnistyttyä luodaan pelikarttaa vastaava ruudukko, ja suoritetaan sillä eri polunetsintäalgoritmeja. Kartta on tällä hetkellä kovakoodattuna ja vaihdettavissa Scenario-luokan init-medoteissa. Alustavat lähtö- ja maalipisteet generoidaan joka suorituskerralla satunnaisesti.
+Karttoihin sovelletaan Dijkstran algoritmin Uniform cost search -variaatiota (jonoon alustetaan vain lähtösolmu) sekä A*-algoritmia. Algoritmien löydettyä lyhyimmät polut ensimmäisen kartan alustavien pisteiden välillä, avataan graafisen käyttöliittymän ikkuna. Kartojen maasto on visualisoitu kuvaavin värein: "Tavallinen maa" on hiekan väristä, puut vihreitä, syvä vesi sinistä ja matala vesi sekoitus hiekan ja veden väriä.
 
-Karttoihin sovelletaan Dijkstran algoritmin Uniform cost search -variaatiota (jonoon alustetaan vain lähtösolmu) sekä A*-algoritmia. Ohjelma kertoo tulostuksilla konsoliin, kun algoritmi on suorittanut toimintonsa.
+Eri algoritmien löytämät lyhyimmät polut, sekä alku- ja maalipisteet ovat meritty kirkkain värein. Käyttöliittymän oikeassa reunassa on työkalupalkki, jossa kerrotaan käytetyt algoritmit ja värit.
 
-Algoritmien suoritusten jälkeen avataan graafisen käyttöliittymän ikkuna, jossa kartan maasto on visualisoitu kuvaavin värein. Eri algoritmien löytämät lyhyimmät polut, sekä alku- ja maalipisteet ovat meritty kirkkain värein.
+Alku- ja lähtöpisteiden koordinaatit ovat tarkasti nähtävissä ja muunneltavissa palkin yläosan tekstikentissä. Polut päivittyvät painikkeesta "New positions".
 
-Käyttöliittymän oikeassa reunassa on työkalupalkki, jossa kerrotaan käytetyt algoritmit ja värit. Palkissaa on myös nappi, jonka avulla käyttäjä voi alustaa uudet satunnaiset lähtö- ja maalipisteet. Uusien pisteiden valinta pyyhkii välittömästi vanhat pisteet ja reitit pois, suorittaa algoritmit uudelleen ja piirtää uudet pisteet ja polut.
+Palkissaa on myös nappi, jonka avulla käyttäjä voi alustaa uudet satunnaiset lähtö- ja maalipisteet. Uusien pisteiden valinta pyyhkii välittömästi vanhat pisteet ja reitit pois, suorittaa algoritmit uudelleen ja piirtää uudet pisteet ja polut.
 
-Työkalupalkissa on lisäksi valikkonappi, jonka avulla käyttäjä voi halutessaan piirtää kartalle esityksen kunkin algoritmin tarkastelemat ruuduista.
+Palkkiin listataan algoritmien löytämät lyhyimmät polut, ja niiden painot. Matalan veden läpi kulkeminen on raskaampaa.
+
+Otsikon "Visualize explored nodes" alla olevasta valikosta voidaan piirtää kartalle esitys kunkin algoritmin tarkastelemista ruuduista.
 
 Käyttäjä voi valita useasta eri kartasta, joko "Previous" ja "Next", tai numeroiduista napeista.
 
-Alimpana on painike, josta voidaan suorittaa suorituskykytestejä. Testit jäädyttävät sovelluksen toiminnallisuuden testien ajaksi. Testien suoriuduttua, tulokset kirjataan työkalupalkkiin testausnapin alle.
+Varoitustekstiä ("WARNING") seuraa painike, josta voidaan suorittaa suorituskykytestejä. Testit jäädyttävät sovelluksen toiminnallisuuden testien ajaksi. Testien suoriuduttua, tulokset kirjataan työkalupalkkiin testausnapin alle.
+
+Alimmaisesta valikosta käyttäjä voi vaihtaa ruudukon skaalausta sopivammaksi oman näyttönsä resoluutioon.
 
 Käyttöliittymäikkunan sulkeminen, esimerkiksi yläkulman ruksipainikkeesta, lopettaa sovelluksen suorituksen.
 

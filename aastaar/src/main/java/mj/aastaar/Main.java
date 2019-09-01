@@ -332,9 +332,9 @@ public class Main extends Application {
         toolbar.getItems().addAll(separator(), startPositionLabel,
                 startTextFields, goalPositionLabel, goalTextFields,
                 newPositionsButton, invalidPositionLabel,
+                separator(), randomPositionsLabel, randomPositionsButton,
                 separator(), pathTexts,
                 separator(), exploredLabel, exploredBox,
-                separator(), randomPositionsLabel, randomPositionsButton,
                 separator(), mapsLabel, prevNextMapButtons, mapNumberButtons,
                 separator(), perfTestLabel, perfTestButton, testResults,
                 separator(), tileSizeLabel, tileSizeBox);

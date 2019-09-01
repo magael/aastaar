@@ -134,8 +134,6 @@ public class Scenario {
     public void runPathfindingAlgorithm(AlgorithmVisualization algorithmVisual) {
         PathfindingAlgorithm algorithm = algorithmVisual.getAlgorithm();
         int pathLength = algorithm.search(start, goal, 4);
-        System.out.print(algorithmVisual.getName() + " shortest path length: " + pathLength);
-        System.out.println(", cost: " + algorithm.getCost(goal) + "\n");
         algorithmVisual.setShortestPath(algorithm.getPath().shortestPath(goal, start, pathLength));
         algorithmVisual.setCameFrom(algorithm.getPath().cameFrom);
     }

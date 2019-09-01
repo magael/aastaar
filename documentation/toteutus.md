@@ -36,7 +36,7 @@ Koodin yksinkertaistamiseksi ja tilavaatimuksen minimoimiseksi algoritmit eivät
 
 Oman HashMapin toteuttaminen ja soveltaminen ovat korkealla prioriteettilistalla. Mikäli aikaa jää, niin olisi kiinnostavaa toteuttaa viistosuuntainen liikkuminen ja eri heuristiikkoja.
 
-Ohjelman toteuttaa tällä hetkellä kaikki vaatimusmäärittelyssä määritellyt [perustoiminnallisuudet](https://github.com/magael/aastaar/blob/master/documentation/maarittely.md#perustoiminnallisuuksia) (BFS on poistettu koodista, koska sen ei koettu tuovan projektille paljoa lisäarvoa). Vatimusmäärittelyn kohdasta ["edistyneitä / jatkokehityksen toiminnallisuuksia"](https://github.com/magael/aastaar/blob/master/documentation/maarittely.md#edistyneit%C3%A4--jatkokehityksen-toiminnallisuuksia) ainakin polun painot ja kartan valinta käyttäjän syötteestä on jo toteutettu.
+Ohjelman toteuttaa tällä hetkellä kaikki vaatimusmäärittelyssä määritellyt [perustoiminnallisuudet](https://github.com/magael/aastaar/blob/master/documentation/maarittely.md#perustoiminnallisuuksia). BFS on poistettu koodista, koska sen ei koettu tuovan projektille paljoa lisäarvoa, sen tilalla vertailukohteena on Dijkstran algoritmi. Vatimusmäärittelyn kohdasta ["edistyneitä / jatkokehityksen toiminnallisuuksia"](https://github.com/magael/aastaar/blob/master/documentation/maarittely.md#edistyneit%C3%A4--jatkokehityksen-toiminnallisuuksia) ainakin polun painot, kartan valinta käyttäjän syötteestä ja ruudukon valinnainen skaalaus on jo toteutettu.
 
 Koodin seasta on siistitty pois erilliseen tiedostoon tiettyihin metodeihin liittyviä [TODO-muistiinpanoja](https://github.com/magael/aastaar/blob/master/documentation/todo.md).
 
