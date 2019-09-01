@@ -163,7 +163,6 @@ public class Main extends Application {
      *
      * @param window JavaFX stage component, where the scene is to be set
      * @param grid Pathfinding grid
-     * @param tileSize The map tile size
      * @return JavaFX Scene object
      */
     private Scene initScene(Stage window, Grid grid) {
@@ -190,7 +189,6 @@ public class Main extends Application {
     /**
      * Creating a toolbar with legend and interactive UI elements.
      *
-     * @param tileSize The map tile size
      * @return JavaFX ToolBar object
      */
     private ToolBar toolBar(Stage window) {
@@ -374,7 +372,6 @@ public class Main extends Application {
      * the new map after the grid has been set in the Scenario.
      *
      * @param window JavaFX Stage object
-     * @param tileSize The map tile size
      */
     private void switchMap(Stage window) {
         scenario.initRandomPositions();
@@ -410,7 +407,6 @@ public class Main extends Application {
      * Menu box to select to show the nodes explored by zero or more algorithms.
      *
      * @param exploredChoices Choices listed in the menu
-     * @param tileSize The map tile size
      * @return JavaFX ChoiceBox object
      */
     private ChoiceBox exploredBox(final String[] exploredChoices) {
@@ -446,7 +442,6 @@ public class Main extends Application {
      * canvases.
      *
      * @param grid2D The map grid as a character array
-     * @param tileSize Pixel dimensions for each tile
      * @return
      */
     private Canvas tileCanvas(char[][] grid2D) {
@@ -492,8 +487,6 @@ public class Main extends Application {
 
     /**
      * Handling the user clicking the "New random positions"-button.
-     *
-     * @param tileSize The map tile size
      */
     private void clickRandomPositions() {
         clearPathCanvas();
@@ -536,8 +529,6 @@ public class Main extends Application {
 
     /**
      * Coloring the start and goal nodes.
-     *
-     * @param tileSize The map tile size
      */
     private void colorStartAndGoal() {
         Node start = scenario.getStart();
@@ -558,8 +549,6 @@ public class Main extends Application {
 
     /**
      * Clearing the start and goal colors.
-     *
-     * @param tileSize The map tile size
      */
     private void clearStartAndGoalColors() {
         Node start = scenario.getStart();
@@ -570,8 +559,6 @@ public class Main extends Application {
 
     /**
      * Coloring different paths found by different algorithms.
-     *
-     * @param tileSize The map tile size
      */
     private void colorPaths() {
         AlgorithmVisualization[] algoVisuals = scenario.getAlgorithmVisuals();
@@ -589,8 +576,6 @@ public class Main extends Application {
 
     /**
      * Clearing the path colors.
-     *
-     * @param tileSize The map tile size
      */
     private void clearPaths() {
         AlgorithmVisualization[] algoVisuals = scenario.getAlgorithmVisuals();
@@ -607,8 +592,6 @@ public class Main extends Application {
 
     /**
      * Coloring the nodes explored by the pathfinding algorithms.
-     *
-     * @param tileSize The map tile size
      */
     private void colorExplored() {
         Node[][] cameFrom = scenario.getAlgorithmVisuals()[showExplored].getCameFrom();
@@ -630,8 +613,6 @@ public class Main extends Application {
 
     /**
      * Clearing the nodes explored by the pathfinding algorithms.
-     *
-     * @param tileSize The map tile size
      */
     private void clearExplored() {
         Node[][] cameFrom = scenario.getAlgorithmVisuals()[showExplored].getCameFrom();
