@@ -204,27 +204,19 @@ public class Main extends Application {
         addAlgorithmsLegend(fontSize, toolbar);
 
         //TODO: texts into private global array, update on clickRandom or clickNew
-        VBox pathLengthTexts = new VBox();
-        pathLengthTexts.setPadding(new Insets(5));
-        VBox pathCostTexts = new VBox();
-        pathCostTexts.setPadding(new Insets(5));
+        VBox pathLengthTextBox = new VBox();
+        pathLengthTextBox.setPadding(new Insets(5));
+        VBox pathCostTextBox = new VBox();
+        pathCostTextBox.setPadding(new Insets(5));
         HBox pathTexts = new HBox();
-        Text pathLengthText = new Text();
-        Text pathCostText = new Text();
+        Text[] pathLengthTexts = new Text[algoVisuals.length];
+        Text[] pathCostTexts = new Text[algoVisuals.length];
         for (int i = 0; i < algoVisuals.length; i++) {
-            pathLengthText = new Text(algoVisuals[i].getName()
-                    + "\npath length:\n"
-                    + algoVisuals[i].getShortestPath().length + "\n");
-            pathLengthText.setFill(Color.WHITE);
-            pathLengthTexts.getChildren().add(pathLengthText);
-
-            pathCostText = new Text("\npath cost:\n"
-                    + algoVisuals[i].getAlgorithm().getCost(scenario.getGoal())
-                    + "\n");
-            pathCostText.setFill(Color.WHITE);
-            pathCostTexts.getChildren().add(pathCostText);
+            updatePathTexts(pathLengthTexts, i, algoVisuals, pathCostTexts);
+            pathLengthTextBox.getChildren().add(pathLengthTexts[i]);
+            pathCostTextBox.getChildren().add(pathCostTexts[i]);
         }
-        pathTexts.getChildren().addAll(pathLengthTexts, pathCostTexts);
+        pathTexts.getChildren().addAll(pathLengthTextBox, pathCostTextBox);
 
         Label startPositionLabel = new Label("Start position x, y");
         startPositionLabel.setTextFill(Color.WHITE);
@@ -264,8 +256,7 @@ public class Main extends Application {
                 scenario.setGoal(goal);
                 for (int i = 0; i < algoVisuals.length; i++) {
                     scenario.runPathfindingAlgorithm(algoVisuals[i]);
-                    //TODO:
-                    //updatePathText(pathLengthText, pathCostText);
+                    updatePathTexts(pathLengthTexts, i, algoVisuals, pathCostTexts);
                 }
                 if (showExplored >= 0) {
                     colorExplored(tileSize);
@@ -295,8 +286,9 @@ public class Main extends Application {
         randomPositionsButton.setOnAction(value -> {
             clickRandomPositions(tileSize);
             updatePositionTexts(startXField, startYField, goalXField, goalYField);
-            //TODO: for each algo
-            //updatePathText(pathLengthText, pathCostText);
+            for (int i = 0; i < algoVisuals.length; i++) {
+                updatePathTexts(pathLengthTexts, i, algoVisuals, pathCostTexts);
+            }
             invalidPositionLabel.setText("");
         });
 
@@ -354,18 +346,22 @@ public class Main extends Application {
         return toolbar;
     }
 
-    private void updatePathText(AlgorithmVisualization[] algoVisuals, Text pathLengthText, Text pathCostText) {
-        for (int i = 0; i < algoVisuals.length; i++) {
-            pathLengthText.setText(algoVisuals[i].getName()
-                    + "\npath length:\n"
-                    + algoVisuals[i].getShortestPath().length + "\n");
-            pathLengthText.setFill(Color.WHITE);
-
-            pathCostText.setText("\npath cost:\n"
-                    + algoVisuals[i].getAlgorithm().getCost(scenario.getGoal())
-                    + "\n");
-            pathCostText.setFill(Color.WHITE);
+    private void updatePathTexts(Text[] pathLengthTexts, int i, AlgorithmVisualization[] algoVisuals, Text[] pathCostTexts) {
+        if (pathLengthTexts[i] == null) {
+            pathLengthTexts[i] = new Text();
         }
+        pathLengthTexts[i].setText(algoVisuals[i].getName()
+                + "\npath length:\n"
+                + algoVisuals[i].getShortestPath().length + "\n");
+        pathLengthTexts[i].setFill(Color.WHITE);
+        
+        if (pathCostTexts[i] == null) {
+            pathCostTexts[i] = new Text();
+        }
+        pathCostTexts[i].setText("\npath cost:\n"
+                + algoVisuals[i].getAlgorithm().getCost(scenario.getGoal())
+                + "\n");
+        pathCostTexts[i].setFill(Color.WHITE);
     }
 
     private void switchMap(Stage window, double tileSize) {
