@@ -1,6 +1,6 @@
 ## Viikkoraportti 6
 
-Työtunteja kertyi yhteensä noin 22h.
+Työtunteja kertyi yhteensä noin 24h.
 
 ---
 
@@ -29,3 +29,7 @@ Vertaispalaute. Pientä kälin säätöä, mm. polun pisteille ääriivivat ja d
 #### To 29.8.
 
 Useita karttavaihtoehtoja, vaihtelu napeista. VisualizationAlgorithm-luokka, Mainin ja Scenarion toiminnan ja toimialueen selkeytys. Suorituskykytestit käli-ikkunaan. Sekalaisia GUI-uudistuksia, refaktorointia ja dokumentointia. N. 9h.
+
+#### Pe 30.8.
+
+Aloitettu polkujen pituuksien ja painojen listaus työkalupalkkiin, sekä alku- ja loppupisteiden koordinaattien määrittely tekstikentillä (branch guiInfo). Käyttöohje. N. 2h.
