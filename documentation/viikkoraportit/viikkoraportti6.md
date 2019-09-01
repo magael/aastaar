@@ -10,6 +10,8 @@ Työtunteja kertyi yhteensä noin 22h.
 
 * Uusi AlgorithmVisualization-luokka myös excludettu jacoco-raportista: Sisältää vain yksinkertaisia gettereitä ja settereitä.
 
+* Mainin GUI:n rakentelu rupeaa paisumaan, etenkin uusimpien työkalupalkin lisäysten myötä. Arvostellaanko sitä koodia millä tavalla, että kannattaako esim. ToolBarin rakentelua refaktoroida luokkaan? Yleisesti ottaen varmaan kannattaisi, mutta kysyn arvostelusta nyt, kun kurssin asioihin on enää vähän aikaa.
+
 ---
 
 #### Ma 26.8.
