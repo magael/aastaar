@@ -304,7 +304,7 @@ public class Main extends Application {
 
         Label perfTestLabel = new Label("WARNING:\n"
                 + "While the tests are running,\nthe application will be "
-                + "frozen\nfor a few seconds up to\na few minutes.");
+                + "frozen\nfor ~30 seconds.");
         perfTestLabel.setTextFill(Color.WHITE);
         Button perfTestButton = new Button("Run performance tests");
         Text testResults = new Text();
@@ -319,6 +319,7 @@ public class Main extends Application {
         tileSizeLabel.setTextFill(Color.WHITE);
         final String[] tileSizeChoices = {"1.0", "2.0", "3.0", "4.0"};
         ChoiceBox tileSizeBox = new ChoiceBox(FXCollections.observableArrayList(tileSizeChoices));
+        tileSizeBox.setValue(Double.toString(tileSize));
         tileSizeBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue ov, Number value, Number new_value) {
                 setTileSize(Double.parseDouble(tileSizeChoices[new_value.intValue()]));
@@ -406,7 +407,7 @@ public class Main extends Application {
     }
 
     /**
-     * Menu box to select to show the nodes explored by zero or more algorithms
+     * Menu box to select to show the nodes explored by zero or more algorithms.
      *
      * @param exploredChoices Choices listed in the menu
      * @param tileSize The map tile size
@@ -429,7 +430,7 @@ public class Main extends Application {
     }
 
     /**
-     * Creating a separator UI-element
+     * Creating a separator UI-element.
      *
      * @return JavaFX Separator object
      */
@@ -465,9 +466,11 @@ public class Main extends Application {
      *
      * @param start Start position for pathfinding
      * @param goal Goal position for pathfinding
-     * @param invalidPositionLabel 
-     * @param pathLengthTexts
-     * @param pathCostTexts
+     * @param invalidPositionLabel Label informing of possible invalid positions
+     * @param pathLengthTexts Texts for the length of the shortest paths found
+     * by each algorithm
+     * @param pathCostTexts Texts for the cost of the shortest paths found by
+     * each algorithm
      */
     private void clickNewPositions(Node start, Node goal, Label invalidPositionLabel, Text[] pathLengthTexts, Text[] pathCostTexts) {
         Grid grid = scenario.getGrid();
@@ -502,6 +505,9 @@ public class Main extends Application {
         colorPathCanvas();
     }
 
+    /**
+     * Visualizing the pathfinding.
+     */
     private void colorPathCanvas() {
         if (showExplored >= 0) {
             colorExplored();
@@ -510,6 +516,9 @@ public class Main extends Application {
         colorStartAndGoal();
     }
 
+    /**
+     * Clearing the pathfinding visualization.
+     */
     private void clearPathCanvas() {
         clearPaths();
         clearStartAndGoalColors();
@@ -641,7 +650,7 @@ public class Main extends Application {
     }
 
     /**
-     * Determine the color for a map tile.
+     * Determining the color for a map tile.
      *
      * @param c Character representation of the map grid node
      * @return JavaFX Color object
