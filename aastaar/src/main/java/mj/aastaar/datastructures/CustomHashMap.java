@@ -29,8 +29,6 @@ public class CustomHashMap<K, V> {
         LOAD_FACTOR = loadFactor;
         buckets = new CustomEntry[INITIAL_SIZE];
     }
-    
-    
 
     public int findIndex(K key) {
         return key.hashCode() % buckets.length;
@@ -42,7 +40,7 @@ public class CustomHashMap<K, V> {
         if (currentEntry == null) {
             buckets[i] = newEntry;
         } else {
-            if 
+            
         }
     }
     
