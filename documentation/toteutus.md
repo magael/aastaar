@@ -23,6 +23,7 @@ Algoritmi-luokat, sekä niiden lyhyimmän polun tilan tallentamiseen käyttävä
 #### Pakkauskohtaisia kaavioita
 
 [aastaar](https://github.com/magael/aastaar/blob/master/documentation/luokkakaavio/kaavio_main.png)
+
 [aastaar.algorithms](https://github.com/magael/aastaar/blob/master/documentation/luokkakaavio/kaavio_algorithms.png)
 
 ---
