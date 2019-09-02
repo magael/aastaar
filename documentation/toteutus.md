@@ -12,13 +12,13 @@ Algoritmi-luokat, sekä niiden lyhyimmän polun tilan tallentamiseen käyttävä
 
 <code>aastaar.utils</code>-hakemisto sisältää tiedostonlukijan sekä algoritmien suorituskykytestaukseen käytettävän luokan <code>PathfindingPerformanceTester</code>. Pelikarttojen tiedostot löytyvät hakemistosta <code>aastaar/src/main/resources</code>.
 
-#### Luokkakaavio
+#### Luokkakaavio pakkausrakenteella
 
-![Luokkakaavio](https://github.com/magael/aastaar/blob/master/documentation/luokkakaavio/kaavio_no_packages.png)
+![Luokkakaavio pakkauksilla](https://github.com/magael/aastaar/blob/master/documentation/luokkakaavio/kaavio_simple.png)
 
-#### Yksinkertaistettu kaavio pakkauksilla
+#### Kaavio kaikilla luokkien välisillä yhteyksillä
 
-![Pakkausrakenne](https://github.com/magael/aastaar/blob/master/documentation/luokkakaavio/kaavio_simple.png)
+![Luokkakaavio kaikilla yhteyksillä](https://github.com/magael/aastaar/blob/master/documentation/luokkakaavio/kaavio_no_packages.png)
 
 #### Pakkauskohtaisia kaavioita
 
