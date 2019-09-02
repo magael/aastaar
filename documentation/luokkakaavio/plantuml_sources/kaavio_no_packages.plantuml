@@ -1,0 +1,69 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam ClassFontStyle bold
+skinparam linetype polyline
+
+  class Main
+  class Scenario
+    class MapCreator 
+    class Grid
+    class Node
+    class AStar
+    class AlgorithmVisualization
+    class UniformCostSearch
+    interface PathfindingAlgorithm <<interface>>
+      class PathWithArray
+      interface Path <<interface>>
+    class PathfindingPerformanceTester
+    class CustomFileReader
+    class CustomPriorityQueue
+
+Main --> Scenario
+Main ..> AlgorithmVisualization
+Main ..> AStar
+Main ..> Grid
+Main ..> Node
+Main ..> UniformCostSearch
+Main ..> PathfindingPerformanceTester
+
+Scenario --> AlgorithmVisualization
+Scenario --> Grid
+Scenario ..> MapCreator
+Scenario --> Node
+Scenario ..> PathfindingAlgorithm
+
+MapCreator --> CustomFileReader
+
+PathfindingPerformanceTester --> Scenario
+PathfindingPerformanceTester --> Node
+PathfindingPerformanceTester ..> PathfindingAlgorithm
+PathfindingPerformanceTester ..> AlgorithmVisualization
+
+AlgorithmVisualization --> Node
+AlgorithmVisualization -o PathfindingAlgorithm
+
+PathfindingAlgorithm ..> Path
+PathfindingAlgorithm ..> Node
+PathfindingAlgorithm <|.. UniformCostSearch
+PathfindingAlgorithm <|.. AStar
+
+UniformCostSearch <|- AStar
+UniformCostSearch --> CustomPriorityQueue
+UniformCostSearch --> PathWithArray
+UniformCostSearch --> Node
+UniformCostSearch --> Grid
+
+
+AStar ..> Grid
+AStar ..> Node
+
+Path <|. PathWithArray
+
+PathWithArray ..> Node
+
+CustomPriorityQueue --> Node
+
+hide members
+hide circles
+
+@enduml

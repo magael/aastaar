@@ -8,13 +8,23 @@ Lähdekoodin juuressa <code>aastaar/src/main/java/mj/aastaar</code> on ohjelman 
 
 Kansiossa <code>aastaar.map</code> on luokka <code>MapCreator</code>, joka luo tiedostonlukijan antaman datan perusteella kartan maastoa kuvaavan merkistötaulukon. Taulukon avulla alustetaan <code>Grid</code>-luokan ilmentymä, jonka jälkeen oliota voidaan käyttää tarkastelemaan polunetsintäruudukon soluja: tietyn solun saavutettavissa olevia naapureita, solujen / ruutujen / solmujen välisen "kaaripainon" laskemiseen ja niin edelleen. <code>Node</code>-luokka ylläpitää yhden ruudun koordinaatteja.
 
-Algoritmit ja niiden lyhyimmän polun tilan tallentamiseen käyttävä <code>Path</code>-rajapinnan toteuttava luokka löytyvät hakemistosta <code>aastaar.algorithms</code>. <code>A*</code> perii <code>UniformCostSarchin</code>, erona on vain solmujen välisen matkan kustannukseen käytetty heuristiikka. Molemmat toteuttavat <code>PathfindingAlgorithm</code>-rajapinnan. Algoritmien käyttämä prioriteettijonototeutus löytyy kansiosta <code>aastaar.datastructures</code>. 
+Algoritmi-luokat, sekä niiden lyhyimmän polun tilan tallentamiseen käyttävä <code>Path</code>-rajapinnan toteuttava luokka löytyvät hakemistosta <code>aastaar.algorithms</code>. <code>A*</code> perii <code>UniformCostSarchin</code>, erona on vain solmujen välisen matkan kustannukseen käytetty heuristiikka. Molemmat toteuttavat <code>PathfindingAlgorithm</code>-rajapinnan. Algoritmien käyttämä prioriteettijonototeutus löytyy kansiosta <code>aastaar.datastructures</code>.
 
 <code>aastaar.utils</code>-hakemisto sisältää tiedostonlukijan sekä algoritmien suorituskykytestaukseen käytettävän luokan <code>PathfindingPerformanceTester</code>. Pelikarttojen tiedostot löytyvät hakemistosta <code>aastaar/src/main/resources</code>.
 
 #### Luokkakaavio
 
-![Luokkakaavio](https://github.com/magael/aastaar/blob/master/documentation/luokkakaavio/kaavio.png)
+![Luokkakaavio](https://github.com/magael/aastaar/blob/master/documentation/luokkakaavio/kaavio_no_packages.png)
+
+#### Yksinkertaistettu kaavio pakkauksilla
+
+![Pakkausrakenne](https://github.com/magael/aastaar/blob/master/documentation/luokkakaavio/kaavio_simple.png)
+
+#### Pakkauskohtaisia kaavioita
+
+[aastaar](https://github.com/magael/aastaar/blob/master/documentation/luokkakaavio/kaavio_main.png)
+
+[aastaar.algorithms](https://github.com/magael/aastaar/blob/master/documentation/luokkakaavio/kaavio_algorithms.png)
 
 ---
 
@@ -34,9 +44,11 @@ Koodin yksinkertaistamiseksi ja tilavaatimuksen minimoimiseksi algoritmit eivät
 
 ### Jatkosuunnitelmia
 
-Oman HashMapin toteuttaminen ja soveltaminen ovat korkealla prioriteettilistalla. Mikäli aikaa jää, niin olisi kiinnostavaa toteuttaa viistosuuntainen liikkuminen ja eri heuristiikkoja.
+Seuraavaksi vuorossa on oman HashMapin toteuttaminen ja soveltaminen, algoritmien suorituksen optimoimiseksi (tila- ja aikavaativuus alas).
 
-Ohjelman toteuttaa tällä hetkellä kaikki vaatimusmäärittelyssä määritellyt [perustoiminnallisuudet](https://github.com/magael/aastaar/blob/master/documentation/maarittely.md#perustoiminnallisuuksia). BFS on poistettu koodista, koska sen ei koettu tuovan projektille paljoa lisäarvoa, sen tilalla vertailukohteena on Dijkstran algoritmi. Vatimusmäärittelyn kohdasta ["edistyneitä / jatkokehityksen toiminnallisuuksia"](https://github.com/magael/aastaar/blob/master/documentation/maarittely.md#edistyneit%C3%A4--jatkokehityksen-toiminnallisuuksia) ainakin polun painot, kartan valinta käyttäjän syötteestä ja ruudukon valinnainen skaalaus on jo toteutettu.
+Ohjelman toteuttaa tällä hetkellä kaikki vaatimusmäärittelyssä määritellyt [perustoiminnallisuudet](https://github.com/magael/aastaar/blob/master/documentation/maarittely.md#perustoiminnallisuuksia). BFS-luokka on poistettu repositorion main-branchista, koska sen ei koettu tuovan projektille paljoa lisäarvoa. BFS:n sijaan vertailukohteena on Dijkstran algoritmi.
+
+Vatimusmäärittelyn kohdasta ["edistyneitä / jatkokehityksen toiminnallisuuksia"](https://github.com/magael/aastaar/blob/master/documentation/maarittely.md#edistyneit%C3%A4--jatkokehityksen-toiminnallisuuksia) ainakin polun painot, kartan valinta käyttäjän syötteestä ja ruudukon valinnainen skaalaus on jo toteutettu.
 
 Koodin seasta on siistitty pois erilliseen tiedostoon tiettyihin metodeihin liittyviä [TODO-muistiinpanoja](https://github.com/magael/aastaar/blob/master/documentation/todo.md).
 

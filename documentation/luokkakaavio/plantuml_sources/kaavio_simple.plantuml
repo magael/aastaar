@@ -1,0 +1,70 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam ClassFontStyle bold
+skinparam linetype polyline
+
+/'title Yksityiskohtaisempi komponenttiarkkitehtuuri'/
+
+package aastaar {
+  class Main
+  class Scenario
+
+  package map {
+    class MapCreator 
+    class Grid
+    class Node
+  }
+
+  package algorithms {
+    class AStar
+    class AlgorithmVisualization
+    class UniformCostSearch
+    interface PathfindingAlgorithm <<interface>>
+
+    package path {
+      class PathWithArray
+      interface Path <<interface>>
+    }
+  }
+
+  package utils {
+    class PathfindingPerformanceTester
+    class CustomFileReader
+  }
+
+  package datastructures {
+    class CustomPriorityQueue
+  }
+}
+
+Main --> Scenario
+
+Scenario --> AlgorithmVisualization
+Scenario --> Grid
+Scenario --> Node
+
+MapCreator --> CustomFileReader
+
+PathfindingPerformanceTester -up-> Scenario
+PathfindingPerformanceTester --> Node
+
+AlgorithmVisualization --> Node
+AlgorithmVisualization -o PathfindingAlgorithm
+
+PathfindingAlgorithm <|.. UniformCostSearch
+PathfindingAlgorithm <|.. AStar
+
+UniformCostSearch <|- AStar
+UniformCostSearch --> Node
+UniformCostSearch --> Grid
+UniformCostSearch --> PathWithArray
+UniformCostSearch --> CustomPriorityQueue
+
+Path <|. PathWithArray
+
+CustomPriorityQueue --> Node
+
+hide members
+hide circles
+
+@enduml

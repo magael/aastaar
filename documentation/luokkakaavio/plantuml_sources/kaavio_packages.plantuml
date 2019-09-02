@@ -1,0 +1,51 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam ClassFontStyle bold
+skinparam linetype polyline
+
+package aastaar {
+  class Main
+  class Scenario
+}
+
+  package map {
+    class MapCreator 
+    class Grid
+    class Node
+  }
+
+  package algorithms {
+    class AStar
+    class AlgorithmVisualization
+    class UniformCostSearch
+    interface PathfindingAlgorithm <<interface>>
+
+    package path {
+      class PathWithArray
+      interface Path <<interface>>
+    }
+  }
+
+  package utils {
+    class PathfindingPerformanceTester
+    class CustomFileReader
+  }
+
+  package datastructures {
+    class CustomPriorityQueue
+  }
+
+aastaar -d-> algorithms
+aastaar -d-> map
+aastaar .d.> utils
+algorithms ---> map
+algorithms ---> datastructures
+datastructures ---> map
+utils -u-> aastaar
+utils ...> algorithms
+map ---> utils
+
+hide members
+hide circles
+
+@enduml
