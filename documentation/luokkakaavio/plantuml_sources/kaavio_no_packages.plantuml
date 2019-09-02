@@ -3,39 +3,20 @@ skinparam classAttributeIconSize 0
 skinparam ClassFontStyle bold
 skinparam linetype polyline
 
-/'title Yksityiskohtaisempi komponenttiarkkitehtuuri'/
-
-package aastaar {
   class Main
   class Scenario
-
-  package map {
     class MapCreator 
     class Grid
     class Node
-  }
-
-  package algorithms {
     class AStar
     class AlgorithmVisualization
     class UniformCostSearch
     interface PathfindingAlgorithm <<interface>>
-
-    package path {
       class PathWithArray
       interface Path <<interface>>
-    }
-  }
-
-  package utils {
     class PathfindingPerformanceTester
     class CustomFileReader
-  }
-
-  package datastructures {
     class CustomPriorityQueue
-  }
-}
 
 Main --> Scenario
 Main ..> AlgorithmVisualization
@@ -67,10 +48,11 @@ PathfindingAlgorithm <|.. UniformCostSearch
 PathfindingAlgorithm <|.. AStar
 
 UniformCostSearch <|- AStar
-UniformCostSearch ..> CustomPriorityQueue
-UniformCostSearch ..> PathWithArray
-UniformCostSearch ..> Node
-UniformCostSearch ..> Grid
+UniformCostSearch --> CustomPriorityQueue
+UniformCostSearch --> PathWithArray
+UniformCostSearch --> Node
+UniformCostSearch --> Grid
+
 
 AStar ..> Grid
 AStar ..> Node

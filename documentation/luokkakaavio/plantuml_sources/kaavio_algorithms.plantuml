@@ -1,0 +1,43 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam ClassFontStyle bold
+skinparam linetype polyline
+
+    class Grid
+    class Node
+
+    class AStar
+    class AlgorithmVisualization
+    class UniformCostSearch
+    interface PathfindingAlgorithm <<interface>>
+
+      class PathWithArray
+      interface Path <<interface>>
+
+    class CustomPriorityQueue
+
+AlgorithmVisualization --> Node
+AlgorithmVisualization -o PathfindingAlgorithm
+
+PathfindingAlgorithm ..> Path
+PathfindingAlgorithm ..> Node
+PathfindingAlgorithm <|.. UniformCostSearch
+PathfindingAlgorithm <|.. AStar
+
+UniformCostSearch <|- AStar
+UniformCostSearch --> CustomPriorityQueue
+UniformCostSearch --> PathWithArray
+UniformCostSearch --> Node
+UniformCostSearch --> Grid
+
+AStar ..> Grid
+AStar ..> Node
+
+Path <|. PathWithArray
+
+PathWithArray ..> Node
+
+hide members
+hide circles
+
+@enduml
