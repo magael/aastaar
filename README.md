@@ -14,7 +14,7 @@
 
 #### Viikkoraportit
 
-[Viikko 6](https://github.com/magael/aastaar/blob/master/documentation/viikkoraportit/viikkoraportti6.md)
+[Viikko 7](https://github.com/magael/aastaar/blob/master/documentation/viikkoraportit/viikkoraportti7.md)
 
 [Aiemmat viikot](https://github.com/magael/aastaar/blob/master/documentation/viikkoraportit/)
 
