@@ -124,11 +124,11 @@ public class Main extends Application {
      */
     private static void initAlgorithms(Grid grid) {
         String cyan = "#00FFFF";
-        String magenta = "#FF00FF";
+//        String magenta = "#FF00FF";
         AlgorithmVisualization dijkstraWHM = new AlgorithmVisualization(new DijkstraWithHashMap(grid), "Dijkstra with Hash Map", cyan);
         AlgorithmVisualization dijkstra = new AlgorithmVisualization(new UniformCostSearch(grid), "Dijkstra", cyan);
-        AlgorithmVisualization aStar = new AlgorithmVisualization(new AStar(grid), "A*", magenta);
-        AlgorithmVisualization[] algorithmVisuals = {dijkstraWHM, dijkstra, aStar};
+//        AlgorithmVisualization aStar = new AlgorithmVisualization(new AStar(grid), "A*", magenta);
+        AlgorithmVisualization[] algorithmVisuals = {dijkstra, dijkstraWHM};
         scenario.setAlgorithmVisuals(algorithmVisuals);
 
         for (int i = 0; i < algorithmVisuals.length; i++) {

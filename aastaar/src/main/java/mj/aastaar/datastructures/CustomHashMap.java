@@ -7,7 +7,7 @@ package mj.aastaar.datastructures;
 public class CustomHashMap<K, V> {
 
     private CustomEntry<K, V>[] buckets;
-    private final int DEFAULT_INITIAL_SIZE = 16;
+    private final int DEFAULT_INITIAL_SIZE = 262144; // 512^2
     private final int INITIAL_SIZE;
     private final double DEFAULT_LOAD_FACTOR = 0.75;
     private final double LOAD_FACTOR;
@@ -42,16 +42,14 @@ public class CustomHashMap<K, V> {
         int i = findIndex(key);
         CustomEntry<K, V> currentEntry = buckets[i];
 
-        while (currentEntry != null) {
-            if (currentEntry.getKey().equals(key)) {
-                return currentEntry;
-            }
+        while (currentEntry != null && !currentEntry.getKey().equals(key)) {
             currentEntry = currentEntry.getNext();
         }
-        return null;
+        return currentEntry;
     }
-    
-    public void put(CustomEntry<K, V> newEntry) {
+
+    public void put(K key, V value) {
+        CustomEntry<K, V> newEntry = new CustomEntry<K, V>(key, value);
         CustomEntry<K, V> currentEntry = find(newEntry.getKey());
         if (currentEntry == null) {
             int i = findIndex(newEntry.getKey());
@@ -61,13 +59,56 @@ public class CustomHashMap<K, V> {
                 currentEntry.setPrev(newEntry);
             }
             buckets[i] = newEntry;
+//            checkSize();
         } else {
             currentEntry.setValue(newEntry.getValue());
         }
     }
-    
-    // TODO: if load would exceed load factor, resize & rehash
 
+    public void checkSize() {
+        int n = 0;
+        for (int i = 0; i < buckets.length; i++) {
+            if (buckets[i] != null) {
+                n++;
+            }
+        }
+        if (n > LOAD_FACTOR * buckets.length) {
+            resize();
+        }
+    }
+
+    public void resize() {
+        CustomEntry<K, V>[] newBuckets = new CustomEntry[buckets.length * 2];
+        for (CustomEntry<K, V> firstEntry : buckets) {
+            if (firstEntry != null) {
+                if (firstEntry.getNext() == null) {
+                    // rehash the only entry in the bucket
+                    rehash(firstEntry, newBuckets);
+//                } else {
+//                    // rehash all entries in the bucket
+//                    CustomEntry<K, V> nextEntry = firstEntry;
+//                    while (nextEntry != null) {
+//                        rehash(nextEntry, newBuckets);
+//                        nextEntry = nextEntry.getNext();
+//                    }
+                }
+            }
+        }
+        buckets = newBuckets;
+    }
+
+    private void rehash(CustomEntry<K, V> entry, CustomEntry<K, V>[] newBuckets) {
+        int i = entry.getKey().hashCode() % newBuckets.length;
+        CustomEntry<K, V> newBucketFirst = newBuckets[i];
+        // if the new bucket is not empty
+        if (newBucketFirst != null) {
+            newBucketFirst.setPrev(entry);
+            entry.setNext(newBucketFirst);
+        }
+        newBuckets[i] = entry;
+    }
+
+// TODO: if load would exceed load factor, resize & rehash
 //    public void put(CustomEntry<K, V> newEntry) {
 //        int i = findIndex(newEntry.getKey());
 //        CustomEntry<K, V> currentEntry = buckets[i];
@@ -100,14 +141,13 @@ public class CustomHashMap<K, V> {
 //            buckets[i] = newEntry;
 //        }
 //    }
-
     private int findIndex(K key) {
         return key.hashCode() % buckets.length;
     }
 
     ////////////////////////////////////////////////////////////////////////////
 //    // TODO: if load would exceed load factor, resize & rehash
-//    public void putLast(CustomEntry<K, V> newEntry) {
+//    public void put(CustomEntry<K, V> newEntry) {
 //        int i = findIndex(newEntry.getKey());
 //        CustomEntry<K, V> currentEntry = buckets[i];
 //
@@ -140,15 +180,14 @@ public class CustomHashMap<K, V> {
 //                }
 //                if (currentEntry.getNext() != null) {
 //                    currentEntry = currentEntry.getNext();
-//                } else {
-//                    break;
+//                } else if (!updatedValue) {
+//                    currentEntry.setNext(newEntry);
+//                    newEntry.setPrev(currentEntry);
 //                }
 //            }
-//            if (!updatedValue) {
-//                currentEntry.setNext(newEntry);
-//                newEntry.setPrev(currentEntry);
-//            }
 //        }
+//    }
+//}
 //    public CustomEntry<K, V> listSearch(CustomEntry<K, V> currentEntry, CustomEntry<K, V> newEntry) {
 //        while (currentEntry != null) {
 //            if (currentEntry.getKey() == newEntry.getKey()) {

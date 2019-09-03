@@ -1,9 +1,6 @@
 package mj.aastaar.algorithms;
 
 import mj.aastaar.algorithms.path.PathWithArray;
-import java.util.HashMap;
-import java.util.HashSet;
-import mj.aastaar.datastructures.CustomEntry;
 import mj.aastaar.datastructures.CustomHashMap;
 import mj.aastaar.datastructures.CustomPriorityQueue;
 import mj.aastaar.map.Grid;
@@ -42,8 +39,7 @@ public class DijkstraWithHashMap implements PathfindingAlgorithm {
         frontier = new CustomPriorityQueue(nx * ny);
         path.putCameFrom(start, start);
         frontier.heapInsert(start);
-//        cost.put(start, 0.0);
-        cost.put(new CustomEntry<Node, Double>(start, 0.0));
+        cost.put(start, 0.0);
 
         while (!frontier.isEmpty()) {
             Node current = frontier.heapDelMin();
@@ -68,8 +64,7 @@ public class DijkstraWithHashMap implements PathfindingAlgorithm {
 
     @Override
     public double getCost(Node goal) {
-//        if (!cost.containsKey(goal)) return -1;
-        if (cost.find(goal) == null) return -1;
+        if (!cost.containsKey(goal)) return -1;
         return cost.get(goal);
     }
 
@@ -81,8 +76,7 @@ public class DijkstraWithHashMap implements PathfindingAlgorithm {
             if (next == null) continue;
             double newCost = cost.get(current) + grid.cost(current, next);
             if (!cost.containsKey(next) || newCost < cost.get(next)) {
-//                cost.put(next, newCost);
-                cost.put(new CustomEntry<Node, Double>(next, newCost));
+                cost.put(next, newCost);
                 next.setPriority(newCost);
                 frontier.heapInsert(next);
                 path.putCameFrom(next, current);
