@@ -16,7 +16,7 @@ public class CustomEntry<K, V> {
         this.value = value;
     }
     
-    public V getValue(K key) {
+    public V getValue() {
         return value;
     }
 

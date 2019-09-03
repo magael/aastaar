@@ -34,6 +34,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import mj.aastaar.algorithms.AStar;
 import mj.aastaar.algorithms.AlgorithmVisualization;
+import mj.aastaar.algorithms.DijkstraWithHashMap;
 import mj.aastaar.algorithms.UniformCostSearch;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
@@ -124,9 +125,10 @@ public class Main extends Application {
     private static void initAlgorithms(Grid grid) {
         String cyan = "#00FFFF";
         String magenta = "#FF00FF";
+        AlgorithmVisualization dijkstraWHM = new AlgorithmVisualization(new DijkstraWithHashMap(grid), "Dijkstra with Hash Map", cyan);
         AlgorithmVisualization dijkstra = new AlgorithmVisualization(new UniformCostSearch(grid), "Dijkstra", cyan);
         AlgorithmVisualization aStar = new AlgorithmVisualization(new AStar(grid), "A*", magenta);
-        AlgorithmVisualization[] algorithmVisuals = {dijkstra, aStar};
+        AlgorithmVisualization[] algorithmVisuals = {dijkstraWHM, dijkstra, aStar};
         scenario.setAlgorithmVisuals(algorithmVisuals);
 
         for (int i = 0; i < algorithmVisuals.length; i++) {
