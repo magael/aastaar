@@ -7,27 +7,33 @@ package mj.aastaar.datastructures;
 public class CustomHashMap<K, V> {
 
     private CustomEntry<K, V>[] buckets;
-    private final int DEFAULT_INITIAL_SIZE = 262144; // 512^2
+//    private final int DEFAULT_INITIAL_SIZE = 16;
+//    private final int DEFAULT_INITIAL_SIZE = 262144; // 512^2
+    private final int DEFAULT_INITIAL_SIZE = 200000;
     private final int INITIAL_SIZE;
     private final double DEFAULT_LOAD_FACTOR = 0.75;
     private final double LOAD_FACTOR;
+    private int filledBucketCount;
 
     public CustomHashMap() {
         INITIAL_SIZE = DEFAULT_INITIAL_SIZE;
         LOAD_FACTOR = DEFAULT_LOAD_FACTOR;
         buckets = new CustomEntry[INITIAL_SIZE];
+        filledBucketCount = 0;
     }
 
     public CustomHashMap(int size) {
         INITIAL_SIZE = size;
         LOAD_FACTOR = DEFAULT_LOAD_FACTOR;
         buckets = new CustomEntry[INITIAL_SIZE];
+        filledBucketCount = 0;
     }
 
     public CustomHashMap(int size, double loadFactor) {
         INITIAL_SIZE = size;
         LOAD_FACTOR = loadFactor;
         buckets = new CustomEntry[INITIAL_SIZE];
+        filledBucketCount = 0;
     }
 
     public boolean containsKey(K key) {
@@ -59,42 +65,28 @@ public class CustomHashMap<K, V> {
                 currentEntry.setPrev(newEntry);
             }
             buckets[i] = newEntry;
-//            checkSize();
+            filledBucketCount++;
+//            if (filledBucketCount > LOAD_FACTOR * buckets.length) {
+//                System.out.println(filledBucketCount);
+//                resize();
+//            }
         } else {
             currentEntry.setValue(newEntry.getValue());
         }
     }
 
-    public void checkSize() {
-        int n = 0;
-        for (int i = 0; i < buckets.length; i++) {
-            if (buckets[i] != null) {
-                n++;
-            }
-        }
-        if (n > LOAD_FACTOR * buckets.length) {
-            resize();
-        }
-    }
-
-    public void resize() {
+    private void resize() {
         CustomEntry<K, V>[] newBuckets = new CustomEntry[buckets.length * 2];
-        for (CustomEntry<K, V> firstEntry : buckets) {
-            if (firstEntry != null) {
-                if (firstEntry.getNext() == null) {
-                    // rehash the only entry in the bucket
-                    rehash(firstEntry, newBuckets);
-//                } else {
-//                    // rehash all entries in the bucket
-//                    CustomEntry<K, V> nextEntry = firstEntry;
-//                    while (nextEntry != null) {
-//                        rehash(nextEntry, newBuckets);
-//                        nextEntry = nextEntry.getNext();
-//                    }
-                }
+        for (int i = 0; i < buckets.length; i++) {
+            CustomEntry<K, V> currentEntry = buckets[i];
+            // rehash all entries in the bucket
+            while (currentEntry != null) {
+                rehash(currentEntry, newBuckets);
+                currentEntry = currentEntry.getNext();
             }
         }
         buckets = newBuckets;
+        System.out.println("whew took it's time huh");
     }
 
     private void rehash(CustomEntry<K, V> entry, CustomEntry<K, V>[] newBuckets) {
@@ -108,93 +100,7 @@ public class CustomHashMap<K, V> {
         newBuckets[i] = entry;
     }
 
-// TODO: if load would exceed load factor, resize & rehash
-//    public void put(CustomEntry<K, V> newEntry) {
-//        int i = findIndex(newEntry.getKey());
-//        CustomEntry<K, V> currentEntry = buckets[i];
-//
-//        // if the bucket is empty, set the new entry at front
-//        if (currentEntry == null) {
-//            buckets[i] = newEntry;
-//        } else {
-////            CustomEntry<K, V> previousEntry = null;
-//            while (currentEntry != null) {
-//                // if the key already exists in the bucket, update the value
-//                if (currentEntry.getKey() == newEntry.getKey()) {
-////                    newEntry.setNext(currentEntry.getNext());
-////                    // if found at head, set new as head
-////                    if (previousEntry == null) {
-////                        buckets[i] = newEntry;
-////                    } else {
-////                        previousEntry.setNext(newEntry);
-////                    }
-////                    return;
-//                    currentEntry.setValue(newEntry.getValue());
-//                    return;
-//                }
-//                // traverse the bucket (linked list)
-////                previousEntry = currentEntry;
-//                currentEntry = currentEntry.getNext();
-//            }
-//            newEntry.setNext(buckets[i]);
-//            buckets[i].setPrev(newEntry);
-//            buckets[i] = newEntry;
-//        }
-//    }
     private int findIndex(K key) {
         return key.hashCode() % buckets.length;
     }
-
-    ////////////////////////////////////////////////////////////////////////////
-//    // TODO: if load would exceed load factor, resize & rehash
-//    public void put(CustomEntry<K, V> newEntry) {
-//        int i = findIndex(newEntry.getKey());
-//        CustomEntry<K, V> currentEntry = buckets[i];
-//
-//        // if the bucket is empty, set the new entry at front
-//        if (currentEntry == null) {
-//            buckets[i] = newEntry;
-//        } else {
-//            while (currentEntry != null) {
-//                // if the key already exists in the bucket, update the value
-//                if (currentEntry.getKey() == newEntry.getKey()) {
-//                    currentEntry.setValue(newEntry.getValue());
-//                    return;
-//                // if reached the end of the linked list, set the new entry as tail
-//                } else if (currentEntry.getNext() == null) {
-//                    currentEntry.setNext(newEntry);
-//                    newEntry.setPrev(currentEntry);
-//                    return;
-//                }
-//                // traverse the bucket (linked list)
-//                currentEntry = currentEntry.getNext();
-//            }
-//        }
-//    }  
-//            boolean updatedValue = false;
-//            while (currentEntry != null) {
-//                if (currentEntry.getKey() == newEntry.getKey()) {
-//                    currentEntry.setValue(newEntry.getValue());
-//                    updatedValue = true;
-//                    return;
-//                }
-//                if (currentEntry.getNext() != null) {
-//                    currentEntry = currentEntry.getNext();
-//                } else if (!updatedValue) {
-//                    currentEntry.setNext(newEntry);
-//                    newEntry.setPrev(currentEntry);
-//                }
-//            }
-//        }
-//    }
-//}
-//    public CustomEntry<K, V> listSearch(CustomEntry<K, V> currentEntry, CustomEntry<K, V> newEntry) {
-//        while (currentEntry != null) {
-//            if (currentEntry.getKey() == newEntry.getKey()) {
-//                return currentEntry;
-//            }
-//            currentEntry = currentEntry.getNext();
-//        }
-//        return null;
-//    }
 }
