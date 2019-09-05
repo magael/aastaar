@@ -27,7 +27,7 @@ public class MapCreator {
     private char[][] grid;
 
     /**
-     *
+     * Initializing the file reader and grid.
      */
     public MapCreator() {
         mapReader = new CustomFileReader();

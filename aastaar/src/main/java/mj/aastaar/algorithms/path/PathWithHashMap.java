@@ -1,6 +1,5 @@
 package mj.aastaar.algorithms.path;
 
-import java.util.HashMap;
 import mj.aastaar.datastructures.CustomHashMap;
 import mj.aastaar.map.Node;
 
@@ -12,10 +11,17 @@ public class PathWithHashMap implements Path {
 
     private CustomHashMap<Node, Node> cameFrom;
 
+    /**
+     *
+     */
     public PathWithHashMap() {
         cameFrom = new CustomHashMap<>();
     }
 
+    /**
+     *
+     * @return
+     */
     public CustomHashMap<Node, Node> getCameFrom() {
         return cameFrom;
     }
@@ -33,6 +39,13 @@ public class PathWithHashMap implements Path {
 
     // traces the steps back from goal to start,
     // returns the length of the shortest path
+
+    /**
+     *
+     * @param current
+     * @param start
+     * @return
+     */
     public int earlyExit(Node current, Node start) {
         int steps = 0;
         while (!current.equals(start)) {

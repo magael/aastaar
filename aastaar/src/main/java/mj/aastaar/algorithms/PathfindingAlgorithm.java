@@ -29,6 +29,8 @@ public interface PathfindingAlgorithm {
      * @return The shortest path
      */
     public Path getPath();
+    
+    public boolean[][] getVisited();
 
     /**
      * Retrieving the cost of the found shortest path.

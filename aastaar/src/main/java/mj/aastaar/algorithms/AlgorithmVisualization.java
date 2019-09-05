@@ -54,14 +54,6 @@ public class AlgorithmVisualization {
 
     /**
      *
-     * @return Links between nodes
-     */
-    public Node[][] getCameFrom() {
-        return (Node[][]) cameFrom;
-    }
-
-    /**
-     *
      * @return Nodes included in the shortest path found by the algorithm
      */
     public Node[] getShortestPath() {

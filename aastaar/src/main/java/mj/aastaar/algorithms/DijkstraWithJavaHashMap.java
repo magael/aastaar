@@ -62,6 +62,11 @@ public class DijkstraWithJavaHashMap implements PathfindingAlgorithm {
         return cost.get(goal);
     }
 
+    @Override
+    public boolean[][] getVisited() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     // used by the search to put new nodes to the frontier (a.k.a. open set) and path
     private void expandFrontier(Node current, int directions) {
 //        visited.add(current);

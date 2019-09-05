@@ -33,6 +33,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import mj.aastaar.algorithms.AStarWithArray;
+import mj.aastaar.algorithms.AStarWithHashMap;
 import mj.aastaar.algorithms.AlgorithmVisualization;
 import mj.aastaar.algorithms.DijkstraWithHashMap;
 import mj.aastaar.algorithms.DijkstraWithArray;
@@ -105,13 +106,16 @@ public class Main extends Application {
      * @param grid
      */
     private static void initAlgorithms(Grid grid) {
+        String blue = "0000FF";
         String cyan = "#00FFFF";
+        String green = "#00FF00";
         String magenta = "#FF00FF";
-        AlgorithmVisualization dijkstra = new AlgorithmVisualization(new DijkstraWithArray(grid), "Dijkstra w/ 2D-array", cyan);
-        AlgorithmVisualization dijkstraWHM = new AlgorithmVisualization(new DijkstraWithHashMap(grid), "Dijkstra w/ hash' cost", magenta);
-        AlgorithmVisualization dijkstraWJava = new AlgorithmVisualization(new DijkstraWithJavaHashMap(grid), "Dijkstra w/ Java hash'", "#00FF00");
-//        AlgorithmVisualization aStar = new AlgorithmVisualization(new AStar(grid), "A*", magenta);
-        AlgorithmVisualization[] algorithmVisuals = {dijkstra, dijkstraWHM, dijkstraWJava};
+        AlgorithmVisualization dijkstraArray = new AlgorithmVisualization(new DijkstraWithArray(grid), "Dijkstra w/ 2D-array", blue);
+        AlgorithmVisualization dijkstraWithHashMap = new AlgorithmVisualization(new DijkstraWithHashMap(grid), "Dijkstra w/ hash table", cyan);
+//        AlgorithmVisualization dijkstraWJava = new AlgorithmVisualization(new DijkstraWithJavaHashMap(grid), "Dijkstra w/ Java hash'", "#00FF00");
+        AlgorithmVisualization aStarArray = new AlgorithmVisualization(new AStarWithArray(grid), "A* w/ 2D-array", green);
+        AlgorithmVisualization aStarHashMap = new AlgorithmVisualization(new AStarWithHashMap(grid), "A* w/ hash table", magenta);
+        AlgorithmVisualization[] algorithmVisuals = {dijkstraArray, dijkstraWithHashMap, aStarArray, aStarHashMap};
         scenario.setAlgorithmVisuals(algorithmVisuals);
 
         for (int i = 0; i < algorithmVisuals.length; i++) {
@@ -127,7 +131,7 @@ public class Main extends Application {
      * @param algoNames The names of the algorithms that are
      */
     private static String runPerformanceTests(AlgorithmVisualization[] algoVisuals) {
-        int[] nums = {10, 10, 20};
+        int[] nums = {1};
         PathfindingPerformanceTester tester = new PathfindingPerformanceTester(scenario);
         long t = System.nanoTime();
         tester.run(nums);
@@ -598,19 +602,18 @@ public class Main extends Application {
      * Coloring the nodes explored by the pathfinding algorithms.
      */
     private void colorExplored() {
-        Node[][] cameFrom = scenario.getAlgorithmVisuals()[showExplored].getCameFrom();
-        for (int i = 0; i < cameFrom.length; i++) {
-            Node[] nodes = cameFrom[i];
-            if (nodes == null) {
+        boolean[][] visited = scenario.getAlgorithmVisuals()[showExplored].getAlgorithm().getVisited();
+        for (int i = 0; i < visited.length; i++) {
+            boolean[] visitedRow = visited[i];
+            if (visitedRow == null) {
                 continue;
             }
-            for (int j = 0; j < nodes.length - 1; j++) {
-                if (nodes[j] == null) {
+            for (int j = 0; j < visitedRow.length - 1; j++) {
+                if (!visitedRow[j]) {
                     continue;
                 }
-
                 pathGraphics.setFill(Color.web("#C5C3DA"));
-                pathGraphics.fillRect((int) (nodes[j].getY() * tileSize), (int) (nodes[j].getX() * tileSize), tileSize, tileSize);
+                pathGraphics.fillRect(j * tileSize, i * tileSize, tileSize, tileSize);
             }
         }
     }
@@ -619,17 +622,17 @@ public class Main extends Application {
      * Clearing the nodes explored by the pathfinding algorithms.
      */
     private void clearExplored() {
-        Node[][] cameFrom = scenario.getAlgorithmVisuals()[showExplored].getCameFrom();
-        for (int i = 0; i < cameFrom.length; i++) {
-            Node[] nodes = cameFrom[i];
-            if (nodes == null) {
+        boolean[][] visited = scenario.getAlgorithmVisuals()[showExplored].getAlgorithm().getVisited();
+        for (int i = 0; i < visited.length; i++) {
+            boolean[] visitedRow = visited[i];
+            if (visitedRow == null) {
                 continue;
             }
-            for (int j = 0; j < nodes.length - 1; j++) {
-                if (nodes[j] == null) {
+            for (int j = 0; j < visitedRow.length - 1; j++) {
+                if (!visitedRow[j]) {
                     continue;
                 }
-                pathGraphics.clearRect((int) (nodes[j].getY() * tileSize), (int) (nodes[j].getX() * tileSize), tileSize, tileSize);
+                pathGraphics.clearRect(j * tileSize, i * tileSize, tileSize, tileSize);
             }
         }
     }

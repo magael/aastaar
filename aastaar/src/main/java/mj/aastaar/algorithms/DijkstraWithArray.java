@@ -7,18 +7,21 @@ import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 
 /**
- * Implementation of uniform cost search, which is a variant of
- * Dijkstra's algorithm.
- * 
+ * Implementation of uniform cost search, which is a variant of Dijkstra's
+ * algorithm. Using 2D-arrays for the path cost. All of the data
+ * structures except the cost values are initialized in the constructor, and
+ * reused by consecutive searches.
+ *
  * @author MJ
  */
 public class DijkstraWithArray implements PathfindingAlgorithm {
 
-    private Node goal; 
+    private Node goal;
     private Grid grid;
     private PathWithArray path;
     private CustomPriorityQueue frontier;
-    private double cost [][];
+    private double cost[][];
+    private boolean[][] visited;
 
     /**
      *
@@ -35,16 +38,18 @@ public class DijkstraWithArray implements PathfindingAlgorithm {
             System.out.println("Invalid positions.");
             return -1;
         }
-//        initDataStructures();
         initCost();
         this.goal = goal;
         frontier.heapInsert(start);
         cost[start.getX()][start.getY()] = 0.0;
-        
+
         while (!frontier.isEmpty()) {
             Node current = frontier.heapDelMin();
             if (current.equals(goal)) {
                 return path.earlyExit(current, start);
+            }
+            if (visited[current.getX()][current.getY()]) {
+                continue;
             }
             expandFrontier(current, directions);
         }
@@ -65,6 +70,11 @@ public class DijkstraWithArray implements PathfindingAlgorithm {
         return c;
     }
     
+    @Override
+    public boolean[][] getVisited() {
+        return visited;
+    }
+
     /**
      *
      * @return Pathfinding grid
@@ -80,7 +90,7 @@ public class DijkstraWithArray implements PathfindingAlgorithm {
     public Node getGoal() {
         return goal;
     }
-    
+
     /**
      *
      * @param node The node that needs it's priority set
@@ -97,6 +107,7 @@ public class DijkstraWithArray implements PathfindingAlgorithm {
      * @param directions Allowed amount of directions for movement
      */
     private void expandFrontier(Node current, int directions) {
+        visited[current.getX()][current.getY()] = true;
         for (Node next : grid.getNeighbours(current.getX(), current.getY(), directions)) {
             if (next == null) {
                 continue;
@@ -120,8 +131,12 @@ public class DijkstraWithArray implements PathfindingAlgorithm {
         path = new PathWithArray(nx, ny);
         frontier = new CustomPriorityQueue(nx * ny);
         cost = new double[nx][ny];
+        visited = new boolean[nx][ny];
     }
 
+    /**
+     * Initializing the cost for each node in the grid.
+     */
     private void initCost() {
         int nx = grid.getLength();
         int ny = grid.getRowLength();
