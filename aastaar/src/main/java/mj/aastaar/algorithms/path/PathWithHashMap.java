@@ -4,7 +4,9 @@ import mj.aastaar.datastructures.CustomHashMap;
 import mj.aastaar.map.Node;
 
 /**
- *
+ * Storing paths and retrieving the shortest path between two positions
+ * on a grid.
+ * 
  * @author MJ
  */
 public class PathWithHashMap implements Path {
@@ -12,45 +14,23 @@ public class PathWithHashMap implements Path {
     private CustomHashMap<Node, Node> cameFrom;
 
     /**
-     *
+     * Initializing the hash map of node links.
      */
     public PathWithHashMap() {
         cameFrom = new CustomHashMap<>();
     }
     
+    @Override
     public boolean containsNode(Node node) {
-        if (cameFrom.containsKey(node)) {
-            return true;
-        }
-        return false;
+        return cameFrom.containsKey(node);
     }
     
+    @Override
     public void putCameFrom(Node to, Node from) {
         cameFrom.put(to, from);
     }
 
-    // traces the steps back from goal to start,
-    // returns the length of the shortest path
-
-    /**
-     *
-     * @param current
-     * @param start
-     * @return
-     */
-    public int earlyExit(Node current, Node start) {
-        int steps = 0;
-        while (!current.equals(start)) {
-            current = cameFrom.get(current);
-            steps++;
-        }
-        return steps;
-    }
-    
-    // returns the Nodes of the shortest path after the path and it's length are found
-    // TODO: no separate shortestPlathLength and shortestPathLength methods,
-    // always return the shortest path.
-    // would still require 2 iterations of the path or a dynamic or a very large array
+    @Override
     public Node[] shortestPath(Node goal, Node start, int length) {
         if (cameFrom.isEmpty() || length < 1) {
             System.out.println("Path not found.");
@@ -65,5 +45,22 @@ public class PathWithHashMap implements Path {
             i--;
         }
         return path;
+    }
+
+    /**
+     * Traces the steps back from goal to start,
+     * returns the length of the shortest path.
+     * 
+     * @param current The goal node
+     * @param start The start node
+     * @return Amount of steps in the shortest path
+     */
+    public int earlyExit(Node current, Node start) {
+        int steps = 0;
+        while (!current.equals(start)) {
+            current = cameFrom.get(current);
+            steps++;
+        }
+        return steps;
     }
 }

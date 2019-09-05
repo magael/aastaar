@@ -37,7 +37,6 @@ import mj.aastaar.algorithms.AStarWithHashMap;
 import mj.aastaar.algorithms.AlgorithmVisualization;
 import mj.aastaar.algorithms.DijkstraWithHashMap;
 import mj.aastaar.algorithms.DijkstraWithArray;
-import mj.aastaar.algorithms.DijkstraWithJavaHashMap;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 import mj.aastaar.utils.PathfindingPerformanceTester;
@@ -112,7 +111,6 @@ public class Main extends Application {
         String magenta = "#FF00FF";
         AlgorithmVisualization dijkstraArray = new AlgorithmVisualization(new DijkstraWithArray(grid), "Dijkstra w/ 2D-array", blue);
         AlgorithmVisualization dijkstraWithHashMap = new AlgorithmVisualization(new DijkstraWithHashMap(grid), "Dijkstra w/ hash table", cyan);
-//        AlgorithmVisualization dijkstraWJava = new AlgorithmVisualization(new DijkstraWithJavaHashMap(grid), "Dijkstra w/ Java hash'", "#00FF00");
         AlgorithmVisualization aStarArray = new AlgorithmVisualization(new AStarWithArray(grid), "A* w/ 2D-array", green);
         AlgorithmVisualization aStarHashMap = new AlgorithmVisualization(new AStarWithHashMap(grid), "A* w/ hash table", magenta);
         AlgorithmVisualization[] algorithmVisuals = {dijkstraArray, dijkstraWithHashMap, aStarArray, aStarHashMap};

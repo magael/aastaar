@@ -4,7 +4,7 @@ import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 
 /**
- * Implementation of the A* algorithm.
+ * Implementation of the A* algorithm. Inheriting DijkstraWithArray.
  *
  * @author MJ
  */

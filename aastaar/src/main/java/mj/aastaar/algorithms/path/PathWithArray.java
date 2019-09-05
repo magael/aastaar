@@ -9,14 +9,12 @@ import mj.aastaar.map.Node;
  * @author mijamija
  */
 public class PathWithArray implements Path {
-
-    /**
-     *
-     */
+    
     private Node[][] cameFrom;
 
     /**
-     *
+     * Initializing the array of node links.
+     * 
      * @param nx The x in n = x * y nodes
      * @param ny The y in n = x * y nodes
      */
@@ -26,17 +24,13 @@ public class PathWithArray implements Path {
 
     @Override
     public boolean containsNode(Node node) {
-        if (cameFrom[node.getX()][node.getY()] != null) {
-            return true;
-        }
-        return false;
+        return cameFrom[node.getX()][node.getY()] != null;
     }
 
     @Override
     public void putCameFrom(Node to, Node from) {
         cameFrom[to.getX()][to.getY()] = from;
     }
-    
     
     @Override
     public Node[] shortestPath(Node goal, Node start, int length) {

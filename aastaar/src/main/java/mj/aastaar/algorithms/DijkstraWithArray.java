@@ -8,7 +8,7 @@ import mj.aastaar.map.Node;
 
 /**
  * Implementation of uniform cost search, which is a variant of Dijkstra's
- * algorithm. Using 2D-arrays for the path cost.
+ * algorithm. Using 2D-arrays for the path and path cost.
  * 
  * @author MJ
  */
@@ -49,6 +49,7 @@ public class DijkstraWithArray implements PathfindingAlgorithm {
             if (visited[current.getX()][current.getY()]) {
                 continue;
             }
+            visited[current.getX()][current.getY()] = true;
             expandFrontier(current, directions);
         }
         return -1;
@@ -105,7 +106,6 @@ public class DijkstraWithArray implements PathfindingAlgorithm {
      * @param directions Allowed amount of directions for movement
      */
     private void expandFrontier(Node current, int directions) {
-        visited[current.getX()][current.getY()] = true;
         for (Node next : grid.getNeighbours(current.getX(), current.getY(), directions)) {
             if (next == null) {
                 continue;

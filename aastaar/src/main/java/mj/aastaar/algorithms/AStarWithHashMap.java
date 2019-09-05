@@ -1,15 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mj.aastaar.algorithms;
 
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 
 /**
- *
+ * Implementation of the A* algorithm. Inheriting DijkstraWithHashMap.
+ * 
  * @author MJ
  */
 public class AStarWithHashMap extends DijkstraWithHashMap {

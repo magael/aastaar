@@ -26,7 +26,17 @@ Yksikkötestit löytyvät hakemistosta <code>aastaar/src/test/java/aastaar</code
   
 - koska joissain kartoissa on eristettyjä saarekkeita, joskus harvoin haut epäonnistuvat tiettyjen pisteiden välillä. tämä saattaa vaikuttaa keskimääräisiin hakujen suoritusaikoihin, etenkin pienillä toistoilla (pisteiden määrillä).
 
-Polunetsinnän suorituskykytestit voidaan ajaa käyttöliittymäikkunassa napista "Run performance tests". Tällä hetkellä testeille annetaan suoritettavaksi kovakoodatun joukon kierroksia {10, 10, 20}. Testit vievät omalla koneellani n. 24 sekuntia.
+- testaillu parilla eri hashcodella:
+
+  - int temp = (y + ((x + 1) / 2));
+  
+    return x + (temp * temp);
+  
+  - return (x * 18397) + (y * 20483);
+
+, joista ensimmäinen on [Stack Overflow:sta löydetty bijektiofunktio](https://stackoverflow.com/questions/22826326/good-hashcode-function-for-2d-coordinates). Toinen on jostain vanhasta toisen kurssin tehtävästä. En huomannut merkittäviä eroja näiden välillä.
+
+Polunetsinnän suorituskykytestit voidaan ajaa käyttöliittymäikkunassa napista "Run performance tests". Tällä hetkellä testeille annetaan suoritettavaksi kovakoodatun joukon kierroksia {10, 10, 20}. Testit vievät omalla koneellani joitain kymmeniä sekunteja.
 
 Kierrosjoukkoa voidaan muokata lähdekoodista, <code>Main</code>-luokan metodista <code>runPerformanceTests</code>. Tulokset voidaan myös esimerkiksi tulostaa konsoliin komennolla <code>System.out.println(runPerformanceTests(scenario.getAlgorithmVisuals()));</code>.
 
@@ -70,4 +80,4 @@ Suoritustestaamista edeltää alustus, jossa eri toistokerroille arvotaan läht�
 
 A* on esimerkin ja muiden testien perusteella noin kolme-neljä kertaa niin nopea, kuin Dijkstra (Uniform cost search).
 
-Algoritmeja on testattu myös "visited"-taulukolla ja ilman (erillisillä kopioilla algoritmiluokista, joissa visited on käytössä). Visited-merkinnällä voidaan luoda tarkistus, onko jonon kärjestä juuri poistetu solmu käsitelty aiemmin. Tarkistus tehdään ennen haun laajennusta seuraaviin vierussolmuihin. Taulukon alustus ja tarkistus vievät tilaa ja aikaa, mutta ilman niitä saatetaan tarkastella turhaan samaa solmua useamman kerran. Suoritusajat vaihtelivat, mutta mitään suurta tai selkeää eroa en onnistunut saamaan. Päätin toistaiseksi poistaa kommentoidut visited-merkinnät koodista. Näin koodi on yksinkertaisempaa ja algoritmit varaavat hieman vähemmän tilaa. Aiempia toteutuksia löytyy repositorion commit-historiasta ja eri brancheista.
+Algoritmeja on testattu myös "visited"-taulukolla ja ilman (erillisillä kopioilla algoritmiluokista, joissa visited on käytössä). Visited-merkinnällä voidaan luoda tarkistus, onko jonon kärjestä juuri poistetu solmu käsitelty aiemmin. Tarkistus tehdään ennen haun laajennusta seuraaviin vierussolmuihin. Taulukon alustus ja tarkistus vievät tilaa ja aikaa, mutta ilman niitä saatetaan tarkastella turhaan samaa solmua useamman kerran. Suoritusajat vaihtelivat, mutta mitään suurta tai selkeää eroa en onnistunut saamaan. Päätin säilyttää tarkistuksen algoritmeihin lähinnä siksi, että sillä saa kätevämmin visualisoitua tarkastellut solmut. Aikaisemmin siihen tarkoitukseen siihen niitä solmuja, joille algoritmit asettivat etäisyysarvion.

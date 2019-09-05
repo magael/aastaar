@@ -1,7 +1,6 @@
 package mj.aastaar.algorithms;
 
 import mj.aastaar.algorithms.path.Path;
-import mj.aastaar.algorithms.path.PathWithArray;
 import mj.aastaar.algorithms.path.PathWithHashMap;
 import mj.aastaar.datastructures.CustomHashMap;
 import mj.aastaar.datastructures.CustomPriorityQueue;
@@ -10,16 +9,14 @@ import mj.aastaar.map.Node;
 
 /**
  * Implementation of uniform cost search, which is a variant of Dijkstra's
- * algorithm. Using custom hash maps for the path and path cost. All of the data
- * structures are re-initialized for every consecutive search.
+ * algorithm. Using custom hash maps for the path and path cost.
  *
  * @author MJ
  */
 public class DijkstraWithHashMap implements PathfindingAlgorithm {
 
     private Node goal;
-//    private PathWithHashMap path;
-    private PathWithArray path;
+    private PathWithHashMap path;
     private CustomPriorityQueue frontier;
     private CustomHashMap<Node, Double> cost;
     private Grid grid;
@@ -31,7 +28,6 @@ public class DijkstraWithHashMap implements PathfindingAlgorithm {
      */
     public DijkstraWithHashMap(Grid grid) {
         this.grid = grid;
-//        initDataStructures();
     }
 
     /**
@@ -61,6 +57,7 @@ public class DijkstraWithHashMap implements PathfindingAlgorithm {
             if (visited[current.getX()][current.getY()]) {
                 continue;
             }
+            visited[current.getX()][current.getY()] = true;
             expandFrontier(current, directions);
         }
         return -1;
@@ -111,7 +108,6 @@ public class DijkstraWithHashMap implements PathfindingAlgorithm {
 
     // used by the search to put new nodes to the frontier (a.k.a. open set) and path
     private void expandFrontier(Node current, int directions) {
-        visited[current.getX()][current.getY()] = true;
         for (Node next : grid.getNeighbours(current.getX(), current.getY(), directions)) {
             if (next == null) {
                 continue;
@@ -129,8 +125,7 @@ public class DijkstraWithHashMap implements PathfindingAlgorithm {
     private void initDataStructures() {
         int nx = grid.getLength();
         int ny = grid.getRowLength();
-//        path = new PathWithHashMap();
-        path = new PathWithArray(nx, ny);
+        path = new PathWithHashMap();
         frontier = new CustomPriorityQueue(nx * ny);
         cost = new CustomHashMap<>();
         visited = new boolean[nx][ny];
