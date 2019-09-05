@@ -34,7 +34,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import mj.aastaar.algorithms.AStar;
 import mj.aastaar.algorithms.AlgorithmVisualization;
-import mj.aastaar.algorithms.DijkstraWithHashMap;
+import mj.aastaar.algorithms.UCSWithHashMap;
 import mj.aastaar.algorithms.UniformCostSearch;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
@@ -99,6 +99,25 @@ public class Main extends Application {
     }
 
     /**
+     * Initialize the algorithms and their visualization components.
+     *
+     * @param grid
+     */
+    private static void initAlgorithms(Grid grid) {
+        String cyan = "#00FFFF";
+//        String magenta = "#FF00FF";
+        AlgorithmVisualization dijkstraWHM = new AlgorithmVisualization(new UCSWithHashMap(grid), "Dijkstra with Hash Map", cyan);
+        AlgorithmVisualization dijkstra = new AlgorithmVisualization(new UniformCostSearch(grid), "Dijkstra", cyan);
+//        AlgorithmVisualization aStar = new AlgorithmVisualization(new AStar(grid), "A*", magenta);
+        AlgorithmVisualization[] algorithmVisuals = {dijkstra, dijkstraWHM};
+        scenario.setAlgorithmVisuals(algorithmVisuals);
+
+        for (int i = 0; i < algorithmVisuals.length; i++) {
+            scenario.runPathfindingAlgorithm(algorithmVisuals[i]);
+        }
+    }
+
+    /**
      * Using the performance tester class to test pathfinding speed. Setting the
      * number of times the tests are run.
      *
@@ -115,25 +134,6 @@ public class Main extends Application {
         String testResults = tester.toString() + "\nPerformance tests ran\nin a total of "
                 + elapsedTime.round(new MathContext(3)) + " seconds.";
         return testResults;
-    }
-
-    /**
-     * Initialize the algorithms and their visualization components.
-     *
-     * @param grid
-     */
-    private static void initAlgorithms(Grid grid) {
-        String cyan = "#00FFFF";
-//        String magenta = "#FF00FF";
-        AlgorithmVisualization dijkstraWHM = new AlgorithmVisualization(new DijkstraWithHashMap(grid), "Dijkstra with Hash Map", cyan);
-        AlgorithmVisualization dijkstra = new AlgorithmVisualization(new UniformCostSearch(grid), "Dijkstra", cyan);
-//        AlgorithmVisualization aStar = new AlgorithmVisualization(new AStar(grid), "A*", magenta);
-        AlgorithmVisualization[] algorithmVisuals = {dijkstra, dijkstraWHM};
-        scenario.setAlgorithmVisuals(algorithmVisuals);
-
-        for (int i = 0; i < algorithmVisuals.length; i++) {
-            scenario.runPathfindingAlgorithm(algorithmVisuals[i]);
-        }
     }
 
     @Override
@@ -302,9 +302,8 @@ public class Main extends Application {
         }
         HBox mapNumberButtons = new HBox(mapButtons);
 
-        Label perfTestLabel = new Label("WARNING:\n"
-                + "While the tests are running,\nthe application will be "
-                + "frozen\nfor ~30-60 seconds.");
+        Label perfTestLabel = new Label("WARNING:\nWhile the tests are running,"
+                + "\nthe application will be frozen.");
         perfTestLabel.setTextFill(Color.WHITE);
         Button perfTestButton = new Button("Run performance tests");
         Text testResults = new Text();

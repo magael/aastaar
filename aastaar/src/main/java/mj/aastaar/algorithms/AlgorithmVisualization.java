@@ -14,7 +14,7 @@ public class AlgorithmVisualization {
     private String name;
     private String color;
     private Node[] shortestPath;
-    private Node[][] cameFrom;
+    private Object cameFrom;
 
     /**
      *
@@ -57,7 +57,7 @@ public class AlgorithmVisualization {
      * @return Links between nodes
      */
     public Node[][] getCameFrom() {
-        return cameFrom;
+        return (Node[][]) cameFrom;
     }
 
     /**
@@ -96,7 +96,7 @@ public class AlgorithmVisualization {
      *
      * @param cameFrom Links between nodes
      */
-    public void setCameFrom(Node[][] cameFrom) {
+    public void setCameFrom(Object cameFrom) {
         this.cameFrom = cameFrom;
     }
 

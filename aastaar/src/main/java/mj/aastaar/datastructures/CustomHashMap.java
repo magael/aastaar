@@ -7,9 +7,7 @@ package mj.aastaar.datastructures;
 public class CustomHashMap<K, V> {
 
     private CustomEntry<K, V>[] buckets;
-//    private final int DEFAULT_INITIAL_SIZE = 16;
-//    private final int DEFAULT_INITIAL_SIZE = 262144; // 512^2
-    private final int DEFAULT_INITIAL_SIZE = 200000;
+    private final int DEFAULT_INITIAL_SIZE = 16;
     private final int INITIAL_SIZE;
     private final double DEFAULT_LOAD_FACTOR = 0.75;
     private final double LOAD_FACTOR;
@@ -63,13 +61,15 @@ public class CustomHashMap<K, V> {
             if (currentEntry != null) {
                 newEntry.setNext(currentEntry);
                 currentEntry.setPrev(newEntry);
+            } else {
+                filledBucketCount++;
             }
             buckets[i] = newEntry;
-            filledBucketCount++;
-//            if (filledBucketCount > LOAD_FACTOR * buckets.length) {
-//                System.out.println(filledBucketCount);
-//                resize();
-//            }
+            if (filledBucketCount > LOAD_FACTOR * buckets.length) {
+                System.out.println("overload");
+                filledBucketCount = 0;
+                resize();
+            }
         } else {
             currentEntry.setValue(newEntry.getValue());
         }
@@ -90,14 +90,17 @@ public class CustomHashMap<K, V> {
     }
 
     private void rehash(CustomEntry<K, V> entry, CustomEntry<K, V>[] newBuckets) {
-        int i = entry.getKey().hashCode() % newBuckets.length;
+        CustomEntry<K, V> entryCopy = new CustomEntry<K, V>(entry.getKey(), entry.getValue());
+        int i = entryCopy.getKey().hashCode() % newBuckets.length;
         CustomEntry<K, V> newBucketFirst = newBuckets[i];
         // if the new bucket is not empty
         if (newBucketFirst != null) {
-            newBucketFirst.setPrev(entry);
-            entry.setNext(newBucketFirst);
+            newBucketFirst.setPrev(entryCopy);
+            entryCopy.setNext(newBucketFirst);
+        } else {
+            filledBucketCount++;
         }
-        newBuckets[i] = entry;
+        newBuckets[i] = entryCopy;
     }
 
     private int findIndex(K key) {

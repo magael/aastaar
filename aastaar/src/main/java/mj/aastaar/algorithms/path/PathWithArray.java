@@ -13,7 +13,7 @@ public class PathWithArray implements Path {
     /**
      *
      */
-    public Node[][] cameFrom;
+    private Node[][] cameFrom;
 
     /**
      *
@@ -28,6 +28,7 @@ public class PathWithArray implements Path {
      *
      * @return A 2D array containing where each node has come from in the path
      */
+    @Override
     public Node[][] getCameFrom() {
         return cameFrom;
     }

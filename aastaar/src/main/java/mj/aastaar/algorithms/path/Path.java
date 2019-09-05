@@ -37,4 +37,6 @@ public interface Path {
      * @return The shortest path as a Node array
      */
     public Node[] shortestPath(Node goal, Node start, int pathLength);
+    
+    public Object getCameFrom();
 }

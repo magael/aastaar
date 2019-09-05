@@ -1,5 +1,6 @@
 package mj.aastaar.algorithms;
 
+import mj.aastaar.algorithms.path.Path;
 import mj.aastaar.algorithms.path.PathWithArray;
 import mj.aastaar.datastructures.CustomPriorityQueue;
 import mj.aastaar.map.Grid;
@@ -25,16 +26,13 @@ public class UniformCostSearch implements PathfindingAlgorithm {
      */
     public UniformCostSearch(Grid grid) {
         this.grid = grid;
+        initDataStructures();
     }
 
     @Override
     public int search(Node start, Node goal, int directions) {
-        if (!grid.nodeIsValid(start)) {
-            System.out.println("The starting position is not valid");
-            return -1;
-        }
+        initCost();
         this.goal = goal;
-        initDataStructures();
         frontier.heapInsert(start);
         cost[start.getX()][start.getY()] = 0.0;
         
@@ -49,7 +47,7 @@ public class UniformCostSearch implements PathfindingAlgorithm {
     }
 
     @Override
-    public PathWithArray getPath() {
+    public Path getPath() {
         return path;
     }
 
@@ -117,7 +115,11 @@ public class UniformCostSearch implements PathfindingAlgorithm {
         path = new PathWithArray(nx, ny);
         frontier = new CustomPriorityQueue(nx * ny);
         cost = new double[nx][ny];
+    }
 
+    private void initCost() {
+        int nx = grid.getLength();
+        int ny = grid.getRowLength();
         for (int i = 0; i < nx; i++) {
             for (int j = 0; j < ny; j++) {
                 cost[i][j] = 1000000000.0;

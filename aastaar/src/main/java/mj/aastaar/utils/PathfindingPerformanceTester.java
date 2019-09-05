@@ -52,8 +52,41 @@ public class PathfindingPerformanceTester {
             for (int j = 0; j < nums.length; j++) {
                 times[i][j] = testAlgorithm(algoVisuals[i].getAlgorithm(), j, nums[j]);
             }
+//            initTimes[i] = testAlgorithmInit(algorithm, i)
         }
     }
+    
+//    private double testAlgorithmInit(PathfindingAlgorithm algorithm, int num) {
+//        long algoTimes[] = new long[num];
+//        long tAcc = 0;
+//        int n = 50;
+//
+//        for (int i = 0; i < num; i++) {
+//            for (int j = 0; j < n; j++) {
+//                long t = System.nanoTime();
+//                
+//                tAcc += System.nanoTime() - t;
+//            }
+//            algoTimes[i] = tAcc / n;
+//            tAcc = 0;
+//        }
+//
+//        return getAverage(algoTimes);
+//    }
+    
+//    public String initializationTimes() {
+//        String results = "";
+//        results += "Average runtime of\ninitializing pathfingind\nalgorithms:\n";
+//        for (int i = 0; i < initTimes.length; i++) {
+//            results += "\n" + scenario.getAlgorithmVisuals()[i].getName() + "\n";
+//            for (int j = 0; j < initTimes[i].length; j++) {
+//                int n = nums[j];
+//                BigDecimal ms = new BigDecimal(initTimes[i][j] / 1000000);
+//                results += n + " repetitions: " + ms.round(new MathContext(4)) + " ms" + "\n";
+//            }
+//        }
+//        return results;
+//    }
 
     @Override
     public String toString() {

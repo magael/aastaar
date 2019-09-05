@@ -1,6 +1,6 @@
 package mj.aastaar.algorithms;
 
-import mj.aastaar.algorithms.path.PathWithArray;
+import mj.aastaar.algorithms.path.Path;
 import mj.aastaar.map.Node;
 
 /**
@@ -28,7 +28,7 @@ public interface PathfindingAlgorithm {
      *
      * @return The shortest path
      */
-    public PathWithArray getPath();
+    public Path getPath();
 
     /**
      * Retrieving the cost of the found shortest path.
