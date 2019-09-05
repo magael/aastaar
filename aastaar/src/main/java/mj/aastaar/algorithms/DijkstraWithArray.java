@@ -35,6 +35,7 @@ public class DijkstraWithArray implements PathfindingAlgorithm {
             System.out.println("Invalid positions.");
             return -1;
         }
+//        initDataStructures();
         initCost();
         this.goal = goal;
         frontier.heapInsert(start);

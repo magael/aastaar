@@ -2,7 +2,7 @@ package mj.aastaar.map;
 
 /**
  * A position on the grid, with a priority for pathfinding algorithms.
- * 
+ *
  * @author MJ
  */
 public class Node {
@@ -69,10 +69,12 @@ public class Node {
     public int getY() {
         return y;
     }
-    
+
     @Override
     public int hashCode() {
-        return (x * 18397) + (y * 20483);
+        int temp = (y + ((x + 1) / 2));
+        return x + (temp * temp);
+//        return (x * 18397) + (y * 20483);
     }
 
     @Override
@@ -86,9 +88,9 @@ public class Node {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        
+
         final Node other = (Node) obj;
-        
+
         if (this.x != other.x) {
             return false;
         }

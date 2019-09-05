@@ -105,9 +105,9 @@ public class Main extends Application {
      */
     private static void initAlgorithms(Grid grid) {
         String cyan = "#00FFFF";
-//        String magenta = "#FF00FF";
-        AlgorithmVisualization dijkstraWHM = new AlgorithmVisualization(new DijkstraWithHashMap(grid), "Dijkstra with Hash Map", cyan);
-        AlgorithmVisualization dijkstra = new AlgorithmVisualization(new DijkstraWithArray(grid), "Dijkstra", cyan);
+        String magenta = "#FF00FF";
+        AlgorithmVisualization dijkstra = new AlgorithmVisualization(new DijkstraWithArray(grid), "Dijkstra with 2D-array", cyan);
+        AlgorithmVisualization dijkstraWHM = new AlgorithmVisualization(new DijkstraWithHashMap(grid), "Dijkstra with Hash Map", magenta);
 //        AlgorithmVisualization aStar = new AlgorithmVisualization(new AStar(grid), "A*", magenta);
         AlgorithmVisualization[] algorithmVisuals = {dijkstra, dijkstraWHM};
         scenario.setAlgorithmVisuals(algorithmVisuals);

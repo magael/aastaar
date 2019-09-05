@@ -34,6 +34,7 @@ public class DijkstraWithHashMap implements PathfindingAlgorithm {
             System.out.println("Invalid positions.");
             return -1;
         }
+//        initDataStructures();
         this.goal = goal;
         frontier.heapInsert(start);
         cost.put(start, 0.0);
@@ -79,6 +80,6 @@ public class DijkstraWithHashMap implements PathfindingAlgorithm {
 //        path = new PathWithHashMap();
         path = new PathWithArray(nx, ny);
         frontier = new CustomPriorityQueue(nx * ny);
-        cost = new CustomHashMap<>(16);
+        cost = new CustomHashMap<>();
     }
 }
