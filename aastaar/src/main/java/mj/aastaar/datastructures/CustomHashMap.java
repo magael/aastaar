@@ -74,6 +74,10 @@ public class CustomHashMap<K, V> {
             currentEntry.setValue(newEntry.getValue());
         }
     }
+    
+    public boolean isEmpty() {
+        return filledBucketCount < 1;
+    }
 
     private void resize() {
         CustomEntry<K, V>[] newBuckets = new CustomEntry[buckets.length * 2];

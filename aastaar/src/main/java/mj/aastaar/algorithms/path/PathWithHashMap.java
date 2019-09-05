@@ -1,6 +1,7 @@
 package mj.aastaar.algorithms.path;
 
 import java.util.HashMap;
+import mj.aastaar.datastructures.CustomHashMap;
 import mj.aastaar.map.Node;
 
 /**
@@ -9,13 +10,13 @@ import mj.aastaar.map.Node;
  */
 public class PathWithHashMap implements Path {
 
-    public HashMap<Node, Node> cameFrom;
+    private CustomHashMap<Node, Node> cameFrom;
 
     public PathWithHashMap() {
-        cameFrom = new HashMap<>();
+        cameFrom = new CustomHashMap<>();
     }
 
-    public HashMap<Node, Node> getCameFrom() {
+    public CustomHashMap<Node, Node> getCameFrom() {
         return cameFrom;
     }
     
@@ -32,18 +33,12 @@ public class PathWithHashMap implements Path {
 
     // traces the steps back from goal to start,
     // returns the length of the shortest path
-    // NOTE: commented out a sketch of using a queue for the shortest path
     public int earlyExit(Node current, Node start) {
         int steps = 0;
-        //ArrayDeque<Node> path = new ArrayDeque<>();
         while (!current.equals(start)) {
             current = cameFrom.get(current);
-            //path.putCameFrom(current);
             steps++;
         }
-//        for (int i = 0; i < steps; i++) {
-//            System.out.println(path.removeLast());
-//        }
         return steps;
     }
     

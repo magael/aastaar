@@ -108,7 +108,7 @@ public class Main extends Application {
         String cyan = "#00FFFF";
         String magenta = "#FF00FF";
         AlgorithmVisualization dijkstra = new AlgorithmVisualization(new DijkstraWithArray(grid), "Dijkstra w/ 2D-array", cyan);
-        AlgorithmVisualization dijkstraWHM = new AlgorithmVisualization(new DijkstraWithHashMap(grid), "Dijkstra w/ hash table", magenta);
+        AlgorithmVisualization dijkstraWHM = new AlgorithmVisualization(new DijkstraWithHashMap(grid), "Dijkstra w/ hash' cost", magenta);
         AlgorithmVisualization dijkstraWJava = new AlgorithmVisualization(new DijkstraWithJavaHashMap(grid), "Dijkstra w/ Java hash'", "#00FF00");
 //        AlgorithmVisualization aStar = new AlgorithmVisualization(new AStar(grid), "A*", magenta);
         AlgorithmVisualization[] algorithmVisuals = {dijkstra, dijkstraWHM, dijkstraWJava};

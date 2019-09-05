@@ -1,7 +1,6 @@
 package mj.aastaar.algorithms;
 
 import mj.aastaar.algorithms.path.Path;
-import mj.aastaar.algorithms.path.PathWithArray;
 import mj.aastaar.algorithms.path.PathWithHashMap;
 import mj.aastaar.datastructures.CustomHashMap;
 import mj.aastaar.datastructures.CustomPriorityQueue;
@@ -15,7 +14,6 @@ import mj.aastaar.map.Node;
 public class DijkstraWithHashMap implements PathfindingAlgorithm {
 
     private Node goal; 
-//    private PathWithArray path;
     private PathWithHashMap path;
     private CustomPriorityQueue frontier;
     private CustomHashMap<Node, Double> cost;
@@ -78,8 +76,7 @@ public class DijkstraWithHashMap implements PathfindingAlgorithm {
         int nx = grid.getLength();
         int ny = grid.getRowLength();
         path = new PathWithHashMap();
-//        path = new PathWithArray(nx, ny);
         frontier = new CustomPriorityQueue(nx * ny);
-        cost = new CustomHashMap<>(250000);
+        cost = new CustomHashMap<>();
     }
 }

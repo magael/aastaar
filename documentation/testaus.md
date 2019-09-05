@@ -18,15 +18,16 @@ Yksikkötestit löytyvät hakemistosta <code>aastaar/src/test/java/aastaar</code
 ### Suorituskykytestit
 
   hashjutut:
+  - hashmap jäi tosiaan viime hetkelle, ja aiheutti huomattavasti enemmän työtä, kun olin arvioinut.
   - jos haut suoritetaan per algoritmi vain kerran niin, että tietorakenteet alustetaan ainoastaan konstruktorissa, alustus on pari kymmentä kertaa nopeampi, ja itse haku pari sataa kertaa nopempi hashmapilla, vrt. arraytoteutuksiin.
-- tällöin oma hashmap on hieman hitaampi alustaa (omien testailujen perusteella kuudesosan-kolmasosan), mutta itse haut ovat käytännössä tasan yhtä nopeita.
-- 
-- jos alustetaan joka haulla uusiksi, niin hashmapin alustus on jostain syystä puolet-tuplasti hitaampi, kuin arrayden.
-  - tällöin oma hashmaptoteutus testattu olevan suunnilleen yhtä nopea (välillä jopa nopeampi, mutta yleensä n. 10% hitaampi), kuin Javan valmiita tietorakenteita käyttävä
-- hashmapin pieni vakiokoko, esim. 16 johtaa useisiin taulun kasvatuksiin, mutta yllättäen esim. 250000 alkion kokoinen taulukko, joka pitää lähes taatusti täyttöasteen alle 75%:ssa (eikä silloin tuota taulukon kasvatuksia), on suunnilleen yhtä hidas.
+    - tällöin path with hashmap n. tuplasti nopeampi alustaa, kuin pathwitharray. hakujen nopeudessa ei merkittävää eroa.
+- oma hashmaptoteutus testattu olevan suunnilleen yhtä nopea, kuin Javan valmiita tietorakenteita käyttävä. Pienellä taulukon alustuskoolla, esim. 16, joka on sama kuin Javan valmiilla, taulukon alustus on jopa puolet nopeampi, mutta haut hieman (esimerkillä n. 5%) hitaampia. Toisena ääriesimerkkinä 250000 alkion kokoinen taulukko, joka pitää lähes taatusti täyttöasteen alle 75%:ssa (eikä silloin tuota taulukon kasvatuksia), on suunnilleen 15-25% hitaampi alustaa, ja haut ovat suunnilleen yhtä nopeita.
+- uuden pisteen valitessa (joko tekstikenttien osoittaman, tai randomin), polunetsintä epäonnistuu. tämä lienee bugi, koska suorituskykytesteissä samalla oliolla peräkkäisten hakujen tekeminen vaikuttaa onnistuvan.
+- jos alustetaan joka haulla uusiksi, niin hashmaptoteutukset ovat jostain syystä puolet-tuplasti hitaampia, kuin arraytoteutukset.
 - arrayversio voi käyttää kertaalleen alustettuja tietorakenteita uusiksi, kun cost alustetaan joka kierroksella uusiksi (joka solmulle, paitsi startilla alkuarvoksi miljardi)
   - paitsi haku ilmeisesti joskus erittäin harvoin epäonnistuu, jolloin polku häviää, ja konsoliin tulostuu "Path not found". harmillisesti ei ole aikaa enempää debuggailla ja kehittää edelleen. jätin toteutuksen kuitenkin paikoille, koska mielestäni kertaalleen alustettujen tietorakenteiden uudellenkäyttö on mielenkiintoinen ero. poluista tulee hieman erilaiset (joskin samanpituiset), kun array-versio käyttää edellisten hakujen täydentämää polun cameFrom-taulukkoa.
-- koska joissain kartoissa on eristettyjä saarekkeita, joskus erittäin harvoin haut epäonnistuvat tiettyjen pisteiden välillä. tämä saattaa vaikuttaa keskimääräisiin hakujen suoritusaikoihin, etenkin pienillä toistoilla (pisteiden määrillä).
+  - jouduin kuitenkin jättämään hashmapeista hitaat toteutukset, joissa tietorakenteet alustetaan joka haulla uusiksi, yllä mainitusta bugista johtuen, jota en kerennyt debugata.
+- koska joissain kartoissa on eristettyjä saarekkeita, joskus harvoin haut epäonnistuvat tiettyjen pisteiden välillä. tämä saattaa vaikuttaa keskimääräisiin hakujen suoritusaikoihin, etenkin pienillä toistoilla (pisteiden määrillä).
 
 Polunetsinnän suorituskykytestit voidaan ajaa käyttöliittymäikkunassa napista "Run performance tests". Tällä hetkellä testeille annetaan suoritettavaksi kovakoodatun joukon kierroksia {10, 10, 20}. Testit vievät omalla koneellani n. 24 sekuntia.
 
