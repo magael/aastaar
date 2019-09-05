@@ -103,16 +103,16 @@ public class Grid {
     public Node[] getNeighbours(int x, int y, int directions) {
         Node[] neighbours = new Node[directions];
         if (x < (grid.length - 1) && isPassable(grid[x + 1][y]) && directions > 0) {
-            neighbours[0] = new Node(x + 1, y, 1);
+            neighbours[0] = new Node(x + 1, y, 0);
         }
         if (x > 0 && isPassable(grid[x - 1][y]) && directions > 1) {
-            neighbours[1] = new Node(x - 1, y, 1);
+            neighbours[1] = new Node(x - 1, y, 0);
         }
         if (y < (grid[0].length - 1) && isPassable(grid[x][y + 1]) && directions > 2) {
-            neighbours[2] = new Node(x, y + 1, 1);
+            neighbours[2] = new Node(x, y + 1, 0);
         }
         if (y > 0 && isPassable(grid[x][y - 1]) && directions > 3) {
-            neighbours[3] = new Node(x, y - 1, 1);
+            neighbours[3] = new Node(x, y - 1, 0);
         }
         return neighbours;
     }

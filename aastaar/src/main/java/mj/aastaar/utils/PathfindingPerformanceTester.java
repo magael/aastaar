@@ -56,6 +56,7 @@ public class PathfindingPerformanceTester {
         initRandomPositions();
 
         for (int i = 0; i < algoVisuals.length; i++) {
+            System.out.println("Testing " + algoVisuals[i].getName());
             for (int j = 0; j < nums.length; j++) {
                 times[i][j] = testAlgorithm(algoVisuals[i].getAlgorithm(), j, nums[j]);
             }
@@ -91,7 +92,7 @@ public class PathfindingPerformanceTester {
     private double testAlgorithmInit(PathfindingAlgorithm algorithm, int i) {
         double algoTimes = 0.0;
         long tAcc = 0;
-        int n = 100;
+        int n = 50;
 
         for (int j = 0; j < n; j++) {
             long t = System.nanoTime();
@@ -130,8 +131,13 @@ public class PathfindingPerformanceTester {
         for (int i = 0; i < num; i++) {
             for (int j = 0; j < n; j++) {
                 long t = System.nanoTime();
-                algorithm.search(startNodes[numIndex][i], goalNodes[numIndex][i], 4);
+                int pathLength = algorithm.search(startNodes[numIndex][i], goalNodes[numIndex][i], 4);
                 tAcc += System.nanoTime() - t;
+                if (pathLength < 0) {
+                    System.out.println("fail at (" + numIndex + ", " + i + ")");
+                } else {
+//                    System.out.println("good");
+                }
             }
             algoTimes[i] = tAcc / n;
             tAcc = 0;

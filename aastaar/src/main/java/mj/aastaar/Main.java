@@ -36,6 +36,7 @@ import mj.aastaar.algorithms.AStarWithArray;
 import mj.aastaar.algorithms.AlgorithmVisualization;
 import mj.aastaar.algorithms.DijkstraWithHashMap;
 import mj.aastaar.algorithms.DijkstraWithArray;
+import mj.aastaar.algorithms.DijkstraWithJavaHashMap;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 import mj.aastaar.utils.PathfindingPerformanceTester;
@@ -106,10 +107,11 @@ public class Main extends Application {
     private static void initAlgorithms(Grid grid) {
         String cyan = "#00FFFF";
         String magenta = "#FF00FF";
-        AlgorithmVisualization dijkstra = new AlgorithmVisualization(new DijkstraWithArray(grid), "Dijkstra with 2D-array", cyan);
-        AlgorithmVisualization dijkstraWHM = new AlgorithmVisualization(new DijkstraWithHashMap(grid), "Dijkstra with Hash Map", magenta);
+        AlgorithmVisualization dijkstra = new AlgorithmVisualization(new DijkstraWithArray(grid), "Dijkstra w/ 2D-array", cyan);
+        AlgorithmVisualization dijkstraWHM = new AlgorithmVisualization(new DijkstraWithHashMap(grid), "Dijkstra w/ hash table", magenta);
+        AlgorithmVisualization dijkstraWJava = new AlgorithmVisualization(new DijkstraWithJavaHashMap(grid), "Dijkstra w/ Java hash'", "#00FF00");
 //        AlgorithmVisualization aStar = new AlgorithmVisualization(new AStar(grid), "A*", magenta);
-        AlgorithmVisualization[] algorithmVisuals = {dijkstra, dijkstraWHM};
+        AlgorithmVisualization[] algorithmVisuals = {dijkstra, dijkstraWHM, dijkstraWJava};
         scenario.setAlgorithmVisuals(algorithmVisuals);
 
         for (int i = 0; i < algorithmVisuals.length; i++) {
@@ -354,9 +356,11 @@ public class Main extends Application {
         if (pathLengthTexts[i] == null) {
             pathLengthTexts[i] = new Text();
         }
+        Node[] path = algoVisuals[i].getShortestPath();
+        int pathLength = (path != null ? path.length : -1);
         pathLengthTexts[i].setText(algoVisuals[i].getName()
                 + "\npath length:\n"
-                + algoVisuals[i].getShortestPath().length + "\n");
+                + pathLength + "\n");
         pathLengthTexts[i].setFill(Color.WHITE);
 
         if (pathCostTexts[i] == null) {
@@ -439,8 +443,7 @@ public class Main extends Application {
     }
 
     /**
-     * Visualizing the map tiles. Coordinates -1 hack to fix offset between
-     * canvases.
+     * Visualizing the map tiles.
      *
      * @param grid2D The map grid as a character array
      * @return
@@ -451,7 +454,7 @@ public class Main extends Application {
         for (int i = 0; i < grid2D.length - 1; i++) {
             for (int j = 0; j < grid2D[i].length - 1; j++) {
                 tileGC.setFill(tileColor(grid2D[i][j]));
-                tileGC.fillRect((int) (j * tileSize) - 1, (int) (i * tileSize) - 1, tileSize, tileSize);
+                tileGC.fillRect((int) (j * tileSize), (int) (i * tileSize), tileSize, tileSize);
             }
         }
         return tileCanvas;

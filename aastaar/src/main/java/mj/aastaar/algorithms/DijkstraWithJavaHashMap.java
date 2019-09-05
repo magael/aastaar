@@ -1,9 +1,9 @@
 package mj.aastaar.algorithms;
 
 import mj.aastaar.algorithms.path.Path;
-import mj.aastaar.algorithms.path.PathWithArray;
 import mj.aastaar.algorithms.path.PathWithHashMap;
-import mj.aastaar.datastructures.CustomHashMap;
+import java.util.HashMap;
+import java.util.HashSet;
 import mj.aastaar.datastructures.CustomPriorityQueue;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
@@ -12,16 +12,16 @@ import mj.aastaar.map.Node;
  *
  * @author MJ
  */
-public class DijkstraWithHashMap implements PathfindingAlgorithm {
+public class DijkstraWithJavaHashMap implements PathfindingAlgorithm {
 
-    private Node goal; 
-//    private PathWithArray path;
+    private Node goal;
     private PathWithHashMap path;
     private CustomPriorityQueue frontier;
-    private CustomHashMap<Node, Double> cost;
+    private HashMap<Node, Double> cost;
+//    private HashSet<Node> visited;
     private Grid grid;
 
-    public DijkstraWithHashMap(Grid grid) {
+    public DijkstraWithJavaHashMap(Grid grid) {
         this.grid = grid;
         initDataStructures();
     }
@@ -30,12 +30,9 @@ public class DijkstraWithHashMap implements PathfindingAlgorithm {
     // NOTE: cannot do multiple searches with the same object
     @Override
     public int search(Node start, Node goal, int directions) {
-        if (!grid.nodeIsValid(start) || !grid.nodeIsValid(goal)) {
-            System.out.println("Invalid positions.");
-            return -1;
-        }
-//        initDataStructures();
         this.goal = goal;
+//        initDataStructures();
+        path.putCameFrom(start, start);
         frontier.heapInsert(start);
         cost.put(start, 0.0);
 
@@ -44,6 +41,9 @@ public class DijkstraWithHashMap implements PathfindingAlgorithm {
             if (current.equals(goal)) {
                 return path.earlyExit(current, start);
             }
+//            if (visited.contains(current)) {
+//                continue;
+//            }
             expandFrontier(current, directions);
         }
         return -1;
@@ -56,14 +56,19 @@ public class DijkstraWithHashMap implements PathfindingAlgorithm {
 
     @Override
     public double getCost(Node goal) {
-        if (!cost.containsKey(goal)) return -1;
+        if (!cost.containsKey(goal)) {
+            return -1;
+        }
         return cost.get(goal);
     }
 
     // used by the search to put new nodes to the frontier (a.k.a. open set) and path
     private void expandFrontier(Node current, int directions) {
+//        visited.add(current);
         for (Node next : grid.getNeighbours(current.getX(), current.getY(), directions)) {
-            if (next == null) continue;
+            if (next == null) {
+                continue;
+            }
             double newCost = cost.get(current) + grid.cost(current, next);
             if (!cost.containsKey(next) || newCost < cost.get(next)) {
                 cost.put(next, newCost);
@@ -77,9 +82,9 @@ public class DijkstraWithHashMap implements PathfindingAlgorithm {
     private void initDataStructures() {
         int nx = grid.getLength();
         int ny = grid.getRowLength();
-        path = new PathWithHashMap();
-//        path = new PathWithArray(nx, ny);
         frontier = new CustomPriorityQueue(nx * ny);
-        cost = new CustomHashMap<>(250000);
+        path = new PathWithHashMap();
+        cost = new HashMap<>();
+//        visited = new HashSet<>();
     }
 }

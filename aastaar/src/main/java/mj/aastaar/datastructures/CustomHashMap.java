@@ -66,7 +66,7 @@ public class CustomHashMap<K, V> {
             }
             buckets[i] = newEntry;
             if (filledBucketCount > LOAD_FACTOR * buckets.length) {
-                System.out.println("overload");
+//                System.out.println("overload");
                 filledBucketCount = 0;
                 resize();
             }
@@ -86,7 +86,6 @@ public class CustomHashMap<K, V> {
             }
         }
         buckets = newBuckets;
-//        System.out.println("whew took it's time huh");
     }
 
     private void rehash(CustomEntry<K, V> entry, CustomEntry<K, V>[] newBuckets) {
