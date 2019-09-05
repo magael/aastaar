@@ -17,14 +17,6 @@ public class PathWithHashMap implements Path {
     public PathWithHashMap() {
         cameFrom = new CustomHashMap<>();
     }
-
-    /**
-     *
-     * @return
-     */
-    public CustomHashMap<Node, Node> getCameFrom() {
-        return cameFrom;
-    }
     
     public boolean containsNode(Node node) {
         if (cameFrom.containsKey(node)) {

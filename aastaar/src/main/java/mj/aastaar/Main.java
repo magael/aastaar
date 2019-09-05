@@ -131,7 +131,7 @@ public class Main extends Application {
      * @param algoNames The names of the algorithms that are
      */
     private static String runPerformanceTests(AlgorithmVisualization[] algoVisuals) {
-        int[] nums = {1};
+        int[] nums = {10, 10, 20};
         PathfindingPerformanceTester tester = new PathfindingPerformanceTester(scenario);
         long t = System.nanoTime();
         tester.run(nums);

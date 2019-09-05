@@ -8,10 +8,8 @@ import mj.aastaar.map.Node;
 
 /**
  * Implementation of uniform cost search, which is a variant of Dijkstra's
- * algorithm. Using 2D-arrays for the path cost. All of the data
- * structures except the cost values are initialized in the constructor, and
- * reused by consecutive searches.
- *
+ * algorithm. Using 2D-arrays for the path cost.
+ * 
  * @author MJ
  */
 public class DijkstraWithArray implements PathfindingAlgorithm {
@@ -29,7 +27,6 @@ public class DijkstraWithArray implements PathfindingAlgorithm {
      */
     public DijkstraWithArray(Grid grid) {
         this.grid = grid;
-        initDataStructures();
     }
 
     @Override
@@ -38,6 +35,7 @@ public class DijkstraWithArray implements PathfindingAlgorithm {
             System.out.println("Invalid positions.");
             return -1;
         }
+        initDataStructures();
         initCost();
         this.goal = goal;
         frontier.heapInsert(start);

@@ -24,15 +24,6 @@ public class PathWithArray implements Path {
         cameFrom = new Node[nx][ny];
     }
 
-    /**
-     *
-     * @return A 2D array containing where each node has come from in the path
-     */
-    @Override
-    public Node[][] getCameFrom() {
-        return cameFrom;
-    }
-
     @Override
     public boolean containsNode(Node node) {
         if (cameFrom[node.getX()][node.getY()] != null) {

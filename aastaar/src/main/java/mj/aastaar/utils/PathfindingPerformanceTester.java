@@ -3,8 +3,6 @@ package mj.aastaar.utils;
 import java.lang.reflect.Constructor;
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import mj.aastaar.Scenario;
 import mj.aastaar.algorithms.AlgorithmVisualization;
 import mj.aastaar.algorithms.PathfindingAlgorithm;
@@ -56,7 +54,7 @@ public class PathfindingPerformanceTester {
         initRandomPositions();
 
         for (int i = 0; i < algoVisuals.length; i++) {
-            System.out.println("Testing " + algoVisuals[i].getName());
+//            System.out.println("Testing " + algoVisuals[i].getName());
             for (int j = 0; j < nums.length; j++) {
                 times[i][j] = testAlgorithm(algoVisuals[i].getAlgorithm(), j, nums[j]);
             }
@@ -134,9 +132,7 @@ public class PathfindingPerformanceTester {
                 int pathLength = algorithm.search(startNodes[numIndex][i], goalNodes[numIndex][i], 4);
                 tAcc += System.nanoTime() - t;
                 if (pathLength < 0) {
-                    System.out.println("fail at (" + numIndex + ", " + i + ")");
-                } else {
-//                    System.out.println("good");
+//                    System.out.println("fail at (" + numIndex + ", " + i + ")");
                 }
             }
             algoTimes[i] = tAcc / n;
