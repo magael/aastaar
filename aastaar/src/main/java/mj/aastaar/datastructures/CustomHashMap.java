@@ -86,7 +86,7 @@ public class CustomHashMap<K, V> {
             }
         }
         buckets = newBuckets;
-        System.out.println("whew took it's time huh");
+//        System.out.println("whew took it's time huh");
     }
 
     private void rehash(CustomEntry<K, V> entry, CustomEntry<K, V>[] newBuckets) {

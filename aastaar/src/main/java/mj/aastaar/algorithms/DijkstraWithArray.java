@@ -12,7 +12,7 @@ import mj.aastaar.map.Node;
  * 
  * @author MJ
  */
-public class UniformCostSearch implements PathfindingAlgorithm {
+public class DijkstraWithArray implements PathfindingAlgorithm {
 
     private Node goal; 
     private Grid grid;
@@ -24,13 +24,17 @@ public class UniformCostSearch implements PathfindingAlgorithm {
      *
      * @param grid Pathfinding grid
      */
-    public UniformCostSearch(Grid grid) {
+    public DijkstraWithArray(Grid grid) {
         this.grid = grid;
         initDataStructures();
     }
 
     @Override
     public int search(Node start, Node goal, int directions) {
+        if (!grid.nodeIsValid(start) || !grid.nodeIsValid(goal)) {
+            System.out.println("Invalid positions.");
+            return -1;
+        }
         initCost();
         this.goal = goal;
         frontier.heapInsert(start);

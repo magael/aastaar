@@ -2,7 +2,7 @@ package aastaar.algorithms;
 
 import static org.junit.Assert.*;
 
-import mj.aastaar.algorithms.UniformCostSearch;
+import mj.aastaar.algorithms.DijkstraWithArray;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 
@@ -16,7 +16,7 @@ import org.junit.Test;
  */
 public class UniformCostSearchTest {
 
-    private UniformCostSearch ucs;
+    private DijkstraWithArray ucs;
     private Grid grid;
 
     @Before
@@ -31,7 +31,7 @@ public class UniformCostSearchTest {
         char[] impassable = {'T', 'W', '@'};
         double heavyEdgeWeight = 2.0;
         grid = new Grid(gridArray, impassable, heavyEdgeWeight);
-        ucs = new UniformCostSearch(grid);
+        ucs = new DijkstraWithArray(grid);
     }
 
     @Test

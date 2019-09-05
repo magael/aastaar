@@ -12,7 +12,7 @@ import mj.aastaar.map.Node;
  *
  * @author MJ
  */
-public class UCSWithHashMap implements PathfindingAlgorithm {
+public class DijkstraWithHashMap implements PathfindingAlgorithm {
 
     private Node goal; 
     private PathWithArray path;
@@ -21,7 +21,7 @@ public class UCSWithHashMap implements PathfindingAlgorithm {
     private CustomHashMap<Node, Double> cost;
     private Grid grid;
 
-    public UCSWithHashMap(Grid grid) {
+    public DijkstraWithHashMap(Grid grid) {
         this.grid = grid;
         initDataStructures();
     }
@@ -30,6 +30,10 @@ public class UCSWithHashMap implements PathfindingAlgorithm {
     // NOTE: cannot do multiple searches with the same object
     @Override
     public int search(Node start, Node goal, int directions) {
+        if (!grid.nodeIsValid(start) || !grid.nodeIsValid(goal)) {
+            System.out.println("Invalid positions.");
+            return -1;
+        }
         this.goal = goal;
         frontier.heapInsert(start);
         cost.put(start, 0.0);

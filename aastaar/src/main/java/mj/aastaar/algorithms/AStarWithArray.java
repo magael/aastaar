@@ -8,13 +8,13 @@ import mj.aastaar.map.Node;
  *
  * @author MJ
  */
-public class AStar extends UniformCostSearch {
+public class AStarWithArray extends DijkstraWithArray {
 
     /**
      *
      * @param grid Pathfinding grid
      */
-    public AStar(Grid grid) {
+    public AStarWithArray(Grid grid) {
         super(grid);
     }
 
