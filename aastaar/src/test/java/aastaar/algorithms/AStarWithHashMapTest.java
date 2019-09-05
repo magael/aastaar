@@ -2,7 +2,7 @@ package aastaar.algorithms;
 
 import static org.junit.Assert.*;
 
-import mj.aastaar.algorithms.DijkstraWithArray;
+import mj.aastaar.algorithms.AStarWithHashMap;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 
@@ -10,14 +10,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Unit tests for the Uniform cost search algorithm.
+ * Unit tests for the A* algorithm.
  * 
  * @author MJ
  */
-public class UniformCostSearchTest {
-
-    private DijkstraWithArray ucs;
+public class AStarWithHashMapTest {
+    
     private Grid grid;
+    private AStarWithHashMap astar;
 
     @Before
     public void setUp() {
@@ -31,14 +31,14 @@ public class UniformCostSearchTest {
         char[] impassable = {'T', 'W', '@'};
         double heavyEdgeWeight = 2.0;
         grid = new Grid(gridArray, impassable, heavyEdgeWeight);
-        ucs = new DijkstraWithArray(grid);
+        astar = new AStarWithHashMap(grid);
     }
 
     @Test
     public void findsTheCorrectPathLengthOfAStraightLinePath() {
         Node start = new Node(2, 1, 0);
         Node goal = new Node(2, 3, 0);
-        int shortestPathLength = ucs.search(start, goal, 4);
+        int shortestPathLength = astar.search(start, goal, 4);
         assertEquals(2, shortestPathLength);
     }
 
@@ -46,7 +46,7 @@ public class UniformCostSearchTest {
     public void findsTheCorrectPathLengthOfACurvedPath() {
         Node start = new Node(3, 3, 0);
         Node goal = new Node(1, 1, 0);
-        int shortestPathLength = ucs.search(start, goal, 4);
+        int shortestPathLength = astar.search(start, goal, 4);
         assertEquals(4, shortestPathLength);
     }
 
@@ -54,7 +54,7 @@ public class UniformCostSearchTest {
     public void findsTheCorrectPathLengthGoingAroundShallowWater() {
         Node start = new Node(2, 2, 0);
         Node goal = new Node(3, 0, 0);
-        int shortestPathLength = ucs.search(start, goal, 4);
+        int shortestPathLength = astar.search(start, goal, 4);
         assertEquals(5, shortestPathLength);
     }
     
@@ -62,7 +62,7 @@ public class UniformCostSearchTest {
     public void findsTheCorrectPathLengthGoingThroughShallowWater() {
         Node start = new Node(2, 2, 0);
         Node goal = new Node(3, 1, 0);
-        int shortestPathLength = ucs.search(start, goal, 4);
+        int shortestPathLength = astar.search(start, goal, 4);
         assertEquals(2, shortestPathLength);
     }
     
@@ -70,7 +70,7 @@ public class UniformCostSearchTest {
     public void findsTheCorrectPathLengthToTheLeftEdge() {
         Node start = new Node(1, 1, 0);
         Node goal = new Node(4, 0, 0);
-        int shortestPathLength = ucs.search(start, goal, 4);
+        int shortestPathLength = astar.search(start, goal, 4);
         assertEquals(6, shortestPathLength);
     }
     
@@ -78,7 +78,7 @@ public class UniformCostSearchTest {
     public void findsTheCorrectPathLengthToTheRightEdge() {
         Node start = new Node(2, 2, 0);
         Node goal = new Node(3, 4, 0);
-        int shortestPathLength = ucs.search(start, goal, 4);
+        int shortestPathLength = astar.search(start, goal, 4);
         assertEquals(3, shortestPathLength);
     }
     
@@ -86,7 +86,7 @@ public class UniformCostSearchTest {
     public void findsTheCorrectPathLengthToTheTopEdge() {
         Node start = new Node(2, 2, 0);
         Node goal = new Node(0, 1, 0);
-        int shortestPathLength = ucs.search(start, goal, 4);
+        int shortestPathLength = astar.search(start, goal, 4);
         assertEquals(3, shortestPathLength);
     }
 
@@ -94,15 +94,15 @@ public class UniformCostSearchTest {
     public void findsTheCorrectPathLengthToTheBottomEdge() {
         Node start = new Node(2, 2, 0);
         Node goal = new Node(4, 0, 0);
-        int shortestPathLength = ucs.search(start, goal, 4);
+        int shortestPathLength = astar.search(start, goal, 4);
         assertEquals(4, shortestPathLength);
     }
-    
+        
     @Test
     public void noPathForImpassableStart() {
         Node start = new Node(0, 0, 0);
         Node goal = new Node(2, 2, 0);
-        int shortestPathLength = ucs.search(start, goal, 4);
+        int shortestPathLength = astar.search(start, goal, 4);
         assertEquals(-1, shortestPathLength);
     }
     
@@ -110,7 +110,7 @@ public class UniformCostSearchTest {
     public void noPathForOutOfBoundsStart() {
         Node start = new Node(-1, -1, 0);
         Node goal = new Node(2, 2, 0);
-        int shortestPathLength = ucs.search(start, goal, 4);
+        int shortestPathLength = astar.search(start, goal, 4);
         assertEquals(-1, shortestPathLength);
     }
 
@@ -118,7 +118,7 @@ public class UniformCostSearchTest {
     public void noPathForImpassableGoal() {
         Node start = new Node(1, 1, 0);
         Node goal = new Node(0, 4, 0);
-        int shortestPathLength = ucs.search(start, goal, 4);
+        int shortestPathLength = astar.search(start, goal, 4);
         assertEquals(-1, shortestPathLength);
     }
     
@@ -126,7 +126,7 @@ public class UniformCostSearchTest {
     public void noPathForOutOfBoundsGoal() {
         Node start = new Node(1, 1, 0);
         Node goal = new Node(-1, -1, 0);
-        int shortestPathLength = ucs.search(start, goal, 4);
+        int shortestPathLength = astar.search(start, goal, 4);
         assertEquals(-1, shortestPathLength);
     }
 
