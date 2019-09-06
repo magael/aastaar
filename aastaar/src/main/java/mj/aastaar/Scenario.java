@@ -135,7 +135,6 @@ public class Scenario {
         PathfindingAlgorithm algorithm = algorithmVisual.getAlgorithm();
         int pathLength = algorithm.search(start, goal, 4);
         algorithmVisual.setShortestPath(algorithm.getPath().shortestPath(goal, start, pathLength));
-        algorithmVisual.setCameFrom(algorithm.getPath().cameFrom);
     }
 
     /**

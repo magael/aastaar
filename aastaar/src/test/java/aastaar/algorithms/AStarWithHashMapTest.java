@@ -2,7 +2,7 @@ package aastaar.algorithms;
 
 import static org.junit.Assert.*;
 
-import mj.aastaar.algorithms.AStar;
+import mj.aastaar.algorithms.AStarWithHashMap;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 
@@ -14,10 +14,10 @@ import org.junit.Test;
  * 
  * @author MJ
  */
-public class AStarTest {
+public class AStarWithHashMapTest {
     
     private Grid grid;
-    private AStar astar;
+    private AStarWithHashMap astar;
 
     @Before
     public void setUp() {
@@ -31,7 +31,7 @@ public class AStarTest {
         char[] impassable = {'T', 'W', '@'};
         double heavyEdgeWeight = 2.0;
         grid = new Grid(gridArray, impassable, heavyEdgeWeight);
-        astar = new AStar(grid);
+        astar = new AStarWithHashMap(grid);
     }
 
     @Test

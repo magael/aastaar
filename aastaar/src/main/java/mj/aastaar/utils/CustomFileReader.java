@@ -16,7 +16,7 @@ public class CustomFileReader {
     private ArrayList<String> data;
 
     /**
-     *
+     * Initializing an array for the file data.
      */
     public CustomFileReader() {
         data = new ArrayList<>();

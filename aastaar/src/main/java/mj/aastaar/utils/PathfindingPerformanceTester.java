@@ -1,10 +1,12 @@
 package mj.aastaar.utils;
 
+import java.lang.reflect.Constructor;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import mj.aastaar.Scenario;
 import mj.aastaar.algorithms.AlgorithmVisualization;
 import mj.aastaar.algorithms.PathfindingAlgorithm;
+import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 
 /**
@@ -17,6 +19,7 @@ public class PathfindingPerformanceTester {
 
     private Scenario scenario;
     private int[] nums;
+    private double[] initTimes;
     private double[][] times;
     private Node[][] startNodes;
     private Node[][] goalNodes;
@@ -46,11 +49,17 @@ public class PathfindingPerformanceTester {
         }
         this.nums = nums;
         times = new double[algoVisuals.length][nums.length];
+        initTimes = new double[algoVisuals.length];
+        double initReps = 2;
         initRandomPositions();
 
         for (int i = 0; i < algoVisuals.length; i++) {
+//            System.out.println("Testing " + algoVisuals[i].getName());
             for (int j = 0; j < nums.length; j++) {
                 times[i][j] = testAlgorithm(algoVisuals[i].getAlgorithm(), j, nums[j]);
+            }
+            for (int j = 0; j < initReps; j++) {
+                initTimes[i] = testAlgorithmInit(algoVisuals[i].getAlgorithm(), i);
             }
         }
     }
@@ -61,13 +70,44 @@ public class PathfindingPerformanceTester {
         results += "Average runtime of\npathfinding between\ntwo random points:\n";
         for (int i = 0; i < times.length; i++) {
             results += "\n" + scenario.getAlgorithmVisuals()[i].getName() + "\n";
+            results += initResults(i);
             for (int j = 0; j < times[i].length; j++) {
                 int n = nums[j];
                 BigDecimal ms = new BigDecimal(times[i][j] / 1000000);
-                results += n + " repetitions: " + ms.round(new MathContext(4)) + " ms" + "\n";
+                results += n + " positions: " + ms.round(new MathContext(4)) + " ms" + "\n";
             }
         }
         return results;
+    }
+
+    private String initResults(int i) {
+        String results = "";
+        BigDecimal ms = new BigDecimal(initTimes[i] / 1000000);
+        results += "Initialization avg: " + ms.round(new MathContext(4)) + " ms." + "\n";
+        return results;
+    }
+
+    private double testAlgorithmInit(PathfindingAlgorithm algorithm, int i) {
+        double algoTimes = 0.0;
+        long tAcc = 0;
+        int n = 50;
+
+        for (int j = 0; j < n; j++) {
+            long t = System.nanoTime();
+            Class c = algorithm.getClass();
+            try {
+                Constructor constructor = c.getConstructor(new Class[]{Grid.class});
+                PathfindingAlgorithm newAlgorithm = (PathfindingAlgorithm) constructor.newInstance(scenario.getGrid());
+            } catch (Exception e) {
+                System.out.println(scenario.getAlgorithmVisuals()[i]
+                        + "initialization failed on round " + j + ".");
+            }
+            tAcc += System.nanoTime() - t;
+        }
+        algoTimes = tAcc / n;
+        tAcc = 0;
+
+        return algoTimes;
     }
 
     /**
@@ -89,8 +129,11 @@ public class PathfindingPerformanceTester {
         for (int i = 0; i < num; i++) {
             for (int j = 0; j < n; j++) {
                 long t = System.nanoTime();
-                algorithm.search(startNodes[numIndex][i], goalNodes[numIndex][i], 4);
+                int pathLength = algorithm.search(startNodes[numIndex][i], goalNodes[numIndex][i], 4);
                 tAcc += System.nanoTime() - t;
+                if (pathLength < 0) {
+//                    System.out.println("fail at (" + numIndex + ", " + i + ")");
+                }
             }
             algoTimes[i] = tAcc / n;
             tAcc = 0;

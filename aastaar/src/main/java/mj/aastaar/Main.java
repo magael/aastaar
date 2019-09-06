@@ -32,9 +32,11 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import mj.aastaar.algorithms.AStar;
+import mj.aastaar.algorithms.AStarWithArray;
+import mj.aastaar.algorithms.AStarWithHashMap;
 import mj.aastaar.algorithms.AlgorithmVisualization;
-import mj.aastaar.algorithms.UniformCostSearch;
+import mj.aastaar.algorithms.DijkstraWithHashMap;
+import mj.aastaar.algorithms.DijkstraWithArray;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 import mj.aastaar.utils.PathfindingPerformanceTester;
@@ -98,6 +100,28 @@ public class Main extends Application {
     }
 
     /**
+     * Initialize the algorithms and their visualization components.
+     *
+     * @param grid
+     */
+    private static void initAlgorithms(Grid grid) {
+        String blue = "0000FF";
+        String cyan = "#00FFFF";
+        String green = "#00FF00";
+        String magenta = "#FF00FF";
+        AlgorithmVisualization dijkstraArray = new AlgorithmVisualization(new DijkstraWithArray(grid), "Dijkstra w/ 2D-array", blue);
+        AlgorithmVisualization dijkstraWithHashMap = new AlgorithmVisualization(new DijkstraWithHashMap(grid), "Dijkstra w/ hash table", cyan);
+        AlgorithmVisualization aStarArray = new AlgorithmVisualization(new AStarWithArray(grid), "A* w/ 2D-array", green);
+        AlgorithmVisualization aStarHashMap = new AlgorithmVisualization(new AStarWithHashMap(grid), "A* w/ hash table", magenta);
+        AlgorithmVisualization[] algorithmVisuals = {dijkstraArray, dijkstraWithHashMap, aStarArray, aStarHashMap};
+        scenario.setAlgorithmVisuals(algorithmVisuals);
+
+        for (int i = 0; i < algorithmVisuals.length; i++) {
+            scenario.runPathfindingAlgorithm(algorithmVisuals[i]);
+        }
+    }
+
+    /**
      * Using the performance tester class to test pathfinding speed. Setting the
      * number of times the tests are run.
      *
@@ -114,24 +138,6 @@ public class Main extends Application {
         String testResults = tester.toString() + "\nPerformance tests ran\nin a total of "
                 + elapsedTime.round(new MathContext(3)) + " seconds.";
         return testResults;
-    }
-
-    /**
-     * Initialize the algorithms and their visualization components.
-     *
-     * @param grid
-     */
-    private static void initAlgorithms(Grid grid) {
-        String cyan = "#00FFFF";
-        String magenta = "#FF00FF";
-        AlgorithmVisualization dijkstra = new AlgorithmVisualization(new UniformCostSearch(grid), "Dijkstra", cyan);
-        AlgorithmVisualization aStar = new AlgorithmVisualization(new AStar(grid), "A*", magenta);
-        AlgorithmVisualization[] algorithmVisuals = {dijkstra, aStar};
-        scenario.setAlgorithmVisuals(algorithmVisuals);
-
-        for (int i = 0; i < algorithmVisuals.length; i++) {
-            scenario.runPathfindingAlgorithm(algorithmVisuals[i]);
-        }
     }
 
     @Override
@@ -300,9 +306,8 @@ public class Main extends Application {
         }
         HBox mapNumberButtons = new HBox(mapButtons);
 
-        Label perfTestLabel = new Label("WARNING:\n"
-                + "While the tests are running,\nthe application will be "
-                + "frozen\nfor ~30-60 seconds.");
+        Label perfTestLabel = new Label("WARNING:\nWhile the tests are running,"
+                + "\nthe application will be frozen.");
         perfTestLabel.setTextFill(Color.WHITE);
         Button perfTestButton = new Button("Run performance tests");
         Text testResults = new Text();
@@ -353,9 +358,11 @@ public class Main extends Application {
         if (pathLengthTexts[i] == null) {
             pathLengthTexts[i] = new Text();
         }
+        Node[] path = algoVisuals[i].getShortestPath();
+        int pathLength = (path != null ? path.length : -1);
         pathLengthTexts[i].setText(algoVisuals[i].getName()
                 + "\npath length:\n"
-                + algoVisuals[i].getShortestPath().length + "\n");
+                + pathLength + "\n");
         pathLengthTexts[i].setFill(Color.WHITE);
 
         if (pathCostTexts[i] == null) {
@@ -438,8 +445,7 @@ public class Main extends Application {
     }
 
     /**
-     * Visualizing the map tiles. Coordinates -1 hack to fix offset between
-     * canvases.
+     * Visualizing the map tiles.
      *
      * @param grid2D The map grid as a character array
      * @return
@@ -450,7 +456,7 @@ public class Main extends Application {
         for (int i = 0; i < grid2D.length - 1; i++) {
             for (int j = 0; j < grid2D[i].length - 1; j++) {
                 tileGC.setFill(tileColor(grid2D[i][j]));
-                tileGC.fillRect((int) (j * tileSize) - 1, (int) (i * tileSize) - 1, tileSize, tileSize);
+                tileGC.fillRect((int) (j * tileSize), (int) (i * tileSize), tileSize, tileSize);
             }
         }
         return tileCanvas;
@@ -594,19 +600,18 @@ public class Main extends Application {
      * Coloring the nodes explored by the pathfinding algorithms.
      */
     private void colorExplored() {
-        Node[][] cameFrom = scenario.getAlgorithmVisuals()[showExplored].getCameFrom();
-        for (int i = 0; i < cameFrom.length; i++) {
-            Node[] nodes = cameFrom[i];
-            if (nodes == null) {
+        boolean[][] visited = scenario.getAlgorithmVisuals()[showExplored].getAlgorithm().getVisited();
+        for (int i = 0; i < visited.length; i++) {
+            boolean[] visitedRow = visited[i];
+            if (visitedRow == null) {
                 continue;
             }
-            for (int j = 0; j < nodes.length - 1; j++) {
-                if (nodes[j] == null) {
+            for (int j = 0; j < visitedRow.length - 1; j++) {
+                if (!visitedRow[j]) {
                     continue;
                 }
-
                 pathGraphics.setFill(Color.web("#C5C3DA"));
-                pathGraphics.fillRect((int) (nodes[j].getY() * tileSize), (int) (nodes[j].getX() * tileSize), tileSize, tileSize);
+                pathGraphics.fillRect(j * tileSize, i * tileSize, tileSize, tileSize);
             }
         }
     }
@@ -615,17 +620,17 @@ public class Main extends Application {
      * Clearing the nodes explored by the pathfinding algorithms.
      */
     private void clearExplored() {
-        Node[][] cameFrom = scenario.getAlgorithmVisuals()[showExplored].getCameFrom();
-        for (int i = 0; i < cameFrom.length; i++) {
-            Node[] nodes = cameFrom[i];
-            if (nodes == null) {
+        boolean[][] visited = scenario.getAlgorithmVisuals()[showExplored].getAlgorithm().getVisited();
+        for (int i = 0; i < visited.length; i++) {
+            boolean[] visitedRow = visited[i];
+            if (visitedRow == null) {
                 continue;
             }
-            for (int j = 0; j < nodes.length - 1; j++) {
-                if (nodes[j] == null) {
+            for (int j = 0; j < visitedRow.length - 1; j++) {
+                if (!visitedRow[j]) {
                     continue;
                 }
-                pathGraphics.clearRect((int) (nodes[j].getY() * tileSize), (int) (nodes[j].getX() * tileSize), tileSize, tileSize);
+                pathGraphics.clearRect(j * tileSize, i * tileSize, tileSize, tileSize);
             }
         }
     }

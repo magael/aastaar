@@ -1,55 +1,62 @@
 package mj.aastaar.algorithms;
 
+import mj.aastaar.algorithms.path.Path;
 import mj.aastaar.algorithms.path.PathWithArray;
 import mj.aastaar.datastructures.CustomPriorityQueue;
 import mj.aastaar.map.Grid;
 import mj.aastaar.map.Node;
 
 /**
- * Implementation of uniform cost search, which is a variant of
- * Dijkstra's algorithm.
+ * Implementation of uniform cost search, which is a variant of Dijkstra's
+ * algorithm. Using 2D-arrays for the path and path cost.
  * 
  * @author MJ
  */
-public class UniformCostSearch implements PathfindingAlgorithm {
+public class DijkstraWithArray implements PathfindingAlgorithm {
 
-    private Node goal; 
+    private Node goal;
     private Grid grid;
     private PathWithArray path;
     private CustomPriorityQueue frontier;
-    private double cost [][];
+    private double cost[][];
+    private boolean[][] visited;
 
     /**
      *
      * @param grid Pathfinding grid
      */
-    public UniformCostSearch(Grid grid) {
+    public DijkstraWithArray(Grid grid) {
         this.grid = grid;
     }
 
     @Override
     public int search(Node start, Node goal, int directions) {
-        if (!grid.nodeIsValid(start)) {
-            System.out.println("The starting position is not valid");
+        if (!grid.nodeIsValid(start) || !grid.nodeIsValid(goal)) {
+            System.out.println("Invalid positions.");
             return -1;
         }
-        this.goal = goal;
         initDataStructures();
+        initCost();
+        this.goal = goal;
         frontier.heapInsert(start);
         cost[start.getX()][start.getY()] = 0.0;
-        
+
         while (!frontier.isEmpty()) {
             Node current = frontier.heapDelMin();
             if (current.equals(goal)) {
                 return path.earlyExit(current, start);
             }
+            if (visited[current.getX()][current.getY()]) {
+                continue;
+            }
+            visited[current.getX()][current.getY()] = true;
             expandFrontier(current, directions);
         }
         return -1;
     }
 
     @Override
-    public PathWithArray getPath() {
+    public Path getPath() {
         return path;
     }
 
@@ -62,6 +69,11 @@ public class UniformCostSearch implements PathfindingAlgorithm {
         return c;
     }
     
+    @Override
+    public boolean[][] getVisited() {
+        return visited;
+    }
+
     /**
      *
      * @return Pathfinding grid
@@ -77,7 +89,7 @@ public class UniformCostSearch implements PathfindingAlgorithm {
     public Node getGoal() {
         return goal;
     }
-    
+
     /**
      *
      * @param node The node that needs it's priority set
@@ -117,7 +129,15 @@ public class UniformCostSearch implements PathfindingAlgorithm {
         path = new PathWithArray(nx, ny);
         frontier = new CustomPriorityQueue(nx * ny);
         cost = new double[nx][ny];
+        visited = new boolean[nx][ny];
+    }
 
+    /**
+     * Initializing the cost for each node in the grid.
+     */
+    private void initCost() {
+        int nx = grid.getLength();
+        int ny = grid.getRowLength();
         for (int i = 0; i < nx; i++) {
             for (int j = 0; j < ny; j++) {
                 cost[i][j] = 1000000000.0;

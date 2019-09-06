@@ -1,40 +1,38 @@
 package mj.aastaar.algorithms.path;
 
+import mj.aastaar.datastructures.CustomHashMap;
 import mj.aastaar.map.Node;
 
 /**
  * Storing paths and retrieving the shortest path between two positions
  * on a grid.
  * 
- * @author mijamija
+ * @author MJ
  */
-public class PathWithArray implements Path {
-    
-    private Node[][] cameFrom;
+public class PathWithHashMap implements Path {
+
+    private CustomHashMap<Node, Node> cameFrom;
 
     /**
-     * Initializing the array of node links.
-     * 
-     * @param nx The x in n = x * y nodes
-     * @param ny The y in n = x * y nodes
+     * Initializing the hash map of node links.
      */
-    public PathWithArray(int nx, int ny) {
-        cameFrom = new Node[nx][ny];
-    }
-
-    @Override
-    public boolean containsNode(Node node) {
-        return cameFrom[node.getX()][node.getY()] != null;
-    }
-
-    @Override
-    public void putCameFrom(Node to, Node from) {
-        cameFrom[to.getX()][to.getY()] = from;
+    public PathWithHashMap() {
+        cameFrom = new CustomHashMap<>();
     }
     
     @Override
+    public boolean containsNode(Node node) {
+        return cameFrom.containsKey(node);
+    }
+    
+    @Override
+    public void putCameFrom(Node to, Node from) {
+        cameFrom.put(to, from);
+    }
+
+    @Override
     public Node[] shortestPath(Node goal, Node start, int length) {
-        if (cameFrom[goal.getX()][goal.getY()] == null || length < 1) {
+        if (cameFrom.isEmpty() || length < 1) {
             System.out.println("Path not found.");
             return null;
         }
@@ -43,7 +41,7 @@ public class PathWithArray implements Path {
         int i = length - 1;
         while (i >= 0) {
             path[i] = current;
-            current = cameFrom[current.getX()][current.getY()];
+            current = cameFrom.get(current);
             i--;
         }
         return path;
@@ -60,7 +58,7 @@ public class PathWithArray implements Path {
     public int earlyExit(Node current, Node start) {
         int steps = 0;
         while (!current.equals(start)) {
-            current = cameFrom[current.getX()][current.getY()];
+            current = cameFrom.get(current);
             steps++;
         }
         return steps;
