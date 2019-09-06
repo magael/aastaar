@@ -129,5 +129,22 @@ public class DijkstraWithArrayTest {
         int shortestPathLength = ucs.search(start, goal, 4);
         assertEquals(-1, shortestPathLength);
     }
-
+        
+    @Test
+    public void costIsSetCorrectlyThroughShallowWater() {
+        Node start = new Node(2, 2, 0);
+        Node goal = new Node(3, 1, 0);
+        int shortestPathLength = ucs.search(start, goal, 4);
+        assertEquals(2, shortestPathLength);
+        assertEquals(4.0, ucs.getCost(goal), 0.0);
+    }
+    
+    @Test
+    public void costIsSetCorrectlyOnGround() {
+        Node start = new Node(2, 1, 0);
+        Node goal = new Node(2, 3, 0);
+        int shortestPathLength = ucs.search(start, goal, 4);
+        assertEquals(2, shortestPathLength);
+        assertEquals(2.0, ucs.getCost(goal), 0.0);
+    }
 }
