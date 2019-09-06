@@ -13,7 +13,7 @@ public class CustomPriorityQueue {
     private int heapSize;
     private Node[] heap;
     private final int ROOT = 1;
-    private final int DEFAULT_SIZE = 11; // or 513 or?
+    private final int DEFAULT_SIZE = 11;
 
     /**
      * Using the default initial heap size. The heapSize variable holds the
@@ -162,6 +162,7 @@ public class CustomPriorityQueue {
      * Doubling the capacity of the heap.
      */
     private void resize() {
+        System.out.println("resizing");
         Node[] newHeap = new Node[heap.length * 2];
         for (int i = 1; i < heapSize + 1; i++) {
             newHeap[i] = heap[i];

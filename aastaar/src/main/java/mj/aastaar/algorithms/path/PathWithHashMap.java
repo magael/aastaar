@@ -12,12 +12,20 @@ import mj.aastaar.map.Node;
 public class PathWithHashMap implements Path {
 
     private CustomHashMap<Node, Node> cameFrom;
+    private final int DEFAULT_SIZE = 11;
 
     /**
-     * Initializing the hash map of node links.
+     * Initializing the hash map of node links with the default size.
      */
     public PathWithHashMap() {
-        cameFrom = new CustomHashMap<>();
+        cameFrom = new CustomHashMap<>(DEFAULT_SIZE);
+    }
+    
+    /**
+     * Initializing the hash map of node links with a custom size.
+     */
+    public PathWithHashMap(int size) {
+        cameFrom = new CustomHashMap<>(size);
     }
     
     @Override
