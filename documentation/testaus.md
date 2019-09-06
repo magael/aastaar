@@ -67,22 +67,19 @@ Algoritmeja on testattu myös "visited"-taulukolla ja ilman (erillisillä kopioi
 
 #### CustomHashMap
 
-Oma hashmaptoteutus testattu olevan suunnilleen yhtä nopea, kuin Javan valmiita tietorakenteita käyttävä. Pienellä taulukon alustuskoolla, esim. 16, joka on sama kuin Javan valmiilla, taulukon alustus on jopa puolet nopeampi, mutta haut hieman (esimerkillä n. 5%) hitaampia. Toisena ääriesimerkkinä 250000 alkion kokoinen taulukko, joka pitää lähes taatusti täyttöasteen alle 75%:ssa (eikä silloin tuota taulukon kasvatuksia), on suunnilleen 15-25% hitaampi alustaa, ja haut ovat suunnilleen yhtä nopeita.
+Oma hashmaptoteutus testattu olevan suunnilleen yhtä nopea, kuin Javan valmiita tietorakenteita käyttävä. Pienellä taulukon alustuskoolla, esim. 16, joka on sama kuin Javan valmiilla, taulukon alustus on jopa puolet nopeampi, mutta haut ovat testien perusteella n. 5% hitaampia. Toisena ääriesimerkkinä 250000 kokoiseksi alustettava hajautustaulu, joka pitää lähes taatusti täyttöasteen alle 75%:ssa (eikä silloin tuota taulukon kasvatuksia), on suunnilleen 15-25% hitaampi alustaa, ja haut ovat suunnilleen yhtä nopeita.
   
-Jos haut suoritetaan per algoritmi vain kerran niin, että tietorakenteet alustetaan ainoastaan konstruktorissa, hashmaptoteutukset ovat huomattavasti arraytoteutuksia nopeampia.
-  
-Kun tietorakenteet alustetaan joka haulla uusiksi, niin hashmaptoteutukset ovat jostain syystä puolet-tuplasti hitaampia, kuin arraytoteutukset.
+Jos haut suoritetaan per algoritmi vain kerran niin, että tietorakenteet alustetaan ainoastaan konstruktorissa, hashmaptoteutukset vaikuttaisivat olevan arraytoteutuksia nopeampia. Kuitenkin, kun tietorakenteet alustetaan joka haulla uusiksi, niin etäisyysarvioihin (<code>cost</code>) hashmappeja käyttävät toteutukset ovat yllättäen puolet-tuplasti hitaampia, kuin arraytoteutukset.
+
+PathWithHashMap ja PathWithArray tuottavat yleensä hieman erilaisia (joskin samanpituisia) polkuja. Yllättäen myös näissä hashmap on selvästi hitaampi. Jokaisen 2D-taulukon muutos hashmapiksi nopeuttaa alustusta hieman (haun suoritusajan kertaluokassa mitättömästi), mutta hidastaa algoritmin suoritusta esimerkiksi omissa testeissäni Dijkstralle noin 10 millisekuntia (cost-> hashmap: n. 10 -> n. 20 ms. path -> hasmap: n. 20 ms. -> n. 30 ms.). Saman huomasin kokeillessani hajautustauluversiota <code>visited</code>-taulukosta.
   
 Testailtu parilla eri hashcodella:
 
-  - int temp = (y + ((x + 1) / 2));
-  
-    return x + (temp * temp);
-  
-  - return (x * 18397) + (y * 20483);
+<code>int temp = (y + ((x + 1) / 2));
+return x + (temp * temp);</code>
 
-, joista ensimmäinen on [Stack Overflow:sta löydetty bijektiofunktio](https://stackoverflow.com/questions/22826326/good-hashcode-function-for-2d-coordinates). Toinen on jostain vanhasta toisen kurssin tehtävästä. En huomannut merkittäviä eroja näiden välillä.
+ja <code>return (x * 18397) + (y * 20483);</code>,
 
-PathWithHashMap ja PathWithArray tuottavat yleensä hieman erilaisia (joskin samanpituisia) polkuja.
+joista ensimmäinen on Stack Overflow:sta löydetty [bijektiofunktio](https://stackoverflow.com/questions/22826326/good-hashcode-function-for-2d-coordinates). Toinen on jostain vanhasta toisen kurssin tehtävästä. En huomannut merkittäviä eroja näiden välillä.
 
 Yritin jonkin aikaa toteuttaa algoritmeista versioita, joissa osa tietorakenteista alustettaisiin vain kerran per kartta. Arrayversio toimi välillä kokeiluissa, joissa vain cost-taulukon arvot alustettiin joka kierroksella uusiksi.

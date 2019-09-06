@@ -35,6 +35,7 @@ import javafx.stage.WindowEvent;
 import mj.aastaar.algorithms.AStarWithArray;
 import mj.aastaar.algorithms.AStarWithHashMap;
 import mj.aastaar.algorithms.AlgorithmVisualization;
+import mj.aastaar.algorithms.DijkstraTest;
 import mj.aastaar.algorithms.DijkstraWithHashMap;
 import mj.aastaar.algorithms.DijkstraWithArray;
 import mj.aastaar.map.Grid;
@@ -111,9 +112,11 @@ public class Main extends Application {
         String magenta = "#FF00FF";
         AlgorithmVisualization dijkstraArray = new AlgorithmVisualization(new DijkstraWithArray(grid), "Dijkstra w/ 2D-array", blue);
         AlgorithmVisualization dijkstraWithHashMap = new AlgorithmVisualization(new DijkstraWithHashMap(grid), "Dijkstra w/ hash table", cyan);
-        AlgorithmVisualization aStarArray = new AlgorithmVisualization(new AStarWithArray(grid), "A* w/ 2D-array", green);
-        AlgorithmVisualization aStarHashMap = new AlgorithmVisualization(new AStarWithHashMap(grid), "A* w/ hash table", magenta);
-        AlgorithmVisualization[] algorithmVisuals = {dijkstraArray, dijkstraWithHashMap, aStarArray, aStarHashMap};
+        AlgorithmVisualization dijkstraTest = new AlgorithmVisualization(new DijkstraTest(grid), "Dijkstra w/ big hm", green);
+//        AlgorithmVisualization aStarArray = new AlgorithmVisualization(new AStarWithArray(grid), "A* w/ 2D-array", green);
+//        AlgorithmVisualization aStarHashMap = new AlgorithmVisualization(new AStarWithHashMap(grid), "A* w/ hash table", magenta);
+//        AlgorithmVisualization[] algorithmVisuals = {dijkstraArray, dijkstraWithHashMap, aStarArray, aStarHashMap};
+        AlgorithmVisualization[] algorithmVisuals = {dijkstraArray, dijkstraWithHashMap, dijkstraTest};
         scenario.setAlgorithmVisuals(algorithmVisuals);
 
         for (int i = 0; i < algorithmVisuals.length; i++) {

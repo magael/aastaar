@@ -1,5 +1,7 @@
 package mj.aastaar.datastructures;
 
+import java.util.Random;
+
 /**
  * A custom implementation of the hash map data structure. Uses the CustomEntry
  * class for the map entries, and linked lists to hold them.
@@ -173,6 +175,12 @@ public class CustomHashMap<K, V> {
      * @return Index
      */
     private int findIndex(K key) {
-        return key.hashCode() % buckets.length;
+//        ((ak+b) modp) modm
+        Random r = new Random();
+        int p = 262147;
+        int a = r.nextInt(p - 1) + 1;
+        int b = r.nextInt(p);
+        return ((a * key.hashCode() + b) % p) % buckets.length;
+//        return key.hashCode() % buckets.length;
     }
 }
