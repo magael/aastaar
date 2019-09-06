@@ -1,18 +1,18 @@
 ## Toteutusdokumentti
 
----
-
 ### Ohjelmiston rakenne
 
 Lähdekoodin juuressa <code>aastaar/src/main/java/mj/aastaar</code> on ohjelman käynnistyksestä ja graafisesta käyttöliittymästä huolehtiva <code>Main</code>, joka hyödyntää luokan <code>Scenario</code> ilmentävää polunetsintäskenaariota. <code>Scenarion</code> avulla kerätään algoritmien palauttamat polut ja ylläpidetään tietoa käytössä olevista lähtö- ja maalipisteestä sekä polunetsintäruudukosta.
 
 Kansiossa <code>aastaar.map</code> on luokka <code>MapCreator</code>, joka luo tiedostonlukijan antaman datan perusteella kartan maastoa kuvaavan merkistötaulukon. Taulukon avulla alustetaan <code>Grid</code>-luokan ilmentymä, jonka jälkeen oliota voidaan käyttää tarkastelemaan polunetsintäruudukon soluja: tietyn solun saavutettavissa olevia naapureita, solujen / ruutujen / solmujen välisen "kaaripainon" laskemiseen ja niin edelleen. <code>Node</code>-luokka ylläpitää yhden ruudun koordinaatteja.
 
-Algoritmi-luokat, sekä niiden lyhyimmän polun tilan tallentamiseen käyttävä <code>Path</code>-rajapinnan toteuttava luokka löytyvät hakemistosta <code>aastaar.algorithms</code>. <code>A*</code> perii <code>UniformCostSarchin</code>, erona on vain solmujen välisen matkan kustannukseen käytetty heuristiikka. Molemmat toteuttavat <code>PathfindingAlgorithm</code>-rajapinnan. Algoritmien käyttämä prioriteettijonototeutus löytyy kansiosta <code>aastaar.datastructures</code>.
+Algoritmi-luokat, sekä niiden lyhyimmän polun tilan tallentamiseen käyttävä <code>Path</code>-rajapinnan toteuttavat luokat löytyvät hakemistosta <code>aastaar.algorithms</code>. <code>A*</code>-luokat perivät <code>Dijkstra</code>-luokat, erona on vain solmujen välisen matkan kustannukseen käytetty heuristiikka. Molemmat toteuttavat <code>PathfindingAlgorithm</code>-rajapinnan. Algoritmien käyttämät tietorakenteet: itse toteutetut prioriteettijono ja hajautustaulu, sekä hajautustaulun alkiona käyttämä "pari"-luokka <code>CustomEntry</code> löytyvät kansiosta <code>aastaar.datastructures</code>.
 
 <code>aastaar.utils</code>-hakemisto sisältää tiedostonlukijan sekä algoritmien suorituskykytestaukseen käytettävän luokan <code>PathfindingPerformanceTester</code>. Pelikarttojen tiedostot löytyvät hakemistosta <code>aastaar/src/main/resources</code>.
 
 #### Luokkakaavio pakkausrakenteella
+
+HUOM: Hajautustaulutoteutuksia ei ole päivitetty kaavioihin, eli luokat CustomHashMap, CustomEntry, PathWithHashMap, DijkstraWithHashMap sekä AStarWithHashMap puuttuvat kaavioista. Lisäksi algoritmiluokat on nimetty uudelleen: UniformCostSearch -> DijkstraWithArray ja AStar -> AStarWithArray.
 
 ![Luokkakaavio pakkauksilla](https://github.com/magael/aastaar/blob/master/documentation/luokkakaavio/kaavio_simple.png)
 
@@ -34,17 +34,17 @@ Algoritmit käyttävät itse toteutettua prioriteettijonoa, eli minimikekoa. Alg
 
 Algoritmien ja prioriteetijonon yksinkertaistamiseksi etäisyysarvioita ei päivitetä jonossa olevaan solmuun, vaan solmuun lisätään kopioita uusilla prioriteeteillä. [Red Blob Games](https://www.redblobgames.com/pathfinding/a-star/implementation.html#algorithm) siteeraa [Chen et al.](https://www3.cs.stonybrook.edu/~rezaul/papers/TR-07-54.pdf) tutkimusta, jonka mukaan tämä on käytännössä myös nopeampaa.
 
-Prioriteettijonojen lisäksi algoritmit hyödyntävät kaksiulotteisia taulukoita, jotka vievät paljon tilaa, mutta joista alkion hakeminen on nopeaa. Tilaa varataan siis jokaiselle verkon/ruudukon solmulle, esim. <code>cameFrom</code> taulukkoon (n * n), missä n on solmujen lukumäärä.
+Prioriteettijonojen lisäksi algoritmeista on versiot, jotka hyödyntävät kaksiulotteisia taulukoita, sekä hajautustaulua käyttävät variaatiot.
 
-Hajautustaulua hyödyntämällä tilaa varattaisiin vain algoritmin tarkastelemille solmuille. Etenkin etäisyysarviot olisi oletettavasti nopeampaa ja vähemmän tilaa vievää toteuttaa hajautustaululla. Tällä hetkellä <code>cost</code>-taulukkoon alustetaan jokaiselle solmulle lähtöarvo.
+Taulukot vievät paljon tilaa, mutta alkion hakeminen niistä on nopeaa. Tilaa varataan siis jokaiselle verkon/ruudukon solmulle, esim. polun <code>cameFrom</code> taulukkoon (n * n), missä n on solmujen lukumäärä. Algoritmien taulukkoversiossa <code>cost</code>-taulukkoon alustetaan jokaiselle solmulle lähtöarvo. Näin ollen taulukkovariaatioiden aikavaativuus on O(n^2).
 
-Koodin yksinkertaistamiseksi ja tilavaatimuksen minimoimiseksi algoritmit eivät hyödynnä "vierailtu"-tarkistusta (<code>visited</code>). Tästä voi lukea lisää [testausdokumentista](https://github.com/magael/aastaar/blob/master/documentation/testaus.md).
+Hajautustaulua hyödyntämällä tilaa varataan parhaimmassa tapauksessa vain algoritmin tarkastelemille solmuille. Etenkin etäisyysarviot olisi oletettavasti nopeampaa ja vähemmän tilaa vievää toteuttaa hajautustaululla. Suorituskykytestien mukaan hajautustaulut ovat kuitenkin taulukkototeutuksia hitaampia (myös Javan valmiilla hajautustaululla). Testailusta voi lukea lisää [testausdokumentista](https://github.com/magael/aastaar/blob/master/documentation/testaus.md)
 
 ---
 
 ### Jatkosuunnitelmia
 
-Seuraavaksi vuorossa on oman HashMapin toteuttaminen ja soveltaminen, algoritmien suorituksen optimoimiseksi (tila- ja aikavaativuus alas).
+HashMapin suoritusta voisi todennäköisesti parantaa testailemalla  lisää eri toteutuksia <code>Node</code>-luokan <code>hashCode</code>-metodille, sekä eri aloituskokoja ja hajautusfunktioita hajautustaululle. Myös prioriteettijonon kokoa voisi optimoida.
 
 Ohjelman toteuttaa tällä hetkellä kaikki vaatimusmäärittelyssä määritellyt [perustoiminnallisuudet](https://github.com/magael/aastaar/blob/master/documentation/maarittely.md#perustoiminnallisuuksia). BFS-luokka on poistettu repositorion main-branchista, koska sen ei koettu tuovan projektille paljoa lisäarvoa. BFS:n sijaan vertailukohteena on Dijkstran algoritmi.
 

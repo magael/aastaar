@@ -72,14 +72,16 @@ Oma hashmaptoteutus testattu olevan suunnilleen yhtä nopea, kuin Javan valmiita
 Jos haut suoritetaan per algoritmi vain kerran niin, että tietorakenteet alustetaan ainoastaan konstruktorissa, hashmaptoteutukset vaikuttaisivat olevan arraytoteutuksia nopeampia. Kuitenkin, kun tietorakenteet alustetaan joka haulla uusiksi, niin etäisyysarvioihin (<code>cost</code>) hashmappeja käyttävät toteutukset ovat yllättäen puolet-tuplasti hitaampia, kuin arraytoteutukset.
 
 PathWithHashMap ja PathWithArray tuottavat yleensä hieman erilaisia (joskin samanpituisia) polkuja. Yllättäen myös näissä hashmap on selvästi hitaampi. Jokaisen 2D-taulukon muutos hashmapiksi nopeuttaa alustusta hieman (haun suoritusajan kertaluokassa mitättömästi), mutta hidastaa algoritmin suoritusta esimerkiksi omissa testeissäni Dijkstralle noin 10 millisekuntia (cost-> hashmap: n. 10 -> n. 20 ms. path -> hasmap: n. 20 ms. -> n. 30 ms.). Saman huomasin kokeillessani hajautustauluversiota <code>visited</code>-taulukosta.
+
+Algoritmi- ja polkuluokkia on testattu paljon alustaa eri kokoisina. Jotkut taikaluvut tuottivat tulosta, mutta päädyin loppujen lopuksi tyytymään solmujen lukumäärän potenssiin kaksi, sillä paljoa siitä en paremmaksi ehtinyt päästä.
   
-Testailtu parilla eri hashcodella:
+<code>Node</code>-luokalle on testailtu paria eri hashcodea:
 
 <code>int temp = (y + ((x + 1) / 2));
 return x + (temp * temp);</code>
 
 ja <code>return (x * 18397) + (y * 20483);</code>,
 
-joista ensimmäinen on Stack Overflow:sta löydetty [bijektiofunktio](https://stackoverflow.com/questions/22826326/good-hashcode-function-for-2d-coordinates). Toinen on jostain vanhasta toisen kurssin tehtävästä. En huomannut merkittäviä eroja näiden välillä.
+joista ensimmäinen on Stack Overflow:sta löydetty [bijektiofunktio](https://stackoverflow.com/questions/22826326/good-hashcode-function-for-2d-coordinates). Toinen on jostain vanhasta toisen kurssin tehtävästä. En huomannut merkittäviä eroja näiden välillä. Samoin on kokeiltu paria eri hajautusfunktiota hajautustaululle, jälleen ilman merkittävää eroa.
 
 Yritin jonkin aikaa toteuttaa algoritmeista versioita, joissa osa tietorakenteista alustettaisiin vain kerran per kartta. Arrayversio toimi välillä kokeiluissa, joissa vain cost-taulukon arvot alustettiin joka kierroksella uusiksi.

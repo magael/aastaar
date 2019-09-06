@@ -15,14 +15,6 @@
 
 ---
 
-### PathWithArray
-
-#### shortestPath()
-
-* no separate shortestPlathLength and shortestPathLength methods, always return the shortest path.
-
----
-
 ### Grid
 
 #### heuristic()
