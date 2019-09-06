@@ -127,7 +127,8 @@ public class DijkstraWithHashMap implements PathfindingAlgorithm {
         int ny = grid.getRowLength();
         path = new PathWithHashMap();
         frontier = new CustomPriorityQueue(nx * ny);
-        cost = new CustomHashMap<>();
+        cost = new CustomHashMap<>(8191);
+//        cost = new CustomHashMap<>(1021);
         visited = new boolean[nx][ny];
     }
 }

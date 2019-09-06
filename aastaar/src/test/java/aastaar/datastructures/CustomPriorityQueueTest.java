@@ -33,12 +33,12 @@ public class CustomPriorityQueueTest {
     }
     
     @Test
-    public void canNotAddNodesWhenHeapIsFull() {
+    public void headGrowsWhenAlmostFull() {
         pq.heapInsert(new Node(4, 4, 2));
         pq.heapInsert(new Node(5, 5, 11));
         assertEquals(5, pq.getHeapSize());
         pq.heapInsert(new Node(6, 6, 6));
-        assertEquals(5, pq.getHeapSize());
+        assertEquals(6, pq.getHeapSize());
     }
 
     @Test

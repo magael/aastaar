@@ -2,6 +2,7 @@ package mj.aastaar.algorithms;
 
 import mj.aastaar.algorithms.path.Path;
 import mj.aastaar.algorithms.path.PathWithArray;
+import mj.aastaar.algorithms.path.PathWithHashMap;
 import mj.aastaar.datastructures.CustomPriorityQueue;
 import mj.aastaar.datastructures.CustomHashMap;
 import mj.aastaar.map.Grid;
@@ -17,7 +18,8 @@ public class DijkstraTest implements PathfindingAlgorithm {
 
     private Node goal;
     private Grid grid;
-    private PathWithArray path;
+//    private PathWithArray path;
+    private PathWithHashMap path;
     private CustomPriorityQueue frontier;
     private CustomHashMap<Node, Double> cost;
     private boolean[][] visited;
@@ -125,9 +127,10 @@ public class DijkstraTest implements PathfindingAlgorithm {
     private void initDataStructures() {
         int nx = grid.getLength();
         int ny = grid.getRowLength();
-        path = new PathWithArray(nx, ny);
-        frontier = new CustomPriorityQueue(nx * ny);
-        cost = new CustomHashMap<>(1024);
+//        path = new PathWithArray(nx, ny);
+        path = new PathWithHashMap();
+        frontier = new CustomPriorityQueue();
+        cost = new CustomHashMap<>(8191);
         visited = new boolean[nx][ny];
     }
 }
