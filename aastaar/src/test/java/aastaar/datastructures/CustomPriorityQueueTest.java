@@ -81,4 +81,12 @@ public class CustomPriorityQueueTest {
         assertEquals(0, pq.getHeapSize());
         assertTrue(pq.isEmpty());
     }
+    
+    @Test
+    public void defaultQueueSizeWorks() {
+        pq = new CustomPriorityQueue();
+        pq.heapInsert(new Node(0, 0, 5));
+        pq.heapInsert(new Node(1, 1, 3));
+        assertEquals(2, pq.getHeapSize());
+    }
 }
