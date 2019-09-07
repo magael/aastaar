@@ -36,9 +36,9 @@ Algoritmien ja prioriteetijonon yksinkertaistamiseksi etäisyysarvioita ei päiv
 
 Prioriteettijonojen lisäksi algoritmeista on versiot, jotka hyödyntävät kaksiulotteisia taulukoita, sekä hajautustaulua käyttävät variaatiot.
 
-Taulukot vievät paljon tilaa, mutta alkion hakeminen niistä on nopeaa. Tilaa varataan siis jokaiselle verkon/ruudukon solmulle, esim. polun <code>cameFrom</code> taulukkoon (n * n), missä n on solmujen lukumäärä. Algoritmien taulukkoversiossa <code>cost</code>-taulukkoon alustetaan jokaiselle solmulle lähtöarvo. Näin ollen taulukkovariaatioiden aikavaativuus on O(n^2).
+Taulukot vievät paljon tilaa, mutta alkion hakeminen niistä on nopeaa. Tietorakenteisiin varataan tilaa jokaiselle verkon/ruudukon solmulle. Algoritmien taulukkoversiossa <code>cost</code>-taulukkoon alustetaan jokaiselle solmulle lähtöarvo. Näin ollen taulukkovariaatioiden aikavaativuus on O(n), missä n on verkon solmujen lukumäärä.
 
-Hajautustaulua hyödyntämällä tilaa varataan parhaimmassa tapauksessa vain algoritmin tarkastelemille solmuille. Etenkin etäisyysarviot olisi oletettavasti nopeampaa ja vähemmän tilaa vievää toteuttaa hajautustaululla. Suorituskykytestien mukaan hajautustaulut ovat kuitenkin taulukkototeutuksia hitaampia (myös Javan valmiilla hajautustaululla). Testailusta voi lukea lisää [testausdokumentista](https://github.com/magael/aastaar/blob/master/documentation/testaus.md)
+Pienemmäksi alustettua hajautustaulua hyödyntämällä tilaa varataan parhaimmassa tapauksessa vain algoritmin tarkastelemille solmuille. Hajautustaulun tehokkuus riippuu siitä, kuinka pienenä taulukko pysyy, ja mikä on sen täyttösuhde. Etenkin etäisyysarviot olisi oletettavasti nopeampaa toteuttaa hajautustaululla. Suorituskykytestien mukaan hajautustaulut ovat kuitenkin taulukkototeutuksia hitaampia (myös Javan valmiilla hajautustaululla). Testailusta voi lukea lisää [testausdokumentista](https://github.com/magael/aastaar/blob/master/documentation/testaus.md)
 
 ---
 
