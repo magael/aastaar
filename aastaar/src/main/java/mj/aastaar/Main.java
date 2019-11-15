@@ -222,10 +222,10 @@ public class Main extends Application {
         }
         pathTexts.getChildren().addAll(pathLengthTextBox, pathCostTextBox);
 
-        Label startPositionLabel = new Label("Start position x, y");
+        Label startPositionLabel = new Label("Start position y, x");
         startPositionLabel.setTextFill(Color.WHITE);
         startPositionLabel.setFont(new Font(fontSize));
-        Label goalPositionLabel = new Label("Goal position x, y");
+        Label goalPositionLabel = new Label("Goal position y, x");
         goalPositionLabel.setTextFill(Color.WHITE);
         goalPositionLabel.setFont(new Font(fontSize));
 
