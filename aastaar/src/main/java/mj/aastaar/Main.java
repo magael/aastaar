@@ -2,6 +2,7 @@ package mj.aastaar;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.util.Optional;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -13,7 +14,10 @@ import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -313,8 +317,22 @@ public class Main extends Application {
         Text testResults = new Text();
         testResults.setTextAlignment(TextAlignment.CENTER);
         testResults.setFill(Color.WHITE);
+        
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Confirm action");
+        alert.setHeaderText("Are you sure you wish to run performance tests?\n\n"
+                + "The tests will freeze the application for approximately 1-2 minutes,\n"
+                + "depending on the map and your hardware.\n"
+                + "The test output shows average runtimes for the different pathfinding algorithms.\n\n"
+                + "If you meant to do another action, \n"
+                + "such as trace a new path or switch maps, select \"Cancel\".");
+        alert.setContentText("Run performance tests?");
+        
         perfTestButton.setOnAction(value -> {
-            testResults.setText(runPerformanceTests(scenario.getAlgorithmVisuals()));
+            Optional<ButtonType> confirmResult = alert.showAndWait();
+            if (confirmResult.get() == ButtonType.OK){
+                testResults.setText(runPerformanceTests(scenario.getAlgorithmVisuals()));
+            }
         });
 
         Label tileSizeLabel = new Label("Set tilesize: ");
