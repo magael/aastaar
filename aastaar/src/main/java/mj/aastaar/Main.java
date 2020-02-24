@@ -198,7 +198,8 @@ public class Main extends Application {
 
     /**
      * Creating a toolbar with legend and interactive UI elements.
-     *
+     * Coordinates flipped for UI (Java GridPane weirdness)
+     * 
      * @return JavaFX ToolBar object
      */
     private ToolBar toolBar(Stage window) {
@@ -248,7 +249,7 @@ public class Main extends Application {
         Label invalidPositionLabel = new Label("");
         invalidPositionLabel.setTextFill(Color.RED);
         invalidPositionLabel.setFont(new Font(fontSize));
-        Button newPositionsButton = new Button("New positions");
+        Button newPositionsButton = new Button("Apply changes");
         newPositionsButton.setOnAction(value -> {
             Node start = new Node(Integer.parseInt(startXField.getText()), Integer.parseInt(startYField.getText()), 0);
             Node goal = new Node(Integer.parseInt(goalXField.getText()), Integer.parseInt(goalYField.getText()), 0);
